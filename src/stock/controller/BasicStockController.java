@@ -1,6 +1,6 @@
 package stock.controller;
 
-public class BasicStockController implements StockController{
+public class BasicStockController implements StockController {
   @Override
   public void run() {
 

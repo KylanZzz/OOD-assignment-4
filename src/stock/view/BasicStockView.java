@@ -75,8 +75,8 @@ public class BasicStockView implements StockView {
 
   @Override
   public void printStockAverage(String ticker, LocalDate endDate, int days, double average) {
-    out.printf("The average for stock %s from %s to %s was $%.2f.\n",
-            ticker, endDate.minusDays(days), endDate, average);
+    out.printf("The average for stock %s on %s for %d days was $%.2f.\n",
+            ticker, endDate, days, average);
   }
 
   @Override

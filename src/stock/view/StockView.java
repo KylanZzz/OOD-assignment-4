@@ -4,6 +4,8 @@ import java.time.LocalDate;
 import java.util.List;
 
 public interface StockView {
+  void printWelcomeScreen();
+
   void printMainMenu();
 
   void printMessage(String message);

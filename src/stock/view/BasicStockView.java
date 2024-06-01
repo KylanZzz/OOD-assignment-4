@@ -5,23 +5,9 @@ import java.util.stream.Collectors;
 import java.io.PrintStream;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.stream.Stream;
 
 public class BasicStockView implements StockView {
   private final PrintStream out;
-  private final List<String> mainMenuOptions =
-          List.of("Get the gain/loss of stock over period of time",
-                  "Get x-day moving average of a stock",
-                  "Get x-day crossovers for a stock",
-                  "Manage portfolios");
-  private final List<String> viewPortfoliosOptions =
-          List.of("Create new portfolio",
-                  "Delete portfolio",
-                  "Rename portfolio");
-  private final List<String> managePortfolioOptions =
-          List.of("Calculate portfolio value",
-                  "Add stock to portfolio",
-                  "Remove stock from portfolio");
 
   public BasicStockView(PrintStream out) {
     this.out = out;
@@ -44,14 +30,19 @@ public class BasicStockView implements StockView {
   }
 
   @Override
+  public void printWelcomeScreen() {
+    out.println("Welcome to OOD Assignment 4 for Stocks part 1!\n");
+  }
+
+  @Override
   public void printMainMenu() {
     printOptionsPrompt();
-    printMenu(mainMenuOptions);
+    printMenu(BasicMenuOptions.mainMenu());
   }
 
   @Override
   public void printViewPortfolios(List<String> portfolios) {
-    var updatedPortfolioOptions = new ArrayList<>(viewPortfoliosOptions);
+    var updatedPortfolioOptions = new ArrayList<>(BasicMenuOptions.viewPortfolios());
     portfolios.forEach(it -> updatedPortfolioOptions.add("View/Edit: " + it));
 
     printOptionsPrompt();
@@ -65,7 +56,7 @@ public class BasicStockView implements StockView {
     out.println();
 
     printOptionsPrompt();
-    printMenu(managePortfolioOptions);
+    printMenu(BasicMenuOptions.managePortfolio());
   }
 
   @Override

@@ -41,30 +41,18 @@ public class BasicStockModel implements StockModel{
 
   @Override
   public void createNewPortfolio(String name) {
-<<<<<<< HEAD
-    portfolio.put(name, null);
-=======
     portfolio.put(name, new ArrayList<>());
->>>>>>> 7b4750a189661dc238938828a429274aa5cae3a4
   }
 
   @Override
   public void deletePortfolio(String name) {
-<<<<<<< HEAD
     portfolio.remove(name, portfolio.get(name));
-=======
-    portfolio.remove(name);
->>>>>>> 7b4750a189661dc238938828a429274aa5cae3a4
   }
 
   @Override
   public void renamePortfolio(String oldName, String newName) {
     portfolio.put(newName, portfolio.get(oldName));
-<<<<<<< HEAD
     portfolio.remove(oldName, portfolio.get(oldName));
-=======
-    deletePortfolio(oldName);
->>>>>>> 7b4750a189661dc238938828a429274aa5cae3a4
   }
 
   @Override
@@ -74,15 +62,11 @@ public class BasicStockModel implements StockModel{
 
   @Override
   public List<String> getPortfolios() {
-<<<<<<< HEAD
     List<String> portfoliosList = new ArrayList<>();
     for (Map.Entry<String, List<String>> entry : portfolio.entrySet()) {
       portfoliosList.add(entry.getKey());
     }
     return portfoliosList;
-=======
-    return new ArrayList<>(portfolio.keySet());
->>>>>>> 7b4750a189661dc238938828a429274aa5cae3a4
   }
 
   @Override

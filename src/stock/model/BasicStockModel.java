@@ -1,6 +1,7 @@
 package stock.model;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -37,17 +38,18 @@ public class BasicStockModel implements StockModel{
 
   @Override
   public void createNewPortfolio(String name) {
-
+    portfolio.put(name, new ArrayList<>());
   }
 
   @Override
   public void deletePortfolio(String name) {
-
+    portfolio.remove(name);
   }
 
   @Override
   public void renamePortfolio(String oldName, String newName) {
-
+    portfolio.put(newName, portfolio.get(oldName));
+    deletePortfolio(oldName);
   }
 
   @Override
@@ -57,7 +59,7 @@ public class BasicStockModel implements StockModel{
 
   @Override
   public List<String> getPortfolios() {
-    return null;
+    return new ArrayList<>(portfolio.keySet());
   }
 
   @Override
@@ -67,16 +69,16 @@ public class BasicStockModel implements StockModel{
 
   @Override
   public void addStockToPortfolio(String name, String ticker) {
-
+    portfolio.get(name).add(ticker);
   }
 
   @Override
   public void removeStockFromPortfolio(String name, String ticker) {
-
+    portfolio.get(name).remove(ticker);
   }
 
   @Override
   public boolean stockExists(String ticker) {
-    return false;
+    return dataSource.stockInDataSource(ticker);
   }
 }

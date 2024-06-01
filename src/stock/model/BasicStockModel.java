@@ -1,10 +1,13 @@
 package stock.model;
 
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
 
 public class BasicStockModel implements StockModel{
   private DataSource dataSource;
+  private HashMap<String, List<String>> portfolio;
+
 
   @Override
   public double getGainOverTime(LocalDate startDate, LocalDate endDate, String ticker) {
@@ -14,13 +17,17 @@ public class BasicStockModel implements StockModel{
       total += dataSource.getClosingPrice(currentDate, ticker);
       currentDate = currentDate.plusDays(1);
     }
+
     return total;
   }
 
   @Override
   public double getMovingDayAverage(LocalDate endDate, int days, String ticker) {
-    dataSource.getClosingPrice(endDate, ticker);
-    return 0;
+    double total = dataSource.getClosingPrice(endDate, ticker);
+    for (int i = 0; i < days; i++) {
+      total += dataSource.getClosingPrice(endDate.minusDays(1), ticker);
+    }
+    return total / (double)days;
   }
 
   @Override
@@ -66,5 +73,10 @@ public class BasicStockModel implements StockModel{
   @Override
   public void removeStockFromPortfolio(String name, String ticker) {
 
+  }
+
+  @Override
+  public boolean stockExists(String ticker) {
+    return false;
   }
 }

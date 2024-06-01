@@ -133,4 +133,6 @@ public interface StockModel {
    * @param ticker the ticker of the stock.
    */
   void removeStockFromPortfolio(String name, String ticker);
+
+  boolean stockExists(String ticker);
 }

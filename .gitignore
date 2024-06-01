@@ -1,0 +1,27 @@
+# IntelliJ IDEA
+*.iml
+.idea/
+
+# Java
+*.class
+*.jar
+*.war
+*.ear
+
+# Build directories
+/build/
+out/
+target/
+
+# Log files
+*.log
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Other IDEs
+.vscode/
+.project
+.classpath
+.settings/

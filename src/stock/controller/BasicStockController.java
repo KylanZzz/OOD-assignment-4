@@ -38,7 +38,6 @@ public class BasicStockController implements StockController {
     boolean exitFlag = false;
 
     while (!exitFlag) {
-//      view.printMessage("\n");
       switch (state) {
         case WELCOME:
           view.printWelcomeScreen();

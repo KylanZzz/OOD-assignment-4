@@ -17,7 +17,7 @@ public class BasicStockModel implements StockModel{
   public double getGainOverTime(LocalDate startDate, LocalDate endDate, String ticker) {
     double total = 0;
     LocalDate currentDate = startDate;
-    while (!currentDate.equals(endDate)) {
+    while (!currentDate.isAfter(endDate)) {
       total += dataSource.getClosingPrice(currentDate, ticker);
       currentDate = currentDate.plusDays(1);
     }
@@ -68,7 +68,7 @@ public class BasicStockModel implements StockModel{
 
   @Override
   public void deletePortfolio(String name) {
-    portfolios.remove(name, portfolios.get(name));
+    portfolios.remove(name);
   }
 
   @Override

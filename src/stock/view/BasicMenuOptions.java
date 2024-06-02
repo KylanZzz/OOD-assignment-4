@@ -21,12 +21,14 @@ public class BasicMenuOptions {
   public static List<String> viewPortfolios() {
     return List.of("Create new portfolio",
             "Delete portfolio",
-            "Rename portfolio");
+            "Rename portfolio",
+            "Go Back");
   }
 
   public static List<String> managePortfolio() {
     return List.of("Calculate portfolio value",
             "Add stock to portfolio",
-            "Remove stock from portfolio");
+            "Remove stock from portfolio",
+            "Go Back");
   }
 }

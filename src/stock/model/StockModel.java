@@ -66,15 +66,12 @@ public interface StockModel {
 
   /**
    *
-   * @param shortStartDate the short period of start day of the crossover.
-   * @param shortEndDate the short period of end day of the crossover.
-   * @param longStartDate the long period of start day of the crossover.
-   * @param longEndDate the long period of end day of the crossover.
+   * @param endDate the end day of the crossover.
    * @param days the amount of period to examine the crossover.
    * @param ticker the ticker of the stock.
    * @return which days are x-day crossovers
    */
-  public double getCrossover(LocalDate shortStartDate, LocalDate shortEndDate, LocalDate longStartDate, LocalDate longEndDate, int days, String ticker);
+  public List<LocalDate> getCrossover(LocalDate endDate, int days, String ticker);
 
   /**
    * Create a new stock portfolio.

@@ -8,7 +8,7 @@ import java.util.Map;
 
 public class BasicStockModel implements StockModel{
   private DataSource dataSource;
-  private HashMap<String, List<String>> portfolio;
+  private HashMap<String, List<String>> portfolios;
 
   private final List<String> CONTENT = List.of("Calculate portfolio value" , "Add stock to portfolio", "Add stock to portfolio");
 
@@ -27,77 +27,88 @@ public class BasicStockModel implements StockModel{
 
   @Override
   public double getMovingDayAverage(LocalDate endDate, int days, String ticker) {
-    double total = dataSource.getClosingPrice(endDate, ticker);
-    for (int i = 0; i < days; i++) {
-      total += dataSource.getClosingPrice(endDate.minusDays(1), ticker);
+    //might occur error if the data is insufficient
+    double total = 0;
+    LocalDate date = endDate;
+
+    int count = 0;
+    while (count < days) {
+      if (dataSource.stockExistsAtDate(date, ticker)) {
+        total += dataSource.getClosingPrice(date, ticker);
+        count++;
+      }
+      date = date.minusDays(1);
     }
-    return total / (double)days;
+
+    return total / days;
   }
 
   @Override
-  public double getCrossover(LocalDate shortStartDate, LocalDate shortEndDate, LocalDate longStartDate, LocalDate longEndDate, int days, String ticker) {
-    return 0;
+  public List<LocalDate> getCrossover(LocalDate endDate, int days, String ticker) {
+    double movingDayAvg = getMovingDayAverage(endDate, days, ticker);
+    List<LocalDate> crossOvers = new ArrayList<>();
+    LocalDate date = endDate;
+
+    int count = 0;
+    while (count < days) {
+      if (dataSource.stockExistsAtDate(date, ticker)
+              && (dataSource.getClosingPrice(date, ticker) > movingDayAvg)) {
+        crossOvers.add(date);
+      }
+      count++;
+      date = date.minusDays(1);
+    }
+    return crossOvers;
   }
 
   @Override
   public void createNewPortfolio(String name) {
-<<<<<<< HEAD
-    portfolio.put(name, null);
-=======
-    portfolio.put(name, new ArrayList<>());
->>>>>>> 7b4750a189661dc238938828a429274aa5cae3a4
+    portfolios.put(name, new ArrayList<>());
   }
 
   @Override
   public void deletePortfolio(String name) {
-<<<<<<< HEAD
-    portfolio.remove(name, portfolio.get(name));
-=======
-    portfolio.remove(name);
->>>>>>> 7b4750a189661dc238938828a429274aa5cae3a4
+    portfolios.remove(name, portfolios.get(name));
   }
 
   @Override
   public void renamePortfolio(String oldName, String newName) {
-    portfolio.put(newName, portfolio.get(oldName));
-<<<<<<< HEAD
-    portfolio.remove(oldName, portfolio.get(oldName));
-=======
+    portfolios.put(newName, portfolios.get(oldName));
     deletePortfolio(oldName);
->>>>>>> 7b4750a189661dc238938828a429274aa5cae3a4
   }
 
   @Override
   public List<String> getPortfolioContents(String name) {
-    return portfolio.get(name);
+    return portfolios.get(name);
   }
 
   @Override
   public List<String> getPortfolios() {
-<<<<<<< HEAD
     List<String> portfoliosList = new ArrayList<>();
-    for (Map.Entry<String, List<String>> entry : portfolio.entrySet()) {
+    for (Map.Entry<String, List<String>> entry : portfolios.entrySet()) {
       portfoliosList.add(entry.getKey());
     }
     return portfoliosList;
-=======
-    return new ArrayList<>(portfolio.keySet());
->>>>>>> 7b4750a189661dc238938828a429274aa5cae3a4
   }
 
   @Override
   public double getPortfolioValue(String name, LocalDate date) {
-    return 0;
+    List<String> stocks = new ArrayList<>(portfolios.get(name));
+    double value = 0;
+    for (int i = 0; i < stocks.size(); i++) {
+      value += dataSource.getClosingPrice(date, stocks.get(i));
+    }
+    return value;
   }
 
   @Override
   public void addStockToPortfolio(String name, String ticker) {
-    portfolio.get(name).add(ticker);
+    portfolios.get(name).add(ticker);
   }
 
   @Override
   public void removeStockFromPortfolio(String name, String ticker) {
-    portfolio.get(name).remove(ticker);
+    portfolios.get(name).remove(ticker);
   }
 
   @Override

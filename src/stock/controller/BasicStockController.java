@@ -1,5 +1,6 @@
 package stock.controller;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.time.DateTimeException;
 import java.time.LocalDate;
@@ -8,8 +9,6 @@ import java.util.Scanner;
 
 import stock.model.BasicStockModel;
 import stock.model.CSVDataSource;
-import java.io.InputStream;
-import java.nio.file.Paths;
 import stock.model.StockModel;
 import stock.view.BasicMenuOptions;
 import stock.view.BasicStockView;
@@ -17,7 +16,6 @@ import stock.view.StockView;
 
 public class BasicStockController implements StockController {
 
-  private final String EXIT_KEYWORD = "EXIT";
   private final StockView view;
   private final StockModel model;
   private final Scanner scanner;
@@ -98,8 +96,11 @@ public class BasicStockController implements StockController {
 
   private void handleGain() {
     view.printMessage("Please enter the ticker of the stock that you would like to know about:");
-    String ticker = getTickerFromUser();
-    if (ticker.equals(EXIT_KEYWORD)) return;
+    String ticker = scanner.nextLine().toUpperCase();
+    if (!model.stockExists(ticker)) {
+      view.printMessage("That stock does not exist!");
+      return;
+    }
 
     view.printMessage("Please enter the starting date (inclusive) in the format MM/DD/YYYY:");
     LocalDate startDate = getDateFromUser();
@@ -107,14 +108,21 @@ public class BasicStockController implements StockController {
     view.printMessage("Please enter the ending date (inclusive) in the format MM/DD/YYYY:");
     LocalDate endDate = getDateFromUser();
 
-    double gain = model.getGainOverTime(startDate, endDate, ticker);
-    view.printStockGain(ticker, startDate, endDate, gain);
+    try {
+      double gain = model.getGainOverTime(startDate, endDate, ticker);
+      view.printStockGain(ticker, startDate, endDate, gain);
+    } catch (IOException e) {
+      view.printMessage(e.getMessage());
+    }
   }
 
   private void handleAverage() {
     view.printMessage("Please enter the ticker of the stock that you would like to know about:");
-    String ticker = getTickerFromUser();
-    if (ticker.equals(EXIT_KEYWORD)) return;
+    String ticker = scanner.nextLine().toUpperCase();
+    if (!model.stockExists(ticker)) {
+      view.printMessage("That stock does not exist!");
+      return;
+    }
 
     view.printMessage("Please enter the ending date in the format MM/DD/YYYY:");
     LocalDate endDate = getDateFromUser();
@@ -122,14 +130,21 @@ public class BasicStockController implements StockController {
     view.printMessage("Please enter the number of days.");
     int days = getPositiveFromUser(Integer.MAX_VALUE);
 
-    double average = model.getMovingDayAverage(endDate, days, ticker);
-    view.printStockAverage(ticker, endDate, days, average);
+    try {
+      double average = model.getMovingDayAverage(endDate, days, ticker);
+      view.printStockAverage(ticker, endDate, days, average);
+    } catch (IOException e) {
+      view.printMessage(e.getMessage());
+    }
   }
 
   private void handleCrossover() {
     view.printMessage("Please enter the ticker of the stock that you would like to know about:");
-    String ticker = getTickerFromUser();
-    if (ticker.equals(EXIT_KEYWORD)) return;
+    String ticker = scanner.nextLine().toUpperCase();
+    if (!model.stockExists(ticker)) {
+      view.printMessage("That stock does not exist!");
+      return;
+    }
 
     view.printMessage("Please enter the ending date in the format MM/DD/YYYY:");
     LocalDate endDate = getDateFromUser();
@@ -137,8 +152,12 @@ public class BasicStockController implements StockController {
     view.printMessage("Please enter the number of days.");
     int days = getPositiveFromUser(Integer.MAX_VALUE);
 
-    var crossOvers = model.getCrossover(endDate, days, ticker);
-    view.printXDayCrossovers(ticker, endDate, days, crossOvers);
+    try {
+      var crossOvers = model.getCrossover(endDate, days, ticker);
+      view.printXDayCrossovers(ticker, endDate, days, crossOvers);
+    } catch (IOException e) {
+      view.printMessage(e.getMessage());
+    }
   }
 
   private void handleViewPortfoliosState() {
@@ -176,10 +195,18 @@ public class BasicStockController implements StockController {
 
   private void handleRenamePortfolio() {
     view.printMessage("What portfolio would you like to rename? (Please enter the name).");
-    String oldName = getPortfolioName();
+    String oldName = scanner.nextLine().toUpperCase();
+    if (!model.getPortfolios().contains(oldName)) {
+      view.printMessage("A portfolio with that name does not exist!");
+      return;
+    }
 
     view.printMessage("What would you like to rename this portfolio to?");
     String newName = scanner.nextLine().toUpperCase();
+    if (!model.getPortfolios().contains(oldName)) {
+      view.printMessage("A portfolio with that name does not exist!");
+      return;
+    }
 
     if (model.getPortfolios().contains(newName)) {
       view.printMessage("A portfolio with that name already exists!");
@@ -190,11 +217,10 @@ public class BasicStockController implements StockController {
   }
 
   private void handleDeletePortfolio() {
-    view.printMessage("What portfolio would you like to delete? (Please enter the name or " +
-            EXIT_KEYWORD + " to quit).");
-    String name = getPortfolioName();
-
-    if (name.equals(EXIT_KEYWORD)) {
+    view.printMessage("What portfolio would you like to delete?");
+    String name = scanner.nextLine().toUpperCase();
+    if (!model.getPortfolios().contains(name)) {
+      view.printMessage("A portfolio with that name does not exist!");
       return;
     }
 
@@ -205,7 +231,6 @@ public class BasicStockController implements StockController {
   private void handleCreatePortfolio() {
     view.printMessage("What is the name of the portfolio you would like to create?");
     String name = scanner.nextLine().toUpperCase();
-
     if (model.getPortfolios().contains(name)) {
       view.printMessage("A portfolio with that name already exists!");
     }
@@ -239,33 +264,34 @@ public class BasicStockController implements StockController {
   private void handleAddStockPortfolio() {
     view.printMessage(String.format("Please enter the ticker of the stock " +
             "that you would like to add to portfolio %s.", currentPortfolioName));
-    String ticker = getTickerFromUser();
+    String ticker = scanner.nextLine().toUpperCase();
+    if (!model.stockExists(ticker)) {
+      view.printMessage("That stock does not exist!");
+      return;
+    }
 
     model.addStockToPortfolio(currentPortfolioName, ticker);
-    view.printMessage(String.format("Successfully added stock %s to portfolio %s.",
-            ticker, currentPortfolioName));
+    view.printMessage(String.format("Successfully added stock %s to portfolio %s.", ticker,
+            currentPortfolioName));
   }
 
   private void handleRemoveStockPortfolio() {
     view.printMessage(String.format("Please enter the ticker of the stock " +
-            "that you would like to remove from portfolio %s, or type %s to " +
-            "quit.", currentPortfolioName, EXIT_KEYWORD));
-    String ticker = getTickerFromUser();
-
-    while (!model.getPortfolioContents(currentPortfolioName).contains(ticker) &&
-    !ticker.equals(EXIT_KEYWORD)) {
-      view.printMessage("That stock is not in the portfolio. Please try again, or type " +
-              EXIT_KEYWORD + " to quit.");
-      ticker = getTickerFromUser();
+            "that you would like to remove from portfolio %s.", currentPortfolioName));
+    String ticker = scanner.nextLine().toUpperCase();
+    if (!model.stockExists(ticker)) {
+      view.printMessage("That stock does not exist!");
+      return;
     }
 
-    if (ticker.equals(EXIT_KEYWORD)) {
+    if (!model.getPortfolioContents(currentPortfolioName).contains(ticker)) {
+      view.printMessage("That stock is not in the portfolio.");
       return;
     }
 
     model.removeStockFromPortfolio(currentPortfolioName, ticker);
-    view.printMessage(String.format("Successfully added stock %s to portfolio %s.",
-            ticker, currentPortfolioName));
+    view.printMessage(String.format("Successfully added stock %s to portfolio %s.", ticker,
+            currentPortfolioName));
   }
 
   private void handlePortfolioValue() {
@@ -273,9 +299,13 @@ public class BasicStockController implements StockController {
             "at? Please enter the date in the format MM/DD/YYYY.", currentPortfolioName));
     LocalDate date = getDateFromUser();
 
-    double value = model.getPortfolioValue(currentPortfolioName, date);
-    view.printMessage(String.format("The value of the portfolio %s at %s is %.2f.",
-            currentPortfolioName, date, value));
+    try {
+      double value = model.getPortfolioValue(currentPortfolioName, date);
+      view.printMessage(String.format("The value of the portfolio %s at %s is %.2f.",
+              currentPortfolioName, date, value));
+    } catch (IOException e) {
+      view.printMessage(e.getMessage());
+    }
   }
 
   private void handleGoBackViewPortfolio() {
@@ -289,15 +319,15 @@ public class BasicStockController implements StockController {
 
   // Helper functions below
 
-  protected final String getPortfolioName() {
-    String output = scanner.nextLine().toUpperCase();
-    while (!model.getPortfolios().contains(output) && !output.equals(EXIT_KEYWORD)) {
-      view.printMessage("A portfolio with that name does not exist! Please try again.");
-      output = scanner.nextLine().toUpperCase();
-    }
-
-    return output;
-  }
+//  protected final String getPortfolioName() {
+//    String output = scanner.nextLine().toUpperCase();
+//    while (!model.getPortfolios().contains(output) && !output.equals(EXIT_KEYWORD)) {
+//      view.printMessage("A portfolio with that name does not exist! Please try again.");
+//      output = scanner.nextLine().toUpperCase();
+//    }
+//
+//    return output;
+//  }
 
   protected final int getPositiveFromUser(int max) {
     int choice = -1;
@@ -314,23 +344,12 @@ public class BasicStockController implements StockController {
       } catch (IllegalArgumentException e) {
         view.printMessage("Invalid input: not a valid number. Please enter a number from 1 to " +
                 max);
+        choice = -1;
         scanner.nextLine();
       }
     }
 
     return choice;
-  }
-
-  protected final String getTickerFromUser() {
-    String ticker = scanner.nextLine().toUpperCase();
-
-    while (!model.stockExists(ticker) && !ticker.equals(EXIT_KEYWORD)) {
-      view.printMessage("Invalid input: stock does not exist for such a ticker. Please try again, " +
-              "or type " + EXIT_KEYWORD + " to quit");
-      ticker = scanner.nextLine().toUpperCase();
-    }
-
-    return ticker;
   }
 
   protected final LocalDate getDateFromUser() {

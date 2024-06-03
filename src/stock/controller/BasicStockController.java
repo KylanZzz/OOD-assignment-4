@@ -112,7 +112,7 @@ public class BasicStockController implements StockController {
       double gain = model.getGainOverTime(startDate, endDate, ticker);
       view.printStockGain(ticker, startDate, endDate, gain);
     } catch (IOException e) {
-      view.printMessage(e.getMessage());
+      view.printMessage("Error occurred while fetching data: " + e.getMessage());
     }
   }
 
@@ -134,7 +134,7 @@ public class BasicStockController implements StockController {
       double average = model.getMovingDayAverage(endDate, days, ticker);
       view.printStockAverage(ticker, endDate, days, average);
     } catch (IOException e) {
-      view.printMessage(e.getMessage());
+      view.printMessage("Error occurred while fetching data: " + e.getMessage());
     }
   }
 
@@ -156,7 +156,7 @@ public class BasicStockController implements StockController {
       var crossOvers = model.getCrossover(endDate, days, ticker);
       view.printXDayCrossovers(ticker, endDate, days, crossOvers);
     } catch (IOException e) {
-      view.printMessage(e.getMessage());
+      view.printMessage("Error occurred while fetching data: " + e.getMessage());
     }
   }
 
@@ -304,7 +304,7 @@ public class BasicStockController implements StockController {
       view.printMessage(String.format("The value of the portfolio %s at %s is %.2f.",
               currentPortfolioName, date, value));
     } catch (IOException e) {
-      view.printMessage(e.getMessage());
+      view.printMessage("Error occurred while fetching data: " + e.getMessage());
     }
   }
 

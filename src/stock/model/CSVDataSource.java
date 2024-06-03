@@ -12,7 +12,7 @@ import java.util.Map;
 import java.io.BufferedReader;
 import java.util.stream.Stream;
 
-public class CSVDataSource implements DataSource {
+public abstract class CSVDataSource implements DataSource {
     private final Map<String, Map<LocalDate, Double>> stocks;
 
     public CSVDataSource(String directoryPath) {
@@ -45,7 +45,7 @@ public class CSVDataSource implements DataSource {
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(",");
                 LocalDate date = LocalDate.parse(parts[0], DateTimeFormatter.ISO_LOCAL_DATE);
-                double closePrice = Double.parseDouble(parts[4]);
+                double closePrice = Double.parseDouble(parts[5]);
                 stocks.get(ticker).put(date,closePrice);
             }
         } catch (IOException e) {
@@ -78,4 +78,5 @@ public class CSVDataSource implements DataSource {
     public boolean stockInDataSource(String ticker) {
         return stocks.containsKey(ticker);
     }
+
 }

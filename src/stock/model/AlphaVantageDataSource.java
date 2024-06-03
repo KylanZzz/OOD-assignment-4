@@ -7,43 +7,28 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.MalformedURLException;
 import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Stream;
 
 public class AlphaVantageDataSource extends CSVDataSource {
   private static final String API_KEY = "W0M1JOKC82EZEQA8";
   //  3FKL0E8WUDB1EOMS
-  private List<String> stockSymbols = new ArrayList<>();
+
+  private List<String> tickerList = new ArrayList();
 
   // throw IOException
   public AlphaVantageDataSource() {
     super();
-    File folder = new File("res/folder");
+    File folder = new File("res/APIData");
     deleteFolder(folder);
     folder.mkdirs();
-    generateStockCSV(folder, "A");
-    loadAllStockData("res/APIData");
+
   }
-
-//  public void initialize() {
-//    File folder = new File("res/APIData");
-//    generateStockCSV(folder, "A");
-//    loadAllStockData("res/APIData");
-//  }
-
   private void generateStockCSV(File folder, String ticker) {
     URL url;
     try {
-      url = new URL("https://www.alphavantage.co/query?function=TIME_SERIES_DAILY"
+      url = new URL("https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED"
               + "&outputsize=full"
               + "&symbol=" + ticker
               + "&apikey=" + API_KEY
@@ -62,11 +47,66 @@ public class AlphaVantageDataSource extends CSVDataSource {
       } catch (IOException e) {
         System.err.println("Failed to write data for " + ticker);
       }
-      System.out.println("Data for " + ticker + " has been saved to " + file.getAbsolutePath());
     } catch (IOException e) {
       throw new IllegalArgumentException("No price data found for " + ticker);
     }
   }
+
+  @Override
+  public boolean stockInDataSource(String ticker) {
+    String filePath = "res/stocksData/stocksList.csv";
+
+    try {
+      BufferedReader reader = new BufferedReader(new FileReader(filePath));
+      String line = reader.readLine();
+      int symbolIndex = -1;
+      int statusIndex = -1;
+      String[] headers = line.split(",");
+      for (int i = 0; i < headers.length; i++) {
+        if (headers[i].trim().equalsIgnoreCase("Symbol")) {
+          symbolIndex = i;
+        }
+        if (headers[i].trim().equalsIgnoreCase("Status")) {
+          statusIndex = i;
+        }
+      }
+
+      if (symbolIndex == -1 || statusIndex == -1) {
+        throw new IllegalArgumentException("CSV file does not have required 'Symbol' or 'Status' columns.");
+      }
+
+      boolean isFound = false;
+      while ((line = reader.readLine()) != null) {
+        String[] parts = line.split(",");
+        if (parts[symbolIndex].trim().equalsIgnoreCase(ticker)) {
+          isFound = true;
+          break;
+        }
+      }
+
+      if (!isFound) {
+        return false;
+      }
+
+      reader.close();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+    if (!tickerList.contains(ticker)) {
+      generateStockCSV(new File("res/APIData"), ticker);
+      loadAllStockData("res/APIData");
+      tickerList.add(ticker);
+    }
+
+    return true;
+  }
+
+  //  public void initialize() {
+//    File folder = new File("res/APIData");
+//    generateStockCSV(folder, "A");
+//    loadAllStockData("res/APIData");
+//  }
+
 
 //  @Override
 //  protected void loadAllStockData(String directoryPath) {

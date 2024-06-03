@@ -7,6 +7,7 @@ import java.time.LocalDate;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+import stock.model.AlphaVantageDataSource;
 import stock.model.BasicStockModel;
 import stock.model.CSVDataSource;
 import stock.model.StockModel;
@@ -383,7 +384,8 @@ public class BasicStockController implements StockController {
   public static void main(String[] args) {
 
     StockView view = new BasicStockView(System.out);
-    StockModel model = new BasicStockModel(new CSVDataSource("res/CSVData"));
+//    StockModel model = new BasicStockModel(new CSVDataSource("res/CSVData"));
+    StockModel model = new BasicStockModel(new AlphaVantageDataSource());
     StockController controller = new BasicStockController(view, model, System.in);
     controller.run();
   }

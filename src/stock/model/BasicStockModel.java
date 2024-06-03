@@ -22,13 +22,18 @@ public class BasicStockModel implements StockModel{
   public double getGainOverTime(LocalDate startDate, LocalDate endDate, String ticker) throws IOException {
     double total = 0;
     LocalDate currentDate = startDate;
-    while (!currentDate.isAfter(endDate)) {
-      total += dataSource.getClosingPrice(currentDate, ticker);
+
+    while (!currentDate.isAfter(endDate.minusDays(1))) {
+      double todayPrice = dataSource.getClosingPrice(currentDate, ticker);
+      double nextDayPrice = dataSource.getClosingPrice(currentDate.plusDays(1), ticker);
+
+      double dailyChange = nextDayPrice - todayPrice;
+      total += dailyChange;
       currentDate = currentDate.plusDays(1);
     }
-    System.out.println(total);
     return total;
   }
+
 
   @Override
   public double getMovingDayAverage(LocalDate endDate, int days, String ticker) throws IOException {

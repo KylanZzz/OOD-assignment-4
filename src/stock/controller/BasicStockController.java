@@ -7,6 +7,9 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import stock.model.BasicStockModel;
+import stock.model.CSVDataSource;
+import java.io.InputStream;
+import java.nio.file.Paths;
 import stock.model.StockModel;
 import stock.view.BasicMenuOptions;
 import stock.view.BasicStockView;
@@ -96,6 +99,7 @@ public class BasicStockController implements StockController {
   private void handleGain() {
     view.printMessage("Please enter the ticker of the stock that you would like to know about:");
     String ticker = getTickerFromUser();
+    if (ticker.equals(EXIT_KEYWORD)) return;
 
     view.printMessage("Please enter the starting date (inclusive) in the format MM/DD/YYYY:");
     LocalDate startDate = getDateFromUser();
@@ -110,6 +114,7 @@ public class BasicStockController implements StockController {
   private void handleAverage() {
     view.printMessage("Please enter the ticker of the stock that you would like to know about:");
     String ticker = getTickerFromUser();
+    if (ticker.equals(EXIT_KEYWORD)) return;
 
     view.printMessage("Please enter the ending date in the format MM/DD/YYYY:");
     LocalDate endDate = getDateFromUser();
@@ -122,7 +127,18 @@ public class BasicStockController implements StockController {
   }
 
   private void handleCrossover() {
+    view.printMessage("Please enter the ticker of the stock that you would like to know about:");
+    String ticker = getTickerFromUser();
+    if (ticker.equals(EXIT_KEYWORD)) return;
 
+    view.printMessage("Please enter the ending date in the format MM/DD/YYYY:");
+    LocalDate endDate = getDateFromUser();
+
+    view.printMessage("Please enter the number of days.");
+    int days = getPositiveFromUser(Integer.MAX_VALUE);
+
+    var crossOvers = model.getCrossover(endDate, days, ticker);
+    view.printXDayCrossovers(ticker, endDate, days, crossOvers);
   }
 
   private void handleViewPortfoliosState() {
@@ -346,8 +362,9 @@ public class BasicStockController implements StockController {
   }
 
   public static void main(String[] args) {
+
     StockView view = new BasicStockView(System.out);
-    StockModel model = new BasicStockModel();
+    StockModel model = new BasicStockModel(new CSVDataSource("res/"));
     StockController controller = new BasicStockController(view, model, System.in);
     controller.run();
   }

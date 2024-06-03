@@ -1,5 +1,6 @@
 package stock.model;
 
+import java.io.IOException;
 import java.time.LocalDate;
 
 /**
@@ -13,8 +14,10 @@ public interface DataSource {
    * @param date the date to get the price at.
    * @param ticker the ticker of the stock.
    * @return the price of a certain date.
+   *
+   * @throws IOException if an I/O error occurs during data fetching.
    */
-  double getClosingPrice(LocalDate date, String ticker);
+  double getClosingPrice(LocalDate date, String ticker) throws IOException;
 
   /**
    * Determines whether the data source contains a log of the stock at a certain date (If it

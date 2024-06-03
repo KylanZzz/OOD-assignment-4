@@ -1,5 +1,6 @@
 package stock.model;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -8,31 +9,36 @@ import java.util.Map;
 
 public class BasicStockModel implements StockModel{
   private DataSource dataSource;
-  private HashMap<String, List<String>> portfolios;
+  private Map<String, List<String>> portfolios;
 
   private final List<String> CONTENT = List.of("Calculate portfolio value" , "Add stock to portfolio", "Add stock to portfolio");
 
+  public BasicStockModel(DataSource ds)  {
+    this.dataSource = ds;
+    this.portfolios = new HashMap<>();
+  }
 
   @Override
-  public double getGainOverTime(LocalDate startDate, LocalDate endDate, String ticker) {
+  public double getGainOverTime(LocalDate startDate, LocalDate endDate, String ticker) throws IOException {
     double total = 0;
     LocalDate currentDate = startDate;
     while (!currentDate.isAfter(endDate)) {
       total += dataSource.getClosingPrice(currentDate, ticker);
       currentDate = currentDate.plusDays(1);
     }
-
+    System.out.println(total);
     return total;
   }
 
   @Override
-  public double getMovingDayAverage(LocalDate endDate, int days, String ticker) {
+  public double getMovingDayAverage(LocalDate endDate, int days, String ticker) throws IOException {
     //might occur error if the data is insufficient
     double total = 0;
+    int counter = 0;
     LocalDate date = endDate;
 
     int count = 0;
-    while (count < days) {
+    while (count < days && !(date.equals(LocalDate.of(1,1,1)))) {
       if (dataSource.stockExistsAtDate(date, ticker)) {
         total += dataSource.getClosingPrice(date, ticker);
         count++;
@@ -44,7 +50,7 @@ public class BasicStockModel implements StockModel{
   }
 
   @Override
-  public List<LocalDate> getCrossover(LocalDate endDate, int days, String ticker) {
+  public List<LocalDate> getCrossover(LocalDate endDate, int days, String ticker) throws IOException {
     double movingDayAvg = getMovingDayAverage(endDate, days, ticker);
     List<LocalDate> crossOvers = new ArrayList<>();
     LocalDate date = endDate;
@@ -92,7 +98,7 @@ public class BasicStockModel implements StockModel{
   }
 
   @Override
-  public double getPortfolioValue(String name, LocalDate date) {
+  public double getPortfolioValue(String name, LocalDate date) throws IOException {
     List<String> stocks = new ArrayList<>(portfolios.get(name));
     double value = 0;
     for (int i = 0; i < stocks.size(); i++) {

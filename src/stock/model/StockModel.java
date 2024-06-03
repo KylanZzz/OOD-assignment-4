@@ -1,5 +1,6 @@
 package stock.model;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -49,8 +50,10 @@ public interface StockModel {
    * @param ticker the ticker of the Stock.
    * @return the amount of the cost that been gain/lost in x-day (positive for a gain and
    *         negative for a loss)
+   *
+   * @throws IOException if an I/O error occurs during data fetching.
    */
-  double getGainOverTime(LocalDate startDate, LocalDate endDate, String ticker);
+  double getGainOverTime(LocalDate startDate, LocalDate endDate, String ticker) throws IOException;
 
   /**
    * Get the x-day moving average for a stock.
@@ -61,8 +64,10 @@ public interface StockModel {
    * @param days the number of days to calculate the average.
    * @param ticker the ticker of the Stock.
    * @return the x-day moving average.
+   *
+   * @throws IOException if an I/O error occurs during data fetching.
    */
-  double getMovingDayAverage(LocalDate endDate, int days, String ticker);
+  double getMovingDayAverage(LocalDate endDate, int days, String ticker) throws IOException;
 
   /**
    *
@@ -70,8 +75,10 @@ public interface StockModel {
    * @param days the amount of period to examine the crossover.
    * @param ticker the ticker of the stock.
    * @return which days are x-day crossovers
+   *
+   * @throws IOException if an I/O error occurs during data fetching.
    */
-  public List<LocalDate> getCrossover(LocalDate endDate, int days, String ticker);
+  public List<LocalDate> getCrossover(LocalDate endDate, int days, String ticker) throws IOException;
 
   /**
    * Create a new stock portfolio.
@@ -116,8 +123,10 @@ public interface StockModel {
    * @param name the name of the portfolio.
    * @param date the date to get value at.
    * @return the value of the portfolio.
+   *
+   * @throws IOException if an I/O error occurs during data fetching.
    */
-  double getPortfolioValue(String name, LocalDate date);
+  double getPortfolioValue(String name, LocalDate date) throws IOException;
 
   /**
    * Add a new stock to a certain portfolio.

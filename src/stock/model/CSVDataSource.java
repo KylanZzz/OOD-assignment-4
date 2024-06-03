@@ -19,7 +19,7 @@ public class CSVDataSource implements DataSource {
     public CSVDataSource(String directoryPath) {
         loadAllStockData(directoryPath);
     }
-
+    // check the format of the csv
     private void loadAllStockData(String directoryPath) {
         try (Stream<Path> paths = Files.walk(Paths.get(directoryPath))) {
             paths.filter(Files::isRegularFile)
@@ -28,31 +28,43 @@ public class CSVDataSource implements DataSource {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
     }
 
     private void loadStockDataFromCSV(Path filePath) {
         String ticker = filePath.getFileName().toString().replace(".csv", "");
+        stocks.put(ticker, new HashMap<>());
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath.toFile()))) {
             String line = reader.readLine();
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(",");
                 LocalDate date = LocalDate.parse(parts[0], DateTimeFormatter.ISO_LOCAL_DATE);
                 double closePrice = Double.parseDouble(parts[4]);
-                stocks.computeIfAbsent(ticker, n -> new HashMap<>()).put(date, closePrice);
+                stocks.get(ticker).put(date,closePrice);
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-
     @Override
     public double getClosingPrice(LocalDate date, String ticker) {
-        return stocks.get(ticker).get(date);
+        if (!stockInDataSource(ticker)) {
+            throw new IllegalArgumentException("Stock is not in Data Source.");
+        } else if (!stockExistsAtDate(date, ticker)) {
+            return 0;
+        } else {
+            return stocks.get(ticker).get(date);
+        }
     }
 
+    // Assumes that the stock exists in the function
+    // Throws illegalargumentexception of stock doesn't exist
     @Override
     public boolean stockExistsAtDate(LocalDate date, String ticker) {
+        if (!stockInDataSource(ticker)) {
+            throw new IllegalArgumentException("Stock is not in Data Source.");
+        }
         return stocks.get(ticker).containsKey(date);
     }
 

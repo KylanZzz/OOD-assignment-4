@@ -383,7 +383,7 @@ public class BasicStockController implements StockController {
   public static void main(String[] args) {
 
     StockView view = new BasicStockView(System.out);
-    StockModel model = new BasicStockModel(new CSVDataSource("res/"));
+    StockModel model = new BasicStockModel(new CSVDataSource("res/CSVData"));
     StockController controller = new BasicStockController(view, model, System.in);
     controller.run();
   }

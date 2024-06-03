@@ -1,6 +1,5 @@
 package stock.model;
 
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -14,13 +13,20 @@ import java.io.BufferedReader;
 import java.util.stream.Stream;
 
 public class CSVDataSource implements DataSource {
-    private final Map<String, Map<LocalDate, Double>> stocks = new HashMap<>();
+    private final Map<String, Map<LocalDate, Double>> stocks;
 
     public CSVDataSource(String directoryPath) {
+        stocks = new HashMap<>();
         loadAllStockData(directoryPath);
+
     }
+
+    public CSVDataSource() {
+        stocks = new HashMap<>();
+    }
+
     // check the format of the csv
-    private void loadAllStockData(String directoryPath) {
+    protected void loadAllStockData(String directoryPath) {
         try (Stream<Path> paths = Files.walk(Paths.get(directoryPath))) {
             paths.filter(Files::isRegularFile)
                     .filter(path -> path.toString().endsWith(".csv"))
@@ -31,7 +37,7 @@ public class CSVDataSource implements DataSource {
 
     }
 
-    private void loadStockDataFromCSV(Path filePath) {
+    protected void loadStockDataFromCSV(Path filePath) {
         String ticker = filePath.getFileName().toString().replace(".csv", "");
         stocks.put(ticker, new HashMap<>());
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath.toFile()))) {

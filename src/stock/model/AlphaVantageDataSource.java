@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -16,9 +17,8 @@ public class AlphaVantageDataSource extends CSVDataSource {
   private static final String API_KEY = "W0M1JOKC82EZEQA8";
   //  3FKL0E8WUDB1EOMS
 
-  private String Stockticker = "";
-
   private Set<String> tickerList = new HashSet<>();
+  String folderName = "res/APIData";
 
   private boolean checkInitialization = false;
 
@@ -28,25 +28,13 @@ public class AlphaVantageDataSource extends CSVDataSource {
   }
 
   private void init() throws IOException {
-    File folder = new File("res/APIData");
+    File folder = new File(folderName);
     deleteFolder(folder);
     folder.mkdirs();
-
-//    try {
-//      generateTickerList(new File("res/stocksData"));
-//      getTickerList();
-//      generateStockCSV(folder, Stockticker);
-//    }
-//    catch (IOException e) {
-//      throw new IOException("The API contains issue, please try again later");
-//    }
     generateTickerList(new File("res/stocksData"));
-    getTickerList();
-    generateStockCSV(folder, Stockticker);
-    loadAllStockData("res/APIData");
   }
 
-  public void generateTickerList(File directory) throws IOException {
+  private void generateTickerList(File directory) throws IOException {
     File[] files = directory.listFiles((dir, name) -> name.endsWith(".csv"));  // Filter for CSV files
     if (files != null) {
       for (File file : files) {
@@ -62,7 +50,8 @@ public class AlphaVantageDataSource extends CSVDataSource {
         }
       }
     } else {
-      throw new IOException("No CSV files found or access denied in directory: " + directory.getPath());
+      throw new IOException("Error: List of tickers was unsuccessfully loaded at " +
+              directory.getPath() + " and the CSV file is formatted properly.");
     }
   }
 
@@ -83,8 +72,8 @@ public class AlphaVantageDataSource extends CSVDataSource {
 
       // Opening a stream from the URL
       try (InputStream in = url.openStream();
-           BufferedInputStream bis = new BufferedInputStream(in);
-           FileOutputStream fos = new FileOutputStream(new File(folder, ticker + ".csv"))) {
+        BufferedInputStream bis = new BufferedInputStream(in);
+        FileOutputStream fos = new FileOutputStream(new File(folder, ticker + ".csv"))) {
 
         byte[] dataBuffer = new byte[1024];
         int bytesRead;
@@ -102,14 +91,42 @@ public class AlphaVantageDataSource extends CSVDataSource {
   }
 
   @Override
-  public boolean stockInDataSource(String ticker) throws IOException {
-    Stockticker = ticker;
+  public boolean stockExistsAtDate(LocalDate date, String ticker) throws IOException {
     if (!checkInitialization) {
-//      try {
-//        init();
-//      } catch (IOException e) {
-//        throw new RuntimeException(e);
-//      }
+      init();
+      checkInitialization = true;
+    }
+
+    // Invalid ticker
+    if (!stockInDataSource(ticker)) {
+      throw new IllegalArgumentException("Invalid ticker: Stock is not in data source.");
+    }
+
+    // Stock has not been read yet
+    if (!stocks.containsKey(ticker)) {
+      generateStockCSV(new File(folderName), ticker);
+      loadAllStockData("res/APIData");
+    }
+
+    return stocks.get(ticker).containsKey(date);
+  }
+
+  @Override
+  public double getClosingPrice(LocalDate date, String ticker) throws IOException {
+    if (!checkInitialization) {
+      init();
+      checkInitialization = true;
+    }
+    if (!stockExistsAtDate(date, ticker)) {
+      return 0;
+    } else {
+      return stocks.get(ticker).get(date);
+    }
+  }
+
+  @Override
+  public boolean stockInDataSource(String ticker) throws IOException {
+    if (!checkInitialization) {
       init();
       checkInitialization = true;
     }

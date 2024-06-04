@@ -13,8 +13,6 @@ public class BasicStockModel implements StockModel {
   private DataSource dataSource;
   private Map<String, Map<String, Integer>> portfolios;
 
-  private boolean checkInitialization = false;
-
   private final List<String> CONTENT = List.of("Calculate portfolio value" , "Add stock to portfolio", "Add stock to portfolio");
 
   public BasicStockModel(DataSource ds)  {
@@ -22,7 +20,6 @@ public class BasicStockModel implements StockModel {
     this.portfolios = new HashMap<>();
   }
 
-  // this no work
   @Override
   public double getGainOverTime(LocalDate startDate, LocalDate endDate, String ticker) throws IOException {
     double total = 0;
@@ -144,7 +141,6 @@ public class BasicStockModel implements StockModel {
   public void addStockToPortfolio(String name, String ticker, int quantity) {
     if (portfolios.get(name).containsKey(ticker)) {
       int newQuantity = portfolios.get(name).get(ticker) + quantity;
-//      portfolios.get(name).remove(ticker);
       portfolios.get(name).put(ticker, newQuantity);
     } else {
       portfolios.get(name).put(ticker, quantity);

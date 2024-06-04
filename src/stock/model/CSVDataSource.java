@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class CSVDataSource implements DataSource {
-    private Map<String, Map<LocalDate, Double>> stocks;
+    protected Map<String, Map<LocalDate, Double>> stocks;
     private String directoryPath;
 
     public CSVDataSource(String directoryPath) {
@@ -87,8 +87,9 @@ public class CSVDataSource implements DataSource {
     // Throws illegalargumentexception of stock doesn't exist
     @Override
     public boolean stockExistsAtDate(LocalDate date, String ticker) throws IOException {
+        // Invalid ticker
         if (!stockInDataSource(ticker)) {
-            throw new IllegalArgumentException("Stock is not in Data Source.");
+            throw new IllegalArgumentException("Invalid ticker: Stock is not in data source.");
         }
         return stocks.get(ticker).containsKey(date);
     }

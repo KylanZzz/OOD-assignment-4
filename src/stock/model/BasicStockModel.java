@@ -28,17 +28,35 @@ public class BasicStockModel implements StockModel {
     double total = 0;
     LocalDate currentDate = startDate;
 
-    while (!currentDate.isAfter(endDate.minusDays(1))) {
-      double todayPrice = dataSource.getClosingPrice(currentDate, ticker);
-      double nextDayPrice = dataSource.getClosingPrice(currentDate.plusDays(1), ticker);
-
-      double dailyChange = nextDayPrice - todayPrice;
-      total += dailyChange;
+    while (!dataSource.stockExistsAtDate(currentDate, ticker) && !currentDate.isAfter(endDate)) {
       currentDate = currentDate.plusDays(1);
     }
+    if (currentDate.isAfter(endDate)) {
+      return 0;
+    }
+
+    LocalDate nextDate = currentDate.plusDays(1);
+
+    while (!currentDate.isAfter(endDate)) {
+      if (dataSource.stockExistsAtDate(currentDate, ticker)) {
+        double todayPrice = dataSource.getClosingPrice(currentDate, ticker);
+        while (!dataSource.stockExistsAtDate(nextDate, ticker) && !nextDate.isAfter(endDate)) {
+          nextDate = nextDate.plusDays(1);
+        }
+        if (!nextDate.isAfter(endDate)) {
+          double nextDayPrice = dataSource.getClosingPrice(nextDate, ticker);
+          total += nextDayPrice - todayPrice;
+        }
+        currentDate = nextDate;
+        nextDate = nextDate.plusDays(1);
+      } else {
+        currentDate = currentDate.plusDays(1);
+        nextDate = currentDate.plusDays(1);
+      }
+    }
+
     return total;
   }
-
 
   @Override
   public double getMovingDayAverage(LocalDate endDate, int days, String ticker) throws IOException {

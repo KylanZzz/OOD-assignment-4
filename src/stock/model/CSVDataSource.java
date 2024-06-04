@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class CSVDataSource implements DataSource {
-    private Map<String, Map<LocalDate, Double>> stocks = new HashMap<>();
+    private Map<String, Map<LocalDate, Double>> stocks;
     private String directoryPath;
 
     public CSVDataSource(String directoryPath) {

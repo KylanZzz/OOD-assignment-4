@@ -21,16 +21,13 @@ public class RenamePortfolio extends PortfolioCommand {
 
     view.printMessage("What would you like to rename this portfolio to?");
     String newName = scanner.nextLine().toUpperCase();
-    if (!model.getPortfolios().contains(oldName)) {
-      view.printMessage("A portfolio with that name does not exist!");
-      return;
-    }
 
     if (model.getPortfolios().contains(newName)) {
       view.printMessage("A portfolio with that name already exists!");
-    } else {
-      model.renamePortfolio(oldName, newName);
-      view.printMessage(String.format("Successfully renamed portfolio %s to %s.", oldName, newName));
+      return;
     }
+
+    model.renamePortfolio(oldName, newName);
+    view.printMessage(String.format("Successfully renamed portfolio %s to %s.", oldName, newName));
   }
 }

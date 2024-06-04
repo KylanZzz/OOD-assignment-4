@@ -1,5 +1,6 @@
 package stock.controller.commands;
 
+import java.io.IOException;
 import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.util.InputMismatchException;
@@ -43,6 +44,21 @@ public abstract class Command {
     }
 
     return choice;
+  }
+
+  protected final String getTickerFromUser() {
+    while (true) {
+      String ticker = scanner.nextLine().toUpperCase();
+      try {
+        if (model.stockExists(ticker)) {
+          return ticker;
+        } else {
+          view.printMessage("That stock does not exist! Please try again.");
+        }
+      } catch (IOException e) {
+        view.printMessage("Error while fetching data: " + e.getMessage());
+      }
+    }
   }
 
   protected final LocalDate getDateFromUser() {

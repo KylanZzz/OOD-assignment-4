@@ -3,13 +3,15 @@ package stock.model;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class BasicStockModel implements StockModel {
   private DataSource dataSource;
-  private Map<String, Map<List<String>, int>> portfolios;
+  private Map<String, Map<String, Integer>> portfolios;
 
   private boolean checkInitialization = false;
 
@@ -76,7 +78,7 @@ public class BasicStockModel implements StockModel {
 
   @Override
   public void createNewPortfolio(String name) {
-    portfolios.put(name, new ArrayList<>());
+    portfolios.put(name, new HashMap<String, Integer>());
   }
 
   @Override
@@ -98,7 +100,7 @@ public class BasicStockModel implements StockModel {
   @Override
   public List<String> getPortfolios() {
     List<String> portfoliosList = new ArrayList<>();
-    for (Map.Entry<String, List<String>> entry : portfolios.entrySet()) {
+    for (Map.Entry<String, Map<String, Integer>> entry : portfolios.entrySet()) {
       portfoliosList.add(entry.getKey());
     }
     return portfoliosList;
@@ -107,7 +109,7 @@ public class BasicStockModel implements StockModel {
  // multi
   @Override
   public double getPortfolioValue(String name, LocalDate date) throws IOException {
-    List<String> stocks = new ArrayList<>(portfolios.get(name));
+    List<String> stocks = new ArrayList<>(portfolios.get(name).keySet());
     double value = 0;
     for (int i = 0; i < stocks.size(); i++) {
       LocalDate dates = date;
@@ -121,8 +123,13 @@ public class BasicStockModel implements StockModel {
 
   @Override
   public void addStockToPortfolio(String name, String ticker, int quantity) {
-    portfolios.get(name).add(ticker);
-    portfolios.get(name).get(ticker);
+    if (portfolios.get(name).containsKey(ticker)) {
+      int newQuantity = portfolios.get(name).get(ticker) + quantity;
+      portfolios.get(name).remove(ticker);
+      portfolios.get(name).put(ticker, newQuantity);
+    }
+
+    portfolios.get(name).put(ticker, quantity);
   }
 
   @Override

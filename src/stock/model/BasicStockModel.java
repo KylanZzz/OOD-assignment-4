@@ -7,9 +7,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class BasicStockModel implements StockModel{
+public class BasicStockModel implements StockModel {
   private DataSource dataSource;
-  private Map<String, List<String>> portfolios;
+  private Map<String, Map<List<String>, int>> portfolios;
 
   private boolean checkInitialization = false;
 
@@ -91,7 +91,7 @@ public class BasicStockModel implements StockModel{
   }
 
   @Override
-  public List<String> getPortfolioContents(String name) {
+   public Map<String, Integer> getPortfolioContents(String name) {
     return portfolios.get(name);
   }
 
@@ -104,6 +104,7 @@ public class BasicStockModel implements StockModel{
     return portfoliosList;
   }
 
+ // multi
   @Override
   public double getPortfolioValue(String name, LocalDate date) throws IOException {
     List<String> stocks = new ArrayList<>(portfolios.get(name));
@@ -119,8 +120,9 @@ public class BasicStockModel implements StockModel{
   }
 
   @Override
-  public void addStockToPortfolio(String name, String ticker) {
+  public void addStockToPortfolio(String name, String ticker, int quantity) {
     portfolios.get(name).add(ticker);
+    portfolios.get(name).get(ticker);
   }
 
   @Override

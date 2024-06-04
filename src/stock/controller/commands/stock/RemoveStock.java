@@ -1,5 +1,6 @@
 package stock.controller.commands.stock;
 
+import java.io.IOException;
 import java.util.Scanner;
 
 import stock.model.StockModel;
@@ -15,9 +16,13 @@ public class RemoveStock extends StockCommand {
     view.printMessage(String.format("Please enter the ticker of the stock " +
             "that you would like to remove from portfolio %s.", portfolio));
     String ticker = scanner.nextLine().toUpperCase();
-    if (!model.stockExists(ticker)) {
-      view.printMessage("That stock does not exist!");
-      return;
+    try {
+      if (!model.stockExists(ticker)) {
+        view.printMessage("That stock does not exist!");
+        return;
+      }
+    } catch (IOException e) {
+      view.printMessage("Error while fetching data: " + e.getMessage());
     }
 
     if (!model.getPortfolioContents(portfolio).contains(ticker)) {

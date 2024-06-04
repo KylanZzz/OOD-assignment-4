@@ -2,6 +2,7 @@ package stock.model;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.Map;
 import java.util.List;
 
 public interface StockModel {
@@ -78,7 +79,7 @@ public interface StockModel {
    *
    * @throws IOException if an I/O error occurs during data fetching.
    */
-  public List<LocalDate> getCrossover(LocalDate endDate, int days, String ticker) throws IOException;
+  List<LocalDate> getCrossover(LocalDate endDate, int days, String ticker) throws IOException;
 
   /**
    * Create a new stock portfolio.
@@ -103,17 +104,18 @@ public interface StockModel {
   void renamePortfolio(String oldName, String newName);
 
   /**
-   * Get the stocks in a portfolio.
+   * Get the stocks and the corresponding shares in a portfolio.
    *
    * @param name the name of the portfolio.
-   * @return the list of options within the contents.
+   * @return a map where the keys are the tickers of all the stocks and values are the number of
+   *     shares of that stock in the portfolio.
    */
-  List<String> getPortfolioContents(String name);
+  Map<String, Integer> getPortfolioContents(String name);
 
   /**
    * A list of portfolios created by the user.
    *
-   * @return a list of portfolios
+   * @return a list of all portfolios names.
    */
   List<String> getPortfolios();
 
@@ -131,9 +133,10 @@ public interface StockModel {
   /**
    * Add a new stock to a certain portfolio.
    * @param name the name of the portfolio.
+   * @param shares the number of shares of this stock.
    * @param ticker the ticker of the stock.
    */
-  void addStockToPortfolio(String name, String ticker);
+  void addStockToPortfolio(String name, String ticker, int shares);
 
   /**
    * Remove a stock from a certain portfolio.

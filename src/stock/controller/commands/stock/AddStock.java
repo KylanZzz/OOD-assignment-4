@@ -1,5 +1,6 @@
 package stock.controller.commands.stock;
 
+import java.io.IOException;
 import java.util.Scanner;
 
 import stock.model.StockModel;
@@ -15,17 +16,32 @@ public class AddStock extends StockCommand {
     view.printMessage(String.format("Please enter the ticker of the stock " +
             "that you would like to add to portfolio %s.", portfolio));
     String ticker = scanner.nextLine().toUpperCase();
-    if (!model.stockExists(ticker)) {
-      view.printMessage("That stock does not exist!");
+    try {
+      if (!model.stockExists(ticker)) {
+        view.printMessage("That stock does not exist!");
+        return;
+      }
+    } catch (IOException e) {
+      view.printMessage("Error while fetching data: " + e.getMessage());
+    }
+
+    view.printMessage("Please enter the number of shares you would like to " +
+            "purchase (you cannot buy fractional stocks): ");
+    int shares = scanner.nextInt();
+    if (shares == 0) {
+      view.printMessage("Cannot purchase 0 shares of a stock.");
+      return;
+    } if (shares < 0) {
+      view.printMessage("Cannot purchase negative number of stocks.");
       return;
     }
 
-    if (model.getPortfolioContents(portfolio).contains(ticker)) {
-      view.printMessage("That stock is already in the portfolio!");
+    if (model.getPortfolioContents(portfolio).containsKey(ticker)) {
+      view.printMessage("This stock already exists in this portfolio.");
       return;
     }
 
-    model.addStockToPortfolio(portfolio, ticker);
+    model.addStockToPortfolio(portfolio, ticker, shares);
     view.printMessage(String.format("Successfully added stock %s to portfolio %s.", ticker,
             portfolio));
   }

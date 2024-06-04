@@ -23,9 +23,9 @@ public class AlphaVantageDataSource extends CSVDataSource {
   private boolean checkInitialization = false;
 
   // throw IOException
-//  public AlphaVantageDataSource() {
-//    super();
-//  }
+  public AlphaVantageDataSource() {
+    super();
+  }
 
   private void init() throws IOException {
     File folder = new File("res/APIData");
@@ -43,7 +43,7 @@ public class AlphaVantageDataSource extends CSVDataSource {
     generateTickerList(new File("res/stocksData"));
     getTickerList();
     generateStockCSV(folder, Stockticker);
-//    loadAllStockData("res/APIData");
+    loadAllStockData("res/APIData");
   }
 
   public void generateTickerList(File directory) throws IOException {
@@ -91,6 +91,7 @@ public class AlphaVantageDataSource extends CSVDataSource {
         while ((bytesRead = bis.read(dataBuffer, 0, 1024)) != -1) {
           fos.write(dataBuffer, 0, bytesRead);
         }
+        fos.flush();
       }
     } catch (MalformedURLException e) {
       throw new IOException("The URL is malformed, please check the API endpoint and parameters: " + e.getMessage(), e);

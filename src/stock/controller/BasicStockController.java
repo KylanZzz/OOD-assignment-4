@@ -43,15 +43,15 @@ public class BasicStockController implements StockController {
   public void run() {
     String choice = "";
 
-    while (!choice.equals(BasicMenuOptions.EXIT_KEYWORD)) {
+    while (!choice.equals(BasicMenuOptions.exitKeyword())) {
       view.printMainMenu();
       choice = scanner.nextLine();
 
       if (commands.containsKey(choice)) {
         commands.get(choice).apply();
-      } else {
+      } else if (!choice.equals(BasicMenuOptions.exitKeyword())){
         view.printMessage("Invalid input. Please enter a valid choice (a number from 1 through " +
-                + BasicMenuOptions.mainMenu().size() + ") or " + BasicMenuOptions.EXIT_KEYWORD
+                + BasicMenuOptions.mainMenu().size() + ") or " + BasicMenuOptions.exitKeyword()
         + "to exit the application.");
       }
     }

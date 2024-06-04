@@ -16,6 +16,7 @@ public class CreatePortfolio extends PortfolioCommand{
     String name = scanner.nextLine().toUpperCase();
     if (model.getPortfolios().contains(name)) {
       view.printMessage("A portfolio with that name already exists!");
+      return;
     }
 
     model.createNewPortfolio(name);

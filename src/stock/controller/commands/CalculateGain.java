@@ -28,6 +28,10 @@ public class CalculateGain extends Command {
       view.printMessage("Please enter the ending date (inclusive) in the format MM/DD/YYYY:");
       LocalDate endDate = getDateFromUser();
 
+      if (!endDate.isAfter(startDate)) {
+        view.printMessage("The end date must be after the start date.");
+        return;
+      }
 
       double gain = model.getGainOverTime(startDate, endDate, ticker);
       view.printStockGain(ticker, startDate, endDate, gain);

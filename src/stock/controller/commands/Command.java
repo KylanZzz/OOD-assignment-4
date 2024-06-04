@@ -22,16 +22,6 @@ public abstract class Command {
 
   // Some helper functions below
 
-//  protected final String getPortfolioName() {
-//    String output = scanner.nextLine().toUpperCase();
-//    while (!model.getPortfolios().contains(output) && !output.equals(EXIT_KEYWORD)) {
-//      view.printMessage("A portfolio with that name does not exist! Please try again.");
-//      output = scanner.nextLine().toUpperCase();
-//    }
-//
-//    return output;
-//  }
-
   protected final int getPositiveFromUser(int max) {
     int choice = -1;
     while (choice == -1) {

@@ -3,11 +3,13 @@ package stock.model;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class MockDataSource implements DataSource {
 
   private Map<LocalDate, Boolean> stockExistence = new HashMap<>();
+  private List<String> tickers = List.of("A", "GOOG", "AMZN");
   private Map<LocalDate, Double> closingPrices = new HashMap<>();
 
   public void setStockExistsAtDate(LocalDate date, boolean exists) {
@@ -20,17 +22,27 @@ public class MockDataSource implements DataSource {
 
   @Override
   public double getClosingPrice(LocalDate date, String ticker) throws IOException {
+    if (!tickers.contains(ticker)) {
+      throw new IOException("There is no such ticker");
+    }
     return closingPrices.getOrDefault(date, 0.0);
   }
 
   @Override
   public boolean stockExistsAtDate(LocalDate date, String ticker) throws IOException {
+    if (!tickers.contains(ticker)) {
+      throw new IOException("There is no such ticker");
+    }
     return stockExistence.getOrDefault(date, false);
   }
 
   @Override
   public boolean stockInDataSource(String ticker) throws IOException {
     // For simplicity, assume the stock always exists in the data source
-    return true;
+    if (tickers.contains(ticker)) {
+      return true;
+    } else {
+      throw new IOException("There is no such ticker");
+    }
   }
 }

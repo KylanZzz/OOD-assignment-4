@@ -1,7 +1,5 @@
 package stock.model;
 
-import com.sun.jdi.LocalVariable;
-
 import org.junit.Before;
 import org.junit.Test;
 
@@ -10,7 +8,6 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
@@ -28,6 +25,22 @@ public class BasicStockModelTest {
 
   @Test
   public void testGetGainOverTime() throws IOException {
+    LocalDate startDate = LocalDate.of(2024, 05, 04);
+    LocalDate endDate = LocalDate.of(2024, 06, 04);
+    String ticker = "GOOG";
+
+    mockDataSource.setStockExistsAtDate(startDate, true);
+    mockDataSource.setStockExistsAtDate(endDate, true);
+    mockDataSource.setClosingPrice(startDate, 150.0);
+    mockDataSource.setClosingPrice(endDate, 160.0);
+
+    double gain = model.getGainOverTime(startDate, endDate, ticker);
+
+    assertEquals(10.0, gain, 0.001);
+  }
+
+  @Test(expected = IOException.class)
+  public void testGetGainOverTimeFailedWIthNoTicker() throws IOException {
     LocalDate startDate = LocalDate.of(2024, 05, 04);
     LocalDate endDate = LocalDate.of(2024, 06, 04);
     String ticker = "AAPL";
@@ -72,12 +85,24 @@ public class BasicStockModelTest {
     assertEquals(9.0, gain, 0.001);
 
   }
+  @Test(expected = IOException.class)
+  public void testGetGainOverTimeNoTicker() throws IOException {
+    LocalDate startDate = LocalDate.of(2024, 03, 04);
+    LocalDate endDate = LocalDate.of(2024, 04, 04);
+    String ticker = "AAPL";
+
+    mockDataSource.setStockExistsAtDate(startDate, false);
+    mockDataSource.setStockExistsAtDate(endDate, false);
+
+    double gain = model.getGainOverTime(startDate, endDate, ticker);
+  }
+
 
   @Test
   public void testGetGainOverTimeNoValidDate() throws IOException {
     LocalDate startDate = LocalDate.of(2024, 03, 04);
     LocalDate endDate = LocalDate.of(2024, 04, 04);
-    String ticker = "AAPL";
+    String ticker = "AMZN";
 
     mockDataSource.setStockExistsAtDate(startDate, false);
     mockDataSource.setStockExistsAtDate(endDate, false);
@@ -92,7 +117,7 @@ public class BasicStockModelTest {
   public void testGetGainOverTimeValidAtEnd() throws IOException {
     LocalDate startDate = LocalDate.of(2024, 05, 04);
     LocalDate endDate = LocalDate.of(2024, 06, 04);
-    String ticker = "AAPL";
+    String ticker = "AMZN";
 
     mockDataSource.setStockExistsAtDate(startDate, false);
     mockDataSource.setStockExistsAtDate(endDate, true);
@@ -112,7 +137,7 @@ public class BasicStockModelTest {
     LocalDate someday3 = LocalDate.of(2024, 05, 9);
 
     LocalDate endDate = LocalDate.of(2024, 06, 4);
-    String ticker = "AAPL";
+    String ticker = "GOOG";
 
     mockDataSource.setStockExistsAtDate(startDate, false);
     mockDataSource.setStockExistsAtDate(endDate, false);
@@ -152,6 +177,26 @@ public class BasicStockModelTest {
     double average = model.getMovingDayAverage(endDate, days, ticker);
 
     assertEquals(16.67, average, 0.1);
+  }
+
+  @Test(expected = IOException.class)
+  public void testGetMovingDayAveNoTicker() throws IOException {
+    LocalDate endDate = LocalDate.of(2022, 12, 03);
+    int days = 3;
+    String ticker = "Asad";
+
+    mockDataSource.setStockExistsAtDate(endDate, true);
+    mockDataSource.setClosingPrice(endDate, 10.0);
+
+    LocalDate first = endDate.minusDays(1);
+    mockDataSource.setStockExistsAtDate(first, true);
+    mockDataSource.setClosingPrice(first, 20.0);
+
+    LocalDate second = first.minusDays(1);
+    mockDataSource.setStockExistsAtDate(second, true);
+    mockDataSource.setClosingPrice(second, 20.0);
+
+    double average = model.getMovingDayAverage(endDate, days, ticker);
   }
 
   @Test
@@ -203,6 +248,28 @@ public class BasicStockModelTest {
     for (int i = 0; i < crossOvers.size(); i++) {
       assertEquals(crossOvers.get(i), actualCrossOvers.get(i));
     }
+  }
+
+  @Test(expected = IOException.class)
+  public void testGetCrossoverNoTicker() throws IOException {
+    LocalDate endDate = LocalDate.of(2022, 10, 3);
+    int days = 3;
+    String ticker = "A";
+
+    mockDataSource.setStockExistsAtDate(endDate, true);
+    mockDataSource.setClosingPrice(endDate, 10.0);
+
+    LocalDate first = endDate.minusDays(1);
+    mockDataSource.setStockExistsAtDate(first, true);
+    mockDataSource.setClosingPrice(first, 20.0);
+
+    LocalDate second = first.minusDays(1);
+    mockDataSource.setStockExistsAtDate(second, true);
+    mockDataSource.setClosingPrice(second, 20.0);
+
+    List<LocalDate> actualCrossOvers = model.getCrossover(endDate, days, ticker);
+
+
   }
 
   @Test
@@ -295,6 +362,28 @@ public class BasicStockModelTest {
   }
 
   @Test
+  public void getPortfolioValue() throws IOException {
+    model.createNewPortfolio("port");
+    model.addStockToPortfolio("port", "A", 60);
+    model.addStockToPortfolio("port", "GOOG", 500);
+    LocalDate date = LocalDate.of(2022, 12, 03);
+    mockDataSource.setClosingPrice(date, 2);
+    mockDataSource.setStockExistsAtDate(date,true);
+    assertEquals(1120.0, model.getPortfolioValue("port", date), 0.001);
+  }
+
+  @Test(expected = IOException.class)
+  public void getPortfolioValueNoTicker() throws IOException {
+    model.createNewPortfolio("port");
+    model.addStockToPortfolio("port", "AAPL", 60);
+    model.addStockToPortfolio("port", "GOOG", 500);
+    LocalDate date = LocalDate.of(2022, 12, 03);
+    mockDataSource.setClosingPrice(date, 2);
+    mockDataSource.setStockExistsAtDate(date,true);
+    assertEquals(1120.0, model.getPortfolioValue("port", date), 0.001);
+  }
+
+  @Test
   public void testAddStockToPortfolio() {
     Map<String, Integer> newMap = new HashMap<>();
     newMap.put("AAPL", 600);
@@ -343,9 +432,23 @@ public class BasicStockModelTest {
     model.removeStockFromPortfolio("Portfolio", "A");
   }
 
+  @Test(expected = IOException.class)
+  public void testStockExistsNoTicker() throws IOException {
+    String ticker = "AAPL";
+
+    LocalDate startDate = LocalDate.of(2024, 05, 04);
+    LocalDate endDate = LocalDate.of(2024, 06, 04);
+
+    mockDataSource.setStockExistsAtDate(startDate, false);
+    mockDataSource.setStockExistsAtDate(endDate, false);
+    mockDataSource.setClosingPrice(startDate, 150.0);
+    mockDataSource.setClosingPrice(endDate, 160.0);
+    assertEquals(true, model.stockExists(ticker));
+  }
+
   @Test
   public void testStockExists() throws IOException {
-    String ticker = "AAPL";
+    String ticker = "AMZN";
 
     LocalDate startDate = LocalDate.of(2024, 05, 04);
     LocalDate endDate = LocalDate.of(2024, 06, 04);
@@ -356,5 +459,5 @@ public class BasicStockModelTest {
     mockDataSource.setClosingPrice(endDate, 160.0);
     assertEquals(true, model.stockExists(ticker));
   }
-  
+
 }

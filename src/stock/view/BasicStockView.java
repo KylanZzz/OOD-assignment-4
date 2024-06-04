@@ -14,7 +14,8 @@ public class BasicStockView implements StockView {
   }
 
   private void printOptionsPrompt() {
-    out.println("Please type the number that corresponds with the choice you would like to pick.");
+    out.println("Please type the number that corresponds with the choice you would like to pick, " +
+            "or type " + BasicMenuOptions.EXIT_KEYWORD + " to return/exit");
   }
 
   private void printMenu(List<String> options) {
@@ -51,7 +52,7 @@ public class BasicStockView implements StockView {
 
   @Override
   public void printManagePortfolio(List<String> tickers, String name) {
-    out.printf("Here are all the stocks in the %s portfolio:\n\n", name);
+    out.printf("Here are all the stocks in the %s portfolio:", name);
     printList(tickers);
     out.println();
 

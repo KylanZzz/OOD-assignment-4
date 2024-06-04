@@ -9,26 +9,24 @@ import java.util.List;
  * menus entirely.
  */
 public class BasicMenuOptions {
+  public static final String EXIT_KEYWORD = "EXIT";
 
   public static List<String> mainMenu() {
     return List.of("Get the gain/loss of stock over period of time",
             "Get x-day moving average of a stock",
             "Get x-day crossovers for a stock",
-            "Manage portfolios",
-            "Exit");
+            "Manage portfolios");
   }
 
   public static List<String> viewPortfolios() {
     return List.of("Create new portfolio",
             "Delete portfolio",
-            "Rename portfolio",
-            "Go Back");
+            "Rename portfolio");
   }
 
   public static List<String> managePortfolio() {
     return List.of("Calculate portfolio value",
             "Add stock to portfolio",
-            "Remove stock from portfolio",
-            "Go Back");
+            "Remove stock from portfolio");
   }
 }

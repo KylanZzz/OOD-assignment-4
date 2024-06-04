@@ -20,11 +20,17 @@ public class BasicStockModel implements StockModel {
     this.portfolios = new HashMap<>();
   }
 
+
+  // Need to write a good documentation for this function
+  // Explain to the user how we calculate it
   @Override
   public double getGainOverTime(LocalDate startDate, LocalDate endDate, String ticker) throws IOException {
     double total = 0;
     LocalDate currentDate = startDate;
 
+    if (startDate.isAfter(endDate)) {
+      throw new IllegalArgumentException("Start date is after the end date");
+    }
     while (!dataSource.stockExistsAtDate(currentDate, ticker) && !currentDate.isAfter(endDate)) {
       currentDate = currentDate.plusDays(1);
     }
@@ -94,22 +100,34 @@ public class BasicStockModel implements StockModel {
 
   @Override
   public void createNewPortfolio(String name) {
+    if (portfolios.containsKey(name)) {
+      throw new IllegalArgumentException("The name of the portfolio exists");
+    }
     portfolios.put(name, new HashMap<String, Integer>());
   }
 
   @Override
   public void deletePortfolio(String name) {
+    if (!portfolios.containsKey(name)) {
+      throw new IllegalArgumentException("There is no such name");
+    }
     portfolios.remove(name);
   }
 
   @Override
   public void renamePortfolio(String oldName, String newName) {
+    if (!portfolios.containsKey(newName)) {
+      throw new IllegalArgumentException("There is no such name");
+    }
     portfolios.put(newName, portfolios.get(oldName));
     deletePortfolio(oldName);
   }
 
   @Override
    public Map<String, Integer> getPortfolioContents(String name) {
+    if (!portfolios.containsKey(name)) {
+      throw new IllegalArgumentException("There is no such name");
+    }
     return portfolios.get(name);
   }
 
@@ -139,6 +157,10 @@ public class BasicStockModel implements StockModel {
 
   @Override
   public void addStockToPortfolio(String name, String ticker, int quantity) {
+    if (!portfolios.containsKey(name)) {
+      throw new IllegalArgumentException("No such name");
+    }
+
     if (portfolios.get(name).containsKey(ticker)) {
       int newQuantity = portfolios.get(name).get(ticker) + quantity;
       portfolios.get(name).put(ticker, newQuantity);
@@ -149,6 +171,13 @@ public class BasicStockModel implements StockModel {
 
   @Override
   public void removeStockFromPortfolio(String name, String ticker) {
+    if (!portfolios.containsKey(name)) {
+      throw new IllegalArgumentException("No such name");
+    }
+
+    if (!portfolios.get(name).containsKey(ticker)) {
+      throw new IllegalArgumentException("No such ticker");
+    }
     portfolios.get(name).remove(ticker);
   }
 

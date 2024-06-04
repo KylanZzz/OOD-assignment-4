@@ -116,7 +116,7 @@ public class BasicStockModel implements StockModel {
       while (!dataSource.stockExistsAtDate(date, stocks.get(i))) {
         dates = dates.minusDays(1);
       }
-      value += dataSource.getClosingPrice(date, stocks.get(i));
+      value += dataSource.getClosingPrice(date, stocks.get(i)) * portfolios.get(name).get(stocks.get(i));
     }
     return value;
   }

@@ -132,7 +132,7 @@ public class BasicStockModel implements StockModel {
     double value = 0;
     for (int i = 0; i < stocks.size(); i++) {
       LocalDate currDate = date;
-      while (!dataSource.stockExistsAtDate(currDate, stocks.get(i))) {
+      while (!dataSource.stockExistsAtDate(currDate, stocks.get(i)) && !currDate.equals(LocalDate.of(1,1,1))) {
         currDate = currDate.minusDays(1);
       }
       value += dataSource.getClosingPrice(currDate, stocks.get(i)) * portfolios.get(name).get(stocks.get(i));
@@ -146,9 +146,9 @@ public class BasicStockModel implements StockModel {
       int newQuantity = portfolios.get(name).get(ticker) + quantity;
 //      portfolios.get(name).remove(ticker);
       portfolios.get(name).put(ticker, newQuantity);
+    } else {
+      portfolios.get(name).put(ticker, quantity);
     }
-
-    portfolios.get(name).put(ticker, quantity);
   }
 
   @Override

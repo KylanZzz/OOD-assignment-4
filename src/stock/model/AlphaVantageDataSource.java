@@ -91,7 +91,6 @@ public class AlphaVantageDataSource extends CSVDataSource {
         while ((bytesRead = bis.read(dataBuffer, 0, 1024)) != -1) {
           fos.write(dataBuffer, 0, bytesRead);
         }
-        fos.flush();
       }
     } catch (MalformedURLException e) {
       throw new IOException("The URL is malformed, please check the API endpoint and parameters: " + e.getMessage(), e);

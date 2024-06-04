@@ -41,16 +41,16 @@ public class ViewPortfolios extends Command {
   public void apply() {
     String choice = "";
 
-    while (!choice.equals(BasicMenuOptions.EXIT_KEYWORD)) {
+    while (!choice.equals(BasicMenuOptions.exitKeyword())) {
       initializeCommands();
       view.printViewPortfolios(model.getPortfolios());
       choice = scanner.nextLine();
 
       if (commands.containsKey(choice)) {
         commands.get(choice).apply();
-      } else if (!choice.equals(BasicMenuOptions.EXIT_KEYWORD)) {
+      } else if (!choice.equals(BasicMenuOptions.exitKeyword())) {
         view.printMessage("Invalid input. Please enter a valid choice (a number from 1 through "
-                + BasicMenuOptions.viewPortfolios().size() + ") or " + BasicMenuOptions.EXIT_KEYWORD
+                + BasicMenuOptions.viewPortfolios().size() + ") or " + BasicMenuOptions.exitKeyword()
                 + " to go back.");
       }
     }

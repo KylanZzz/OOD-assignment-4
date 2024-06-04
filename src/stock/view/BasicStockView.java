@@ -16,7 +16,7 @@ public class BasicStockView implements StockView {
 
   private void printOptionsPrompt() {
     out.println("Please type the number that corresponds with the choice you would like to pick, " +
-            "or type " + BasicMenuOptions.EXIT_KEYWORD + " to return/exit");
+            "or type " + BasicMenuOptions.exitKeyword() + " to return/exit");
   }
 
   private void printMenu(List<String> options) {

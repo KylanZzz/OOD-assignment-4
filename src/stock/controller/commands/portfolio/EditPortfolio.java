@@ -33,15 +33,15 @@ public class EditPortfolio extends PortfolioCommand {
     initializeCommands();
     String choice = "";
 
-    while (!choice.equals(BasicMenuOptions.EXIT_KEYWORD)) {
+    while (!choice.equals(BasicMenuOptions.exitKeyword())) {
       view.printManagePortfolio(model.getPortfolioContents(portfolioName), portfolioName);
       choice = scanner.nextLine();
 
       if (commands.containsKey(choice)) {
         commands.get(choice).apply();
-      } else if (!choice.equals(BasicMenuOptions.EXIT_KEYWORD)){
+      } else if (!choice.equals(BasicMenuOptions.exitKeyword())){
         view.printMessage("Invalid input. Please enter a valid choice (a number from 1 through "
-                + BasicMenuOptions.managePortfolio().size() + ") or " + BasicMenuOptions.EXIT_KEYWORD
+                + BasicMenuOptions.managePortfolio().size() + ") or " + BasicMenuOptions.exitKeyword()
                 + " to go back.");
       }
     }

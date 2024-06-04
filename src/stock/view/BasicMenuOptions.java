@@ -9,7 +9,9 @@ import java.util.List;
  * menus entirely.
  */
 public class BasicMenuOptions {
-  public static final String EXIT_KEYWORD = "EXIT";
+  public static String exitKeyword() {
+    return "EXIT";
+  }
 
   public static List<String> mainMenu() {
     return List.of("Get the gain/loss of stock over period of time",

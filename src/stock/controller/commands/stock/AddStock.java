@@ -15,15 +15,7 @@ public class AddStock extends StockCommand {
   public void apply() {
     view.printMessage(String.format("Please enter the ticker of the stock " +
             "that you would like to add to portfolio %s:", portfolio));
-    String ticker = scanner.nextLine().toUpperCase();
-    try {
-      if (!model.stockExists(ticker)) {
-        view.printMessage("That stock does not exist!");
-        return;
-      }
-    } catch (IOException e) {
-      view.printMessage("Error while fetching data: " + e.getMessage());
-    }
+    String ticker = getTickerFromUser();
 
     view.printMessage("Please enter the number of shares you would like to " +
             "purchase (you cannot buy fractional number of stocks): ");

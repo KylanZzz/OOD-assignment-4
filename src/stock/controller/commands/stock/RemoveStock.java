@@ -25,7 +25,7 @@ public class RemoveStock extends StockCommand {
       view.printMessage("Error while fetching data: " + e.getMessage());
     }
 
-    if (!model.getPortfolioContents(portfolio).contains(ticker)) {
+    if (!model.getPortfolioContents(portfolio).containsKey(ticker)) {
       view.printMessage("That stock is not in the portfolio.");
       return;
     }

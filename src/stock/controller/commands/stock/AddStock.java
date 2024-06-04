@@ -14,7 +14,7 @@ public class AddStock extends StockCommand {
   @Override
   public void apply() {
     view.printMessage(String.format("Please enter the ticker of the stock " +
-            "that you would like to add to portfolio %s.", portfolio));
+            "that you would like to add to portfolio %s:", portfolio));
     String ticker = scanner.nextLine().toUpperCase();
     try {
       if (!model.stockExists(ticker)) {
@@ -26,8 +26,9 @@ public class AddStock extends StockCommand {
     }
 
     view.printMessage("Please enter the number of shares you would like to " +
-            "purchase (you cannot buy fractional stocks): ");
+            "purchase (you cannot buy fractional number of stocks): ");
     int shares = scanner.nextInt();
+    scanner.nextLine();
     if (shares == 0) {
       view.printMessage("Cannot purchase 0 shares of a stock.");
       return;
@@ -37,12 +38,13 @@ public class AddStock extends StockCommand {
     }
 
     if (model.getPortfolioContents(portfolio).containsKey(ticker)) {
-      view.printMessage("This stock already exists in this portfolio.");
-      return;
+      model.addStockToPortfolio(portfolio, ticker, shares);
+      view.printMessage(String.format("Successfully purchased %d number of %s stocks in the %s " +
+              "portfolio.", shares, ticker, portfolio));
+    } else {
+      model.addStockToPortfolio(portfolio, ticker, shares);
+      view.printMessage(String.format("Successfully added stock %s to portfolio %s.", ticker, portfolio));
     }
 
-    model.addStockToPortfolio(portfolio, ticker, shares);
-    view.printMessage(String.format("Successfully added stock %s to portfolio %s.", ticker,
-            portfolio));
   }
 }

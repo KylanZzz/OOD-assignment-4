@@ -22,6 +22,7 @@ public class BasicStockModel implements StockModel {
     this.portfolios = new HashMap<>();
   }
 
+  // this no work
   @Override
   public double getGainOverTime(LocalDate startDate, LocalDate endDate, String ticker) throws IOException {
     double total = 0;
@@ -112,11 +113,11 @@ public class BasicStockModel implements StockModel {
     List<String> stocks = new ArrayList<>(portfolios.get(name).keySet());
     double value = 0;
     for (int i = 0; i < stocks.size(); i++) {
-      LocalDate dates = date;
-      while (!dataSource.stockExistsAtDate(date, stocks.get(i))) {
-        dates = dates.minusDays(1);
+      LocalDate currDate = date;
+      while (!dataSource.stockExistsAtDate(currDate, stocks.get(i))) {
+        currDate = currDate.minusDays(1);
       }
-      value += dataSource.getClosingPrice(date, stocks.get(i)) * portfolios.get(name).get(stocks.get(i));
+      value += dataSource.getClosingPrice(currDate, stocks.get(i)) * portfolios.get(name).get(stocks.get(i));
     }
     return value;
   }
@@ -125,7 +126,7 @@ public class BasicStockModel implements StockModel {
   public void addStockToPortfolio(String name, String ticker, int quantity) {
     if (portfolios.get(name).containsKey(ticker)) {
       int newQuantity = portfolios.get(name).get(ticker) + quantity;
-      portfolios.get(name).remove(ticker);
+//      portfolios.get(name).remove(ticker);
       portfolios.get(name).put(ticker, newQuantity);
     }
 

@@ -23,24 +23,27 @@ public class AlphaVantageDataSource extends CSVDataSource {
   private boolean checkInitialization = false;
 
   // throw IOException
-  public AlphaVantageDataSource() {
-    super();
-  }
+//  public AlphaVantageDataSource() {
+//    super();
+//  }
 
   private void init() throws IOException {
     File folder = new File("res/APIData");
     deleteFolder(folder);
     folder.mkdirs();
 
-    try {
-      generateTickerList(new File("res/stocksData"));
-      getTickerList();
-      generateStockCSV(folder, Stockticker);
-    }
-    catch (IOException e) {
-      throw new IOException("The API contains issue, please try again later");
-    }
-    loadAllStockData("res/APIData");
+//    try {
+//      generateTickerList(new File("res/stocksData"));
+//      getTickerList();
+//      generateStockCSV(folder, Stockticker);
+//    }
+//    catch (IOException e) {
+//      throw new IOException("The API contains issue, please try again later");
+//    }
+    generateTickerList(new File("res/stocksData"));
+    getTickerList();
+    generateStockCSV(folder, Stockticker);
+//    loadAllStockData("res/APIData");
   }
 
   public void generateTickerList(File directory) throws IOException {
@@ -99,14 +102,15 @@ public class AlphaVantageDataSource extends CSVDataSource {
   }
 
   @Override
-  public boolean stockInDataSource(String ticker) {
+  public boolean stockInDataSource(String ticker) throws IOException {
     Stockticker = ticker;
     if (!checkInitialization) {
-      try {
-        init();
-      } catch (IOException e) {
-        throw new RuntimeException(e);
-      }
+//      try {
+//        init();
+//      } catch (IOException e) {
+//        throw new RuntimeException(e);
+//      }
+      init();
       checkInitialization = true;
     }
     return tickerList.contains(ticker);

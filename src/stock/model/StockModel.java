@@ -131,7 +131,9 @@ public interface StockModel {
   double getPortfolioValue(String name, LocalDate date) throws IOException;
 
   /**
-   * Add a new stock to a certain portfolio.
+   * Add a new stock to a certain portfolio. If the stock is already in the portfolio, then add the
+   * specified number of shares of that stock to the portfolio.
+   *
    * @param name the name of the portfolio.
    * @param shares the number of shares of this stock.
    * @param ticker the ticker of the stock.
@@ -140,6 +142,7 @@ public interface StockModel {
 
   /**
    * Remove a stock from a certain portfolio.
+   *
    * @param name the name of the portfolio.
    * @param ticker the ticker of the stock.
    */

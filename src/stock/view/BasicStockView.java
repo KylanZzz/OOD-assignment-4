@@ -1,6 +1,7 @@
 package stock.view;
 
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.stream.Collectors;
 import java.io.PrintStream;
 import java.time.LocalDate;
@@ -25,7 +26,7 @@ public class BasicStockView implements StockView {
   }
 
   private void printList(List<String> list) {
-    for (String item: list) {
+    for (String item : list) {
       out.println(item);
     }
   }
@@ -51,9 +52,11 @@ public class BasicStockView implements StockView {
   }
 
   @Override
-  public void printManagePortfolio(List<String> tickers, String name) {
+  public void printManagePortfolio(Map<String, Integer> stocks, String name) {
     out.printf("Here are all the stocks in the %s portfolio:", name);
-    printList(tickers);
+    var list = stocks.keySet().stream().map(it -> String.format("%-30s %d", it, stocks.get(it)))
+            .collect(Collectors.toList());
+    printList(list);
     out.println();
 
     printOptionsPrompt();

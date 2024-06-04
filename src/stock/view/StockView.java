@@ -2,6 +2,7 @@ package stock.view;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 public interface StockView {
   void printWelcomeScreen();
@@ -12,7 +13,7 @@ public interface StockView {
 
   void printViewPortfolios(List<String> portfolios);
 
-  void printManagePortfolio(List<String> tickers, String name);
+  void printManagePortfolio(Map<String, Integer> stocks, String name);
 
   void printXDayCrossovers(String ticker, LocalDate date, int days, List<LocalDate> dates);
 

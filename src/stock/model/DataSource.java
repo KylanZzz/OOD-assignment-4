@@ -28,7 +28,7 @@ public interface DataSource {
    * @param ticker the ticker of the stock.
    * @return whether the date contains the stock price
    */
-  boolean stockExistsAtDate(LocalDate date, String ticker);
+  boolean stockExistsAtDate(LocalDate date, String ticker) throws IOException;
 
   /**
    * Determines whether a stock exists in the data source (This could either be because the stock
@@ -37,5 +37,5 @@ public interface DataSource {
    * @param ticker the ticker of the stock.
    * @return whether the stock exist sin the data source.
    */
-  boolean stockInDataSource(String ticker);
+  boolean stockInDataSource(String ticker) throws IOException;
 }

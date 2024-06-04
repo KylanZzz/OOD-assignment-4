@@ -11,6 +11,8 @@ public class BasicStockModel implements StockModel{
   private DataSource dataSource;
   private Map<String, List<String>> portfolios;
 
+  private boolean checkInitialization = false;
+
   private final List<String> CONTENT = List.of("Calculate portfolio value" , "Add stock to portfolio", "Add stock to portfolio");
 
   public BasicStockModel(DataSource ds)  {
@@ -107,6 +109,10 @@ public class BasicStockModel implements StockModel{
     List<String> stocks = new ArrayList<>(portfolios.get(name));
     double value = 0;
     for (int i = 0; i < stocks.size(); i++) {
+      LocalDate dates = date;
+      while (!dataSource.stockExistsAtDate(date, stocks.get(i))) {
+        dates = dates.minusDays(1);
+      }
       value += dataSource.getClosingPrice(date, stocks.get(i));
     }
     return value;
@@ -123,7 +129,7 @@ public class BasicStockModel implements StockModel{
   }
 
   @Override
-  public boolean stockExists(String ticker) {
+  public boolean stockExists(String ticker) throws IOException {
     return dataSource.stockInDataSource(ticker);
   }
 

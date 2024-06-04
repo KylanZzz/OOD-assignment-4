@@ -148,5 +148,5 @@ public interface StockModel {
    * @param ticker the ticker of the stock.
    * @return whether the stock exists.
    */
-  boolean stockExists(String ticker);
+  boolean stockExists(String ticker) throws IOException;
 }

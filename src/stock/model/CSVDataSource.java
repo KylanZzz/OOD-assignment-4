@@ -8,17 +8,20 @@ import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.io.BufferedReader;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public abstract class CSVDataSource implements DataSource {
-    private final Map<String, Map<LocalDate, Double>> stocks;
+public class CSVDataSource implements DataSource {
+    private Map<String, Map<LocalDate, Double>> stocks = new HashMap<>();
+    private String directoryPath;
 
     public CSVDataSource(String directoryPath) {
         stocks = new HashMap<>();
+        this.directoryPath = directoryPath;
         loadAllStockData(directoryPath);
-
     }
 
     public CSVDataSource() {
@@ -36,25 +39,41 @@ public abstract class CSVDataSource implements DataSource {
         }
 
     }
-
     protected void loadStockDataFromCSV(Path filePath) {
         String ticker = filePath.getFileName().toString().replace(".csv", "");
         stocks.put(ticker, new HashMap<>());
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath.toFile()))) {
             String line = reader.readLine();
+            int timeIndex = -1;
+            int closeIndex = -1;
+            String[] headers = line.split(",");
+            for (int i = 0; i < headers.length; i++) {
+                if (headers[i].trim().equalsIgnoreCase("timestamp")) {
+                    timeIndex = i;
+                }
+                if (headers[i].trim().equalsIgnoreCase("close")) {
+                    closeIndex = i;
+                }
+            }
+            if (timeIndex == -1 || closeIndex == -1) {
+                throw new IllegalArgumentException("CSV file does not have required 'timestamp' or 'closing' columns.");
+            }
+
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(",");
                 LocalDate date = LocalDate.parse(parts[0], DateTimeFormatter.ISO_LOCAL_DATE);
                 double closePrice = Double.parseDouble(parts[5]);
                 stocks.get(ticker).put(date,closePrice);
             }
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             e.printStackTrace();
         }
+
     }
 
     @Override
-    public double getClosingPrice(LocalDate date, String ticker) {
+    public double getClosingPrice(LocalDate date, String ticker) throws IOException {
         if (!stockInDataSource(ticker)) {
             throw new IllegalArgumentException("Stock is not in Data Source.");
         } else if (!stockExistsAtDate(date, ticker)) {
@@ -67,7 +86,7 @@ public abstract class CSVDataSource implements DataSource {
     // Assumes that the stock exists in the function
     // Throws illegalargumentexception of stock doesn't exist
     @Override
-    public boolean stockExistsAtDate(LocalDate date, String ticker) {
+    public boolean stockExistsAtDate(LocalDate date, String ticker) throws IOException {
         if (!stockInDataSource(ticker)) {
             throw new IllegalArgumentException("Stock is not in Data Source.");
         }
@@ -75,7 +94,7 @@ public abstract class CSVDataSource implements DataSource {
     }
 
     @Override
-    public boolean stockInDataSource(String ticker) {
+    public boolean stockInDataSource(String ticker) throws IOException {
         return stocks.containsKey(ticker);
     }
 

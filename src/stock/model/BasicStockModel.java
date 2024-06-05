@@ -116,7 +116,7 @@ public class BasicStockModel implements StockModel {
 
   @Override
   public void renamePortfolio(String oldName, String newName) {
-    if (!portfolios.containsKey(newName)) {
+    if (!portfolios.containsKey(oldName)) {
       throw new IllegalArgumentException("There is no such name");
     }
     portfolios.put(newName, portfolios.get(oldName));

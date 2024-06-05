@@ -54,7 +54,8 @@ public class MockDataSource implements DataSource {
     if (tickers.contains(ticker)) {
       return true;
     } else {
-      throw new IOException("There is no such ticker");
+      return false;
+//      throw new IOException("There is no such ticker");
     }
   }
 }

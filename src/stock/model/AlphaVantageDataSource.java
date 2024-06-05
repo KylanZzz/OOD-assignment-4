@@ -7,14 +7,19 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
+import java.net.HttpURLConnection;
+
 
 public class AlphaVantageDataSource extends CSVDataSource {
   private static final String API_KEY = "W0M1JOKC82EZEQA8";
+  private static final String BASE_URL = "https://www.alphavantage.co/query?";
+
   //  3FKL0E8WUDB1EOMS
 
   private Set<String> tickerList = new HashSet<>();
@@ -55,12 +60,36 @@ public class AlphaVantageDataSource extends CSVDataSource {
     }
   }
 
-
   public Set<String> getTickerList() {
     return tickerList;
   }
 
   private void generateStockCSV(File folder, String ticker) throws IOException {
+//    String function = "TIME_SERIES_DAILY_ADJUSTED";
+//    String urlString = BASE_URL + "function=" + function + "&symbol=" + ticker + "&apikey=" + API_KEY;
+//    try {
+//      URL url = new URL(urlString);
+//      HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+//      connection.setRequestMethod("GET");
+//      connection.connect();
+//
+//      int responseCode = connection.getResponseCode();
+//      if (responseCode == 200) {
+//        BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+//        String line;
+//        StringBuilder response = new StringBuilder();
+//        while ((line = reader.readLine()) != null) {
+//          response.append(line);
+//        }
+//        reader.close();
+//
+//      } else {
+//        System.out.println("Failed to get response from server.");
+//      }
+//    } catch (Exception e) {
+//      e.printStackTrace();
+//    }
+
     URL url;
     try {
       // Constructing the URL

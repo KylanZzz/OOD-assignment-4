@@ -27,6 +27,8 @@ public interface DataSource {
    * @param date the date.
    * @param ticker the ticker of the stock.
    * @return whether the date contains the stock price
+   *
+   * @throws IOException if an I/O error occurs during data fetching.
    */
   boolean stockExistsAtDate(LocalDate date, String ticker) throws IOException;
 
@@ -36,6 +38,8 @@ public interface DataSource {
    *
    * @param ticker the ticker of the stock.
    * @return whether the stock exist sin the data source.
+   *
+   * @throws IOException if an I/O error occurs during data fetching.
    */
   boolean stockInDataSource(String ticker) throws IOException;
 }

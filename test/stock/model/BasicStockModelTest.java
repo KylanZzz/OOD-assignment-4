@@ -432,7 +432,7 @@ public class BasicStockModelTest {
     model.removeStockFromPortfolio("Portfolio", "A");
   }
 
-  @Test(expected = IOException.class)
+  @Test
   public void testStockExistsNoTicker() throws IOException {
     String ticker = "AAPL";
 
@@ -443,7 +443,7 @@ public class BasicStockModelTest {
     mockDataSource.setStockExistsAtDate(endDate);
     mockDataSource.setClosingPrice(startDate, 150.0);
     mockDataSource.setClosingPrice(endDate, 160.0);
-    assertEquals(true, model.stockExists(ticker));
+    assertEquals(false, model.stockExists(ticker));
   }
 
   @Test

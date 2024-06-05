@@ -54,13 +54,13 @@ public class CSVDataSource implements DataSource {
                 }
             }
             if (timeIndex == -1 || closeIndex == -1) {
-                throw new IllegalArgumentException("CSV file does not have required 'timestamp' or 'closing' columns.");
+                throw new IllegalArgumentException("CSV file does not have required 'timestamp' or 'close' columns.");
             }
 
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(",");
-                LocalDate date = LocalDate.parse(parts[0], DateTimeFormatter.ISO_LOCAL_DATE);
-                double closePrice = Double.parseDouble(parts[5]);
+                LocalDate date = LocalDate.parse(parts[timeIndex], DateTimeFormatter.ISO_LOCAL_DATE);
+                double closePrice = Double.parseDouble(parts[closeIndex]);
                 stocks.get(ticker).put(date,closePrice);
             }
         }

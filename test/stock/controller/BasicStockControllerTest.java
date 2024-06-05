@@ -736,22 +736,22 @@ public class BasicStockControllerTest {
             prints("printMessagePlease enter the ticker of the stock that you would like to add to portfolio S&P500:"),
             inputs("UYHGBN"),
 
-            prints("printMessageThat stock does not exist! Please try again."),
+            prints(tickerIncorrect),
             inputs("$%^YTG"),
 
-            prints("printMessageThat stock does not exist! Please try again."),
+            prints(tickerIncorrect),
             inputs("7654rfgy"),
 
-            prints("printMessageThat stock does not exist! Please try again."),
+            prints(tickerIncorrect),
             inputs("5rtgfd"),
 
-            prints("printMessageThat stock does not exist! Please try again."),
+            prints(tickerIncorrect),
             inputs("4ewsdfg"),
 
-            prints("printMessageThat stock does not exist! Please try again."),
+            prints(tickerIncorrect),
             inputs("WSDF"),
 
-            prints("printMessageThat stock does not exist! Please try again."),
+            prints(tickerIncorrect),
             inputs("AAPL"),
 
             prints("printMessagePlease enter the number of shares you would like to purchase (you cannot buy fractional number of stocks): "),
@@ -891,25 +891,25 @@ public class BasicStockControllerTest {
 
             prints("printMessagePlease enter the ticker of the stock that you would like to remove from portfolio S&P500."),
             inputs("XYZ123"),
-            prints("printMessageThat stock does not exist! Please try again."),
+            prints(tickerIncorrect),
             inputs("3"),
 
-            prints("printMessageThat stock does not exist! Please try again."),
+            prints(tickerIncorrect),
             inputs("GOOGL"),
-            prints("printMessageThat stock does not exist! Please try again."),
+            prints(tickerIncorrect),
             inputs("3"),
 
-            prints("printMessageThat stock does not exist! Please try again."),
+            prints(tickerIncorrect),
             inputs("NFLX100"),
-            prints("printMessageThat stock does not exist! Please try again."),
+            prints(tickerIncorrect),
             inputs("3"),
 
-            prints("printMessageThat stock does not exist! Please try again."),
+            prints(tickerIncorrect),
             inputs("aaaa"),
-            prints("printMessageThat stock does not exist! Please try again."),
+            prints(tickerIncorrect),
             inputs("3"),
 
-            prints("printMessageThat stock does not exist! Please try again."),
+            prints(tickerIncorrect),
             inputs("TSLA"),
 
             prints("printMessageThat stock is not in the portfolio."),

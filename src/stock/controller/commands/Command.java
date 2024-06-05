@@ -28,10 +28,10 @@ public abstract class Command {
     while (choice == -1) {
       try {
         choice = scanner.nextInt();
-        scanner.nextLine();
         if (choice > max || choice < 1) {
           throw new IllegalArgumentException();
         }
+        scanner.nextLine();
       } catch (InputMismatchException e) {
         view.printMessage("Invalid input: not an integer, please try again.");
         scanner.nextLine();

@@ -1,6 +1,7 @@
 package stock.controller;
 
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Scanner;
 
@@ -24,7 +25,7 @@ public class BasicStockController implements StockController {
   private final Scanner scanner;
   private final Map<String, Command> commands;
 
-  public BasicStockController(StockView view, StockModel model, InputStream in) {
+  public BasicStockController(StockView view, StockModel model, Readable in) {
     scanner = new Scanner(in);
     this.view = view;
     this.model = model;
@@ -50,9 +51,9 @@ public class BasicStockController implements StockController {
       if (commands.containsKey(choice)) {
         commands.get(choice).apply();
       } else if (!choice.equals(BasicMenuOptions.exitKeyword())){
-        view.printMessage("Invalid input. Please enter a valid choice (a number from 1 through " +
+        view.printMessage("Invalid input. Please enter a valid choice (a number from 1 through "
                 + BasicMenuOptions.mainMenu().size() + ") or " + BasicMenuOptions.exitKeyword()
-        + "to exit the application.");
+        + " to exit the application.");
       }
     }
   }
@@ -62,7 +63,7 @@ public class BasicStockController implements StockController {
     StockView view = new BasicStockView(System.out);
 //    StockModel model = new BasicStockModel(new CSVDataSource("res/CSVData"));
     StockModel model = new BasicStockModel(new AlphaVantageDataSource());
-    StockController controller = new BasicStockController(view, model, System.in);
+    StockController controller = new BasicStockController(view, model, new InputStreamReader(System.in));
     controller.run();
   }
 }

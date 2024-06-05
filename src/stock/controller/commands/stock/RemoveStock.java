@@ -23,7 +23,7 @@ public class RemoveStock extends StockCommand {
     }
 
     model.removeStockFromPortfolio(portfolio, ticker);
-    view.printMessage(String.format("Successfully added stock %s to portfolio %s.", ticker,
+    view.printMessage(String.format("Successfully removed stock %s from portfolio %s.", ticker,
             portfolio));
   }
 }

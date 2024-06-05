@@ -1,6 +1,7 @@
 package stock.controller.commands.stock;
 
 import java.io.IOException;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import stock.model.StockModel;
@@ -19,24 +20,28 @@ public class AddStock extends StockCommand {
 
     view.printMessage("Please enter the number of shares you would like to " +
             "purchase (you cannot buy fractional number of stocks): ");
-    int shares = scanner.nextInt();
-    scanner.nextLine();
+    int shares;
+    try {
+      shares = scanner.nextInt();
+      scanner.nextLine();
+    } catch (InputMismatchException e) {
+      view.printMessage("Invalid input: not an integer, please try again.");
+      scanner.nextLine();
+      return;
+    }
+
     if (shares == 0) {
       view.printMessage("Cannot purchase 0 shares of a stock.");
       return;
-    } if (shares < 0) {
+    }
+
+    if (shares < 0) {
       view.printMessage("Cannot purchase negative number of stocks.");
       return;
     }
 
-    if (model.getPortfolioContents(portfolio).containsKey(ticker)) {
-      model.addStockToPortfolio(portfolio, ticker, shares);
-      view.printMessage(String.format("Successfully purchased %d number of %s stocks in the %s " +
-              "portfolio.", shares, ticker, portfolio));
-    } else {
-      model.addStockToPortfolio(portfolio, ticker, shares);
-      view.printMessage(String.format("Successfully added stock %s to portfolio %s.", ticker, portfolio));
-    }
-
+    model.addStockToPortfolio(portfolio, ticker, shares);
+    view.printMessage(String.format("Successfully purchased %d number of %s stocks in the %s " +
+            "portfolio.", shares, ticker, portfolio));
   }
 }

@@ -74,7 +74,7 @@ public class BasicStockViewTest {
   }
 
   @Test
-  public void printViewPortfoliosWorks() {
+  public void printViewPortfoliosWorksWithNonEmptyList() {
     List<String> portfolios = List.of("S&P500", "NASDAQ");
     view.printViewPortfolios(portfolios);
 
@@ -88,7 +88,19 @@ public class BasicStockViewTest {
   }
 
   @Test
-  public void printManagePortfolioWorks() {
+  public void printViewPortfolioWorksWithEmptyList() {
+    List<String> portfolios = List.of();
+    view.printViewPortfolios(portfolios);
+
+    String expectedOutput = "Please type the number that corresponds with the choice you would like to pick, or type EXIT to return/exit\n" +
+            "1. Create new portfolio\n" +
+            "2. Delete portfolio\n" +
+            "3. Rename portfolio\n";
+    assertEquals(expectedOutput, sb.toString());
+  }
+
+  @Test
+  public void printManagePortfolioWorksWithNonEmptyList() {
     Map<String, Integer> stocks = Map.of("AAPL", 5, "AMZN", 10, "NFLX", 15);
     view.printManagePortfolio(stocks, "S&P500");
 
@@ -97,6 +109,20 @@ public class BasicStockViewTest {
             "AAPL                           5\n" +
             "AMZN                           10\n" +
             "NFLX                           15\n\n" +
+            "Please type the number that corresponds with the choice you would like to pick, or type EXIT to return/exit\n" +
+            "1. Calculate portfolio value\n" +
+            "2. Add stock to portfolio\n" +
+            "3. Remove stock from portfolio\n";
+    assertEquals(expectedOutput, sb.toString());
+  }
+
+  @Test
+  public void printManagePortfolioWorksWithEmptyList() {
+    Map<String, Integer> stocks = Map.of();
+    view.printManagePortfolio(stocks, "S&P500");
+
+    String expectedOutput = "Here are all the stocks in the S&P500 portfolio:\n\n" +
+            "Stock                          Shares\n\n" +
             "Please type the number that corresponds with the choice you would like to pick, or type EXIT to return/exit\n" +
             "1. Calculate portfolio value\n" +
             "2. Add stock to portfolio\n" +

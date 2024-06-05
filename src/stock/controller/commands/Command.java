@@ -77,10 +77,18 @@ public abstract class Command {
         int year = Integer.parseInt(split[2]);
 
         date = LocalDate.of(year, month, day);
+
+        if (date.isAfter(LocalDate.now())) {
+          date = null;
+          throw new InputMismatchException();
+        }
       } catch (NumberFormatException e) {
         view.printMessage("Invalid input: not an integer, please try again.");
       } catch (DateTimeException e) {
         view.printMessage("Invalid date: Please enter a valid date.");
+      } catch (InputMismatchException e) {
+        view.printMessage("Invalid date: Date has not passed yet, please enter a date before or " +
+                "equal to today.");
       } catch (Exception e) {
         view.printMessage("Incorrect format: Please enter the date in the format MM/DD/YYYY.");
       }

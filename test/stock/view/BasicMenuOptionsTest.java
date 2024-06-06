@@ -6,7 +6,11 @@ import java.util.List;
 
 import static org.junit.Assert.*;
 
+/**
+ * Test the functionalities of displaying the menu, portfolios, options within the portfolios.
+ */
 public class BasicMenuOptionsTest {
+
 
   @Test
   public void testExitKeyword() {

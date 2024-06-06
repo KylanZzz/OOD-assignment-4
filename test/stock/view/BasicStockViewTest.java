@@ -9,9 +9,20 @@ import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
 
+/**
+ * Test the functionalities of printing the welcome message, the options for the users,
+ * getting crossovers, getting gain and loss value, moving average, and portfolios.
+ */
 public class BasicStockViewTest {
   StockView view;
   StringBuilder sb;
+
+  /**
+   * Prepares the test environment before each test execution.
+   * This method initializes a StringBuilder to capture the output from the BasicStockView
+   * and creates an instance of BasicStockView with this StringBuilder as its Appendable output target.
+   * This setup is crucial for testing the output functionality of the BasicStockView without interacting with more complex I/O operations.
+   */
   @Before
   public void setup() {
     sb = new StringBuilder();

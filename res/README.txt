@@ -56,16 +56,20 @@ this key.
 This configuration is set in the main function of the BasicStockController class and can be
 changed by altering the constructor of the model. Another data source that has been implemented
 is to directly support CSV files. This works by replacing this line in stock program:
-
-${StockModel model = new BasicStockModel(new AlphaVantageDataSource());}
-
+    ${StockModel model = new BasicStockModel(new AlphaVantageDataSource());}
 with this line:
-
-${StockModel model = new BasicStockModel(new CSVDataSource("res/CSVData"));}
+    ${StockModel model = new BasicStockModel(new CSVDataSource("res/CSVData"));}
 
 This secondary data source will instead retrieve data from CSV files on the user's local computer.
 All stock data using this method must be stored in the res/CSVData folder as .csv files, and named
 in the following format:
+    [Ticker Symbol in all UPPERCASE LETTERS].csv
+        IE: "AAPL.csv" for Apple Inc. "AMZN.csv" for Amazon.com Inc
+The CSV files themselves should have the first row as:
+    "timestamp,open,high,low,close,volume"
+and each subsequent row should contain the corresponding data values in the same order.
+Note: The first row must be formatted exactly as specified above, and each row must have all
+fields present with no extra or missing fields.
 
 --Share Purchasing Restrictions--
 One important restriction is that the program does not allow users to purchase fractional shares.

@@ -437,6 +437,7 @@ public class BasicStockModelTest {
     model.addStockToPortfolio("Portfolio", "GOOG", 200);
     model.removeStockFromPortfolio("Portfolio2", "GOOG");
   }
+  
   @Test(expected = IllegalArgumentException.class)
   public void testRemoveStockFromPortfolioFaildTicker() {
     Map<String, Integer> newMap = new HashMap<>();

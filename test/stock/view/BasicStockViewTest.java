@@ -98,7 +98,7 @@ public class BasicStockViewTest {
     String expectedOutput = "Please type the number that corresponds "
             + "with the choice you would like to pick, or type EXIT to return/exit\n"
             + "1. Create new portfolio\n"
-            +"2. Delete portfolio\n"
+            + "2. Delete portfolio\n"
             + "3. Rename portfolio\n"
             + "4. View/Edit: S&P500\n"
             + "5. View/Edit: NASDAQ\n";

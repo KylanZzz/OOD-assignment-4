@@ -18,15 +18,6 @@ contents of tickerList.txt from:
 
 https://github.com/KylanZzz/OOD-assignment-4/blob/main/res/stocksData/tickerList.txt
 
-A text description (SETUP-README.txt) in the res folder of how exactly to run your program from the
-JAR file. If you require the jar file to be in a specific folder, or require other files with it,
-please include these directions here. You should also include detailed instructions on how to run
-your program to create a portfolio with 3 different stocks, a second portfolio with 2 different
-stocks and query their value on a specific date. We will run your program with this data to begin
-grading. You should also include a list of stocks that your program supports, along with dates on
-which its value can be determined (if there are restrictions in your program about which data is
-available).
-
 
 --Running the Program--
 

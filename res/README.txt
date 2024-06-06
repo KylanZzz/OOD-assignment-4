@@ -6,11 +6,12 @@ The application allows users to calculate the gain or loss of a stock over a spe
 on its closing prices. All calculations use the closing price, not the adjusted closing price.
 Users are prompted to input the ticker symbol of the stock and the start and end dates for the
 calculation.
-Note: If no data is found for the entire date range, the returned value is 0.
-Note: If no data is available on the start date, the next closest date (increasing, e.g., if 6/1
-is not found, then 6/2 is checked) is used.
-Note: If no data is available on the end date, the next closest date (decreasing, e.g., if 1/27
-is not found, then 1/26 is checked) is used.
+Note: If the start date has no data, but data is available for some later date up to and including
+the end date, the calculation will begin from the first available date.
+Note: If both the start date and the end date have data, the gain or loss is calculated over this
+period.
+Note: If neither the start date nor the end date have data, but data is available in between,
+the program will return 0 because the end date is required for comparison.
 
 --Calculate x-Day Moving Average of a Stock--
 Users can calculate the x-day moving average of a stock, which is the average of the closing prices

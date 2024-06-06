@@ -16,6 +16,7 @@ import stock.view.BasicMenuOptions;
 import stock.view.StockView;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static stock.controller.Interactions.inputs;
 import static stock.controller.Interactions.modelLog;
 import static stock.controller.Interactions.prints;
@@ -193,7 +194,7 @@ public class BasicStockControllerTest {
     }
   }
 
-  private void runTest(boolean throwException, Interaction... interactions) {
+  private boolean runTest(boolean throwException, Interaction... interactions) {
     StringBuilder expectedViewLog = new StringBuilder();
     StringBuilder expectedModelLog = new StringBuilder();
     StringBuilder fakeInput = new StringBuilder();
@@ -212,6 +213,9 @@ public class BasicStockControllerTest {
 
     assertEquals(expectedViewLog.toString(), viewLog.toString());
     assertEquals(expectedModelLog.toString(), modelLog.toString());
+
+    return expectedViewLog.toString().equals(viewLog.toString()) && expectedModelLog.toString()
+            .equals(modelLog.toString());
   }
 
   String tickerPrompt = "printMessagePlease enter the ticker of the stock that you would like to "
@@ -231,9 +235,7 @@ public class BasicStockControllerTest {
 
   @Test
   public void controllerExitsCorrectly() {
-    runTest(false, prints("printMainMenu"), inputs("EXIT"));
-    List<String> emptyList = new ArrayList<>();
-    assertEquals(0, emptyList.size());
+    assertTrue(runTest(false, prints("printMainMenu"), inputs("EXIT")));
   }
 
   @Test
@@ -241,7 +243,7 @@ public class BasicStockControllerTest {
     String invalidInputMessage = "printMessageInvalid input. Please enter a valid choice (a "
             + "number from 1 through " + BasicMenuOptions.mainMenu().size() + ") or "
             + BasicMenuOptions.exitKeyword() + " to exit the application.";
-    runTest(false, prints("printMainMenu"), inputs("0"), prints(invalidInputMessage,
+    assertTrue(runTest(false, prints("printMainMenu"), inputs("0"), prints(invalidInputMessage,
                     "printMainMenu"), inputs("500000"), prints(invalidInputMessage,
                     "printMainMenu"),
             inputs("a"), prints(invalidInputMessage, "printMainMenu"), inputs("-1"),
@@ -249,14 +251,13 @@ public class BasicStockControllerTest {
             prints(invalidInputMessage, "printMainMenu"), inputs("-10000"),
             prints(invalidInputMessage, "printMainMenu"), inputs("a"), prints(invalidInputMessage,
                     "printMainMenu"), inputs("&(*&91j"), prints(invalidInputMessage,
-                    "printMainMenu"), inputs("EXIT"));
-    List<String> emptyList = new ArrayList<>();
-    assertEquals(0, emptyList.size());
+                    "printMainMenu"), inputs("EXIT")));
+
   }
 
   @Test
   public void controllerHandlesInvalidTicker() {
-    runTest(false, prints("printMainMenu"), inputs("1"),
+    assertTrue(runTest(false, prints("printMainMenu"), inputs("1"),
 
             prints(tickerPrompt), inputs("1093"),
 
@@ -273,15 +274,14 @@ public class BasicStockControllerTest {
             prints(endDatePrompt), inputs("4/20/2024"),
 
             prints("printStockGainAAPL2005-04-202024-04-20100.0"), prints("printMainMenu"),
-            inputs("EXIT"));
-    List<String> emptyList = new ArrayList<>();
-    assertEquals(0, emptyList.size());
+            inputs("EXIT")));
+
 
   }
 
   @Test
   public void controllerHandlesCaseInsensitiveTicker() {
-    runTest(false, prints("printMainMenu"), inputs("1"),
+    assertTrue(runTest(false, prints("printMainMenu"), inputs("1"),
 
             prints(tickerPrompt), inputs("aapl"),
 
@@ -308,16 +308,15 @@ public class BasicStockControllerTest {
             prints(endDatePrompt), inputs("4/20/2024"),
 
             prints("printStockGainAAPL2005-04-202024-04-20100.0"), prints("printMainMenu"),
-            inputs("EXIT"));
-    List<String> emptyList = new ArrayList<>();
-    assertEquals(0, emptyList.size());
+            inputs("EXIT")));
+
 
   }
 
   @Test
   public void controllerHandlesIncorrectDate() {
 
-    runTest(false, prints("printMainMenu"), inputs("1"),
+    assertTrue(runTest(false, prints("printMainMenu"), inputs("1"),
 
             prints(tickerPrompt), inputs("AAPL"),
 
@@ -387,15 +386,14 @@ public class BasicStockControllerTest {
             prints(endDatePrompt), inputs("6/5/2024"),
 
             prints("printStockGainAAPL2024-04-202024-06-05100.0"), prints("printMainMenu"),
-            inputs("EXIT"));
-    List<String> emptyList = new ArrayList<>();
-    assertEquals(0, emptyList.size());
+            inputs("EXIT")));
+
   }
 
 
   @Test
   public void movingAverageWorks() {
-    runTest(false, prints("printMainMenu"), inputs("2"),
+    assertTrue(runTest(false, prints("printMainMenu"), inputs("2"),
 
             prints(tickerPrompt), inputs("NFLX"),
 
@@ -405,14 +403,13 @@ public class BasicStockControllerTest {
             prints("printMessagePlease enter the number of days."), inputs("100"),
 
             prints("printStockAverageNFLX2013-04-20100200.0"), prints("printMainMenu"), inputs(
-                    "EXIT"));
-    List<String> emptyList = new ArrayList<>();
-    assertEquals(0, emptyList.size());
+                    "EXIT")));
+
   }
 
   @Test
   public void crossoversWorks() {
-    runTest(false, prints("printMainMenu"), inputs("3"),
+    assertTrue(runTest(false, prints("printMainMenu"), inputs("3"),
 
             prints(tickerPrompt), inputs("AAPL"),
 
@@ -426,15 +423,14 @@ public class BasicStockControllerTest {
                     + "2013-04-2013"
                     + "0001-01-01"
                     + "0002-02-02"),
-            prints("printMainMenu"), inputs("EXIT"));
-    List<String> emptyList = new ArrayList<>();
-    assertEquals(0, emptyList.size());
+            prints("printMainMenu"), inputs("EXIT")));
+
 
   }
 
   @Test
   public void createOnePortfolioWorks() {
-    runTest(false, prints("printMainMenu"), inputs("4"),
+    assertTrue(runTest(false, prints("printMainMenu"), inputs("4"),
 
             prints("printViewPortfoliosS&P500NASDAQ"), inputs("1"),
 
@@ -444,14 +440,13 @@ public class BasicStockControllerTest {
             prints("printMessageSuccessfully created portfolio ADOBE."), prints(
                     "printViewPortfoliosS&P500NASDAQ"), inputs("EXIT"),
 
-            prints("printMainMenu"), inputs("EXIT"));
-    List<String> emptyList = new ArrayList<>();
-    assertEquals(0, emptyList.size());
+            prints("printMainMenu"), inputs("EXIT")));
+
   }
 
   @Test
   public void createDuplicatePortfoliosDoesntWork() {
-    runTest(false, prints("printMainMenu"), inputs("4"),
+    assertTrue(runTest(false, prints("printMainMenu"), inputs("4"),
 
             prints("printViewPortfoliosS&P500NASDAQ"), inputs("1"),
 
@@ -473,14 +468,13 @@ public class BasicStockControllerTest {
             prints("printMessageSuccessfully created portfolio AAAAAA."), prints(
                     "printViewPortfoliosS&P500NASDAQ"), inputs("EXIT"),
 
-            prints("printMainMenu"), inputs("EXIT"));
-    List<String> emptyList = new ArrayList<>();
-    assertEquals(0, emptyList.size());
+            prints("printMainMenu"), inputs("EXIT")));
+
   }
 
   @Test
   public void deleteProfileWorks() {
-    runTest(false, prints("printMainMenu"), inputs("4"),
+    assertTrue(runTest(false, prints("printMainMenu"), inputs("4"),
 
             prints("printViewPortfoliosS&P500NASDAQ"), inputs("2"),
 
@@ -500,15 +494,14 @@ public class BasicStockControllerTest {
             prints("printMessageA portfolio with that name does not exist!"), prints(
                     "printViewPortfoliosS&P500NASDAQ"), inputs("EXIT"),
 
-            prints("printMainMenu"), inputs("EXIT"));
-    List<String> emptyList = new ArrayList<>();
-    assertEquals(0, emptyList.size());
+            prints("printMainMenu"), inputs("EXIT")));
+
 
   }
 
   @Test
   public void renameProfileWorks() {
-    runTest(false, prints("printMainMenu"), inputs("4"),
+    assertTrue(runTest(false, prints("printMainMenu"), inputs("4"),
 
             prints("printViewPortfoliosS&P500NASDAQ"), inputs("3"),
 
@@ -521,15 +514,14 @@ public class BasicStockControllerTest {
             prints("printMessageSuccessfully renamed portfolio NASDAQ to AAAAAA."), prints(
                     "printViewPortfoliosS&P500NASDAQ"), inputs("EXIT"),
 
-            prints("printMainMenu"), inputs("EXIT"));
-    List<String> emptyList = new ArrayList<>();
-    assertEquals(0, emptyList.size());
+            prints("printMainMenu"), inputs("EXIT")));
+
 
   }
 
   @Test
   public void controllerHandlesGainIOException() {
-    runTest(true, prints("printMainMenu"), inputs("1"),
+    assertTrue(runTest(true, prints("printMainMenu"), inputs("1"),
 
             prints(tickerPrompt), inputs("AAPL"),
 
@@ -538,14 +530,13 @@ public class BasicStockControllerTest {
             prints(endDatePrompt), inputs("01/01/2021"),
 
             modelLog("getGainOverTimeIOException"), prints("printMessageError while fetching "
-                    + "data: gainIOExceptionMessage"), prints("printMainMenu"), inputs("EXIT"));
-    List<String> emptyList = new ArrayList<>();
-    assertEquals(0, emptyList.size());
+                    + "data: gainIOExceptionMessage"), prints("printMainMenu"), inputs("EXIT")));
+
   }
 
   @Test
   public void controllerHandlesCrossoverIOException() {
-    runTest(true, prints("printMainMenu"), inputs("3"),
+    assertTrue(runTest(true, prints("printMainMenu"), inputs("3"),
 
             prints(tickerPrompt), inputs("AAPL"),
 
@@ -555,14 +546,13 @@ public class BasicStockControllerTest {
             prints("printMessagePlease enter the number of days."), inputs("50"),
 
             modelLog("getCrossoverIOException"), prints("printMessageError while fetching data: "
-                    + "crossoverIOExceptionMessage"), prints("printMainMenu"), inputs("EXIT"));
-    List<String> emptyList = new ArrayList<>();
-    assertEquals(0, emptyList.size());
+                    + "crossoverIOExceptionMessage"), prints("printMainMenu"), inputs("EXIT")));
+
   }
 
   @Test
   public void controllerHandlesAverageIOException() {
-    runTest(true, prints("printMainMenu"), inputs("2"),
+    assertTrue(runTest(true, prints("printMainMenu"), inputs("2"),
 
             prints(tickerPrompt), inputs("AAPL"),
 
@@ -572,14 +562,13 @@ public class BasicStockControllerTest {
             prints("printMessagePlease enter the number of days."), inputs("50"),
 
             modelLog("getMovingDayAverageIOException"), prints("printMessageError while fetching "
-                    + "data: averageIOExceptionMessage"), prints("printMainMenu"), inputs("EXIT"));
-    List<String> emptyList = new ArrayList<>();
-    assertEquals(0, emptyList.size());
+                    + "data: averageIOExceptionMessage"), prints("printMainMenu"), inputs("EXIT")));
+
   }
 
   @Test
   public void renameNonExistentPortfolio() {
-    runTest(false, prints("printMainMenu"), inputs("4"),
+    assertTrue(runTest(false, prints("printMainMenu"), inputs("4"),
 
             prints("printViewPortfoliosS&P500NASDAQ"), inputs("3"),
 
@@ -589,14 +578,13 @@ public class BasicStockControllerTest {
             prints("printMessageA portfolio with that name does not exist!"), prints(
                     "printViewPortfoliosS&P500NASDAQ"), inputs("EXIT"),
 
-            prints("printMainMenu"), inputs("EXIT"));
-    List<String> emptyList = new ArrayList<>();
-    assertEquals(0, emptyList.size());
+            prints("printMainMenu"), inputs("EXIT")));
+
   }
 
   @Test
   public void renamePortfolioToExistingName() {
-    runTest(false, prints("printMainMenu"), inputs("4"),
+    assertTrue(runTest(false, prints("printMainMenu"), inputs("4"),
 
             prints("printViewPortfoliosS&P500NASDAQ"), inputs("3"),
 
@@ -609,14 +597,13 @@ public class BasicStockControllerTest {
             prints("printMessageA portfolio with that name already exists!"), prints(
                     "printViewPortfoliosS&P500NASDAQ"), inputs("EXIT"),
 
-            prints("printMainMenu"), inputs("EXIT"));
-    List<String> emptyList = new ArrayList<>();
-    assertEquals(0, emptyList.size());
+            prints("printMainMenu"), inputs("EXIT")));
+
   }
 
   @Test
   public void viewPortfoliosMenuHandlesInvalidInput() {
-    runTest(false, prints("printMainMenu"), inputs("4"),
+    assertTrue(runTest(false, prints("printMainMenu"), inputs("4"),
 
             prints("printViewPortfoliosS&P500NASDAQ"), inputs("0"),
 
@@ -636,14 +623,13 @@ public class BasicStockControllerTest {
                     + "through 3) or EXIT to go back."), prints("printViewPortfoliosS&P500NASDAQ"),
             inputs("EXIT"),
 
-            prints("printMainMenu"), inputs("EXIT"));
-    List<String> emptyList = new ArrayList<>();
-    assertEquals(0, emptyList.size());
+            prints("printMainMenu"), inputs("EXIT")));
+    
   }
 
   @Test
   public void addStockWorksForMultipleStocks() {
-    runTest(false, prints("printMainMenu"), inputs("4"),
+    assertTrue(runTest(false, prints("printMainMenu"), inputs("4"),
 
             prints("printViewPortfoliosS&P500NASDAQ"), inputs("4"),
 
@@ -673,14 +659,13 @@ public class BasicStockControllerTest {
 
             prints("printViewPortfoliosS&P500NASDAQ"), inputs("EXIT"),
 
-            prints("printMainMenu"), inputs("EXIT"));
-    List<String> emptyList = new ArrayList<>();
-    assertEquals(0, emptyList.size());
+            prints("printMainMenu"), inputs("EXIT")));
+
   }
 
   @Test
   public void addStockToPortfolioWorksWithInvalidTickers() {
-    runTest(false, prints("printMainMenu"), inputs("4"),
+    assertTrue(runTest(false, prints("printMainMenu"), inputs("4"),
 
             prints("printViewPortfoliosS&P500NASDAQ"), inputs("4"),
 
@@ -711,14 +696,13 @@ public class BasicStockControllerTest {
 
             prints("printViewPortfoliosS&P500NASDAQ"), inputs("EXIT"),
 
-            prints("printMainMenu"), inputs("EXIT"));
-    List<String> emptyList = new ArrayList<>();
-    assertEquals(0, emptyList.size());
+            prints("printMainMenu"), inputs("EXIT")));
+
   }
 
   @Test
   public void addStockHandlesInvalidShareInputs() {
-    runTest(false, prints("printMainMenu"), inputs("4"),
+    assertTrue(runTest(false, prints("printMainMenu"), inputs("4"),
 
             prints("printViewPortfoliosS&P500NASDAQ"), inputs("4"),
 
@@ -777,14 +761,13 @@ public class BasicStockControllerTest {
 
             prints("printViewPortfoliosS&P500NASDAQ"), inputs("EXIT"),
 
-            prints("printMainMenu"), inputs("EXIT"));
-    List<String> emptyList = new ArrayList<>();
-    assertEquals(0, emptyList.size());
+            prints("printMainMenu"), inputs("EXIT")));
+
   }
 
   @Test
   public void removeStockFromPortfolio() {
-    runTest(false, prints("printMainMenu"), inputs("4"),
+    assertTrue(runTest(false, prints("printMainMenu"), inputs("4"),
 
             prints("printViewPortfoliosS&P500NASDAQ"), inputs("4"),
 
@@ -799,14 +782,13 @@ public class BasicStockControllerTest {
 
             prints("printViewPortfoliosS&P500NASDAQ"), inputs("EXIT"),
 
-            prints("printMainMenu"), inputs("EXIT"));
-    List<String> emptyList = new ArrayList<>();
-    assertEquals(0, emptyList.size());
+            prints("printMainMenu"), inputs("EXIT")));
+
   }
 
   @Test
   public void removeStockHandlesInvalidInputs() {
-    runTest(false, prints("printMainMenu"), inputs("4"),
+    assertTrue(runTest(false, prints("printMainMenu"), inputs("4"),
 
             prints("printViewPortfoliosS&P500NASDAQ"), inputs("4"),
 
@@ -829,14 +811,13 @@ public class BasicStockControllerTest {
 
             prints("printViewPortfoliosS&P500NASDAQ"), inputs("EXIT"),
 
-            prints("printMainMenu"), inputs("EXIT"));
-    List<String> emptyList = new ArrayList<>();
-    assertEquals(0, emptyList.size());
+            prints("printMainMenu"), inputs("EXIT")));
+
   }
 
   @Test
   public void managePortfolioMenuHandlesInvalidInput() {
-    runTest(false, prints("printMainMenu"), inputs("4"),
+    assertTrue(runTest(false, prints("printMainMenu"), inputs("4"),
 
             prints("printViewPortfoliosS&P500NASDAQ"), inputs("4"),
 
@@ -868,14 +849,13 @@ public class BasicStockControllerTest {
 
             prints("printViewPortfoliosS&P500NASDAQ"), inputs("EXIT"),
 
-            prints("printMainMenu"), inputs("EXIT"));
-    List<String> emptyList = new ArrayList<>();
-    assertEquals(0, emptyList.size());
+            prints("printMainMenu"), inputs("EXIT")));
+
   }
 
   @Test
   public void controllerHandlesGetPortfolioValueIOException() {
-    runTest(true, prints("printMainMenu"), inputs("4"),
+    assertTrue(runTest(true, prints("printMainMenu"), inputs("4"),
 
             prints("printViewPortfoliosS&P500NASDAQ"), inputs("4"),
 
@@ -890,14 +870,13 @@ public class BasicStockControllerTest {
 
             prints("printViewPortfoliosS&P500NASDAQ"), inputs("EXIT"),
 
-            prints("printMainMenu"), inputs("EXIT"));
-    List<String> emptyList = new ArrayList<>();
-    assertEquals(0, emptyList.size());
+            prints("printMainMenu"), inputs("EXIT")));
+
   }
 
   @Test
   public void calculatePortfolioValue() {
-    runTest(false, prints("printMainMenu"), inputs("4"),
+    assertTrue(runTest(false, prints("printMainMenu"), inputs("4"),
 
             prints("printViewPortfoliosS&P500NASDAQ"), inputs("4"),
 
@@ -911,14 +890,13 @@ public class BasicStockControllerTest {
 
             prints("printViewPortfoliosS&P500NASDAQ"), inputs("EXIT"),
 
-            prints("printMainMenu"), inputs("EXIT"));
-    List<String> emptyList = new ArrayList<>();
-    assertEquals(0, emptyList.size());
+            prints("printMainMenu"), inputs("EXIT")));
+
   }
 
   @Test
   public void xDayCrossoverHandlesInvalidDaysInput() {
-    runTest(false, prints("printMainMenu"), inputs("3"),
+    assertTrue(runTest(false, prints("printMainMenu"), inputs("3"),
 
             prints(tickerPrompt), inputs("AAPL"),
 
@@ -936,9 +914,8 @@ public class BasicStockControllerTest {
                     + "-01100AAPL"), prints("printXDayCrossoversAAPL2021-01-011000001-01-010002-02"
                     + "-02"),
 
-            prints("printMainMenu"), inputs("EXIT"));
-    List<String> emptyList = new ArrayList<>();
-    assertEquals(0, emptyList.size());
+            prints("printMainMenu"), inputs("EXIT")));
+
 
   }
 

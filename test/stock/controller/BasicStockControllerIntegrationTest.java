@@ -17,6 +17,7 @@ import stock.view.BasicStockView;
 import stock.view.StockView;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static stock.controller.Interactions.inputs;
 import static stock.controller.Interactions.prints;
 
@@ -26,7 +27,7 @@ import static stock.controller.Interactions.prints;
  */
 public class BasicStockControllerIntegrationTest {
 
-  private void runTest(Interaction... interactions) {
+  private boolean runTest(Interaction... interactions) {
     StringBuilder expectedViewLog = new StringBuilder();
     StringBuilder fakeInput = new StringBuilder();
 
@@ -42,7 +43,7 @@ public class BasicStockControllerIntegrationTest {
     StockController controller = new BasicStockController(view, model, in);
     controller.run();
 
-    assertEquals(expectedViewLog.toString(), viewLog.toString());
+    return expectedViewLog.toString().equals(viewLog.toString());
   }
 
   String mainMenu =
@@ -100,18 +101,15 @@ public class BasicStockControllerIntegrationTest {
 
   @Test
   public void programRunsAndExits() {
-    List<String> emptyList = new ArrayList<>();
-
-    runTest(
+    assertTrue(runTest(
             prints(mainMenu),
             inputs("EXIT")
-    );
-    assertEquals(0, emptyList.size());
+    ));
   }
 
   @Test
   public void getGainWorksForOne() {
-    runTest(
+    assertTrue(runTest(
             prints(mainMenu),
             inputs("1"),
 
@@ -127,15 +125,12 @@ public class BasicStockControllerIntegrationTest {
             prints("The gain for stock AAPL from 2013-04-20 to 2024-04-20 was $152.56.\n"),
             prints(mainMenu),
             inputs("EXIT")
-    );
-    List<String> emptyList = new ArrayList<>();
-    assertEquals(0, emptyList.size());
-
+    ));
   }
 
   @Test
   public void getGainWorksForMultiple() {
-    runTest(
+    assertTrue(runTest(
             prints(mainMenu),
             inputs("1"),
 
@@ -177,15 +172,12 @@ public class BasicStockControllerIntegrationTest {
             prints("The gain for stock AAPL from 2013-04-20 to 2024-04-20 was $152.56.\n"),
             prints(mainMenu),
             inputs("EXIT")
-    );
-    List<String> emptyList = new ArrayList<>();
-    assertEquals(0, emptyList.size());
-
+    ));
   }
 
   @Test
   public void inputHandlesIncorrectTicker() {
-    runTest(
+    assertTrue(runTest(
             prints(mainMenu),
             inputs("1"),
 
@@ -240,16 +232,14 @@ public class BasicStockControllerIntegrationTest {
             prints("The gain for stock AAPL from 2005-04-20 to 2013-04-20 was $10.89.\n"),
             prints(mainMenu),
             inputs("EXIT")
-    );
-    List<String> emptyList = new ArrayList<>();
-    assertEquals(0, emptyList.size());
+    ));
   }
 
   @Test
   public void inputTickerIsCaseInsensitive() {
     String gainMessage = "The gain for stock AAPL from 2005-04-20 to 2013-04-20 was $10.89.\n";
 
-    runTest(
+    assertTrue(runTest(
             prints(mainMenu),
             inputs("1"),
 
@@ -265,9 +255,9 @@ public class BasicStockControllerIntegrationTest {
             prints(gainMessage),
             prints(mainMenu),
             inputs("EXIT")
-    );
+    ));
 
-    runTest(
+    assertTrue(runTest(
             prints(mainMenu),
             inputs("1"),
 
@@ -283,9 +273,8 @@ public class BasicStockControllerIntegrationTest {
             prints(gainMessage),
             prints(mainMenu),
             inputs("EXIT")
-    );
-    List<String> emptyList = new ArrayList<>();
-    assertEquals(0, emptyList.size());
+    ));
+
   }
 
   @Test
@@ -294,7 +283,7 @@ public class BasicStockControllerIntegrationTest {
     String todayString = today.format(DateTimeFormatter.ofPattern("MM/dd/yyyy"));
     String tomorrowString = today.plusDays(1).format(DateTimeFormatter.ofPattern("MM/dd/yyyy"));
 
-    runTest(
+    assertTrue(runTest(
             prints(mainMenu),
             inputs("1"),
 
@@ -346,16 +335,13 @@ public class BasicStockControllerIntegrationTest {
             prints("The gain for stock AAPL from 2024-01-01 to 2024-01-31 was $-1.24.\n"),
             prints(mainMenu),
             inputs("EXIT")
-    );
-
-    List<String> emptyList = new ArrayList<>();
-    assertEquals(0, emptyList.size());
+    ));
   }
 
   @Test
   public void menuHandlesInvalidOptionAndEndDate() {
     String invalidInputDateOrder = "Invalid input: The end date must be after the start date.";
-    runTest(
+    assertTrue(runTest(
             prints(mainMenu),
             inputs("0"),
             prints(invalidInputMessage),
@@ -411,14 +397,12 @@ public class BasicStockControllerIntegrationTest {
 
             prints(mainMenu),
             inputs("EXIT")
-    );
-    List<String> emptyList = new ArrayList<>();
-    assertEquals(0, emptyList.size());
+    ));
   }
 
   @Test
   public void getMovingAverageWorks() {
-    runTest(
+    assertTrue(runTest(
             prints(mainMenu),
             inputs("2"),
 
@@ -450,9 +434,7 @@ public class BasicStockControllerIntegrationTest {
             prints("The average for stock AMZN on 2011-04-21 for 10 days was $9.10.\n"),
             prints(mainMenu),
             inputs("EXIT")
-    );
-    List<String> emptyList = new ArrayList<>();
-    assertEquals(0, emptyList.size());
+    ));
   }
 
   @Test
@@ -482,7 +464,7 @@ public class BasicStockControllerIntegrationTest {
                     + "2020-12-28\n2020-12-24\n2020-12-23\n202"
                     + "0-12-22\n";
 
-    runTest(
+    assertTrue(runTest(
             prints(mainMenu),
             inputs("3"),
 
@@ -514,14 +496,12 @@ public class BasicStockControllerIntegrationTest {
             prints(aaplCrossoversMessage),
             prints(mainMenu),
             inputs("EXIT")
-    );
-    List<String> emptyList = new ArrayList<>();
-    assertEquals(0, emptyList.size());
+    ));
   }
 
   @Test
   public void createAndDeletePortfolios() {
-    runTest(
+    assertTrue(runTest(
             prints(mainMenu),
             inputs("4"),
 
@@ -617,9 +597,7 @@ public class BasicStockControllerIntegrationTest {
 
             prints(mainMenu),
             inputs("EXIT")
-    );
-    List<String> emptyList = new ArrayList<>();
-    assertEquals(0, emptyList.size());
+    ));
   }
 
   @Test
@@ -628,7 +606,7 @@ public class BasicStockControllerIntegrationTest {
             "Invalid input. Please enter a valid choice (a number "
                     + "from 1 through 3) or EXIT to go"
                     + " back.";
-    runTest(
+    assertTrue(runTest(
             prints(mainMenu),
             inputs("4"),
 
@@ -664,14 +642,13 @@ public class BasicStockControllerIntegrationTest {
 
             prints(mainMenu),
             inputs("EXIT")
-    );
-    List<String> emptyList = new ArrayList<>();
-    assertEquals(0, emptyList.size());
+    ));
+
   }
 
   @Test
   public void testOnePortfolio() {
-    runTest(
+    assertTrue(runTest(
             prints(mainMenu),
             inputs("4"),
 
@@ -824,7 +801,7 @@ public class BasicStockControllerIntegrationTest {
 
             prints(portfolioValuePrompt),
             inputs("04/20/2024"),
-            prints("The value of the portfolio NASDAQ"
+            prints("The value of the portfolio NASDAQ "
                     + "at 2024-04-20 is 3394.05."),
             prints("Here are all the stocks in the NASDAQ portfolio:\n\n"
                     + "Stock                          Shares\n"
@@ -838,14 +815,13 @@ public class BasicStockControllerIntegrationTest {
 
             prints(mainMenu),
             inputs("EXIT")
-    );
-    List<String> emptyList = new ArrayList<>();
-    assertEquals(0, emptyList.size());
+    ));
+
   }
 
   @Test
   public void testMultiplePortfolios() {
-    runTest(
+    assertTrue(runTest(
             prints(mainMenu),
             inputs("4"),
 
@@ -1021,14 +997,13 @@ public class BasicStockControllerIntegrationTest {
 
             prints(mainMenu),
             inputs("EXIT")
-    );
-    List<String> emptyList = new ArrayList<>();
-    assertEquals(0, emptyList.size());
+    ));
+
   }
 
   @Test
   public void renamePortfolioWorksForDifferentScenarios() {
-    runTest(
+    assertTrue(runTest(
             prints(mainMenu),
             inputs("4"),
 
@@ -1149,14 +1124,13 @@ public class BasicStockControllerIntegrationTest {
 
             prints(mainMenu),
             inputs("EXIT")
-    );
-    List<String> emptyList = new ArrayList<>();
-    assertEquals(0, emptyList.size());
+    ));
+
   }
 
   @Test
   public void deletePortfolioWorksInDifferentScenarios() {
-    runTest(
+    assertTrue(runTest(
             prints(mainMenu),
             inputs("4"),
 
@@ -1183,14 +1157,13 @@ public class BasicStockControllerIntegrationTest {
 
             prints(mainMenu),
             inputs("EXIT")
-    );
-    List<String> emptyList = new ArrayList<>();
-    assertEquals(0, emptyList.size());
+    ));
+
   }
 
   @Test
   public void addingAndRemovingStockFromPortfolioChangesValue() {
-    runTest(
+    assertTrue(runTest(
             prints(mainMenu),
             inputs("4"),
 
@@ -1311,9 +1284,8 @@ public class BasicStockControllerIntegrationTest {
 
             prints(mainMenu),
             inputs("EXIT")
-    );
-    List<String> emptyList = new ArrayList<>();
-    assertEquals(0, emptyList.size());
+    ));
+
   }
 
 }

@@ -1,11 +1,13 @@
 ***Stock Program***
 
 Features:
+--IMPORTANT--
+All input (Ticker symbols, portfolio names, etc.) are CASE INSENSITIVE!
+
 --Examine Gain/Loss For a Stock--
 The application allows users to calculate the gain or loss of a stock over a specified period based
-on its closing prices. All calculations use the closing price, not the adjusted closing price.
-Users are prompted to input the ticker symbol of the stock and the start and end dates for the
-calculation.
+on its closing prices. All calculations use the adjusted closing price. Users are prompted to input
+the ticker symbol of the stock and the start and end dates for the calculation.
 Note: If the start date has no data, but data is available for some later date up to and including
 the end date, the calculation will begin from the first available date.
 Note: If both the start date and the end date have data, the gain or loss is calculated over this
@@ -51,8 +53,7 @@ closing price is used instead. If no other earlier closing price can be found, t
 
 --Configuration--
 The application is currently configured to use the AlphaVantage API to retrieve stock data, with
-our own free key of the API being used. Keep in mind there is a limit of 25 API calls per day with
-this key.
+the unlimited key that was provided to us by the professor.
 
 This configuration is set in the main function of the BasicStockController class and can be
 changed by altering the constructor of the model. Another data source that has been implemented
@@ -77,7 +78,3 @@ One important restriction is that the program does not allow users to purchase f
 This design choice reflects the real-world limitation where most brokers do not support fractional
 share purchases. Users can only buy whole numbers of shares, ensuring that the simulation remains
 realistic.
-
---Valid Stocks--
-The list of all stocks that this program supports is listed in 'res/stocksData/tickerList.txt'.
-This list was pulled from the AlphaVantage API on 06/03/2024.

@@ -8,17 +8,31 @@ import java.util.Scanner;
 import stock.view.StockView;
 import stock.model.StockModel;
 
+/**
+ * Represents a single command in the stock application. This abstract class provides some utility
+ * functions, such as for handling user input.
+ */
 public abstract class Command {
   protected final StockView view;
   protected final StockModel model;
   protected final Scanner scanner;
 
+  /**
+   * Constructs a command with a stock's view, model, and source of input.
+   *
+   * @param view the view of the stock program.
+   * @param model the model of the stock program.
+   * @param scanner the input of the stock program.
+   */
   public Command(StockView view, StockModel model, Scanner scanner) {
     this.view = view;
     this.model = model;
     this.scanner = scanner;
   }
 
+  /**
+   * Executes the command.
+   */
   public abstract void apply();
 
   // Some helper functions below

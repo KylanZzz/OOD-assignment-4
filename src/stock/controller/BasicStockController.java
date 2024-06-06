@@ -18,6 +18,12 @@ import stock.view.BasicStockView;
 import stock.view.StockView;
 import java.util.Map;
 
+/**
+ * A simple implementation of a stock controller. It allows the user to analyze
+ * stocks such as finding the x-day average, gain/loss over a period of time,
+ * as well as creating portfolios and analyzing their value through text-based
+ * input.
+ */
 public class BasicStockController implements StockController {
 
   private final StockView view;
@@ -25,6 +31,13 @@ public class BasicStockController implements StockController {
   private final Scanner scanner;
   private final Map<String, Command> commands;
 
+  /**
+   * Constructs a BasicStockController with the given view, model, and input
+   * source.
+   * @param view component of the MVC which displays information to the user.
+   * @param model component of MVC which performs operations on data.
+   * @param in the source of input for the application.
+   */
   public BasicStockController(StockView view, StockModel model, Readable in) {
     scanner = new Scanner(in);
     this.view = view;
@@ -40,6 +53,10 @@ public class BasicStockController implements StockController {
     commands.put("4", new ViewPortfolios(view, model, scanner));
   }
 
+  /**
+   * Starts the stock application. Displays the main menu, reads user input,
+   * and executes the commands until the user exits the application.
+   */
   @Override
   public void run() {
     String choice = "";

@@ -12,22 +12,40 @@ import stock.model.StockModel;
 import stock.view.BasicMenuOptions;
 import stock.view.StockView;
 
+/**
+ * Command that prompts the user for how they want
+ * to edit a portfolio.
+ */
 public class EditPortfolio extends PortfolioCommand {
   protected final String portfolioName;
   private final Map<String, StockCommand> commands;
 
+  /**
+   * Constructs a new edit portfolio command.
+   * @param view the view of the stock program.
+   * @param model the model of the stock program.
+   * @param scanner the input of the stock program.
+   * @param portfolioName name of the portfolio to edit.
+   */
   public EditPortfolio(StockView view, StockModel model, Scanner scanner, String portfolioName) {
     super(view, model, scanner);
     this.portfolioName = portfolioName;
     commands = new HashMap<>();
   }
 
-  private void initializeCommands() {
+  /**
+   * Initializes different commands that can be performed on the portfolio.
+   */
+  protected void initializeCommands() {
     commands.put("1", new PortfolioValue(view, model, scanner, portfolioName));
     commands.put("2", new AddStock(view, model, scanner, portfolioName));
     commands.put("3", new RemoveStock(view, model, scanner, portfolioName));
   }
 
+  /**
+   * Repeatedly asks the user for the command they want to perform on the
+   * portfolio until the user inputs the exit keyword.
+   */
   @Override
   public void apply() {
     initializeCommands();

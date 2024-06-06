@@ -570,7 +570,8 @@ public class BasicStockControllerIntegrationTest {
             prints(managePortfoliosMenu + "\n4. View/Edit: NASDAQ"),
             inputs("4"),
 
-            prints("Here are all the stocks in the NASDAQ portfolio:\n\nStock                          Shares\n"),
+            prints("Here are all the stocks in the NASDAQ portfolio:\n\n" +
+                    "Stock                          Shares\n"),
             prints(viewEditPortfolioMenu),
             inputs("EXIT"),
 
@@ -597,7 +598,8 @@ public class BasicStockControllerIntegrationTest {
             prints(managePortfoliosMenu + "\n4. View/Edit: NASDAQ"),
             inputs("4"),
 
-            prints("Here are all the stocks in the NASDAQ portfolio:\n\nStock                          Shares\n"),
+            prints("Here are all the stocks in the NASDAQ portfolio:\n\n" +
+                    "Stock                          Shares\n"),
             prints(viewEditPortfolioMenu),
             inputs("2"),
 

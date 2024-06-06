@@ -8,14 +8,14 @@ import stock.view.StockView;
 /**
  * Command to create a new empty stock portfolio.
  */
-public class CreatePortfolio extends PortfolioCommand{
+public class CreatePortfolio extends PortfolioCommand {
 
   /**
    * Constructs a create portfolio command with a stock's
    * view, model, and source of input.
    *
-   * @param view the view of the stock program.
-   * @param model the model of the stock program.
+   * @param view    the view of the stock program.
+   * @param model   the model of the stock program.
    * @param scanner the input of the stock program.
    */
   public CreatePortfolio(StockView view, StockModel model, Scanner scanner) {

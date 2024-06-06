@@ -1,12 +1,9 @@
 package stock.controller.commands;
 
-import java.io.IOException;
-import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Scanner;
 import java.util.Map;
 
-import stock.controller.commands.Command;
 import stock.controller.commands.portfolio.CreatePortfolio;
 import stock.controller.commands.portfolio.DeletePortfolio;
 import stock.controller.commands.portfolio.EditPortfolio;
@@ -30,8 +27,8 @@ public class ViewPortfolios extends Command {
    * Constructs a ViewPortfolios command with the given view, model, and scanner,
    * then initializes the commands map.
    *
-   * @param view the view to be used for displaying messages
-   * @param model the model to interact with stock data
+   * @param view    the view to be used for displaying messages
+   * @param model   the model to interact with stock data
    * @param scanner the scanner to read user inputs
    */
   public ViewPortfolios(StockView view, StockModel model, Scanner scanner) {
@@ -75,8 +72,8 @@ public class ViewPortfolios extends Command {
         commands.get(choice).apply();
       } else if (!choice.equals(BasicMenuOptions.exitKeyword())) {
         view.printMessage("Invalid input. Please enter a valid choice (a number from 1 through "
-                + BasicMenuOptions.viewPortfolios().size() + ") or " + BasicMenuOptions.exitKeyword()
-                + " to go back.");
+                + BasicMenuOptions.viewPortfolios().size() + ") or " +
+                BasicMenuOptions.exitKeyword() + " to go back.");
       }
     }
   }

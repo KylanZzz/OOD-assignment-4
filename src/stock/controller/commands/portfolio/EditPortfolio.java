@@ -22,9 +22,10 @@ public class EditPortfolio extends PortfolioCommand {
 
   /**
    * Constructs a new edit portfolio command.
-   * @param view the view of the stock program.
-   * @param model the model of the stock program.
-   * @param scanner the input of the stock program.
+   *
+   * @param view          the view of the stock program.
+   * @param model         the model of the stock program.
+   * @param scanner       the input of the stock program.
    * @param portfolioName name of the portfolio to edit.
    */
   public EditPortfolio(StockView view, StockModel model, Scanner scanner, String portfolioName) {
@@ -57,7 +58,7 @@ public class EditPortfolio extends PortfolioCommand {
 
       if (commands.containsKey(choice)) {
         commands.get(choice).apply();
-      } else if (!choice.equals(BasicMenuOptions.exitKeyword())){
+      } else if (!choice.equals(BasicMenuOptions.exitKeyword())) {
         view.printMessage("Invalid input. Please enter a valid choice (a number from 1 through "
                 + BasicMenuOptions.managePortfolio().size() + ") or " + BasicMenuOptions.exitKeyword()
                 + " to go back.");

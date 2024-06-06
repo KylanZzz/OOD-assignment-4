@@ -1,10 +1,8 @@
 package stock.controller;
 
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Scanner;
-
 import stock.controller.commands.CalculateAverage;
 import stock.controller.commands.CalculateCrossover;
 import stock.controller.commands.CalculateGain;
@@ -67,20 +65,11 @@ public class BasicStockController implements StockController {
 
       if (commands.containsKey(choice)) {
         commands.get(choice).apply();
-      } else if (!choice.equals(BasicMenuOptions.exitKeyword())){
-        view.printMessage("Invalid input. Please enter a valid choice (a number from 1 through "
+      } else if (!choice.equals(BasicMenuOptions.exitKeyword())) {
+          view.printMessage("Invalid input. Please enter a valid choice (a number from 1 through "
                 + BasicMenuOptions.mainMenu().size() + ") or " + BasicMenuOptions.exitKeyword()
-        + " to exit the application.");
+                + " to exit the application.");
       }
     }
-  }
-
-  public static void main(String[] args) {
-
-    StockView view = new BasicStockView(System.out);
-//    StockModel model = new BasicStockModel(new CSVDataSource("res/CSVData"));
-    StockModel model = new BasicStockModel(new AlphaVantageDataSource());
-    StockController controller = new BasicStockController(view, model, new InputStreamReader(System.in));
-    controller.run();
   }
 }

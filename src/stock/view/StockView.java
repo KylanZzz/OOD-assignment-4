@@ -6,7 +6,8 @@ import java.util.Map;
 
 /**
  * Defines the contract for a user interface component in a stock market application.
- * Implementations of this interface are responsible for displaying various types of stock-related information to the user.
+ * Implementations of this interface are responsible for;
+ * displaying various types of stock-related information to the user.
  */
 public interface StockView {
 

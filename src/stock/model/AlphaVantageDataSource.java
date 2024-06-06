@@ -78,6 +78,8 @@ public class AlphaVantageDataSource extends CSVDataSource {
   }
 
   /**
+   * The class that takes in the folder directory and the ticker.
+   * Using the API to get the information, and generate it to CSV.
    * @param folder the file of a certain CSV of the stock.
    * @param ticker the ticker of the stock.
    * @throws IOException when the user reached the maximum of request, the API needs time to load,
@@ -102,13 +104,14 @@ public class AlphaVantageDataSource extends CSVDataSource {
       if (responseCode == 429) {
         throw new IOException("API rate limit exceeded for " + ticker);
       } else if (responseCode != 200) {
-        throw new IOException("Failed to download data for " + ticker + ". HTTP response code: " + responseCode);
+        throw new IOException("Failed to download data for " + ticker
+                + ". HTTP response code: " + responseCode);
       }
 
       // Opening a stream from the URL
       try (InputStream in = url.openStream();
-        BufferedInputStream bis = new BufferedInputStream(in);
-        FileOutputStream fos = new FileOutputStream(new File(folder, ticker + ".csv"))) {
+          BufferedInputStream bis = new BufferedInputStream(in);
+          FileOutputStream fos = new FileOutputStream(new File(folder, ticker + ".csv"))) {
 
         byte[] dataBuffer = new byte[1024];
         int bytesRead;
@@ -117,17 +120,20 @@ public class AlphaVantageDataSource extends CSVDataSource {
         }
       }
     } catch (MalformedURLException e) {
-      throw new IOException("The URL is malformed, please check the API endpoint and parameters: " + e.getMessage(), e);
+      throw new IOException("The URL is malformed, please check the API endpoint and parameters: "
+              + e.getMessage(), e);
     } catch (IOException e) {
-      throw new IOException("Failed to download or write data for " + ticker + ": " + e.getMessage(), e);
+      throw new IOException("Failed to download or write data for " + ticker + ": "
+              + e.getMessage(), e);
     } catch (Exception e) {
-      throw new IOException("An unexpected error occurred while accessing the API for " + ticker + ": " + e.getMessage(), e);
+      throw new IOException("An unexpected error occurred while accessing the API for "
+              + ticker + ": " + e.getMessage(), e);
     }
   }
 
 
   protected URL createStockDataURL(String ticker) throws MalformedURLException {
-    return new URL("https://www.alphavantage.co/query?function=TIME_SERIES_DAILY"
+    return new URL("https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED"
             + "&outputsize=full"
             + "&symbol=" + ticker
             + "&apikey=" + API_KEY

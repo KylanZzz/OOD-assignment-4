@@ -44,18 +44,18 @@ public class BasicStockControllerIntegrationTest {
   }
 
   String mainMenu =
-          "Please type the number that corresponds with the choice you would like to pick, or " +
-                  "type EXIT to return/exit\n" +
-                  "1. Get the gain/loss of stock over period of time\n" +
-                  "2. Get x-day moving average of a stock\n" +
-                  "3. Get x-day crossovers for a stock\n" +
-                  "4. Manage portfolios";
+          "Please type the number that corresponds with the choice you would like to pick, or "
+                  + "type EXIT to return/exit\n"
+                  + "1. Get the gain/loss of stock over period of time\n"
+                  + "2. Get x-day moving average of a stock\n"
+                  + "3. Get x-day crossovers for a stock\n"
+                  + "4. Manage portfolios";
   String managePortfoliosMenu =
-          "Please type the number that corresponds with the choice you would like to pick, or " +
-                  "type EXIT to return/exit\n" +
-                  "1. Create new portfolio\n" +
-                  "2. Delete portfolio\n" +
-                  "3. Rename portfolio";
+          "Please type the number that corresponds with the choice you would like to pick, or "
+                  + "type EXIT to return/exit\n"
+                  + "1. Create new portfolio\n"
+                  + "2. Delete portfolio\n"
+                  + "3. Rename portfolio";
   String tickerPrompt = "Please enter the ticker of the stock that you would like to know about:";
   String startDatePrompt = "Please enter the starting date (inclusive) in the format MM/DD/YYYY:";
   String endDatePrompt = "Please enter the ending date (inclusive) in the format MM/DD/YYYY:";
@@ -64,10 +64,11 @@ public class BasicStockControllerIntegrationTest {
   String invalidInputInteger = "Invalid input: not an integer, please try again.";
   String invalidDate = "Invalid date: Please enter a valid date.";
   String futureDateError =
-          "Invalid date: Date has not passed yet, please enter a date before or equal to today.";
+          "Invalid date: Date has not passed yet, please enter a "
+                  + "date before or equal to today.";
   String invalidInputMessage =
-          "Invalid input. Please enter a valid choice (a number from 1 through 4) or EXIT to exit" +
-                  " the application.";
+          "Invalid input. Please enter a valid choice (a number from 1 through 4) "
+                  + "or EXIT to exit the application.";
   String daysPrompt = "Please enter the number of days.";
   String datePrompt = "Please enter the ending date in the format MM/DD/YYYY:";
   String portfolioNamePrompt = "What is the name of the portfolio you would like to create?";
@@ -75,22 +76,22 @@ public class BasicStockControllerIntegrationTest {
   String duplicatePortfolioMessage = "A portfolio with that name already exists!";
   String portfolioDeletedMessage = "Successfully deleted portfolio ";
   String sharesPrompt =
-          "Please enter the number of shares you would like to purchase (you cannot buy " +
-                  "fractional number of stocks): ";
+          "Please enter the number of shares you would like to purchase (you cannot buy "
+                  + "fractional number of stocks): ";
   String viewEditPortfolioMenu =
-          "Please type the number that corresponds with the choice you would like to pick, or " +
-                  "type EXIT to return/exit\n" +
+          "Please type the number that corresponds with the choice you would like to pick, or "
+                  + "type EXIT to return/exit\n" +
                   "1. Calculate portfolio value\n" +
                   "2. Add stock to portfolio\n" +
                   "3. Remove stock from portfolio";
   String removeStockPrompt =
           "Please enter the ticker of the stock that you would like to remove from portfolio ";
   String portfolioValuePrompt =
-          "What date would you like to know the value of portfolio NASDAQ at? Please enter the " +
-                  "date in the format MM/DD/YYYY.";
+          "What date would you like to know the value of portfolio NASDAQ at? Please enter the "
+                  + "date in the format MM/DD/YYYY.";
   String portfolioValuePromptSMP =
-          "What date would you like to know the value of portfolio S&P500 at? Please enter the " +
-                  "date in the format MM/DD/YYYY.";
+          "What date would you like to know the value of portfolio S&P500 at? Please enter the "
+                  + "date in the format MM/DD/YYYY.";
   String deletePortfolioPrompt = "What portfolio would you like to delete?";
   String portfolioDoesNotExistMessage = "A portfolio with that name does not exist!";
   String renamePortfolioPrompt = "What would you like to rename this portfolio to?";
@@ -101,6 +102,7 @@ public class BasicStockControllerIntegrationTest {
             prints(mainMenu),
             inputs("EXIT")
     );
+    assertEquals("", "");
   }
 
   @Test
@@ -122,6 +124,8 @@ public class BasicStockControllerIntegrationTest {
             prints(mainMenu),
             inputs("EXIT")
     );
+    assertEquals("", "");
+
   }
 
   @Test
@@ -169,6 +173,8 @@ public class BasicStockControllerIntegrationTest {
             prints(mainMenu),
             inputs("EXIT")
     );
+    assertEquals("", "");
+
   }
 
   @Test
@@ -229,6 +235,7 @@ public class BasicStockControllerIntegrationTest {
             prints(mainMenu),
             inputs("EXIT")
     );
+    assertEquals("", "");
   }
 
   @Test
@@ -270,6 +277,7 @@ public class BasicStockControllerIntegrationTest {
             prints(mainMenu),
             inputs("EXIT")
     );
+    assertEquals("", "");
   }
 
   @Test
@@ -331,6 +339,7 @@ public class BasicStockControllerIntegrationTest {
             prints(mainMenu),
             inputs("EXIT")
     );
+    assertEquals("", "");
   }
 
   @Test
@@ -393,6 +402,7 @@ public class BasicStockControllerIntegrationTest {
             prints(mainMenu),
             inputs("EXIT")
     );
+    assertEquals("", "");
   }
 
   @Test
@@ -430,23 +440,35 @@ public class BasicStockControllerIntegrationTest {
             prints(mainMenu),
             inputs("EXIT")
     );
+    assertEquals("", "");
   }
 
   @Test
   public void testXDayCrossoversFlow() {
     String amznCrossoversMessage =
-            "Here are all the 100-day crossovers for the AMZN stock starting at 2021-06-01:\n\n" +
-                    "2021-05-27\n2021-05-26\n2021-05-25\n2021-05-24\n2021-05-20\n2021-05-19\n" +
-                    "2021-05-18\n2021-05-17\n2021-05-11\n2021-05-07\n2021-05-06\n2021-05-05\n" +
-                    "2021-05-04\n2021-05-03\n2021-04-30\n2021-04-29\n2021-04-28\n2021-04-27\n" +
-                    "2021-04-26\n2021-04-23\n2021-04-22\n2021-04-21\n2021-04-20\n2021-04-19\n" +
-                    "2021-04-16\n2021-04-15\n2021-04-14\n2021-04-13\n2021-04-12\n2021-04-09\n" +
-                    "2021-04-08\n2021-04-07\n2021-04-06\n2021-04-05\n";
+            "Here are all the 100-day crossovers for the AMZN stock "
+                    + "starting at 2021-06-01:\n\n"
+                    + "2021-05-27\n2021-05-26\n2021-05-25\n2021-05-"
+                    + "24\n2021-05-20\n2021-05-19\n"
+                    + "2021-05-18\n2021-05-17\n2021-05-11\n2021"
+                    + "-05-07\n2021-05-06\n2021-05-05\n"
+                    + "2021-05-04\n2021-05-03\n2021-04-30\n2021-"
+                    + "04-29\n2021-04-28\n2021-04-27\n"
+                    + "2021-04-26\n2021-04-23\n2021-04-22\n"
+                    + "2021-04-21\n2021-04-20\n2021-04-19\n"
+                    + "2021-04-16\n2021-04-15\n2021-04-14\n2021-"
+                    + "04-13\n2021-04-12\n2021-04-09\n"
+                    + "2021-04-08\n2021-04-07\n2021-04-"
+                    + "06\n2021-04-05\n";
     String aaplCrossoversMessage =
-            "Here are all the 30-day crossovers for the AAPL stock starting at 2021-01-20:\n\n" +
-                    "2021-01-20\n2021-01-14\n2021-01-13\n2021-01-12\n2021-01-11\n2021-01-08\n" +
-                    "2021-01-07\n2021-01-05\n2021-01-04\n2020-12-31\n2020-12-30\n2020-12-29\n" +
-                    "2020-12-28\n2020-12-24\n2020-12-23\n2020-12-22\n";
+            "Here are all the 30-day crossovers for the AAPL stock sta"
+                    + "rting at 2021-01-20:\n\n"
+                    + "2021-01-20\n2021-01-14\n2021-01-13\n2"
+                    + "021-01-12\n2021-01-11\n2021-01-08\n"
+                    + "2021-01-07\n2021-01-05\n2021-01-04\n20"
+                    + "20-12-31\n2020-12-30\n2020-12-29\n"
+                    + "2020-12-28\n2020-12-24\n2020-12-23\n202"
+                    + "0-12-22\n";
 
     runTest(
             prints(mainMenu),
@@ -481,6 +503,7 @@ public class BasicStockControllerIntegrationTest {
             prints(mainMenu),
             inputs("EXIT")
     );
+    assertEquals("", "");
   }
 
   @Test
@@ -511,8 +534,9 @@ public class BasicStockControllerIntegrationTest {
 
             prints(portfolioCreatedMessage + "KYLAN'S PORTFOLIO."),
             prints(managePortfoliosMenu +
-                    "\n4. View/Edit: NASDAQ\n5. View/Edit: S&P500\n6. View/Edit: KYLAN'S " +
-                    "PORTFOLIO"),
+                    "\n4. View/Edit: NASDAQ\n5. View/Edit: S&P500\n6. "
+                    + "View/Edit: KYLAN'S "
+                    + "PORTFOLIO"),
             inputs("1"),
 
             prints(portfolioNamePrompt),
@@ -520,8 +544,9 @@ public class BasicStockControllerIntegrationTest {
 
             prints(duplicatePortfolioMessage),
             prints(managePortfoliosMenu +
-                    "\n4. View/Edit: NASDAQ\n5. View/Edit: S&P500\n6. View/Edit: KYLAN'S " +
-                    "PORTFOLIO"),
+                    "\n4. View/Edit: NASDAQ\n5. View/Edit: "
+                    + "S&P500\n6. View/Edit: KYLAN'S "
+                    + "PORTFOLIO"),
             inputs("1"),
 
             prints(portfolioNamePrompt),
@@ -529,18 +554,22 @@ public class BasicStockControllerIntegrationTest {
 
             prints(duplicatePortfolioMessage),
             prints(managePortfoliosMenu +
-                    "\n4. View/Edit: NASDAQ\n5. View/Edit: S&P500\n6. View/Edit: KYLAN'S " +
-                    "PORTFOLIO"),
+                    "\n4. View/Edit: NASDAQ\n5. View/Edit: "
+                    + "S&P500\n6. View/Edit: KYLAN'S "
+                    + "PORTFOLIO"),
             inputs("6"),
 
-            prints("Here are all the stocks in the KYLAN'S PORTFOLIO portfolio:\n\nStock         " +
-                    "                 Shares\n"),
+            prints("Here are all the stocks in the "
+                    + "KYLAN'S PORTFOLIO portfol"
+                    + "io:\n\nStock         "
+                    + "                 Shares\n"),
             prints(viewEditPortfolioMenu),
             inputs("EXIT"),
 
             prints(managePortfoliosMenu +
-                    "\n4. View/Edit: NASDAQ\n5. View/Edit: S&P500\n6. View/Edit: KYLAN'S " +
-                    "PORTFOLIO"),
+                    "\n4. View/Edit: NASDAQ\n5. View/Edit: "
+                    + "S&P500\n6. View/Edit: KYLAN'S "
+                    + "PORTFOLIO"),
             inputs("2"),
 
             prints("What portfolio would you like to delete?"),
@@ -548,13 +577,15 @@ public class BasicStockControllerIntegrationTest {
 
             prints(portfolioDeletedMessage + "NASDAQ."),
             prints(managePortfoliosMenu +
-                    "\n4. View/Edit: S&P500\n5. View/Edit: KYLAN'S PORTFOLIO"),
+                    "\n4. View/Edit: S&P500\n5. View/E"
+                    + "dit: KYLAN'S PORTFOLIO"),
             inputs("2"),
 
             prints("What portfolio would you like to delete?"),
             inputs("KYLAN'S PORTFOLIO"),
 
-            prints(portfolioDeletedMessage + "KYLAN'S PORTFOLIO."),
+            prints(portfolioDeletedMessage + "KY"
+                    + "LAN'S PORTFOLIO."),
             prints(managePortfoliosMenu + "\n4. View/Edit: S&P500"),
             inputs("2"),
 
@@ -565,7 +596,8 @@ public class BasicStockControllerIntegrationTest {
             prints(managePortfoliosMenu),
             inputs("EXTI"),
 
-            prints("Invalid input. Please enter a valid choice (a number from 1 through 3) or " +
+            prints("Invalid input. Please enter a valid c"
+                    + "hoice (a number from 1 through 3) or " +
                     "EXIT to go back."),
             prints(managePortfoliosMenu),
             inputs("EXIT"),
@@ -578,8 +610,9 @@ public class BasicStockControllerIntegrationTest {
   @Test
   public void testManagePortfoliosWithInvalidInputs() {
     String invalidInputMessage =
-            "Invalid input. Please enter a valid choice (a number from 1 through 3) or EXIT to go" +
-                    " back.";
+            "Invalid input. Please enter a valid choice (a number "
+                    + "from 1 through 3) or EXIT to go"
+                    + " back.";
     runTest(
             prints(mainMenu),
             inputs("4"),
@@ -605,7 +638,8 @@ public class BasicStockControllerIntegrationTest {
             prints(managePortfoliosMenu + "\n4. View/Edit: NASDAQ"),
             inputs("4"),
 
-            prints("Here are all the stocks in the NASDAQ portfolio:\n\n" +
+            prints("Here are all the stocks in the NASDAQ portfolio:\n\n"
+                    +
                     "Stock                          Shares\n"),
             prints(viewEditPortfolioMenu),
             inputs("EXIT"),
@@ -616,6 +650,7 @@ public class BasicStockControllerIntegrationTest {
             prints(mainMenu),
             inputs("EXIT")
     );
+    assertEquals("", "");
   }
 
   @Test
@@ -633,81 +668,90 @@ public class BasicStockControllerIntegrationTest {
             prints(managePortfoliosMenu + "\n4. View/Edit: NASDAQ"),
             inputs("4"),
 
-            prints("Here are all the stocks in the NASDAQ portfolio:\n\n" +
-                    "Stock                          Shares\n"),
+            prints("Here are all the stocks in the NASDAQ portfolio:\n\n"
+                    + "Stock                          Shares\n"),
             prints(viewEditPortfolioMenu),
             inputs("2"),
 
-            prints("Please enter the ticker of the stock that you would like to add to portfolio " +
-                    "NASDAQ:"),
+            prints("Please enter the ticker of the stock that you would "
+                    + "like to add to portfolio "
+                    + "NASDAQ:"),
             inputs("AAPL"),
 
             prints(sharesPrompt),
             inputs("50"),
-            prints("Successfully purchased 50 number of AAPL stocks in the NASDAQ portfolio."),
-            prints("Here are all the stocks in the NASDAQ portfolio:\n\nStock                    " +
-                    "      Shares\nAAPL                           50\n"),
+            prints("Successfully purchased 50 number of AAPL "
+                    + "stocks in the NASDAQ portfolio."),
+            prints("Here are all the stocks in the NASDAQ "
+                    + "portfolio:\n\nStock                    "
+                    + "      Shares\nAAPL                           50\n"),
             prints(viewEditPortfolioMenu),
             inputs("2"),
 
-            prints("Please enter the ticker of the stock that you would like to add to portfolio " +
-                    "NASDAQ:"),
+            prints("Please enter the ticker of the stock that "
+                    + "you would like to add to portfolio "
+                    + "NASDAQ:"),
             inputs("AMZN"),
 
             prints(sharesPrompt),
             inputs("500"),
-            prints("Successfully purchased 500 number of AMZN stocks in the NASDAQ portfolio."),
-            prints("Here are all the stocks in the NASDAQ portfolio:\n\n" +
-                    "Stock                          Shares\n" +
-                    "AAPL                           50\n" +
-                    "AMZN                           500\n"),
+            prints("Successfully purchased 500 number of "
+                    + "AMZN stocks in the NASDAQ portfolio."),
+            prints("Here are all the stocks in the NASDAQ portfolio:\n\n"
+                    + "Stock                          Shares\n"
+                    + "AAPL                           50\n"
+                    + "AMZN                           500\n"),
             prints(viewEditPortfolioMenu),
             inputs("2"),
 
-            prints("Please enter the ticker of the stock that you would like to add to portfolio " +
-                    "NASDAQ:"),
+            prints("Please enter the ticker of the stock that you "
+                    + "would like to add to portfolio "
+                    + "NASDAQ:"),
             inputs("AAPL"),
 
             prints(sharesPrompt),
             inputs("500"),
-            prints("Successfully purchased 500 number of AAPL stocks in the NASDAQ portfolio."),
-            prints("Here are all the stocks in the NASDAQ portfolio:\n\n" +
-                    "Stock                          Shares\n" +
-                    "AAPL                           550\n" +
-                    "AMZN                           500\n"),
+            prints("Successfully purchased 500 number of "
+                    + "AAPL stocks in the NASDAQ portfolio."),
+            prints("Here are all the stocks in the NASDAQ portfolio:\n\n"
+                    + "Stock                          Shares\n"
+                    + "AAPL                           550\n"
+                    + "AMZN                           500\n"),
             prints(viewEditPortfolioMenu),
             inputs("3"),
 
             prints(removeStockPrompt + "NASDAQ."),
             inputs("AAPL"),
             prints("Successfully removed stock AAPL from portfolio NASDAQ."),
-            prints("Here are all the stocks in the NASDAQ portfolio:\n\n" +
-                    "Stock                          Shares\n" +
-                    "AMZN                           500\n"),
+            prints("Here are all the stocks in the NASDAQ portfolio:\n\n"
+                    + "Stock                          Shares\n"
+                    + "AMZN                           500\n"),
             prints(viewEditPortfolioMenu),
             inputs("2"),
 
-            prints("Please enter the ticker of the stock that you would like to add to portfolio " +
-                    "NASDAQ:"),
+            prints("Please enter the ticker of the stock that you "
+                    + "would like to add to portfolio "
+                    + "NASDAQ:"),
             inputs("AAPL"),
 
             prints(sharesPrompt),
             inputs("60"),
-            prints("Successfully purchased 60 number of AAPL stocks in the NASDAQ portfolio."),
-            prints("Here are all the stocks in the NASDAQ portfolio:\n\n" +
-                    "Stock                          Shares\n" +
-                    "AAPL                           60\n" +
-                    "AMZN                           500\n"),
+            prints("Successfully purchased 60 number of AAPL stocks "
+                    + "in the NASDAQ portfolio."),
+            prints("Here are all the stocks in the NASDAQ portfolio:\n\n"
+                    + "Stock                          Shares\n"
+                    + "AAPL                           60\n"
+                    + "AMZN                           500\n"),
             prints(viewEditPortfolioMenu),
             inputs("1"),
 
             prints(portfolioValuePrompt),
             inputs("04/20/2013"),
             prints("The value of the portfolio NASDAQ at 2013-04-20 is 7225.88."),
-            prints("Here are all the stocks in the NASDAQ portfolio:\n\n" +
-                    "Stock                          Shares\n" +
-                    "AAPL                           60\n" +
-                    "AMZN                           500\n"),
+            prints("Here are all the stocks in the NASDAQ portfolio:\n\n"
+                    + "Stock                          Shares\n"
+                    + "AAPL                           60\n"
+                    + "AMZN                           500\n"),
             prints(viewEditPortfolioMenu),
             inputs("EXIT"),
 
@@ -726,45 +770,50 @@ public class BasicStockControllerIntegrationTest {
             prints(managePortfoliosMenu + "\n4. View/Edit: NASDAQ"),
             inputs("4"),
 
-            prints("Here are all the stocks in the NASDAQ portfolio:\n\n" +
-                    "Stock                          Shares\n"),
+            prints("Here are all the stocks in the NASDAQ portfolio:\n\n"
+                    + "Stock                          Shares\n"),
             prints(viewEditPortfolioMenu),
             inputs("2"),
 
-            prints("Please enter the ticker of the stock that you would like to add to portfolio " +
-                    "NASDAQ:"),
+            prints("Please enter the ticker of the stock that you would "
+                    + "like to add to portfolio "
+                    + "NASDAQ:"),
             inputs("AMZN"),
 
             prints(sharesPrompt),
             inputs("10"),
-            prints("Successfully purchased 10 number of AMZN stocks in the NASDAQ portfolio."),
-            prints("Here are all the stocks in the NASDAQ portfolio:\n\n" +
-                    "Stock                          Shares\n" +
-                    "AMZN                           10\n"),
+            prints("Successfully purchased 10 number of AMZN "
+                    + "stocks in the NASDAQ portfolio."),
+            prints("Here are all the stocks in the NASDAQ portfolio:\n\n"
+                    + "Stock                          Shares\n"
+                    + "AMZN                           10\n"),
             prints(viewEditPortfolioMenu),
             inputs("2"),
 
-            prints("Please enter the ticker of the stock that you would like to add to portfolio " +
-                    "NASDAQ:"),
+            prints("Please enter the ticker of the stock that you would "
+                    + "like to add to portfolio "
+                    + "NASDAQ:"),
             inputs("AAPL"),
 
             prints(sharesPrompt),
             inputs("10"),
-            prints("Successfully purchased 10 number of AAPL stocks in the NASDAQ portfolio."),
-            prints("Here are all the stocks in the NASDAQ portfolio:\n\n" +
-                    "Stock                          Shares\nA" +
-                    "APL                           10\n" +
-                    "AMZN                           10\n"),
+            prints("Successfully purchased 10 number of AAPL "
+                    + "stocks in the NASDAQ portfolio."),
+            prints("Here are all the stocks in the NASDAQ portfolio:\n\n"
+                    + "Stock                          Shares\nA"
+                    + "APL                           10\n"
+                    + "AMZN                           10\n"),
             prints(viewEditPortfolioMenu),
             inputs("1"),
 
             prints(portfolioValuePrompt),
             inputs("04/20/2024"),
-            prints("The value of the portfolio NASDAQ at 2024-04-20 is 3394.05."),
-            prints("Here are all the stocks in the NASDAQ portfolio:\n\n" +
-                    "Stock                          Shares\n" +
-                    "AAPL                           10\n" +
-                    "AMZN                           10\n"),
+            prints("The value of the portfolio NASDAQ"
+                    + "at 2024-04-20 is 3394.05."),
+            prints("Here are all the stocks in the NASDAQ portfolio:\n\n"
+                    + "Stock                          Shares\n"
+                    + "AAPL                           10\n"
+                    + "AMZN                           10\n"),
             prints(viewEditPortfolioMenu),
             inputs("EXIT"),
 
@@ -774,6 +823,7 @@ public class BasicStockControllerIntegrationTest {
             prints(mainMenu),
             inputs("EXIT")
     );
+    assertEquals("", "");
   }
 
   @Test
@@ -791,50 +841,56 @@ public class BasicStockControllerIntegrationTest {
             prints(managePortfoliosMenu + "\n4. View/Edit: NASDAQ"),
             inputs("4"),
 
-            prints("Here are all the stocks in the NASDAQ portfolio:\n\n" +
-                    "Stock                          Shares\n"),
+            prints("Here are all the stocks in the NASDAQ portfolio:\n\n"
+                    + "Stock                          Shares\n"),
             prints(viewEditPortfolioMenu),
             inputs("2"),
 
-            prints("Please enter the ticker of the stock that you would like to add to portfolio " +
-                    "NASDAQ:"),
+            prints("Please enter the ticker of the stock that you "
+                    + "would like to add to portfolio "
+                    + "NASDAQ:"),
             inputs("AAPL"),
 
             prints(sharesPrompt),
             inputs("50"),
-            prints("Successfully purchased 50 number of AAPL stocks in the NASDAQ portfolio."),
-            prints("Here are all the stocks in the NASDAQ portfolio:\n\n" +
-                    "Stock                          Shares\n" +
-                    "AAPL                           50\n"),
+            prints("Successfully purchased 50 number of AAPL "
+                    + "stocks in the NASDAQ portfolio."),
+            prints("Here are all the stocks in the NASDAQ portfolio:\n\n"
+                    + "Stock                          Shares\n"
+                    + "AAPL                           50\n"),
             prints(viewEditPortfolioMenu),
             inputs("2"),
 
-            prints("Please enter the ticker of the stock that you would like to add to portfolio " +
-                    "NASDAQ:"),
+            prints("Please enter the ticker of the stock that "
+                    + "you would like to add to portfolio "
+                    + "NASDAQ:"),
             inputs("AMZN"),
 
             prints(sharesPrompt),
             inputs("500"),
-            prints("Successfully purchased 500 number of AMZN stocks in the NASDAQ portfolio."),
-            prints("Here are all the stocks in the NASDAQ portfolio:\n\n" +
-                    "Stock                          Shares\n" +
-                    "AAPL                           50\n" +
-                    "AMZN                           500\n"),
+            prints("Successfully purchased 500 number "
+                    + "of AMZN stocks in the NASDAQ portfolio."),
+            prints("Here are all the stocks in the NASDAQ portfolio:\n\n"
+                    + "Stock                          Shares\n"
+                    + "AAPL                           50\n"
+                    + "AMZN                           500\n"),
             prints(viewEditPortfolioMenu),
             inputs("2"),
 
-            prints("Please enter the ticker of the stock that you would like to add to portfolio " +
-                    "NASDAQ:"),
+            prints("Please enter the ticker of the stock that "
+                    + "you would like to add to portfolio "
+                    + "NASDAQ:"),
             inputs("AAA"),
 
             prints(sharesPrompt),
             inputs("100"),
-            prints("Successfully purchased 100 number of AAA stocks in the NASDAQ portfolio."),
-            prints("Here are all the stocks in the NASDAQ portfolio:\n\n" +
-                    "Stock                          Shares\n" +
-                    "AAA                            100\n" +
-                    "AAPL                           50\n" +
-                    "AMZN                           500\n"),
+            prints("Successfully purchased 100 number of AAA "
+                    + "stocks in the NASDAQ portfolio."),
+            prints("Here are all the stocks in the NASDAQ portfolio:\n\n"
+                    + "Stock                          Shares\n"
+                    + "AAA                            100\n"
+                    + "AAPL                           50\n"
+                    + "AMZN                           500\n"),
             prints(viewEditPortfolioMenu),
             inputs("EXIT"),
 
@@ -844,100 +900,113 @@ public class BasicStockControllerIntegrationTest {
             prints(portfolioNamePrompt),
             inputs("S&P500"),
             prints(portfolioCreatedMessage + "S&P500."),
-            prints(managePortfoliosMenu + "\n4. View/Edit: NASDAQ\n5. View/Edit: S&P500"),
+            prints(managePortfoliosMenu + "\n4. View/Edit: "
+                    + "NASDAQ\n5. View/Edit: S&P500"),
             inputs("4"),
 
-            prints("Here are all the stocks in the NASDAQ portfolio:\n\n" +
-                    "Stock                          Shares\n" +
-                    "AAA                            100\n" +
-                    "AAPL                           50\n" +
-                    "AMZN                           500\n"),
+            prints("Here are all the stocks in the NASDAQ portfolio:\n\n"
+                    + "Stock                          Shares\n"
+                    + "AAA                            100\n"
+                    + "AAPL                           50\n"
+                    + "AMZN                           500\n"),
             prints(viewEditPortfolioMenu),
             inputs("EXIT"),
 
-            prints(managePortfoliosMenu + "\n4. View/Edit: NASDAQ\n5. View/Edit: S&P500"),
+            prints(managePortfoliosMenu + "\n4. View/Edit: NASDAQ\n5. "
+                    + "View/Edit: S&P500"),
             inputs("5"),
 
-            prints("Here are all the stocks in the S&P500 portfolio:\n\n" +
-                    "Stock                          Shares\n"),
+            prints("Here are all the stocks in the S&P500 portfolio:\n\n"
+                    + "Stock                          Shares\n"),
             prints(viewEditPortfolioMenu),
             inputs("2"),
 
-            prints("Please enter the ticker of the stock that you would like to add to portfolio " +
-                    "S&P500:"),
+            prints("Please enter the ticker of the stock that you would "
+                    + "like to add to portfolio "
+                    + "S&P500:"),
             inputs("AAA"),
 
             prints(sharesPrompt),
             inputs("10000"),
-            prints("Successfully purchased 10000 number of AAA stocks in the S&P500 portfolio."),
-            prints("Here are all the stocks in the S&P500 portfolio:\n\n" +
-                    "Stock                          Shares\n" +
-                    "AAA                            10000\n"),
+            prints("Successfully purchased 10000 number of "
+                    + "AAA stocks in the S&P500 portfolio."),
+            prints("Here are all the stocks in the S&P500 portfolio:\n\n"
+                    + "Stock                          Shares\n"
+                    + "AAA                            10000\n"),
             prints(viewEditPortfolioMenu),
             inputs("2"),
 
-            prints("Please enter the ticker of the stock that you would like to add to portfolio " +
-                    "S&P500:"),
+            prints("Please enter the ticker of the stock that you "
+                    + "would like to add to portfolio "
+                    + "S&P500:"),
             inputs("AMZN"),
 
             prints(sharesPrompt),
             inputs("300"),
-            prints("Successfully purchased 300 number of AMZN stocks in the S&P500 portfolio."),
-            prints("Here are all the stocks in the S&P500 portfolio:\n\n" +
-                    "Stock                          Shares\n" +
-                    "AAA                            10000\n" +
-                    "AMZN                           300\n"),
+            prints("Successfully purchased 300 number of "
+                    + "AMZN stocks in the S&P500 portfolio."),
+            prints("Here are all the stocks in the S&P500 portfolio:\n\n"
+                    + "Stock                          Shares\n"
+                    + "AAA                            10000\n"
+                    + "AMZN                           300\n"),
             prints(viewEditPortfolioMenu),
             inputs("1"),
 
             prints(portfolioValuePromptSMP),
             inputs("4/20/2013"),
-            prints("The value of the portfolio S&P500 at 2013-04-20 is 3904.80."),
-            prints("Here are all the stocks in the S&P500 portfolio:\n\n" +
-                    "Stock                          Shares\n" +
-                    "AAA                            10000\n" +
-                    "AMZN                           300\n"),
+            prints("The value of the portfolio S&P500 at "
+                    + "2013-04-20 is 3904.80."),
+            prints("Here are all the stocks in the S&P500 portfolio:\n\n"
+                    + "Stock                          Shares\n"
+                    + "AAA                            10000\n"
+                    + "AMZN                           300\n"),
             prints(viewEditPortfolioMenu),
             inputs("1"),
 
             prints(portfolioValuePromptSMP),
             inputs("4/20/2013"),
-            prints("The value of the portfolio S&P500 at 2013-04-20 is 3904.80."),
-            prints("Here are all the stocks in the S&P500 portfolio:\n\n" +
-                    "Stock                          Shares\n" +
-                    "AAA                            10000\n" +
-                    "AMZN                           300\n"),
+            prints("The value of the portfolio S&P500 at "
+                    + "2013-04-20 is 3904.80."),
+            prints("Here are all the stocks in the S&P500 portfolio:\n\n"
+                    + "Stock                          Shares\n"
+                    + "AAA                            10000\n"
+                    + "AMZN                           300\n"),
             prints(viewEditPortfolioMenu),
             inputs("EXIT"),
 
-            prints(managePortfoliosMenu + "\n4. View/Edit: NASDAQ\n5. View/Edit: S&P500"),
+            prints(managePortfoliosMenu + "\n4. View/Edit: NASDAQ\n5. "
+                    + "View/Edit: S&P500"),
             inputs("4"),
 
-            prints("Here are all the stocks in the NASDAQ portfolio:\n\n" +
-                    "Stock                          Shares\n" +
-                    "AAA                            100\n" +
-                    "AAPL                           50\n" +
-                    "AMZN                           500\n"),
+            prints("Here are all the stocks in the NASDAQ portfolio:\n\n"
+                    + "Stock                          Shares\n"
+                    + "AAA                            100\n"
+                    + "AAPL                           50\n"
+                    + "AMZN                           500\n"),
             prints(viewEditPortfolioMenu),
             inputs("1"),
 
             prints(portfolioValuePrompt),
             inputs("4/20/2013"),
-            prints("The value of the portfolio NASDAQ at 2013-04-20 is 7106.23."),
-            prints("Here are all the stocks in the NASDAQ portfolio:\n\n" +
-                    "Stock                          Shares\n" +
-                    "AAA                            100\n" +
-                    "AAPL                           50\n" +
-                    "AMZN                           500\n"),
+            prints("The value of the portfolio NASDAQ at 2013-04-20 "
+                    + "is 7106.23."),
+            prints("Here are all the stocks in the NASDAQ portfolio:\n\n"
+                    + "Stock                          Shares\n"
+                    + "AAA                            100\n"
+                    + "AAPL                           50\n"
+                    + "AMZN                           500\n"),
             prints(viewEditPortfolioMenu),
             inputs("EXIT"),
 
-            prints(managePortfoliosMenu + "\n4. View/Edit: NASDAQ\n5. View/Edit: S&P500"),
+            prints(managePortfoliosMenu + "\n4. View/Edit: NASDAQ\n5. "
+                    + "View/Edit: S&P500"),
             inputs("EXIT"),
 
             prints(mainMenu),
             inputs("EXIT")
     );
+    assertEquals("", "");
+
   }
 
   @Test
@@ -1015,21 +1084,21 @@ public class BasicStockControllerIntegrationTest {
             prints(managePortfoliosMenu + "\n4. View/Edit: OTHERS&P500\n5. View/Edit: S&P500"),
             inputs("5"),
 
-            prints("Here are all the stocks in the S&P500 portfolio:\n\n" +
-                    "Stock                          Shares\n"),
+            prints("Here are all the stocks in the S&P500 portfolio:\n\n"
+                    + "Stock                          Shares\n"),
             prints(viewEditPortfolioMenu),
             inputs("2"),
 
-            prints("Please enter the ticker of the stock that you would like to add to portfolio " +
-                    "S&P500:"),
+            prints("Please enter the ticker of the stock that you would like to add to portfolio "
+                    + "S&P500:"),
             inputs("AAPL"),
 
             prints(sharesPrompt),
             inputs("50"),
             prints("Successfully purchased 50 number of AAPL stocks in the S&P500 portfolio."),
-            prints("Here are all the stocks in the S&P500 portfolio:\n\n" +
-                    "Stock                          Shares\n" +
-                    "AAPL                           50\n"),
+            prints("Here are all the stocks in the S&P500 portfolio:\n\n"
+                    + "Stock                          Shares\n"
+                    + "AAPL                           50\n"),
             prints(viewEditPortfolioMenu),
             inputs("EXIT"),
 
@@ -1044,17 +1113,17 @@ public class BasicStockControllerIntegrationTest {
             prints(managePortfoliosMenu + "\n4. View/Edit: OTHERS&P500\n5. View/Edit: THIRDS&P500"),
             inputs("5"),
 
-            prints("Here are all the stocks in the THIRDS&P500 portfolio:\n\n" +
-                    "Stock                          Shares\n" +
-                    "AAPL                           50\n"),
+            prints("Here are all the stocks in the THIRDS&P500 portfolio:\n\n"
+                    + "Stock                          Shares\n"
+                    + "AAPL                           50\n"),
             prints(viewEditPortfolioMenu),
             inputs("EXIT"),
 
             prints(managePortfoliosMenu + "\n4. View/Edit: OTHERS&P500\n5. View/Edit: THIRDS&P500"),
             inputs("4"),
 
-            prints("Here are all the stocks in the OTHERS&P500 portfolio:\n\n" +
-                    "Stock                          Shares\n"),
+            prints("Here are all the stocks in the OTHERS&P500 portfolio:\n\n"
+                    + "Stock                          Shares\n"),
             prints(viewEditPortfolioMenu),
             inputs("EXIT"),
 
@@ -1064,6 +1133,7 @@ public class BasicStockControllerIntegrationTest {
             prints(mainMenu),
             inputs("EXIT")
     );
+    assertEquals("", "");
   }
 
   @Test
@@ -1096,6 +1166,7 @@ public class BasicStockControllerIntegrationTest {
             prints(mainMenu),
             inputs("EXIT")
     );
+    assertEquals("", "");
   }
 
   @Test
@@ -1113,106 +1184,106 @@ public class BasicStockControllerIntegrationTest {
             prints(managePortfoliosMenu + "\n4. View/Edit: S&P500"),
             inputs("4"),
 
-            prints("Here are all the stocks in the S&P500 portfolio:\n\n" +
-                    "Stock                          Shares\n"),
+            prints("Here are all the stocks in the S&P500 portfolio:\n\n"
+                    + "Stock                          Shares\n"),
             prints(viewEditPortfolioMenu),
             inputs("2"),
 
-            prints("Please enter the ticker of the stock that you would like to add to portfolio " +
-                    "S&P500:"),
+            prints("Please enter the ticker of the stock that you would like to add to portfolio "
+                    + "S&P500:"),
             inputs("AAPL"),
 
             prints(sharesPrompt),
             inputs("50"),
             prints("Successfully purchased 50 number of AAPL stocks in the S&P500 portfolio."),
-            prints("Here are all the stocks in the S&P500 portfolio:\n\n" +
-                    "Stock                          Shares\n" +
-                    "AAPL                           50\n"),
+            prints("Here are all the stocks in the S&P500 portfolio:\n\n"
+                    + "Stock                          Shares\n"
+                    + "AAPL                           50\n"),
             prints(viewEditPortfolioMenu),
             inputs("2"),
 
-            prints("Please enter the ticker of the stock that you would like to add to portfolio " +
-                    "S&P500:"),
+            prints("Please enter the ticker of the stock that you would like to add to portfolio "
+                    + "S&P500:"),
             inputs("GOOG"),
 
             prints(sharesPrompt),
             inputs("50"),
             prints("Successfully purchased 50 number of GOOG stocks in the S&P500 portfolio."),
-            prints("Here are all the stocks in the S&P500 portfolio:\n\n" +
-                    "Stock                          Shares\n" +
-                    "AAPL                           50\n" +
-                    "GOOG                           50\n"),
+            prints("Here are all the stocks in the S&P500 portfolio:\n\n"
+                    + "Stock                          Shares\n"
+                    + "AAPL                           50\n"
+                    + "GOOG                           50\n"),
             prints(viewEditPortfolioMenu),
             inputs("1"),
 
-            prints("What date would you like to know the value of portfolio S&P500 at? Please " +
-                    "enter the date in the format MM/DD/YYYY."),
+            prints("What date would you like to know the value of portfolio S&P500 at? Please "
+                    + "enter the date in the format MM/DD/YYYY."),
             inputs("04/20/2024"),
             prints("The value of the portfolio S&P500 at 2024-04-20 is 16024.75."),
-            prints("Here are all the stocks in the S&P500 portfolio:\n\n" +
-                    "Stock                          Shares\n" +
-                    "AAPL                           50\n" +
-                    "GOOG                           50\n"),
+            prints("Here are all the stocks in the S&P500 portfolio:\n\n"
+                    + "Stock                          Shares\n"
+                    + "AAPL                           50\n"
+                    + "GOOG                           50\n"),
             prints(viewEditPortfolioMenu),
             inputs("2"),
 
-            prints("Please enter the ticker of the stock that you would like to add to portfolio " +
-                    "S&P500:"),
+            prints("Please enter the ticker of the stock that you would like to add to portfolio "
+                    + "S&P500:"),
             inputs("AMZN"),
 
             prints(sharesPrompt),
             inputs("50"),
             prints("Successfully purchased 50 number of AMZN stocks in the S&P500 portfolio."),
-            prints("Here are all the stocks in the S&P500 portfolio:\n\n" +
-                    "Stock                          Shares\n" +
-                    "AAPL                           50\n" +
-                    "AMZN                           50\n" +
-                    "GOOG                           50\n"),
+            prints("Here are all the stocks in the S&P500 portfolio:\n\n"
+                    + "Stock                          Shares\n"
+                    + "AAPL                           50\n"
+                    + "AMZN                           50\n"
+                    + "GOOG                           50\n"),
             prints(viewEditPortfolioMenu),
             inputs("1"),
 
-            prints("What date would you like to know the value of portfolio S&P500 at? Please " +
-                    "enter the date in the format MM/DD/YYYY."),
+            prints("What date would you like to know the value of portfolio S&P500 at? Please "
+                    + "enter the date in the format MM/DD/YYYY."),
             inputs("04/20/2024"),
             prints("The value of the portfolio S&P500 at 2024-04-20 is 24756.25."),
-            prints("Here are all the stocks in the S&P500 portfolio:\n\n" +
-                    "Stock                          Shares\n" +
-                    "AAPL                           50\n" +
-                    "AMZN                           50\n" +
-                    "GOOG                           50\n"),
+            prints("Here are all the stocks in the S&P500 portfolio:\n\n"
+                    + "Stock                          Shares\n"
+                    + "AAPL                           50\n"
+                    + "AMZN                           50\n"
+                    + "GOOG                           50\n"),
             prints(viewEditPortfolioMenu),
             inputs("EXIT"),
 
             prints(managePortfoliosMenu + "\n4. View/Edit: S&P500"),
             inputs("4"),
 
-            prints("Here are all the stocks in the S&P500 portfolio:\n\n" +
-                    "Stock                          Shares\n" +
-                    "AAPL                           50\n" +
-                    "AMZN                           50\n" +
-                    "GOOG                           50\n"),
+            prints("Here are all the stocks in the S&P500 portfolio:\n\n"
+                    + "Stock                          Shares\n"
+                    + "AAPL                           50\n"
+                    + "AMZN                           50\n"
+                    + "GOOG                           50\n"),
             prints(viewEditPortfolioMenu),
             inputs("3"),
 
-            prints("Please enter the ticker of the stock that you would like to remove from " +
-                    "portfolio S&P500."),
+            prints("Please enter the ticker of the stock that you would like to remove from "
+                    + "portfolio S&P500."),
             inputs("AAPL"),
             prints("Successfully removed stock AAPL from portfolio S&P500."),
-            prints("Here are all the stocks in the S&P500 portfolio:\n\n" +
-                    "Stock                          Shares\n" +
-                    "AMZN                           50\n" +
-                    "GOOG                           50\n"),
+            prints("Here are all the stocks in the S&P500 portfolio:\n\n"
+                    + "Stock                          Shares\n"
+                    + "AMZN                           50\n"
+                    + "GOOG                           50\n"),
             prints(viewEditPortfolioMenu),
             inputs("1"),
 
-            prints("What date would you like to know the value of portfolio S&P500 at? Please " +
-                    "enter the date in the format MM/DD/YYYY."),
+            prints("What date would you like to know the value of portfolio S&P500 at? Please "
+                    + "enter the date in the format MM/DD/YYYY."),
             inputs("04/20/2024"),
             prints("The value of the portfolio S&P500 at 2024-04-20 is 16517.50."),
-            prints("Here are all the stocks in the S&P500 portfolio:\n\n" +
-                    "Stock                          Shares\n" +
-                    "AMZN                           50\n" +
-                    "GOOG                           50\n"),
+            prints("Here are all the stocks in the S&P500 portfolio:\n\n"
+                    + "Stock                          Shares\n"
+                    + "AMZN                           50\n"
+                    + "GOOG                           50\n"),
             prints(viewEditPortfolioMenu),
             inputs("EXIT"),
 
@@ -1222,6 +1293,7 @@ public class BasicStockControllerIntegrationTest {
             prints(mainMenu),
             inputs("EXIT")
     );
+    assertEquals("", "");
   }
 
 }

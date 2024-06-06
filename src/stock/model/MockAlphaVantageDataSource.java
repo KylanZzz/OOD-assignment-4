@@ -1,10 +1,17 @@
 package stock.model;
 
-import java.io.*;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.lang.reflect.Field;
-import java.net.*;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.time.LocalDate;
-import java.util.*;
+import java.util.Map;
+import java.util.HashMap;
+import java.util.Set;
+
 
 public class MockAlphaVantageDataSource extends AlphaVantageDataSource {
   private Map<String, Map<LocalDate, Double>> simulatedStockData = new HashMap<>();
@@ -17,7 +24,8 @@ public class MockAlphaVantageDataSource extends AlphaVantageDataSource {
 
   private void initializeSimulatedData() {
     // Initialize simulated API responses
-    simulatedAPIResponses.put("AAPL", "date,open,high,low,close,volume\n2021-01-01,132.43,133.00,131.10,132.69,1000000");
+    simulatedAPIResponses.put("AAPL", "date,open,high,low,close,"
+            + "volume\n2021-01-01,132.43,133.00,131.10,132.69,1000000");
 
     // Initialize simulated stock data
     Map<LocalDate, Double> aaplPrices = new HashMap<>();
@@ -65,7 +73,8 @@ public class MockAlphaVantageDataSource extends AlphaVantageDataSource {
 
   @Override
   public boolean stockExistsAtDate(LocalDate date, String ticker) {
-    return simulatedStockData.containsKey(ticker) && simulatedStockData.get(ticker).containsKey(date);
+    return simulatedStockData.containsKey(ticker)
+            && simulatedStockData.get(ticker).containsKey(date);
   }
 
   @Override

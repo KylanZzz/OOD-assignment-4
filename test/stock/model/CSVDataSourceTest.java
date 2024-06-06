@@ -11,7 +11,10 @@ import java.util.Comparator;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
-import static org.junit.Assert.*;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Test class for {@link CSVDataSource}. It validates the functionality of loading, reading, and
@@ -44,6 +47,10 @@ public class CSVDataSourceTest {
     Files.write(csvFile, lines);
   }
 
+  /**
+   * Clear the file from the directory that the user creates.
+   * @throws IOException when there is error occur in the folder.
+   */
   @AfterClass
   public static void tearDown() throws IOException {
     Files.walk(tempDirectory)
@@ -92,12 +99,6 @@ public class CSVDataSourceTest {
     double closingPrice = dataSource.getClosingPrice(LocalDate.of(2022,2,1), "AAPL");
     assertEquals(0, closingPrice, 0.001);
   }
-
-//  @Test
-//  public void testAddExistsAtDate() throws IOException {
-//    CSVDataSource dataSource = new CSVDataSource(tempDirectory.toString());
-//    assertTrue(dataSource.stockExistsAtDate(LocalDate.of(2022, 1, 5), "AAPL"));
-//  }
 
   @Test
   public void testAddExistsAtDateFalse() throws IOException {

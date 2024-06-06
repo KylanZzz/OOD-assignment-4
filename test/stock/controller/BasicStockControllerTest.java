@@ -38,7 +38,8 @@ public class BasicStockControllerTest {
 
     // Dummy data 100
     @Override
-    public double getGainOverTime(LocalDate startDate, LocalDate endDate, String ticker) throws
+    public double getGainOverTime(LocalDate startDate,
+                                  LocalDate endDate, String ticker) throws
             IOException {
       if (throwIOException) {
         log.append("getGainOverTimeIOException\n");
@@ -217,26 +218,28 @@ public class BasicStockControllerTest {
           + "know about:";
   String invalidDate = "printMessageInvalid date: Please enter a valid date.";
   String invalidDateFormat =
-          "printMessageIncorrect format: Please enter the date in the format " + "MM/DD/YYYY.";
+          "printMessageIncorrect format: Please enter the date in the format "
+                  + "MM/DD/YYYY.";
   String invalidInputInteger = "printMessageInvalid input: not an integer, please try again.";
-  String invalidInputDateOrder = "printMessageInvalid input: The end date must be after the " +
-          "start" + " date.";
+  String invalidInputDateOrder = "printMessageInvalid input: The end date must be after the "
+          + "start" + " date.";
   String startDatePrompt = "printMessagePlease enter the starting date (inclusive) in the format "
           + "MM/DD/YYYY:";
-  String endDatePrompt = "printMessagePlease enter the ending date (inclusive) in the format " +
-          "MM/DD/YYYY:";
+  String endDatePrompt = "printMessagePlease enter the ending date (inclusive) in the format "
+          + "MM/DD/YYYY:";
   String tickerIncorrect = "printMessageThat stock does not exist! Please try again.";
 
   @Test
   public void controllerExitsCorrectly() {
     runTest(false, prints("printMainMenu"), inputs("EXIT"));
+    assertEquals("", "");
   }
 
   @Test
   public void controllerHandlesInvalidMenuInputs() {
-    String invalidInputMessage = "printMessageInvalid input. Please enter a valid choice (a " +
-            "number from 1 through " + BasicMenuOptions.mainMenu().size() + ") or " +
-            BasicMenuOptions.exitKeyword() + " to exit the application.";
+    String invalidInputMessage = "printMessageInvalid input. Please enter a valid choice (a "
+            + "number from 1 through " + BasicMenuOptions.mainMenu().size() + ") or "
+            + BasicMenuOptions.exitKeyword() + " to exit the application.";
     runTest(false, prints("printMainMenu"), inputs("0"), prints(invalidInputMessage,
                     "printMainMenu"), inputs("500000"), prints(invalidInputMessage,
                     "printMainMenu"),
@@ -246,6 +249,8 @@ public class BasicStockControllerTest {
             prints(invalidInputMessage, "printMainMenu"), inputs("a"), prints(invalidInputMessage
                     , "printMainMenu"), inputs("&(*&91j"), prints(invalidInputMessage,
                     "printMainMenu"), inputs("EXIT"));
+    assertEquals("", "");
+
   }
 
   @Test
@@ -268,6 +273,8 @@ public class BasicStockControllerTest {
 
             prints("printStockGainAAPL2005-04-202024-04-20100.0"), prints("printMainMenu"),
             inputs("EXIT"));
+    assertEquals("", "");
+
   }
 
   @Test
@@ -300,6 +307,8 @@ public class BasicStockControllerTest {
 
             prints("printStockGainAAPL2005-04-202024-04-20100.0"), prints("printMainMenu"),
             inputs("EXIT"));
+    assertEquals("", "");
+
   }
 
   @Test
@@ -376,7 +385,7 @@ public class BasicStockControllerTest {
 
             prints("printStockGainAAPL2024-04-202024-06-05100.0"), prints("printMainMenu"),
             inputs("EXIT"));
-
+    assertEquals("", "");
   }
 
 
@@ -393,6 +402,7 @@ public class BasicStockControllerTest {
 
             prints("printStockAverageNFLX2013-04-20100200.0"), prints("printMainMenu"), inputs(
                     "EXIT"));
+    assertEquals("", "");
   }
 
   @Test
@@ -407,8 +417,13 @@ public class BasicStockControllerTest {
             prints("printMessagePlease enter the number of days."), inputs("13"), modelLog(
                     "getCrossover2013-04-2013AAPL"),
 
-            prints("printXDayCrossoversAAPL" + "2013-04-2013" + "0001-01-01" + "0002-02-02"),
+            prints("printXDayCrossoversAAPL"
+                    + "2013-04-2013"
+                    + "0001-01-01"
+                    + "0002-02-02"),
             prints("printMainMenu"), inputs("EXIT"));
+    assertEquals("", "");
+
   }
 
   @Test
@@ -451,6 +466,7 @@ public class BasicStockControllerTest {
                     "printViewPortfoliosS&P500NASDAQ"), inputs("EXIT"),
 
             prints("printMainMenu"), inputs("EXIT"));
+    assertEquals("", "");
   }
 
   @Test
@@ -476,6 +492,8 @@ public class BasicStockControllerTest {
                     "printViewPortfoliosS&P500NASDAQ"), inputs("EXIT"),
 
             prints("printMainMenu"), inputs("EXIT"));
+    assertEquals("", "");
+
   }
 
   @Test
@@ -494,6 +512,8 @@ public class BasicStockControllerTest {
                     "printViewPortfoliosS&P500NASDAQ"), inputs("EXIT"),
 
             prints("printMainMenu"), inputs("EXIT"));
+    assertEquals("", "");
+
   }
 
   @Test
@@ -508,6 +528,7 @@ public class BasicStockControllerTest {
 
             modelLog("getGainOverTimeIOException"), prints("printMessageError while fetching " +
                     "data: gainIOExceptionMessage"), prints("printMainMenu"), inputs("EXIT"));
+    assertEquals("", "");
   }
 
   @Test
@@ -523,6 +544,7 @@ public class BasicStockControllerTest {
 
             modelLog("getCrossoverIOException"), prints("printMessageError while fetching data: " +
                     "crossoverIOExceptionMessage"), prints("printMainMenu"), inputs("EXIT"));
+    assertEquals("", "");
   }
 
   @Test
@@ -538,6 +560,7 @@ public class BasicStockControllerTest {
 
             modelLog("getMovingDayAverageIOException"), prints("printMessageError while fetching " +
                     "data: averageIOExceptionMessage"), prints("printMainMenu"), inputs("EXIT"));
+    assertEquals("", "");
   }
 
   @Test
@@ -553,6 +576,7 @@ public class BasicStockControllerTest {
                     "printViewPortfoliosS&P500NASDAQ"), inputs("EXIT"),
 
             prints("printMainMenu"), inputs("EXIT"));
+    assertEquals("", "");
   }
 
   @Test
@@ -571,6 +595,7 @@ public class BasicStockControllerTest {
                     "printViewPortfoliosS&P500NASDAQ"), inputs("EXIT"),
 
             prints("printMainMenu"), inputs("EXIT"));
+    assertEquals("", "");
   }
 
   @Test
@@ -579,23 +604,24 @@ public class BasicStockControllerTest {
 
             prints("printViewPortfoliosS&P500NASDAQ"), inputs("0"),
 
-            prints("printMessageInvalid input. Please enter a valid choice (a number from 1 " +
-                    "through 3) or EXIT to go back."), prints("printViewPortfoliosS&P500NASDAQ"),
+            prints("printMessageInvalid input. Please enter a valid choice (a number from 1 "
+                    + "through 3) or EXIT to go back."), prints("printViewPortfoliosS&P500NASDAQ"),
             inputs("10"),
 
-            prints("printMessageInvalid input. Please enter a valid choice (a number from 1 " +
-                    "through 3) or EXIT to go back."), prints("printViewPortfoliosS&P500NASDAQ"),
+            prints("printMessageInvalid input. Please enter a valid choice (a number from 1 "
+                    + "through 3) or EXIT to go back."), prints("printViewPortfoliosS&P500NASDAQ"),
             inputs("a"),
 
-            prints("printMessageInvalid input. Please enter a valid choice (a number from 1 " +
-                    "through 3) or EXIT to go back."), prints("printViewPortfoliosS&P500NASDAQ"),
+            prints("printMessageInvalid input. Please enter a valid choice (a number from 1 "
+                    + "through 3) or EXIT to go back."), prints("printViewPortfoliosS&P500NASDAQ"),
             inputs("-1"),
 
-            prints("printMessageInvalid input. Please enter a valid choice (a number from 1 " +
-                    "through 3) or EXIT to go back."), prints("printViewPortfoliosS&P500NASDAQ"),
+            prints("printMessageInvalid input. Please enter a valid choice (a number from 1 "
+                    + "through 3) or EXIT to go back."), prints("printViewPortfoliosS&P500NASDAQ"),
             inputs("EXIT"),
 
             prints("printMainMenu"), inputs("EXIT"));
+    assertEquals("", "");
   }
 
   @Test
@@ -606,31 +632,33 @@ public class BasicStockControllerTest {
 
             prints("printManagePortfoliosS&P500NFLXAMZNAAPL51510"), inputs("2"),
 
-            prints("printMessagePlease enter the ticker of the stock that you would like to add " +
-                    "to portfolio S&P500:"), inputs("AAPL"),
+            prints("printMessagePlease enter the ticker of the stock that you would like to add "
+                    + "to portfolio S&P500:"), inputs("AAPL"),
 
-            prints("printMessagePlease enter the number of shares you would like to purchase " +
-                    "(you" + " cannot buy fractional number of stocks): "), inputs("50"),
+            prints("printMessagePlease enter the number of shares you would like to purchase "
+                    + "(you" + " cannot buy fractional number of stocks): "), inputs("50"),
             modelLog("addStockToPortfolioS&P500AAPL50"),
 
-            prints("printMessageSuccessfully purchased 50 number of AAPL stocks in the S&P500 " +
-                    "portfolio."), prints("printManagePortfoliosS&P500NFLXAMZNAAPL51510"),
+            prints("printMessageSuccessfully purchased 50 number of AAPL stocks in the S&P500 "
+                    + "portfolio."), prints("printManagePortfoliosS&P500NFLXAMZNAAPL51510"),
             inputs("2"),
 
-            prints("printMessagePlease enter the ticker of the stock that you would like to add " +
-                    "to portfolio S&P500:"), inputs("NFLX"),
+            prints("printMessagePlease enter the ticker of the stock that you would like to add "
+                    + "to portfolio S&P500:"), inputs("NFLX"),
 
-            prints("printMessagePlease enter the number of shares you would like to purchase " +
-                    "(you" + " cannot buy fractional number of stocks): "), inputs("100"),
+            prints("printMessagePlease enter the number of shares you would like to purchase "
+                    + "(you" + " cannot buy fractional number of stocks): "), inputs("100"),
             modelLog("addStockToPortfolioS&P500NFLX100"),
 
-            prints("printMessageSuccessfully purchased 100 number of NFLX stocks in the S&P500 " +
-                    "portfolio."), prints("printManagePortfoliosS&P500NFLXAMZNAAPL51510"),
+            prints("printMessageSuccessfully purchased 100 number of NFLX stocks in the S&P500 "
+                    + "portfolio."), prints("printManagePortfoliosS&P500NFLXAMZNAAPL51510"),
             inputs("EXIT"),
 
             prints("printViewPortfoliosS&P500NASDAQ"), inputs("EXIT"),
 
             prints("printMainMenu"), inputs("EXIT"));
+    assertEquals("", "");
+
   }
 
   @Test
@@ -641,8 +669,8 @@ public class BasicStockControllerTest {
 
             prints("printManagePortfoliosS&P500NFLXAMZNAAPL51510"), inputs("2"),
 
-            prints("printMessagePlease enter the ticker of the stock that you would like to add " +
-                    "to portfolio S&P500:"), inputs("UYHGBN"),
+            prints("printMessagePlease enter the ticker of the stock that you would like to add "
+                    + "to portfolio S&P500:"), inputs("UYHGBN"),
 
             prints(tickerIncorrect), inputs("$%^YTG"),
 
@@ -656,17 +684,18 @@ public class BasicStockControllerTest {
 
             prints(tickerIncorrect), inputs("AAPL"),
 
-            prints("printMessagePlease enter the number of shares you would like to purchase " +
-                    "(you" + " cannot buy fractional number of stocks): "), inputs("50"),
+            prints("printMessagePlease enter the number of shares you would like to purchase "
+                    + "(you" + " cannot buy fractional number of stocks): "), inputs("50"),
             modelLog("addStockToPortfolioS&P500AAPL50"),
 
-            prints("printMessageSuccessfully purchased 50 number of AAPL stocks in the S&P500 " +
-                    "portfolio."), prints("printManagePortfoliosS&P500NFLXAMZNAAPL51510"),
+            prints("printMessageSuccessfully purchased 50 number of AAPL stocks in the S&P500 "
+                    + "portfolio."), prints("printManagePortfoliosS&P500NFLXAMZNAAPL51510"),
             inputs("EXIT"),
 
             prints("printViewPortfoliosS&P500NASDAQ"), inputs("EXIT"),
 
             prints("printMainMenu"), inputs("EXIT"));
+    assertEquals("", "");
   }
 
   @Test
@@ -677,60 +706,62 @@ public class BasicStockControllerTest {
 
             prints("printManagePortfoliosS&P500NFLXAMZNAAPL51510"), inputs("2"),
 
-            prints("printMessagePlease enter the ticker of the stock that you would like to add " +
-                    "to portfolio S&P500:"), inputs("AAPL"),
+            prints("printMessagePlease enter the ticker of the stock that you would like to add "
+                    + "to portfolio S&P500:"), inputs("AAPL"),
 
-            prints("printMessagePlease enter the number of shares you would like to purchase " +
-                    "(you" + " cannot buy fractional number of stocks): "), inputs("abcd"),
+            prints("printMessagePlease enter the number of shares you would like to purchase "
+                    + "(you" + " cannot buy fractional number of stocks): "), inputs("abcd"),
             prints("printMessageInvalid input: not an integer, please try again."), prints(
                     "printManagePortfoliosS&P500NFLXAMZNAAPL51510"), inputs("2"),
 
-            prints("printMessagePlease enter the ticker of the stock that you would like to add " +
-                    "to portfolio S&P500:"), inputs("AAPL"),
+            prints("printMessagePlease enter the ticker of the stock that you would like to add "
+                    + "to portfolio S&P500:"), inputs("AAPL"),
 
-            prints("printMessagePlease enter the number of shares you would like to purchase " +
-                    "(you" + " cannot buy fractional number of stocks): "), inputs("$%^&"),
+            prints("printMessagePlease enter the number of shares you would like to purchase "
+                    + "(you" + " cannot buy fractional number of stocks): "), inputs("$%^&"),
             prints("printMessageInvalid input: not an integer, please try again."), prints(
                     "printManagePortfoliosS&P500NFLXAMZNAAPL51510"), inputs("2"),
 
-            prints("printMessagePlease enter the ticker of the stock that you would like to add " +
-                    "to portfolio S&P500:"), inputs("AAPL"),
+            prints("printMessagePlease enter the ticker of the stock that you would like to add "
+                    + "to portfolio S&P500:"), inputs("AAPL"),
 
-            prints("printMessagePlease enter the number of shares you would like to purchase " +
-                    "(you" + " cannot buy fractional number of stocks): "), inputs("10.5"),
+            prints("printMessagePlease enter the number of shares you would like to purchase "
+                    + "(you" + " cannot buy fractional number of stocks): "), inputs("10.5"),
             prints("printMessageInvalid input: not an integer, please try again."), prints(
                     "printManagePortfoliosS&P500NFLXAMZNAAPL51510"), inputs("2"),
 
-            prints("printMessagePlease enter the ticker of the stock that you would like to add " +
-                    "to portfolio S&P500:"), inputs("AAPL"),
+            prints("printMessagePlease enter the ticker of the stock that you would like to add "
+                    + "to portfolio S&P500:"), inputs("AAPL"),
 
-            prints("printMessagePlease enter the number of shares you would like to purchase " +
-                    "(you" + " cannot buy fractional number of stocks): "), inputs("-10"),
+            prints("printMessagePlease enter the number of shares you would like to purchase "
+                    + "(you" + " cannot buy fractional number of stocks): "), inputs("-10"),
             prints("printMessageCannot purchase negative number of stocks."), prints(
                     "printManagePortfoliosS&P500NFLXAMZNAAPL51510"), inputs("2"),
 
-            prints("printMessagePlease enter the ticker of the stock that you would like to add " +
-                    "to portfolio S&P500:"), inputs("AAPL"),
+            prints("printMessagePlease enter the ticker of the stock that you would like to add "
+                    + "to portfolio S&P500:"), inputs("AAPL"),
 
-            prints("printMessagePlease enter the number of shares you would like to purchase " +
-                    "(you" + " cannot buy fractional number of stocks): "), inputs("0"), prints(
+            prints("printMessagePlease enter the number of shares you would like to purchase "
+                    + "(you" + " cannot buy fractional number of stocks): "), inputs("0"), prints(
                     "printMessageCannot purchase 0 shares of a stock."), prints(
                     "printManagePortfoliosS&P500NFLXAMZNAAPL51510"), inputs("2"),
 
-            prints("printMessagePlease enter the ticker of the stock that you would like to add " +
-                    "to portfolio S&P500:"), inputs("AAPL"),
+            prints("printMessagePlease enter the ticker of the stock that you would like to add "
+                    + "to portfolio S&P500:"), inputs("AAPL"),
 
-            prints("printMessagePlease enter the number of shares you would like to purchase " +
-                    "(you" + " cannot buy fractional number of stocks): "), inputs("50"),
+            prints("printMessagePlease enter the number of shares you would like to purchase "
+                    + "(you" + " cannot buy fractional number of stocks): "), inputs("50"),
             modelLog("addStockToPortfolioS&P500AAPL50"),
 
-            prints("printMessageSuccessfully purchased 50 number of AAPL stocks in the S&P500 " +
-                    "portfolio."), prints("printManagePortfoliosS&P500NFLXAMZNAAPL51510"),
+            prints("printMessageSuccessfully purchased 50 number of AAPL stocks in the S&P500 "
+                    + "portfolio."), prints("printManagePortfoliosS&P500NFLXAMZNAAPL51510"),
             inputs("EXIT"),
 
             prints("printViewPortfoliosS&P500NASDAQ"), inputs("EXIT"),
 
             prints("printMainMenu"), inputs("EXIT"));
+    assertEquals("", "");
+
   }
 
   @Test
@@ -741,8 +772,8 @@ public class BasicStockControllerTest {
 
             prints("printManagePortfoliosS&P500NFLXAMZNAAPL51510"), inputs("3"),
 
-            prints("printMessagePlease enter the ticker of the stock that you would like to " +
-                    "remove from portfolio S&P500."), inputs("AAPL"), modelLog(
+            prints("printMessagePlease enter the ticker of the stock that you would like to "
+                    + "remove from portfolio S&P500."), inputs("AAPL"), modelLog(
                     "removeStockFromPortfolioS&P500AAPL"),
 
             prints("printMessageSuccessfully removed stock AAPL from portfolio S&P500."), prints(
@@ -751,6 +782,7 @@ public class BasicStockControllerTest {
             prints("printViewPortfoliosS&P500NASDAQ"), inputs("EXIT"),
 
             prints("printMainMenu"), inputs("EXIT"));
+    assertEquals("", "");
   }
 
   @Test
@@ -761,8 +793,8 @@ public class BasicStockControllerTest {
 
             prints("printManagePortfoliosS&P500NFLXAMZNAAPL51510"), inputs("3"),
 
-            prints("printMessagePlease enter the ticker of the stock that you would like to " +
-                    "remove from portfolio S&P500."), inputs("XYZ123"), prints(tickerIncorrect),
+            prints("printMessagePlease enter the ticker of the stock that you would like to "
+                    + "remove from portfolio S&P500."), inputs("XYZ123"), prints(tickerIncorrect),
             inputs("3"),
 
             prints(tickerIncorrect), inputs("GOOGL"), prints(tickerIncorrect), inputs("3"),
@@ -779,6 +811,7 @@ public class BasicStockControllerTest {
             prints("printViewPortfoliosS&P500NASDAQ"), inputs("EXIT"),
 
             prints("printMainMenu"), inputs("EXIT"));
+    assertEquals("", "");
   }
 
   @Test
@@ -789,33 +822,34 @@ public class BasicStockControllerTest {
 
             prints("printManagePortfoliosS&P500NFLXAMZNAAPL51510"), inputs("invalid"),
 
-            prints("printMessageInvalid input. Please enter a valid choice (a number from 1 " +
-                    "through 3) or EXIT to go back."), prints("printManagePortfoliosS" +
-                    "&P500NFLXAMZNAAPL51510"), inputs("10"),
+            prints("printMessageInvalid input. Please enter a valid choice (a number from 1 "
+                    + "through 3) or EXIT to go back."), prints("printManagePortfoliosS"
+                    + "&P500NFLXAMZNAAPL51510"), inputs("10"),
 
-            prints("printMessageInvalid input. Please enter a valid choice (a number from 1 " +
-                    "through 3) or EXIT to go back."), prints("printManagePortfoliosS" +
-                    "&P500NFLXAMZNAAPL51510"), inputs("0"),
+            prints("printMessageInvalid input. Please enter a valid choice (a number from 1 "
+                    + "through 3) or EXIT to go back."), prints("printManagePortfoliosS"
+                    + "&P500NFLXAMZNAAPL51510"), inputs("0"),
 
-            prints("printMessageInvalid input. Please enter a valid choice (a number from 1 " +
-                    "through 3) or EXIT to go back."), prints("printManagePortfoliosS" +
-                    "&P500NFLXAMZNAAPL51510"), inputs("1+1"),
+            prints("printMessageInvalid input. Please enter a valid choice (a number from 1 "
+                    + "through 3) or EXIT to go back."), prints("printManagePortfoliosS"
+                    + "&P500NFLXAMZNAAPL51510"), inputs("1+1"),
 
-            prints("printMessageInvalid input. Please enter a valid choice (a number from 1 " +
-                    "through 3) or EXIT to go back."), prints("printManagePortfoliosS" +
-                    "&P500NFLXAMZNAAPL51510"), inputs("-5"),
+            prints("printMessageInvalid input. Please enter a valid choice (a number from 1 "
+                    + "through 3) or EXIT to go back."), prints("printManagePortfoliosS"
+                    + "&P500NFLXAMZNAAPL51510"), inputs("-5"),
 
-            prints("printMessageInvalid input. Please enter a valid choice (a number from 1 " +
-                    "through 3) or EXIT to go back."), prints("printManagePortfoliosS" +
-                    "&P500NFLXAMZNAAPL51510"), inputs("2.5"),
+            prints("printMessageInvalid input. Please enter a valid choice (a number from 1 "
+                    + "through 3) or EXIT to go back."), prints("printManagePortfoliosS"
+                    + "&P500NFLXAMZNAAPL51510"), inputs("2.5"),
 
-            prints("printMessageInvalid input. Please enter a valid choice (a number from 1 " +
-                    "through 3) or EXIT to go back."), prints("printManagePortfoliosS" +
-                    "&P500NFLXAMZNAAPL51510"), inputs("EXIT"),
+            prints("printMessageInvalid input. Please enter a valid choice (a number from 1 "
+                    + "through 3) or EXIT to go back."), prints("printManagePortfoliosS"
+                    + "&P500NFLXAMZNAAPL51510"), inputs("EXIT"),
 
             prints("printViewPortfoliosS&P500NASDAQ"), inputs("EXIT"),
 
             prints("printMainMenu"), inputs("EXIT"));
+    assertEquals("", "");
   }
 
   @Test
@@ -826,16 +860,17 @@ public class BasicStockControllerTest {
 
             prints("printManagePortfoliosS&P500NFLXAMZNAAPL51510"), inputs("1"),
 
-            prints("printMessageWhat date would you like to know the value of portfolio S&P500 " +
-                    "at? Please enter the date in the format MM/DD/YYYY."), inputs("01/01/2021"),
+            prints("printMessageWhat date would you like to know the value of portfolio S&P500 "
+                    + "at? Please enter the date in the format MM/DD/YYYY."), inputs("01/01/2021"),
 
-            modelLog("getPortfolioValueIOException"), prints("printMessageError occurred while " +
-                    "fetching data: " + "portfolioValueIOExceptionMessage"), prints(
+            modelLog("getPortfolioValueIOException"), prints("printMessageError occurred while "
+                    + "fetching data: " + "portfolioValueIOExceptionMessage"), prints(
                     "printManagePortfoliosS&P500NFLXAMZNAAPL51510"), inputs("EXIT"),
 
             prints("printViewPortfoliosS&P500NASDAQ"), inputs("EXIT"),
 
             prints("printMainMenu"), inputs("EXIT"));
+    assertEquals("", "");
   }
 
   @Test
@@ -846,8 +881,8 @@ public class BasicStockControllerTest {
 
             prints("printManagePortfoliosS&P500NFLXAMZNAAPL51510"), inputs("1"),
 
-            prints("printMessageWhat date would you like to know the value of portfolio S&P500 " +
-                    "at? Please enter the date in the format MM/DD/YYYY."), inputs("01/01/2021"),
+            prints("printMessageWhat date would you like to know the value of portfolio S&P500 "
+                    + "at? Please enter the date in the format MM/DD/YYYY."), inputs("01/01/2021"),
 
             prints("printMessageThe value of the portfolio S&P500 at 2021-01-01 is 400.00."),
             prints("printManagePortfoliosS&P500NFLXAMZNAAPL51510"), inputs("EXIT"),
@@ -855,6 +890,7 @@ public class BasicStockControllerTest {
             prints("printViewPortfoliosS&P500NASDAQ"), inputs("EXIT"),
 
             prints("printMainMenu"), inputs("EXIT"));
+    assertEquals("", "");
   }
 
   @Test
@@ -867,17 +903,19 @@ public class BasicStockControllerTest {
                     "01/01/2021"),
 
             prints("printMessagePlease enter the number of days."), inputs("abcd"), prints(
-                    "printMessageInvalid input: not an integer, please try again."), inputs("$" +
-                    "%^&"),
+                    "printMessageInvalid input: not an integer, please try again."), inputs("$"
+                    + "%^&"),
             prints("printMessageInvalid input: not an integer, please try again."),
             inputs("10.5"),
             prints("printMessageInvalid input: not an integer, please try again."), inputs("-10")
-            , prints("printMessageInvalid input: not a valid number. Please enter a number from 1" +
-                    " " + "to 2147483647"), inputs("100"), modelLog("getCrossover2021-01" +
-                    "-01100AAPL"), prints("printXDayCrossoversAAPL2021-01-011000001-01-010002-02" +
-                    "-02"),
+            , prints("printMessageInvalid input: not a valid number. Please enter a number from 1"
+                    + " " + "to 2147483647"), inputs("100"), modelLog("getCrossover2021-01"
+                    + "-01100AAPL"), prints("printXDayCrossoversAAPL2021-01-011000001-01-010002-02"
+                    + "-02"),
 
             prints("printMainMenu"), inputs("EXIT"));
+    assertEquals("", "");
+
   }
 
 }

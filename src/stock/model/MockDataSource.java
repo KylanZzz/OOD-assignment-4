@@ -66,10 +66,6 @@ public class MockDataSource implements DataSource {
 
   @Override
   public boolean stockInDataSource(String ticker) throws IOException {
-    if (tickers.contains(ticker)) {
-      return true;
-    } else {
-      return false;
-    }
+    return tickers.contains(ticker);
   }
 }

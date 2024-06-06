@@ -20,7 +20,8 @@ public class MockURLStreamHandler extends URLStreamHandler {
   /**
    * Constructs a MockURLStreamHandler with a predefined response.
    *
-   * @param response The response string to be returned by this handler when a URL connection is opened.
+   * @param response The response string to be returned by this handler,
+   *                when a URL connection is opened.
    */
   public MockURLStreamHandler(String response) {
     this.response = response;

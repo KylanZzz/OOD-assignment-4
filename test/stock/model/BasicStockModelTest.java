@@ -11,7 +11,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+
 
 /**
  * Tests for the BasicStockModel class using a MockDataSource to simulate the DataSource interface.
@@ -26,7 +27,8 @@ public class BasicStockModelTest {
 
   /**
    * Sets up the environment for each test case.
-   * This method initializes the mock data source and the BasicStockModel with this mock data source.
+   * This method initializes the mock data source,
+   * and the BasicStockModel with this mock data source.
    */
   @Before
   public void setup() {
@@ -94,8 +96,8 @@ public class BasicStockModelTest {
 
     double gain = model.getGainOverTime(startDate, endDate, ticker);
     assertEquals(9.0, gain, 0.001);
-
   }
+
   @Test(expected = IOException.class)
   public void testGetGainOverTimeNoTicker() throws IOException {
     LocalDate startDate = LocalDate.of(2024, 03, 04);
@@ -317,6 +319,7 @@ public class BasicStockModelTest {
     model.createNewPortfolio("newPortfolio");
     model.createNewPortfolio("newPortfolio");
   }
+
   @Test
   public void testDeletePortfolio() {
     model.createNewPortfolio("newPortfolio");

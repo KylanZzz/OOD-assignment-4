@@ -4,7 +4,8 @@ import org.junit.Test;
 
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+
 
 /**
  * Test the functionalities of displaying the menu, portfolios, options within the portfolios.

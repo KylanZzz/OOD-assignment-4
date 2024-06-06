@@ -33,8 +33,8 @@ public class BasicStockView implements StockView {
   }
 
   private void printOptionsPrompt() {
-    println("Please type the number that corresponds with the choice you would like to pick, " +
-            "or type " + BasicMenuOptions.exitKeyword() + " to return/exit");
+    println("Please type the number that corresponds with the choice you would like to pick, "
+            + "or type " + BasicMenuOptions.exitKeyword() + " to return/exit");
   }
 
   private void printMenu(List<String> options) {
@@ -67,7 +67,8 @@ public class BasicStockView implements StockView {
   }
 
   /**
-   * Displays the portfolios view menu, allowing users to select from existing portfolios or view/edit them.
+   * Displays the portfolios view menu, allowing users to select from existing portfolios,
+   * or view/edit them.
    *
    * @param portfolios A list of existing portfolio names.
    */
@@ -89,7 +90,8 @@ public class BasicStockView implements StockView {
   @Override
   public void printManagePortfolio(Map<String, Integer> stocks, String name) {
     println(String.format("Here are all the stocks in the %s portfolio:\n", name));
-    var list = stocks.keySet().stream().sorted().map(it -> String.format("%-30s %d", it, stocks.get(it)))
+    var list = stocks.keySet().stream().sorted().map(it
+                    -> String.format("%-30s %d", it, stocks.get(it)))
             .collect(Collectors.toList());
     list.add(0, String.format("%-30s %s", "Stock", "Shares"));
     printList(list);

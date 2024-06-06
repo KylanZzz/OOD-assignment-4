@@ -60,7 +60,8 @@ public class EditPortfolio extends PortfolioCommand {
         commands.get(choice).apply();
       } else if (!choice.equals(BasicMenuOptions.exitKeyword())) {
         view.printMessage("Invalid input. Please enter a valid choice (a number from 1 through "
-                + BasicMenuOptions.managePortfolio().size() + ") or " + BasicMenuOptions.exitKeyword()
+                + BasicMenuOptions.managePortfolio().size() + ") or "
+                + BasicMenuOptions.exitKeyword()
                 + " to go back.");
       }
     }

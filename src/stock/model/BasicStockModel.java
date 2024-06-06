@@ -3,21 +3,19 @@ package stock.model;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
- * This class implements the StockModel interface that provides the functionality for the user to calculate the stocks,
- * including the ability to calculate portfolio values, track stock gains over time, and manage multiple portfolios.
+ * This class implements the StockModel interface,
+ * that provides the functionality for the user to calculate the stocks,
+ * including the ability to calculate portfolio values,
+ * track stock gains over time, and manage multiple portfolios.
  */
 public class BasicStockModel implements StockModel {
   private DataSource dataSource;
   private Map<String, Map<String, Integer>> portfolios;
-
-  private final List<String> CONTENT = List.of("Calculate portfolio value" , "Add stock to portfolio", "Add stock to portfolio");
 
   public BasicStockModel(DataSource ds)  {
     this.dataSource = ds;
@@ -26,10 +24,13 @@ public class BasicStockModel implements StockModel {
 
 
   /**
-   * 1) When the startDate didn't have a stock but someday in the middle starts to have and the endDate exists,
+   * 1) When the startDate didn't have a stock but someday in the middle starts,
+   * to have and the endDate exists,
    * the program will calculate from the date that the stocks starts to exist.
-   * 2) When the startDate did exist and the endDate also exists, the program will calculate the gain and loss over the time.
-   * 3) When the startDate and the endDate both missing, only the middle part exists, will return 0 because cannot find the endDate to compare.
+   * 2) When the startDate did exist and the endDate also exists,
+   * the program will calculate the gain and loss over the time.
+   * 3) When the startDate and the endDate both missing, only the middle part exists,
+   * will return 0 because cannot find the endDate to compare.
    * 4) the startDate is after the endDate, throws illegalArgumentException.
    * @param startDate the start date for calculating the gain/loss.
    * @param endDate   the end date for calculating the cost.
@@ -40,7 +41,8 @@ public class BasicStockModel implements StockModel {
   // Need to write a good documentation for this function
   // Explain to the user how we calculate it
   @Override
-  public double getGainOverTime(LocalDate startDate, LocalDate endDate, String ticker) throws IOException {
+  public double getGainOverTime(LocalDate startDate, LocalDate endDate, String ticker)
+          throws IOException {
     double total = 0;
     LocalDate currentDate = startDate;
 
@@ -78,7 +80,8 @@ public class BasicStockModel implements StockModel {
   }
 
   @Override
-  public double getMovingDayAverage(LocalDate endDate, int days, String ticker) throws IOException {
+  public double getMovingDayAverage(LocalDate endDate, int days, String ticker)
+          throws IOException {
     //might occur error if the data is insufficient
     double total = 0;
     LocalDate date = endDate;
@@ -162,10 +165,12 @@ public class BasicStockModel implements StockModel {
     double value = 0;
     for (int i = 0; i < stocks.size(); i++) {
       LocalDate currDate = date;
-      while (!dataSource.stockExistsAtDate(currDate, stocks.get(i)) && !currDate.equals(LocalDate.of(1,1,1))) {
+      while (!dataSource.stockExistsAtDate(currDate, stocks.get(i))
+              && !currDate.equals(LocalDate.of(1,1,1))) {
         currDate = currDate.minusDays(1);
       }
-      value += dataSource.getClosingPrice(currDate, stocks.get(i)) * portfolios.get(name).get(stocks.get(i));
+      value += dataSource.getClosingPrice(currDate, stocks.get(i))
+              * portfolios.get(name).get(stocks.get(i));
     }
     return value;
   }

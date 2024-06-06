@@ -1,6 +1,5 @@
 package stock.controller.commands.stock;
 
-import java.io.IOException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -39,12 +38,12 @@ public class AddStock extends StockCommand {
    */
   @Override
   public void apply() {
-    view.printMessage(String.format("Please enter the ticker of the stock " +
-            "that you would like to add to portfolio %s:", portfolio));
+    view.printMessage(String.format("Please enter the ticker of the stock "
+            + "that you would like to add to portfolio %s:", portfolio));
     String ticker = getTickerFromUser();
 
-    view.printMessage("Please enter the number of shares you would like to " +
-            "purchase (you cannot buy fractional number of stocks): ");
+    view.printMessage("Please enter the number of shares you would like to "
+            + "purchase (you cannot buy fractional number of stocks): ");
     int shares;
     try {
       shares = scanner.nextInt();
@@ -66,7 +65,7 @@ public class AddStock extends StockCommand {
     }
 
     model.addStockToPortfolio(portfolio, ticker, shares);
-    view.printMessage(String.format("Successfully purchased %d number of %s stocks in the %s " +
-            "portfolio.", shares, ticker, portfolio));
+    view.printMessage(String.format("Successfully purchased %d number of %s stocks in the %s "
+            + "portfolio.", shares, ticker, portfolio));
   }
 }

@@ -2,7 +2,9 @@ package stock.model;
 
 import org.junit.Before;
 import org.junit.Test;
-import java.io.*;
+
+import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.Field;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -35,7 +37,8 @@ public class AlphaVantageDataSourceTest {
   private void setupMockURLStreamHandlerFactory() {
     URLStreamHandlerFactory factory = protocol -> {
       if ("http".equals(protocol) || "https".equals(protocol)) {
-        return new MockURLStreamHandler("date,open,high,low,close,volume\n2021-01-01,132.43,133.00,131.10,132.69,1000000");
+        return new MockURLStreamHandler("date,open,high,low,"
+                + "close,volume\n2021-01-01,132.43,133.00,131.10,132.69,1000000");
       }
       return null;
     };

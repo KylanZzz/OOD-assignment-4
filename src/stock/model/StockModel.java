@@ -5,43 +5,14 @@ import java.time.LocalDate;
 import java.util.Map;
 import java.util.List;
 
+/**
+ * The StockModel interface provides methods for managing stock portfolios and
+ * performing various financial calculations such as calculating gains, moving averages,
+ * and detecting crossovers.
+ * It also includes methods for portfolio management, such as creating,
+ * deleting, and renaming portfolios, as well as adding and removing stocks from portfolios.
+ */
 public interface StockModel {
-//  List<Portfolio> portfolios;
-//
-//  class Portfolio {
-//    String name;
-//    List<Stock> stocks;
-//
-//  }
-//
-//  class Stock {
-//    String ticker;
-//  }
-
-  /**
-   * 1. Get the gain/loss of stock over period of time
-   * 2. Get x-day moving average of a stock
-   * 3. Get x-day crossovers for a stock
-   * 4. Manage portfolios
-   *
-   * Type 4...
-   *
-   * 1. Create new portfolio
-   * 2. Delete portfolio
-   * 3. Rename portfolio
-   * 4. Portfolio 1...
-   * 5. Portfolio 2...
-   * 6. Portfolio 3...
-   *
-   * Type 4...
-   *
-   * // Display portfolio1 contents
-   *
-   * 1. Calculate portfolio value
-   * 2. Add stock to portfolio
-   * 3. Remove stock from portfolio
-   */
-
 
   /**
    * Get the gain/loss of a stock.

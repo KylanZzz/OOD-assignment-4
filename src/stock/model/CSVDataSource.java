@@ -65,12 +65,12 @@ public class CSVDataSource implements DataSource {
                 if (headers[i].trim().equalsIgnoreCase("timestamp")) {
                     timeIndex = i;
                 }
-                if (headers[i].trim().equalsIgnoreCase("adjusted_close")) {
+                if (headers[i].trim().equalsIgnoreCase("close")) {
                     closeIndex = i;
                 }
             }
             if (timeIndex == -1 || closeIndex == -1) {
-                throw new IllegalArgumentException("CSV file does not have required 'timestamp' or 'adjusted_close' columns.");
+                throw new IllegalArgumentException("CSV file does not have required 'timestamp' or 'close' columns.");
             }
 
             while ((line = reader.readLine()) != null) {

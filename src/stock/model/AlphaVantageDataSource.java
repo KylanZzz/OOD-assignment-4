@@ -127,7 +127,7 @@ public class AlphaVantageDataSource extends CSVDataSource {
 
 
   protected URL createStockDataURL(String ticker) throws MalformedURLException {
-    return new URL("https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED"
+    return new URL("https://www.alphavantage.co/query?function=TIME_SERIES_DAILY"
             + "&outputsize=full"
             + "&symbol=" + ticker
             + "&apikey=" + API_KEY

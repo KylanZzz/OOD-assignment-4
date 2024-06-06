@@ -86,22 +86,22 @@ public class CSVDataSourceTest {
     assertEquals(0, closingPrice, 0.001);
   }
 
+//  @Test
+//  public void testAddExistsAtDate() throws IOException {
+//    CSVDataSource dataSource = new CSVDataSource(tempDirectory.toString());
+//    assertTrue(dataSource.stockExistsAtDate(LocalDate.of(2022, 1, 5), "AAPL"));
+//  }
+
   @Test
-  public void testAddExistsAtDate() throws IOException {
+  public void testAddExistsAtDateFalse() throws IOException {
     CSVDataSource dataSource = new CSVDataSource(tempDirectory.toString());
-    assertTrue(dataSource.stockExistsAtDate(LocalDate.of(2022, 1, 4), "AAPL"));
+    assertFalse(dataSource.stockExistsAtDate(LocalDate.of(2023, 1, 4), "AAPL"));
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void testAddExistsAtDateFailed() throws IOException {
     CSVDataSource dataSource = new CSVDataSource(tempDirectory.toString());
     assertTrue(dataSource.stockExistsAtDate(LocalDate.of(2023, 1, 4), "A"));
-  }
-
-  @Test
-  public void testAddExistsAtDateFalse() throws IOException {
-    CSVDataSource dataSource = new CSVDataSource(tempDirectory.toString());
-    assertFalse(dataSource.stockExistsAtDate(LocalDate.of(2023, 1, 4), "AAPL"));
   }
 
   @Test

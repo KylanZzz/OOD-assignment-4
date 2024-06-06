@@ -42,7 +42,8 @@ public interface StockModel {
   double getMovingDayAverage(LocalDate endDate, int days, String ticker) throws IOException;
 
   /**
-   *
+   * Get the crossover of x-day of the stock.
+   * 
    * @param endDate the end day of the crossover.
    * @param days the amount of period to examine the crossover.
    * @param ticker the ticker of the stock.

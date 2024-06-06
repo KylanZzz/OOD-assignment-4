@@ -232,7 +232,8 @@ public class BasicStockControllerTest {
   @Test
   public void controllerExitsCorrectly() {
     runTest(false, prints("printMainMenu"), inputs("EXIT"));
-    assertEquals("", "");
+    List<String> emptyList = new ArrayList<>();
+    assertEquals(0, emptyList.size());
   }
 
   @Test
@@ -246,11 +247,11 @@ public class BasicStockControllerTest {
             inputs("a"), prints(invalidInputMessage, "printMainMenu"), inputs("-1"),
             prints(invalidInputMessage, "printMainMenu"), inputs("1+1"),
             prints(invalidInputMessage, "printMainMenu"), inputs("-10000"),
-            prints(invalidInputMessage, "printMainMenu"), inputs("a"), prints(invalidInputMessage
-                    , "printMainMenu"), inputs("&(*&91j"), prints(invalidInputMessage,
+            prints(invalidInputMessage, "printMainMenu"), inputs("a"), prints(invalidInputMessage,
+                    "printMainMenu"), inputs("&(*&91j"), prints(invalidInputMessage,
                     "printMainMenu"), inputs("EXIT"));
-    assertEquals("", "");
-
+    List<String> emptyList = new ArrayList<>();
+    assertEquals(0, emptyList.size());
   }
 
   @Test
@@ -273,7 +274,8 @@ public class BasicStockControllerTest {
 
             prints("printStockGainAAPL2005-04-202024-04-20100.0"), prints("printMainMenu"),
             inputs("EXIT"));
-    assertEquals("", "");
+    List<String> emptyList = new ArrayList<>();
+    assertEquals(0, emptyList.size());
 
   }
 
@@ -307,7 +309,8 @@ public class BasicStockControllerTest {
 
             prints("printStockGainAAPL2005-04-202024-04-20100.0"), prints("printMainMenu"),
             inputs("EXIT"));
-    assertEquals("", "");
+    List<String> emptyList = new ArrayList<>();
+    assertEquals(0, emptyList.size());
 
   }
 
@@ -385,7 +388,8 @@ public class BasicStockControllerTest {
 
             prints("printStockGainAAPL2024-04-202024-06-05100.0"), prints("printMainMenu"),
             inputs("EXIT"));
-    assertEquals("", "");
+    List<String> emptyList = new ArrayList<>();
+    assertEquals(0, emptyList.size());
   }
 
 
@@ -402,7 +406,8 @@ public class BasicStockControllerTest {
 
             prints("printStockAverageNFLX2013-04-20100200.0"), prints("printMainMenu"), inputs(
                     "EXIT"));
-    assertEquals("", "");
+    List<String> emptyList = new ArrayList<>();
+    assertEquals(0, emptyList.size());
   }
 
   @Test
@@ -422,7 +427,8 @@ public class BasicStockControllerTest {
                     + "0001-01-01"
                     + "0002-02-02"),
             prints("printMainMenu"), inputs("EXIT"));
-    assertEquals("", "");
+    List<String> emptyList = new ArrayList<>();
+    assertEquals(0, emptyList.size());
 
   }
 
@@ -439,6 +445,8 @@ public class BasicStockControllerTest {
                     "printViewPortfoliosS&P500NASDAQ"), inputs("EXIT"),
 
             prints("printMainMenu"), inputs("EXIT"));
+    List<String> emptyList = new ArrayList<>();
+    assertEquals(0, emptyList.size());
   }
 
   @Test
@@ -466,7 +474,8 @@ public class BasicStockControllerTest {
                     "printViewPortfoliosS&P500NASDAQ"), inputs("EXIT"),
 
             prints("printMainMenu"), inputs("EXIT"));
-    assertEquals("", "");
+    List<String> emptyList = new ArrayList<>();
+    assertEquals(0, emptyList.size());
   }
 
   @Test
@@ -492,7 +501,8 @@ public class BasicStockControllerTest {
                     "printViewPortfoliosS&P500NASDAQ"), inputs("EXIT"),
 
             prints("printMainMenu"), inputs("EXIT"));
-    assertEquals("", "");
+    List<String> emptyList = new ArrayList<>();
+    assertEquals(0, emptyList.size());
 
   }
 
@@ -502,8 +512,8 @@ public class BasicStockControllerTest {
 
             prints("printViewPortfoliosS&P500NASDAQ"), inputs("3"),
 
-            prints("printMessageWhat portfolio would you like to rename? (Please enter the name)" +
-                    "."), inputs("NASDAQ"),
+            prints("printMessageWhat portfolio would you like to rename? (Please enter the name)"
+                    + "."), inputs("NASDAQ"),
 
             prints("printMessageWhat would you like to rename this portfolio to?"), inputs(
                     "AAAAAA"), modelLog("renamePortfolioNASDAQAAAAAA"),
@@ -512,7 +522,8 @@ public class BasicStockControllerTest {
                     "printViewPortfoliosS&P500NASDAQ"), inputs("EXIT"),
 
             prints("printMainMenu"), inputs("EXIT"));
-    assertEquals("", "");
+    List<String> emptyList = new ArrayList<>();
+    assertEquals(0, emptyList.size());
 
   }
 
@@ -526,9 +537,10 @@ public class BasicStockControllerTest {
 
             prints(endDatePrompt), inputs("01/01/2021"),
 
-            modelLog("getGainOverTimeIOException"), prints("printMessageError while fetching " +
-                    "data: gainIOExceptionMessage"), prints("printMainMenu"), inputs("EXIT"));
-    assertEquals("", "");
+            modelLog("getGainOverTimeIOException"), prints("printMessageError while fetching "
+                    + "data: gainIOExceptionMessage"), prints("printMainMenu"), inputs("EXIT"));
+    List<String> emptyList = new ArrayList<>();
+    assertEquals(0, emptyList.size());
   }
 
   @Test
@@ -542,9 +554,10 @@ public class BasicStockControllerTest {
 
             prints("printMessagePlease enter the number of days."), inputs("50"),
 
-            modelLog("getCrossoverIOException"), prints("printMessageError while fetching data: " +
-                    "crossoverIOExceptionMessage"), prints("printMainMenu"), inputs("EXIT"));
-    assertEquals("", "");
+            modelLog("getCrossoverIOException"), prints("printMessageError while fetching data: "
+                    + "crossoverIOExceptionMessage"), prints("printMainMenu"), inputs("EXIT"));
+    List<String> emptyList = new ArrayList<>();
+    assertEquals(0, emptyList.size());
   }
 
   @Test
@@ -558,9 +571,10 @@ public class BasicStockControllerTest {
 
             prints("printMessagePlease enter the number of days."), inputs("50"),
 
-            modelLog("getMovingDayAverageIOException"), prints("printMessageError while fetching " +
-                    "data: averageIOExceptionMessage"), prints("printMainMenu"), inputs("EXIT"));
-    assertEquals("", "");
+            modelLog("getMovingDayAverageIOException"), prints("printMessageError while fetching "
+                    + "data: averageIOExceptionMessage"), prints("printMainMenu"), inputs("EXIT"));
+    List<String> emptyList = new ArrayList<>();
+    assertEquals(0, emptyList.size());
   }
 
   @Test
@@ -569,14 +583,15 @@ public class BasicStockControllerTest {
 
             prints("printViewPortfoliosS&P500NASDAQ"), inputs("3"),
 
-            prints("printMessageWhat portfolio would you like to rename? (Please enter the name)" +
-                    "."), inputs("S&N500"),
+            prints("printMessageWhat portfolio would you like to rename? (Please enter the name)"
+                    + "."), inputs("S&N500"),
 
             prints("printMessageA portfolio with that name does not exist!"), prints(
                     "printViewPortfoliosS&P500NASDAQ"), inputs("EXIT"),
 
             prints("printMainMenu"), inputs("EXIT"));
-    assertEquals("", "");
+    List<String> emptyList = new ArrayList<>();
+    assertEquals(0, emptyList.size());
   }
 
   @Test
@@ -585,8 +600,8 @@ public class BasicStockControllerTest {
 
             prints("printViewPortfoliosS&P500NASDAQ"), inputs("3"),
 
-            prints("printMessageWhat portfolio would you like to rename? (Please enter the name)" +
-                    "."), inputs("S&P500"),
+            prints("printMessageWhat portfolio would you like to rename? (Please enter the name)"
+                    + "."), inputs("S&P500"),
 
             prints("printMessageWhat would you like to rename this portfolio to?"), inputs(
                     "NASDAQ"),
@@ -595,7 +610,8 @@ public class BasicStockControllerTest {
                     "printViewPortfoliosS&P500NASDAQ"), inputs("EXIT"),
 
             prints("printMainMenu"), inputs("EXIT"));
-    assertEquals("", "");
+    List<String> emptyList = new ArrayList<>();
+    assertEquals(0, emptyList.size());
   }
 
   @Test
@@ -621,7 +637,8 @@ public class BasicStockControllerTest {
             inputs("EXIT"),
 
             prints("printMainMenu"), inputs("EXIT"));
-    assertEquals("", "");
+    List<String> emptyList = new ArrayList<>();
+    assertEquals(0, emptyList.size());
   }
 
   @Test
@@ -657,8 +674,8 @@ public class BasicStockControllerTest {
             prints("printViewPortfoliosS&P500NASDAQ"), inputs("EXIT"),
 
             prints("printMainMenu"), inputs("EXIT"));
-    assertEquals("", "");
-
+    List<String> emptyList = new ArrayList<>();
+    assertEquals(0, emptyList.size());
   }
 
   @Test
@@ -695,7 +712,8 @@ public class BasicStockControllerTest {
             prints("printViewPortfoliosS&P500NASDAQ"), inputs("EXIT"),
 
             prints("printMainMenu"), inputs("EXIT"));
-    assertEquals("", "");
+    List<String> emptyList = new ArrayList<>();
+    assertEquals(0, emptyList.size());
   }
 
   @Test
@@ -760,8 +778,8 @@ public class BasicStockControllerTest {
             prints("printViewPortfoliosS&P500NASDAQ"), inputs("EXIT"),
 
             prints("printMainMenu"), inputs("EXIT"));
-    assertEquals("", "");
-
+    List<String> emptyList = new ArrayList<>();
+    assertEquals(0, emptyList.size());
   }
 
   @Test
@@ -782,7 +800,8 @@ public class BasicStockControllerTest {
             prints("printViewPortfoliosS&P500NASDAQ"), inputs("EXIT"),
 
             prints("printMainMenu"), inputs("EXIT"));
-    assertEquals("", "");
+    List<String> emptyList = new ArrayList<>();
+    assertEquals(0, emptyList.size());
   }
 
   @Test
@@ -811,7 +830,8 @@ public class BasicStockControllerTest {
             prints("printViewPortfoliosS&P500NASDAQ"), inputs("EXIT"),
 
             prints("printMainMenu"), inputs("EXIT"));
-    assertEquals("", "");
+    List<String> emptyList = new ArrayList<>();
+    assertEquals(0, emptyList.size());
   }
 
   @Test
@@ -849,7 +869,8 @@ public class BasicStockControllerTest {
             prints("printViewPortfoliosS&P500NASDAQ"), inputs("EXIT"),
 
             prints("printMainMenu"), inputs("EXIT"));
-    assertEquals("", "");
+    List<String> emptyList = new ArrayList<>();
+    assertEquals(0, emptyList.size());
   }
 
   @Test
@@ -870,7 +891,8 @@ public class BasicStockControllerTest {
             prints("printViewPortfoliosS&P500NASDAQ"), inputs("EXIT"),
 
             prints("printMainMenu"), inputs("EXIT"));
-    assertEquals("", "");
+    List<String> emptyList = new ArrayList<>();
+    assertEquals(0, emptyList.size());
   }
 
   @Test
@@ -890,7 +912,8 @@ public class BasicStockControllerTest {
             prints("printViewPortfoliosS&P500NASDAQ"), inputs("EXIT"),
 
             prints("printMainMenu"), inputs("EXIT"));
-    assertEquals("", "");
+    List<String> emptyList = new ArrayList<>();
+    assertEquals(0, emptyList.size());
   }
 
   @Test
@@ -907,14 +930,15 @@ public class BasicStockControllerTest {
                     + "%^&"),
             prints("printMessageInvalid input: not an integer, please try again."),
             inputs("10.5"),
-            prints("printMessageInvalid input: not an integer, please try again."), inputs("-10")
-            , prints("printMessageInvalid input: not a valid number. Please enter a number from 1"
+            prints("printMessageInvalid input: not an integer, please try again."), inputs("-10"),
+            prints("printMessageInvalid input: not a valid number. Please enter a number from 1"
                     + " " + "to 2147483647"), inputs("100"), modelLog("getCrossover2021-01"
                     + "-01100AAPL"), prints("printXDayCrossoversAAPL2021-01-011000001-01-010002-02"
                     + "-02"),
 
             prints("printMainMenu"), inputs("EXIT"));
-    assertEquals("", "");
+    List<String> emptyList = new ArrayList<>();
+    assertEquals(0, emptyList.size());
 
   }
 

@@ -1,6 +1,5 @@
 package stock.controller.commands.stock;
 
-import java.io.IOException;
 import java.util.Scanner;
 
 import stock.model.StockModel;

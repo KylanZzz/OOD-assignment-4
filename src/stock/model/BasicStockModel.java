@@ -99,7 +99,8 @@ public class BasicStockModel implements StockModel {
   }
 
   @Override
-  public List<LocalDate> getCrossover(LocalDate endDate, int days, String ticker) throws IOException {
+  public List<LocalDate> getCrossover(LocalDate endDate, int days, String ticker)
+          throws IOException {
     double movingDayAvg = getMovingDayAverage(endDate, days, ticker);
     List<LocalDate> crossOvers = new ArrayList<>();
     LocalDate date = endDate;
@@ -158,7 +159,7 @@ public class BasicStockModel implements StockModel {
     return portfoliosList;
   }
 
- // multi
+  // multi
   @Override
   public double getPortfolioValue(String name, LocalDate date) throws IOException {
     List<String> stocks = new ArrayList<>(portfolios.get(name).keySet());

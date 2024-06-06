@@ -22,8 +22,8 @@ public class BasicStockViewTest {
    * This method initializes a StringBuilder to capture the output,
    * from the BasicStockView, and creates an instance of BasicStockView with this StringBuilder,
    * as its Appendable output target.
-   * This setup is crucial for testing the output functionality of the BasicStockView without interacting,
-   * with more complex I/O operations.
+   * This setup is crucial for testing the output functionality of,
+   * the BasicStockView without interacting, with more complex I/O operations.
    */
   @Before
   public void setup() {

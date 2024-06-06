@@ -90,8 +90,8 @@ public class BasicStockView implements StockView {
   @Override
   public void printManagePortfolio(Map<String, Integer> stocks, String name) {
     println(String.format("Here are all the stocks in the %s portfolio:\n", name));
-    var list = stocks.keySet().stream().sorted().map(it
-                    -> String.format("%-30s %d", it, stocks.get(it)))
+    var list = stocks.keySet().stream().sorted()
+            .map(it -> String.format("%-30s %d", it, stocks.get(it)))
             .collect(Collectors.toList());
     list.add(0, String.format("%-30s %s", "Stock", "Shares"));
     printList(list);

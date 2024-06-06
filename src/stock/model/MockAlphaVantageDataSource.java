@@ -13,6 +13,11 @@ import java.util.HashMap;
 import java.util.Set;
 
 
+/**
+ * A mock implementation of AlphaVantageDataSource for testing purposes.
+ * This class simulates API responses and stock data to facilitate unit testing
+ * without making actual API requests.
+ */
 public class MockAlphaVantageDataSource extends AlphaVantageDataSource {
   private Map<String, Map<LocalDate, Double>> simulatedStockData = new HashMap<>();
   private Map<String, String> simulatedAPIResponses = new HashMap<>();

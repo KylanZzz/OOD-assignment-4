@@ -18,24 +18,25 @@ import stock.view.StockView;
 public class StockProgram {
 
   /**
-   * The main method that sets up the stock market application. It creates instances
-   * of the view, model, and controller, and then starts the application.
+   * The main method to run the stock portfolio application.
    *
-   * The method initializes:
-   * - A {@link StockView} that outputs to {@code System.out}, represented by a {@code BasicStockView}.
-   * - A {@link StockModel} that can be switched between a CSV data source and an AlphaVantage data source.
-   *   This example uses {@code AlphaVantageDataSource} for live stock data.
-   * - A {@link StockController} that manages the interaction between the model and view,
-   *   taking input from {@code System.in}.
+   * <p>This method initializes the view, model, and controller components of the application
+   * and starts the application by calling the controller's run method.</p>
    *
-   * @param args the command-line arguments, not used in this application.
+   * <p>The view is implemented by BasicStockView, which outputs to the system output stream.
+   * The model is implemented by BasicStockModel, which can be initialized,
+   * with different data sources.
+   * Currently, it is initialized with AlphaVantageDataSource.</p>
+   *
+   * @param args command line arguments (not used).
    */
   public static void main(String[] args) {
 
     StockView view = new BasicStockView(System.out);
     // StockModel model = new BasicStockModel(new CSVDataSource("res/CSVData"));
     StockModel model = new BasicStockModel(new AlphaVantageDataSource());
-    StockController controller = new BasicStockController(view, model, new InputStreamReader(System.in));
+    StockController controller = new BasicStockController(view, model,
+            new InputStreamReader(System.in));
     controller.run();
   }
 }

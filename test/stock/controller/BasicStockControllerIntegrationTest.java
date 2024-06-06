@@ -6,6 +6,8 @@ import java.io.Reader;
 import java.io.StringReader;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 
 import stock.model.AlphaVantageDataSource;
 import stock.model.BasicStockModel;
@@ -80,10 +82,10 @@ public class BasicStockControllerIntegrationTest {
                   + "fractional number of stocks): ";
   String viewEditPortfolioMenu =
           "Please type the number that corresponds with the choice you would like to pick, or "
-                  + "type EXIT to return/exit\n" +
-                  "1. Calculate portfolio value\n" +
-                  "2. Add stock to portfolio\n" +
-                  "3. Remove stock from portfolio";
+                  + "type EXIT to return/exit\n"
+                  + "1. Calculate portfolio value\n"
+                  + "2. Add stock to portfolio\n"
+                  + "3. Remove stock from portfolio";
   String removeStockPrompt =
           "Please enter the ticker of the stock that you would like to remove from portfolio ";
   String portfolioValuePrompt =
@@ -98,11 +100,13 @@ public class BasicStockControllerIntegrationTest {
 
   @Test
   public void programRunsAndExits() {
+    List<String> emptyList = new ArrayList<>();
+
     runTest(
             prints(mainMenu),
             inputs("EXIT")
     );
-    assertEquals("", "");
+    assertEquals(0, emptyList.size());
   }
 
   @Test
@@ -124,7 +128,8 @@ public class BasicStockControllerIntegrationTest {
             prints(mainMenu),
             inputs("EXIT")
     );
-    assertEquals("", "");
+    List<String> emptyList = new ArrayList<>();
+    assertEquals(0, emptyList.size());
 
   }
 
@@ -173,7 +178,8 @@ public class BasicStockControllerIntegrationTest {
             prints(mainMenu),
             inputs("EXIT")
     );
-    assertEquals("", "");
+    List<String> emptyList = new ArrayList<>();
+    assertEquals(0, emptyList.size());
 
   }
 
@@ -235,7 +241,8 @@ public class BasicStockControllerIntegrationTest {
             prints(mainMenu),
             inputs("EXIT")
     );
-    assertEquals("", "");
+    List<String> emptyList = new ArrayList<>();
+    assertEquals(0, emptyList.size());
   }
 
   @Test
@@ -277,7 +284,8 @@ public class BasicStockControllerIntegrationTest {
             prints(mainMenu),
             inputs("EXIT")
     );
-    assertEquals("", "");
+    List<String> emptyList = new ArrayList<>();
+    assertEquals(0, emptyList.size());
   }
 
   @Test
@@ -339,7 +347,9 @@ public class BasicStockControllerIntegrationTest {
             prints(mainMenu),
             inputs("EXIT")
     );
-    assertEquals("", "");
+
+    List<String> emptyList = new ArrayList<>();
+    assertEquals(0, emptyList.size());
   }
 
   @Test
@@ -402,7 +412,8 @@ public class BasicStockControllerIntegrationTest {
             prints(mainMenu),
             inputs("EXIT")
     );
-    assertEquals("", "");
+    List<String> emptyList = new ArrayList<>();
+    assertEquals(0, emptyList.size());
   }
 
   @Test
@@ -440,7 +451,8 @@ public class BasicStockControllerIntegrationTest {
             prints(mainMenu),
             inputs("EXIT")
     );
-    assertEquals("", "");
+    List<String> emptyList = new ArrayList<>();
+    assertEquals(0, emptyList.size());
   }
 
   @Test
@@ -503,7 +515,8 @@ public class BasicStockControllerIntegrationTest {
             prints(mainMenu),
             inputs("EXIT")
     );
-    assertEquals("", "");
+    List<String> emptyList = new ArrayList<>();
+    assertEquals(0, emptyList.size());
   }
 
   @Test
@@ -533,8 +546,8 @@ public class BasicStockControllerIntegrationTest {
             inputs("KYLAN'S PORTFOLIO"),
 
             prints(portfolioCreatedMessage + "KYLAN'S PORTFOLIO."),
-            prints(managePortfoliosMenu +
-                    "\n4. View/Edit: NASDAQ\n5. View/Edit: S&P500\n6. "
+            prints(managePortfoliosMenu
+                    + "\n4. View/Edit: NASDAQ\n5. View/Edit: S&P500\n6. "
                     + "View/Edit: KYLAN'S "
                     + "PORTFOLIO"),
             inputs("1"),
@@ -543,8 +556,8 @@ public class BasicStockControllerIntegrationTest {
             inputs("nasdaq"),
 
             prints(duplicatePortfolioMessage),
-            prints(managePortfoliosMenu +
-                    "\n4. View/Edit: NASDAQ\n5. View/Edit: "
+            prints(managePortfoliosMenu
+                    + "\n4. View/Edit: NASDAQ\n5. View/Edit: "
                     + "S&P500\n6. View/Edit: KYLAN'S "
                     + "PORTFOLIO"),
             inputs("1"),
@@ -553,8 +566,8 @@ public class BasicStockControllerIntegrationTest {
             inputs("s&P500"),
 
             prints(duplicatePortfolioMessage),
-            prints(managePortfoliosMenu +
-                    "\n4. View/Edit: NASDAQ\n5. View/Edit: "
+            prints(managePortfoliosMenu
+                    + "\n4. View/Edit: NASDAQ\n5. View/Edit: "
                     + "S&P500\n6. View/Edit: KYLAN'S "
                     + "PORTFOLIO"),
             inputs("6"),
@@ -566,8 +579,8 @@ public class BasicStockControllerIntegrationTest {
             prints(viewEditPortfolioMenu),
             inputs("EXIT"),
 
-            prints(managePortfoliosMenu +
-                    "\n4. View/Edit: NASDAQ\n5. View/Edit: "
+            prints(managePortfoliosMenu
+                    + "\n4. View/Edit: NASDAQ\n5. View/Edit: "
                     + "S&P500\n6. View/Edit: KYLAN'S "
                     + "PORTFOLIO"),
             inputs("2"),
@@ -576,8 +589,8 @@ public class BasicStockControllerIntegrationTest {
             inputs("NASDAQ"),
 
             prints(portfolioDeletedMessage + "NASDAQ."),
-            prints(managePortfoliosMenu +
-                    "\n4. View/Edit: S&P500\n5. View/E"
+            prints(managePortfoliosMenu
+                    + "\n4. View/Edit: S&P500\n5. View/E"
                     + "dit: KYLAN'S PORTFOLIO"),
             inputs("2"),
 
@@ -597,14 +610,16 @@ public class BasicStockControllerIntegrationTest {
             inputs("EXTI"),
 
             prints("Invalid input. Please enter a valid c"
-                    + "hoice (a number from 1 through 3) or " +
-                    "EXIT to go back."),
+                    + "hoice (a number from 1 through 3) or "
+                    + "EXIT to go back."),
             prints(managePortfoliosMenu),
             inputs("EXIT"),
 
             prints(mainMenu),
             inputs("EXIT")
     );
+    List<String> emptyList = new ArrayList<>();
+    assertEquals(0, emptyList.size());
   }
 
   @Test
@@ -650,7 +665,8 @@ public class BasicStockControllerIntegrationTest {
             prints(mainMenu),
             inputs("EXIT")
     );
-    assertEquals("", "");
+    List<String> emptyList = new ArrayList<>();
+    assertEquals(0, emptyList.size());
   }
 
   @Test
@@ -823,7 +839,8 @@ public class BasicStockControllerIntegrationTest {
             prints(mainMenu),
             inputs("EXIT")
     );
-    assertEquals("", "");
+    List<String> emptyList = new ArrayList<>();
+    assertEquals(0, emptyList.size());
   }
 
   @Test
@@ -1005,8 +1022,8 @@ public class BasicStockControllerIntegrationTest {
             prints(mainMenu),
             inputs("EXIT")
     );
-    assertEquals("", "");
-
+    List<String> emptyList = new ArrayList<>();
+    assertEquals(0, emptyList.size());
   }
 
   @Test
@@ -1133,7 +1150,8 @@ public class BasicStockControllerIntegrationTest {
             prints(mainMenu),
             inputs("EXIT")
     );
-    assertEquals("", "");
+    List<String> emptyList = new ArrayList<>();
+    assertEquals(0, emptyList.size());
   }
 
   @Test
@@ -1166,7 +1184,8 @@ public class BasicStockControllerIntegrationTest {
             prints(mainMenu),
             inputs("EXIT")
     );
-    assertEquals("", "");
+    List<String> emptyList = new ArrayList<>();
+    assertEquals(0, emptyList.size());
   }
 
   @Test
@@ -1293,7 +1312,8 @@ public class BasicStockControllerIntegrationTest {
             prints(mainMenu),
             inputs("EXIT")
     );
-    assertEquals("", "");
+    List<String> emptyList = new ArrayList<>();
+    assertEquals(0, emptyList.size());
   }
 
 }

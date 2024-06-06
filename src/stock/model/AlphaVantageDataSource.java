@@ -31,7 +31,7 @@ public class AlphaVantageDataSource extends CSVDataSource {
   private boolean checkInitialization = false;
 
   /**
-   * Initialized the class by inherent the CSVDataSource class/
+   * Initialized the class by inherent the CSVDataSource class.
    */
   // throw IOException
   public AlphaVantageDataSource() {
@@ -53,23 +53,23 @@ public class AlphaVantageDataSource extends CSVDataSource {
    * @throws IOException when the directory cannot find any files.
    */
   protected void generateTickerList(File directory) throws IOException {
-    File[] files = directory.listFiles((dir, name) -> name.endsWith(".csv"));
-    if (files != null && files.length != 0) {
-      for (File file : files) {
-        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
-          String line = reader.readLine();
-          while ((line = reader.readLine()) != null) {
-            String[] parts = line.split(",");
-            if (parts.length > 0) {
-              String symbol = parts[0].trim();
-              tickerList.add(symbol);
-            }
+    File[] files = directory.listFiles((dir, name) -> name.endsWith(".txt"));
+    if (files == null || files.length == 0) {
+      throw new IOException("There is no TXT file in the folder");
+    }
+
+    for (File file : files) {
+      try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+        String line;
+        while ((line = reader.readLine()) != null) {
+          String[] parts = line.split(",");
+          for (int i = 1; i < parts.length; i++) {
+            tickerList.add(parts[i].trim());
           }
         }
+      } catch (IOException e) {
+        throw new IOException("Failed to read from file: " + file.getPath());
       }
-    } else {
-      throw new IOException("Error: List of tickers was unsuccessfully loaded at " +
-              directory.getPath() + " and the CSV file is formatted properly.");
     }
   }
 

@@ -22,10 +22,9 @@ public class AlphaVantageDataSourceTest {
 
   private MockAlphaVantageDataSource dataSource;
 
+
   /**
-   * Sets up the test environment before each test method.
-   * This method initializes the mock data source and sets a custom URLStreamHandlerFactory
-   * to intercept HTTP connections and provide predetermined responses for testing.
+   * Creates the mock API data source and set up the mock URL.
    */
   @Before
   public void setup() {
@@ -66,7 +65,7 @@ public class AlphaVantageDataSourceTest {
 
   @Test(expected = IOException.class)
   public void testGenerateTickerListFailed() throws IOException {
-    dataSource.generateTickerList(new File("res/folder"));
+    dataSource.generateTickerList(new File("res/testFolder"));
   }
 
   @Test

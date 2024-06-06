@@ -6,11 +6,14 @@ import org.junit.Test;
 
 import java.io.*;
 import java.lang.reflect.Field;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLStreamHandlerFactory;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -59,8 +62,6 @@ public class AlphaVantageDataSourceTest {
   @Test(expected = IOException.class)
   public void testGenerateTickerListFailed() throws IOException {
     dataSource.generateTickerList(new File("res/folder"));
-//    assertTrue(dataSource.getTickerList().contains("A"));
-//    assertTrue(dataSource.getTickerList().contains("GOOG"));
   }
 
   @Test
@@ -94,14 +95,22 @@ public class AlphaVantageDataSourceTest {
   }
 
   @Test
+  public void testGetClosingPriceNotExists() {
+    double price = dataSource.getClosingPrice(LocalDate.of(2020, 1, 1), "A");
+    assertEquals(0, price, 0.01);
+  }
+
+  @Test
   public void testStockInDataSource() {
     boolean inDataSource = dataSource.stockInDataSource("AAPL");
     assertTrue(inDataSource);
   }
 
-  @After
-  public void tearDown() {
-    // No teardown needed for this mock setup
+  @Test(expected = MalformedURLException.class)
+  public void createStockDataURLMock() throws MalformedURLException {
+    dataSource.createStockDataURLMock("AAPL");
   }
-  
+
+
+
 }

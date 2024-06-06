@@ -40,7 +40,7 @@ public class AlphaVantageDataSource extends CSVDataSource {
 
   protected void generateTickerList(File directory) throws IOException {
     File[] files = directory.listFiles((dir, name) -> name.endsWith(".csv"));
-    if (files != null) {
+    if (files != null && files.length != 0) {
       for (File file : files) {
         try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
           String line = reader.readLine();
@@ -68,11 +68,11 @@ public class AlphaVantageDataSource extends CSVDataSource {
     HttpURLConnection connection = null;
     try {
       // Constructing the URL
-//      url = new URL("https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED"
-//              + "&outputsize=full"
-//              + "&symbol=" + ticker
-//              + "&apikey=" + API_KEY
-//              + "&datatype=csv");
+      // url = new URL("https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED"
+      //        + "&outputsize=full"
+      //        + "&symbol=" + ticker
+      //        + "&apikey=" + API_KEY
+      //        + "&datatype=csv");
       url = createStockDataURL(ticker);
       connection = (HttpURLConnection) url.openConnection();
       connection.setRequestMethod("GET");

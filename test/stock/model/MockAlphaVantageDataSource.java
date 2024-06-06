@@ -45,10 +45,23 @@ public class MockAlphaVantageDataSource extends AlphaVantageDataSource {
     }
   }
 
+  protected void generateStockCSVMock(File folder, String ticker) throws IOException {
+    String response = simulatedAPIResponses.getOrDefault(ticker, "");
+    File outputFile = new File(folder, ticker + ".csv");
+    try (BufferedWriter writer = new BufferedWriter(new FileWriter(outputFile))) {
+      writer.write(response);
+    }
+  }
+
   @Override
   public URL createStockDataURL(String ticker) throws MalformedURLException {
     return new URL("http://localhost:8080/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=" + ticker + "&apikey=demo&datatype=csv");
   }
+
+  public URL createStockDataURLMock(String ticker) throws MalformedURLException {
+    return new URL("htttp://www.example.com" + ticker);
+  }
+
 
   @Override
   public boolean stockExistsAtDate(LocalDate date, String ticker) {

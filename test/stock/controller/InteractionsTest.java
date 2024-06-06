@@ -5,7 +5,6 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
-
 /**
  * Test class for the Interactions class that ensures that input,
  * output, and model logs are correctly written to.

@@ -6,8 +6,6 @@ import java.io.Reader;
 import java.io.StringReader;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
 
 import stock.model.AlphaVantageDataSource;
 import stock.model.BasicStockModel;
@@ -16,7 +14,6 @@ import stock.model.StockModel;
 import stock.view.BasicStockView;
 import stock.view.StockView;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static stock.controller.Interactions.inputs;
 import static stock.controller.Interactions.prints;

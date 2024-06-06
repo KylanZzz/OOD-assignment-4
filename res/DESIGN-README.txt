@@ -49,7 +49,15 @@ the terminal. It simply receives input from the controller and then displays tha
  formatted in a visually appealing way.
 
 --Testing--
-The Model was tested...
+The Model was tested using a combination of unit tests and mock data sources. We implemented a
+MockDataSource to real data fetches, which allowed us to directly test whether our model calculations
+were correct or not. It also allowed us to test how our model handled scenarios where a data
+fetching error occurs (IE: If a file is missing, there is a network error, or API limit).
+Additionally, we also unit tested each data source we implemented, including the CSVDataSource and
+AlphaVantage API DataSource. These tests ensured that each data source correctly retrieved and
+processed stock data. For the CSVDataSource, we verified that it could correctly parse CSV files
+and return the correct information. For the AlphaVantage API Data Source, we checked that calls to
+the API worked properly, and correct errors were thrown in the case that the API did not work.
 
 The Controller was unit tested by mocking both the model and view simultaneously.
 MockModel simulates the behavior of the StockModel interface and logs method calls, which allows
@@ -60,12 +68,11 @@ correctly, and handles exceptions from the model accordingly.
 
 The View was tested straightforwardly by measuring it's actual output with the expected output.
 
-We also wrote an integration test for our Stock Program at
+Finally, we wrote an integration test for our Stock Program at
 test/stock/controller/BasicStockControllerIntegrationTest
 This test simulates user interactions with the stock program, including user inputs and navigation
 through the application. It tests the entire MVC architecture, making real API calls and generating
-actual output. This ensures that all components work together seamlessly and the program functions
-as intended.
+actual output, ensuring there the user experience is smooth.
 
 
 

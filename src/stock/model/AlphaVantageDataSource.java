@@ -7,15 +7,19 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
-import java.net.HttpURLConnection;
 
 
+/**
+ * A data source class that retrieves the data from AlphaVantage API.
+ * This class handles initialization of the stock data, manages ticker symbols, and
+ * facilitates downloading and processing stock data from the API.
+ */
 public class AlphaVantageDataSource extends CSVDataSource {
   private static final String API_KEY = "W0M1JOKC82EZEQA8";
 
@@ -26,6 +30,9 @@ public class AlphaVantageDataSource extends CSVDataSource {
 
   private boolean checkInitialization = false;
 
+  /**
+   * Initialized the class by inherent the CSVDataSource class/
+   */
   // throw IOException
   public AlphaVantageDataSource() {
     super();
@@ -38,6 +45,13 @@ public class AlphaVantageDataSource extends CSVDataSource {
     generateTickerList(new File("res/stocksData"));
   }
 
+  /**
+   * User can upload more than one stock files to let the program get the ticker,
+   * this function will help to combine to list of tickers.
+   *
+   * @param directory The directory of the files.
+   * @throws IOException when the directory cannot find any files.
+   */
   protected void generateTickerList(File directory) throws IOException {
     File[] files = directory.listFiles((dir, name) -> name.endsWith(".csv"));
     if (files != null && files.length != 0) {
@@ -63,6 +77,13 @@ public class AlphaVantageDataSource extends CSVDataSource {
     return tickerList;
   }
 
+  /**
+   * @param folder the file of a certain CSV of the stock.
+   * @param ticker the ticker of the stock.
+   * @throws IOException when the user reached the maximum of request, the API needs time to load,
+   *                     when the link is malformed, when the link cannot be read,
+   *                     or any kind of error that the API encounters.
+   */
   protected void generateStockCSV(File folder, String ticker) throws IOException {
     URL url;
     HttpURLConnection connection = null;
@@ -104,7 +125,8 @@ public class AlphaVantageDataSource extends CSVDataSource {
     }
   }
 
-  public URL createStockDataURL(String ticker) throws MalformedURLException {
+
+  protected URL createStockDataURL(String ticker) throws MalformedURLException {
     return new URL("https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED"
             + "&outputsize=full"
             + "&symbol=" + ticker

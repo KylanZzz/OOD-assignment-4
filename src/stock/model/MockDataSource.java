@@ -6,8 +6,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * A mock implementation of the DataSource interface for testing purposes.
+ * This class simulates stock data interactions without the need for an actual data source,
+ * such as a database or external API.
+ */
 public class MockDataSource implements DataSource {
-
   private Map<LocalDate, Boolean> stockExistence = new HashMap<>();
   private List<String> tickers = List.of("A", "GOOG", "AMZN");
   private List<LocalDate> dates = List.of(LocalDate.of(2024, 05, 04),
@@ -19,6 +23,13 @@ public class MockDataSource implements DataSource {
           LocalDate.of(2024,5,15));
   private Map<LocalDate, Double> closingPrices = new HashMap<>();
 
+
+  /**
+   * Sets the stock existence status for a given date.
+   * This method simulates whether stock data is available for specific dates.
+   *
+   * @param date The date for which to set the stock existence.
+   */
   public void setStockExistsAtDate(LocalDate date) {
     boolean exists = false;
     if (dates.contains(date)) {
@@ -28,6 +39,11 @@ public class MockDataSource implements DataSource {
     stockExistence.put(date, exists);
   }
 
+  /**
+   * Setting the closing price for the mock.
+   * @param date  the date to set the price for.
+   * @param price the price of the stock.
+   */
   public void setClosingPrice(LocalDate date, double price) {
     closingPrices.put(date, price);
   }
@@ -50,12 +66,10 @@ public class MockDataSource implements DataSource {
 
   @Override
   public boolean stockInDataSource(String ticker) throws IOException {
-    // For simplicity, assume the stock always exists in the data source
     if (tickers.contains(ticker)) {
       return true;
     } else {
       return false;
-//      throw new IOException("There is no such ticker");
     }
   }
 }

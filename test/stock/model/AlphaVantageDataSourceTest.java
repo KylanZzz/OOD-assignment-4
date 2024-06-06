@@ -1,9 +1,7 @@
 package stock.model;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-
 import java.io.*;
 import java.lang.reflect.Field;
 import java.net.MalformedURLException;
@@ -12,16 +10,23 @@ import java.net.URLStreamHandlerFactory;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+/**
+ * This class contains test cases for the AlphaVantageDataSource class.
+ * It uses a mock data source to simulate interactions with an external API and ensures
+ * that the AlphaVantageDataSource behaves as expected under various scenarios.
+ */
 public class AlphaVantageDataSourceTest {
 
   private MockAlphaVantageDataSource dataSource;
 
+  /**
+   * Sets up the test environment before each test method.
+   * This method initializes the mock data source and sets a custom URLStreamHandlerFactory
+   * to intercept HTTP connections and provide predetermined responses for testing.
+   */
   @Before
   public void setup() {
     dataSource = new MockAlphaVantageDataSource();
@@ -110,7 +115,4 @@ public class AlphaVantageDataSourceTest {
   public void createStockDataURLMock() throws MalformedURLException {
     dataSource.createStockDataURLMock("AAPL");
   }
-
-
-
 }

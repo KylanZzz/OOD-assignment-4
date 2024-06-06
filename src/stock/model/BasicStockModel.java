@@ -9,6 +9,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * This class implements the StockModel interface that provides the functionality for the user to calculate the stocks,
+ * including the ability to calculate portfolio values, track stock gains over time, and manage multiple portfolios.
+ */
 public class BasicStockModel implements StockModel {
   private DataSource dataSource;
   private Map<String, Map<String, Integer>> portfolios;
@@ -21,6 +25,18 @@ public class BasicStockModel implements StockModel {
   }
 
 
+  /**
+   * 1) When the startDate didn't have a stock but someday in the middle starts to have and the endDate exists,
+   * the program will calculate from the date that the stocks starts to exist.
+   * 2) When the startDate did exist and the endDate also exists, the program will calculate the gain and loss over the time.
+   * 3) When the startDate and the endDate both missing, only the middle part exists, will return 0 because cannot find the endDate to compare.
+   * 4) the startDate is after the endDate, throws illegalArgumentException.
+   * @param startDate the start date for calculating the gain/loss.
+   * @param endDate   the end date for calculating the cost.
+   * @param ticker    the ticker of the Stock.
+   * @return the gain/loss over the time.
+   * @throws IOException when the date doesn't exist with the stock.
+   */
   // Need to write a good documentation for this function
   // Explain to the user how we calculate it
   @Override
@@ -65,7 +81,6 @@ public class BasicStockModel implements StockModel {
   public double getMovingDayAverage(LocalDate endDate, int days, String ticker) throws IOException {
     //might occur error if the data is insufficient
     double total = 0;
-    int counter = 0;
     LocalDate date = endDate;
 
     int count = 0;

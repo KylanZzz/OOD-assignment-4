@@ -73,6 +73,7 @@ public class MockAlphaVantageDataSource extends AlphaVantageDataSource {
     return stockExistsAtDate(date, ticker) ? simulatedStockData.get(ticker).get(date) : 0;
   }
 
+
   @Override
   public boolean stockInDataSource(String ticker) {
     try {

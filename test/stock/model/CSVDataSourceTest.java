@@ -33,7 +33,7 @@ public class CSVDataSourceTest {
     tempDirectory = Files.createTempDirectory("testCsvData");
     Path csvFile = tempDirectory.resolve("AAPL.csv");
     List<String> lines = Arrays.asList(
-            "timestamp,open,high,low,close,volume",
+            "timestamp,open,high,low,adjusted_close,volume",
             "2022-01-01,100,110,90,100,100",
             "2022-01-02,105,115,95,110,200",
             "2022-01-03,105,115,95,120,300",

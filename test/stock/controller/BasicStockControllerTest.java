@@ -21,6 +21,11 @@ import static stock.controller.Interactions.inputs;
 import static stock.controller.Interactions.modelLog;
 import static stock.controller.Interactions.prints;
 
+/**
+ * Unit test for the BasicStockController class that ensures
+ * the controller correctly passes information from the model
+ * to the view and handles user input properly.
+ */
 public class BasicStockControllerTest {
 
   protected final class MockModel implements StockModel {

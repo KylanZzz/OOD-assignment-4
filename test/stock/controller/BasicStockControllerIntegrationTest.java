@@ -18,6 +18,10 @@ import static org.junit.Assert.assertEquals;
 import static stock.controller.Interactions.inputs;
 import static stock.controller.Interactions.prints;
 
+/**
+ * Test for the BasicStock program that tests the entire MVC
+ * architecture by simulating user interaction.
+ */
 public class BasicStockControllerIntegrationTest {
 
   private void runTest(Interaction... interactions) {

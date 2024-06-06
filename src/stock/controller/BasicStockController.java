@@ -1,6 +1,5 @@
 package stock.controller;
 
-import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Scanner;
 import stock.controller.commands.CalculateAverage;
@@ -8,11 +7,8 @@ import stock.controller.commands.CalculateCrossover;
 import stock.controller.commands.CalculateGain;
 import stock.controller.commands.Command;
 import stock.controller.commands.ViewPortfolios;
-import stock.model.AlphaVantageDataSource;
-import stock.model.BasicStockModel;
 import stock.model.StockModel;
 import stock.view.BasicMenuOptions;
-import stock.view.BasicStockView;
 import stock.view.StockView;
 import java.util.Map;
 

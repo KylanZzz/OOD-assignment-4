@@ -49,7 +49,7 @@ public class CSVDataSource implements DataSource {
                 if (headers[i].trim().equalsIgnoreCase("timestamp")) {
                     timeIndex = i;
                 }
-                if (headers[i].trim().equalsIgnoreCase("close")) {
+                if (headers[i].trim().equalsIgnoreCase("adjusted_close")) {
                     closeIndex = i;
                 }
             }

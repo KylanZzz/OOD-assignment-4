@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -283,7 +284,59 @@ public class BasicStockControllerTest {
   }
 
   @Test
+  public void controllerHandlesCaseInsensitiveTicker() {
+    runTest(
+            false,
+            prints("printMainMenu"),
+            inputs("1"),
+
+            prints(tickerPrompt),
+            inputs("aapl"),
+
+            prints(startDatePrompt),
+            inputs("4/20/2005"),
+
+            prints(endDatePrompt),
+            inputs("4/20/2024"),
+
+            prints("printStockGainAAPL2005-04-202024-04-20100.0"),
+            prints("printMainMenu"),
+            inputs("1"),
+
+            prints(tickerPrompt),
+            inputs("aAPl"),
+
+            prints(startDatePrompt),
+            inputs("4/20/2005"),
+
+            prints(endDatePrompt),
+            inputs("4/20/2024"),
+
+            prints("printStockGainAAPL2005-04-202024-04-20100.0"),
+            prints("printMainMenu"),
+            inputs("1"),
+
+            prints(tickerPrompt),
+            inputs("AAPL"),
+
+            prints(startDatePrompt),
+            inputs("4/20/2005"),
+
+            prints(endDatePrompt),
+            inputs("4/20/2024"),
+
+            prints("printStockGainAAPL2005-04-202024-04-20100.0"),
+            prints("printMainMenu"),
+            inputs("EXIT")
+    );
+  }
+
+  @Test
   public void controllerHandlesIncorrectDate() {
+    LocalDate today = LocalDate.now();
+    String todayString = today.format(DateTimeFormatter.ofPattern("MM/dd/yyyy"));
+    String tomorrowString = today.plusDays(1).format(DateTimeFormatter.ofPattern("MM/dd/yyyy"));
+
     runTest(
             false,
             prints("printMainMenu"),
@@ -353,9 +406,54 @@ public class BasicStockControllerTest {
 
             prints("printStockGainAAPL2013-04-202013-04-21100.0"),
             prints("printMainMenu"),
+            inputs("1"),
+
+            prints(tickerPrompt),
+            inputs("AAPL"),
+
+            prints(startDatePrompt),
+            inputs("12/30/2023"),
+
+            prints(endDatePrompt),
+            inputs("12/31/2023"),
+
+            prints("printStockGainAAPL2023-12-302023-12-31100.0"),
+            prints("printMainMenu"),
+            inputs("1"),
+
+            prints(tickerPrompt),
+            inputs("AAPL"),
+
+            prints(startDatePrompt),
+            inputs("01/01/2023"),
+
+            prints(endDatePrompt),
+            inputs("12/31/2023"),
+
+            prints("printStockGainAAPL2023-01-012023-12-31100.0"),
+            prints("printMainMenu"),
+            inputs("1"),
+
+            prints(tickerPrompt),
+            inputs("AAPL"),
+
+            prints(startDatePrompt),
+            inputs("4/20/2024"),
+
+            prints(endDatePrompt),
+            inputs(tomorrowString),
+
+            prints("printMessageInvalid date: Date has not passed yet, please enter a date before or equal to today."),
+            inputs(todayString),
+
+            prints("printStockGainAAPL2024-04-202024-06-05100.0"),
+            prints("printMainMenu"),
             inputs("EXIT")
     );
+
   }
+
+
 
   @Test
   public void movingAverageWorks() {

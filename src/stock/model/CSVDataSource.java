@@ -12,16 +12,32 @@ import java.util.Map;
 import java.io.BufferedReader;
 import java.util.stream.Stream;
 
+
+/**
+ * A data source implementation that reads stock data from CSV files.
+ * This class is responsible for loading stock data from CSV files,
+ * and providing access to specific data points such as
+ * closing prices on given dates.
+ */
 public class CSVDataSource implements DataSource {
     protected Map<String, Map<LocalDate, Double>> stocks;
     private String directoryPath;
 
+    /**
+     * Constructs a CSVDataSource with a specific directory path.
+     * This constructor initializes the stock data from the CSV files located in the specified directory.
+     *
+     * @param directoryPath The path to the directory containing stock data CSV files.
+     */
     public CSVDataSource(String directoryPath) {
         stocks = new HashMap<>();
         this.directoryPath = directoryPath;
         loadAllStockData(directoryPath);
     }
 
+    /**
+     * Default constructor that initializes an empty data source without preloading data.
+     */
     public CSVDataSource() {
         stocks = new HashMap<>();
     }

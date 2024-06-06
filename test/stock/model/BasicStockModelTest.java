@@ -13,10 +13,21 @@ import java.util.Map;
 
 import static org.junit.Assert.*;
 
+/**
+ * Tests for the BasicStockModel class using a MockDataSource to simulate the DataSource interface.
+ * This class ensures that BasicStockModel behaves as expected when interacting with stock data,
+ * focusing on functionalities like calculating gains over time, checking stock existence,
+ * and managing portfolios.
+ */
+
 public class BasicStockModelTest {
   private MockDataSource mockDataSource;
   private BasicStockModel model;
 
+  /**
+   * Sets up the environment for each test case.
+   * This method initializes the mock data source and the BasicStockModel with this mock data source.
+   */
   @Before
   public void setup() {
     mockDataSource = new MockDataSource();

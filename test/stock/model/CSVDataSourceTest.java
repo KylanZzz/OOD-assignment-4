@@ -3,8 +3,6 @@ package stock.model;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
-
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -15,9 +13,18 @@ import java.util.Arrays;
 import java.util.List;
 import static org.junit.Assert.*;
 
+/**
+ * Test class for {@link CSVDataSource}. It validates the functionality of loading, reading, and
+ * managing stock data from CSV files.
+ */
 public class CSVDataSourceTest {
   private static Path tempDirectory;
 
+  /**
+   * Sets up the environment for all tests in this class. It creates a temporary directory
+   * and populates it with a sample CSV file representing stock data for testing.
+   * @throws IOException If there is an error creating the file or writing to it.
+   */
   @BeforeClass
   public static void setUp() throws IOException {
     tempDirectory = Files.createTempDirectory("testCsvData");

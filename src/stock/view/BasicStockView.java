@@ -198,4 +198,17 @@ public class BasicStockView implements StockView {
     printOptionsPrompt();
     printMenu(BasicMenuOptions.managePortfolio());
   }
+
+  /**
+   * Display the list of commands that the user can ask for.
+   *
+   * @param fileName the name of the saved files.
+   */
+  @Override
+  public void printFileSaveName(List<String> fileName) {
+    for (int i = 0; i < fileName.size(); i++) {
+      println(String.format("%d. %s", i + 1, fileName.get(i)));
+    }
+
+  }
 }

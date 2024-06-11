@@ -91,5 +91,11 @@ public interface StockView {
    */
   void printDistribution(Map<String, Double> stocks, String name, LocalDate date);
 
+  /**
+   * Display the list of commands that the user can ask for.
+   *
+   * @param fileName the name of the saved files.
+   */
+  void printFileSaveName(List<String> fileName);
 
 }

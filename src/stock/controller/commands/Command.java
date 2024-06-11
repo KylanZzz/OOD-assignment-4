@@ -3,7 +3,9 @@ package stock.controller.commands;
 import java.io.IOException;
 import java.time.DateTimeException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.InputMismatchException;
+import java.util.List;
 import java.util.Scanner;
 
 import stock.model.PortfolioStockModel;
@@ -123,15 +125,33 @@ public abstract class Command {
   protected final String getPortfolioNameFromUser() {
     while (true) {
       String name = scanner.nextLine().toUpperCase();
+
       try {
           portfolioModel.createNewPortfolioSave(name);
-          view.printMessage("That stock does not exist! Please try again.");
+          view.printMessage(String.format("You selected:  %s: ", name));
 
       } catch (IOException e) {
         view.printMessage("Error while fetching data: " + e.getMessage());
       }
     }
+  }
 
+  protected final String getPortfolioFileSaveName() {
+    view.printMessage("Please enter the name of the portfolio that you want to fetch: ");
+    String name = scanner.nextLine().toUpperCase();
+    List<String> PortfolioList = portfolioModel.getPortfolios();
+    if (PortfolioList.contains(name)) {
+      return name;
+    } else {
+//      view.printMessage("Name of that portfolio doesn't exist");
+      throw new IllegalArgumentException("Name of that portfolio doesn't exist");
+    }
+  }
+
+  protected final String getFileSaves() {
+    view.printMessage("Please select the file in this portfolio: ");
+    String name = scanner.nextLine().toUpperCase();
+    return name;
   }
 
 

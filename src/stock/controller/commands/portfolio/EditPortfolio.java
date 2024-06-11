@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.Scanner;
 
 import stock.controller.commands.AdvancePortfolio.DistributionWithDate;
+import stock.controller.commands.AdvancePortfolio.LoadPortfolio;
 import stock.controller.commands.AdvancePortfolio.PortfolioValueWithDate;
 import stock.controller.commands.AdvancePortfolio.PurchaseStockWithDate;
 import stock.controller.commands.AdvancePortfolio.SavePortfolio;
@@ -56,6 +57,7 @@ public class EditPortfolio extends PortfolioCommand {
     commands.put("6", new PortfolioValueWithDate(view, portfolioModel, scanner, portfolioName));
     commands.put("7", new DistributionWithDate(view, portfolioModel, scanner, portfolioName));
     commands.put("8", new SavePortfolio(view, portfolioModel, scanner, portfolioName));
+    commands.put("9", new LoadPortfolio(view, portfolioModel, scanner, portfolioName));
 
   }
 

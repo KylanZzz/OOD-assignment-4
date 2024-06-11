@@ -57,7 +57,8 @@ public class BasicMenuOptions {
             "Remove stock from portfolio on specific date",
             "Calculate portfolio value on specific date",
             "Check the distribution of value on specific date",
-            "Save Portfolio");
+            "Save portfolio",
+            "Load the saved portfolio");
   }
 }
 

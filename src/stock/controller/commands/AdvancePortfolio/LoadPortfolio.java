@@ -1,5 +1,6 @@
 package stock.controller.commands.AdvancePortfolio;
 
+import java.io.IOException;
 import java.util.Scanner;
 
 import stock.controller.commands.stock.StockCommand;
@@ -16,7 +17,19 @@ public class LoadPortfolio extends StockCommand {
    */
   @Override
   public void apply() {
-    view.printMessage("Where is the list of the portfolios that you have saved: ");
-    
+    view.printMessage("Here is the list of the portfolios that you have saved: ");
+    String name = getPortfolioFileSaveName();
+    try {
+      view.printFileSaveName(portfolioModel.getPortfolioSaves(name));
+    } catch (IOException e) {
+      view.printMessage("Error occurred while fetching data: " + e.getMessage());
+    }
+    String fileSaveName = getFileSaves();
+    try {
+      portfolioModel.loadPortfolioSave(name, fileSaveName);
+      view.printMessage("Successfully load the saved file!");
+    } catch (IOException e) {
+      view.printMessage("Error occurred while fetching data: " + e.getMessage());
+    }
   }
 }

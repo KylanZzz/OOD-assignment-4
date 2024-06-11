@@ -9,12 +9,12 @@ public interface PortfolioStockModel extends StockModel {
   @Override
   default void addStockToPortfolio(String name, String ticker, int shares) {
     throw new UnsupportedOperationException("This method is not supported. "
-            + "Use addStockToPortfolio with date parameter.");
+            + "Please use addStockToPortfolio with date parameter.");
   }
 
   @Override
   default Map<String, Integer> getPortfolioContents(String name) {
-    throw new UnsupportedOperationException("This method is no longer supported. Please Use "
+    throw new UnsupportedOperationException("This method is no longer supported. Please use "
             + "getPortfolioContentsDecimal instead");
   }
 
@@ -115,28 +115,19 @@ public interface PortfolioStockModel extends StockModel {
   void createNewPortfolioSave(String name) throws IOException, IllegalArgumentException;
 
   /**
-   * Rebalance the portfolio from a given period. In order to rebalance a portfolio, all stocks
-   * must exist before the start date of rebalacning.
+   * Rebalance the portfolio from a given period. When a portfolio is rebalanced, shares of each
+   * stock are purchased/sold so that the portfolio has even proportions (in terms of value) of
+   * each stock.
    *
-   * @param name      the name of the portfolio.
-   * @param startDate the starting date of the stock. The value percentage each stock holds in
-   *                  the portfolio will be calculated from this date. For example, if a portfolio
-   *                  has stock A with 30$ in shares and B with 70$ in shares at this date, then
-   *                  the proportion each stock holds in the portfolio will be calculated from
-   *                  this date. (which would be 30% and 70% respectively). If a stock doesn't
-   *                  have a closing price on this day, then the next earliest day will be chosen
-   *                  instead.
-   * @param endDate   the ending date of the stock. The new number of shares will be calculated
-   *                  according to the price of each stock in the portfolio on this day. If a stock
-   *                  in the portfolio doesn't have a closing price on this day, then the next
-   *                  earliest day will be chosen instead.
+   * @param name the name of the portfolio.
+   * @param date the date to rebalance. Only transactions that occurred before this date will be
+   *             considered for rebalancing
    * @throws IOException              if a data fetching error occurs.
    * @throws IllegalArgumentException if the name of the stock doesn't exist, if the end date
    *                                  comes before the start date, or if any of the stocks in the
    *                                  portfolio didn't exist before the start date.
    */
-  void rebalancePortfolio(String name, LocalDate startDate, LocalDate endDate) throws IOException,
-          IllegalArgumentException;
+  void rebalancePortfolio(String name, LocalDate date) throws IOException, IllegalArgumentException;
 
   /**
    * Get the performance of a value, which is a list of the value of the portfolio across a
@@ -151,9 +142,9 @@ public interface PortfolioStockModel extends StockModel {
    * @throws IllegalArgumentException if the start date is not before the end date or if the name
    *                                  of the ticker is invalid
    */
-  Map<LocalDate, Double> getPortfolioPerformance(String name,
-                                                 LocalDate startDate, LocalDate endDate)
-          throws IllegalArgumentException, IOException;
+  Map<LocalDate, Double> getPortfolioPerformance(String name, LocalDate startDate,
+                                                 LocalDate endDate) throws IllegalArgumentException,
+          IOException;
 
 }
 

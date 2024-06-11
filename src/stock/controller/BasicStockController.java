@@ -7,6 +7,7 @@ import stock.controller.commands.CalculateCrossover;
 import stock.controller.commands.CalculateGain;
 import stock.controller.commands.Command;
 import stock.controller.commands.ViewPortfolios;
+import stock.controller.commands.portfolioStock.ViewAdvancePortfolios;
 import stock.model.PortfolioStockModel;
 import stock.model.StockModel;
 import stock.view.BasicMenuOptions;
@@ -48,14 +49,21 @@ public class BasicStockController implements StockController {
     this.view = view;
     this.portfolioModel = portfolioModel;
     commands = new HashMap<>();
-    initializeCommands();
+    initializePortfolioCommands();
   }
 
   protected void initializeCommands() {
-    commands.put("1", new CalculateGain(view, portfolioModel, scanner));
-    commands.put("2", new CalculateAverage(view, portfolioModel, scanner));
-    commands.put("3", new CalculateCrossover(view, portfolioModel, scanner));
-    commands.put("4", new ViewPortfolios(view, portfolioModel, scanner));
+    commands.put("1", new CalculateGain(view, model, scanner));
+    commands.put("2", new CalculateAverage(view, model, scanner));
+    commands.put("3", new CalculateCrossover(view, model, scanner));
+    commands.put("4", new ViewPortfolios(view, model, scanner));
+  }
+
+  protected void initializePortfolioCommands() {
+    commands.put("1", new stock.controller.commands.portfolioStock.AdvancePortfolio.CalculateGain(view, portfolioModel, scanner));
+    commands.put("2", new stock.controller.commands.portfolioStock.AdvancePortfolio.CalculateAverage(view, portfolioModel, scanner));
+    commands.put("3", new stock.controller.commands.portfolioStock.AdvancePortfolio.CalculateCrossover(view, portfolioModel, scanner));
+    commands.put("4", new ViewAdvancePortfolios(view, portfolioModel, scanner));
   }
 
   /**

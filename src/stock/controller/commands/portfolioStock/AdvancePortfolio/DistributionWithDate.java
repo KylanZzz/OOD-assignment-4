@@ -1,4 +1,4 @@
-package stock.controller.commands.AdvancePortfolio;
+package stock.controller.commands.portfolioStock.AdvancePortfolio;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -8,7 +8,7 @@ import stock.controller.commands.stock.StockCommand;
 import stock.model.PortfolioStockModel;
 import stock.view.StockView;
 
-public class DistributionWithDate extends StockCommand {
+public class DistributionWithDate extends StockPortfolioCommand {
 
 
   public DistributionWithDate(StockView view, PortfolioStockModel portfolioModel, Scanner scanner, String portfolio) {

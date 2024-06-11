@@ -23,12 +23,8 @@ public class CalculateCrossover extends Command {
    * @param model the model of the stock program.
    * @param scanner the input of the stock program.
    */
-//  public CalculateCrossover(StockView view, StockModel model, Scanner scanner) {
-//    super(view, model, scanner);
-//  }
-
-  public CalculateCrossover(StockView view, PortfolioStockModel portfolioModel, Scanner scanner) {
-    super(view, portfolioModel, scanner);
+  public CalculateCrossover(StockView view, StockModel model, Scanner scanner) {
+    super(view, model, scanner);
   }
 
   /**
@@ -53,7 +49,7 @@ public class CalculateCrossover extends Command {
     int days = getPositiveFromUser(Integer.MAX_VALUE);
 
     try {
-      var crossOvers = portfolioModel.getCrossover(endDate, days, ticker);
+      var crossOvers = model.getCrossover(endDate, days, ticker);
       view.printXDayCrossovers(ticker, endDate, days, crossOvers);
     } catch (IOException e) {
       view.printMessage("Error while fetching data: " + e.getMessage());

@@ -18,14 +18,14 @@ public class CalculateAverage extends Command {
    * and source of input.
    *
    * @param view the view of the stock program.
-   * @param portfolioModel the model of the stock program.
+   * @param model the model of the stock program.
    * @param scanner the input of the stock program.
    */
 //  public CalculateAverage(StockView view, StockModel model, Scanner scanner) {
 //    super(view, model, scanner);
 //  }
-  public CalculateAverage(StockView view, PortfolioStockModel portfolioModel, Scanner scanner) {
-    super(view, portfolioModel, scanner);
+  public CalculateAverage(StockView view, StockModel model, Scanner scanner) {
+    super(view, model, scanner);
   }
 
   /**
@@ -48,7 +48,7 @@ public class CalculateAverage extends Command {
     int days = getPositiveFromUser(Integer.MAX_VALUE);
 
     try {
-      double average = portfolioModel.getMovingDayAverage(endDate, days, ticker);
+      double average = model.getMovingDayAverage(endDate, days, ticker);
       view.printStockAverage(ticker, endDate, days, average);
     } catch (IOException e) {
       view.printMessage("Error while fetching data: " + e.getMessage());

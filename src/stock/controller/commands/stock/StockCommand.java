@@ -25,10 +25,5 @@ public abstract class StockCommand extends Command {
     super(view, model, scanner);
     this.portfolio = portfolio;
   }
-
-  public StockCommand(StockView view, PortfolioStockModel portfolioModel, Scanner scanner, String portfolio) {
-    super(view, portfolioModel, scanner);
-    this.portfolio = portfolio;
-  }
 }
 

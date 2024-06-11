@@ -8,7 +8,9 @@ import stock.controller.commands.portfolio.CreatePortfolio;
 import stock.controller.commands.portfolio.DeletePortfolio;
 import stock.controller.commands.portfolio.EditPortfolio;
 import stock.controller.commands.portfolio.PortfolioCommand;
+import stock.controller.commands.portfolio.PurchaseStockToPortfolio;
 import stock.controller.commands.portfolio.RenamePortfolio;
+import stock.model.PortfolioStockModel;
 import stock.model.StockModel;
 import stock.view.BasicMenuOptions;
 import stock.view.StockView;
@@ -22,6 +24,8 @@ import stock.view.StockView;
 public class ViewPortfolios extends Command {
 
   private final Map<String, PortfolioCommand> commands;
+  private final int quantity;
+  private String portfolioName;
 
   /**
    * Constructs a ViewPortfolios command with the given view, model, and scanner,
@@ -34,7 +38,10 @@ public class ViewPortfolios extends Command {
   public ViewPortfolios(StockView view, StockModel model, Scanner scanner) {
     super(view, model, scanner);
     commands = new HashMap<>();
+    this.quantity = 0;
+    this.portfolioName = "ads";
   }
+
 
   /**
    * Initializes commands for portfolio management: including creating, deleting,
@@ -46,6 +53,7 @@ public class ViewPortfolios extends Command {
     commands.put("1", new CreatePortfolio(view, model, scanner));
     commands.put("2", new DeletePortfolio(view, model, scanner));
     commands.put("3", new RenamePortfolio(view, model, scanner));
+    commands.put("4", new PurchaseStockToPortfolio(view, model, scanner, portfolioName));
 
     int numOptions = BasicMenuOptions.viewPortfolios().size();
     for (int i = 0; i < model.getPortfolios().size(); i++) {

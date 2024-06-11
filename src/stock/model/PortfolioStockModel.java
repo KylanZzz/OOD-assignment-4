@@ -33,7 +33,8 @@ public interface PortfolioStockModel extends StockModel {
    * shares of that stock in the portfolio.
    * @throws IllegalArgumentException if the name of the ticker symbol does not exist.
    */
-  Map<String, Double> getPortfolioContentsDecimal(String name, LocalDate date) throws IllegalArgumentException;
+  Map<String, Double> getPortfolioContentsDecimal(String name, LocalDate date) throws
+          IllegalArgumentException;
 
   /**
    * @param name   the name of the portfolio.
@@ -94,9 +95,12 @@ public interface PortfolioStockModel extends StockModel {
    * @param name the name of the portfolio.
    * @return the filenames of the saved instances in sorted order of date (earliest to latest)
    * @throws IllegalArgumentException if the name of the portfolio doesn't exist.
-   * @throws IOException if an error occurs during file reading.
+   * @throws IOException              if an error occurs during file reading.
    */
   List<String> getPortfolioSaves(String name) throws IllegalArgumentException, IOException;
+  // name = "S&P500"
+  // return "S&P500_06_11_2024.txt"
+
 
   /**
    * Load a previous save of a portfolio from disk. The save file should be in the
@@ -127,15 +131,22 @@ public interface PortfolioStockModel extends StockModel {
    * stock are purchased/sold so that the portfolio has even proportions (in terms of value) of
    * each stock.
    *
-   * @param name the name of the portfolio.
-   * @param date the date to rebalance. Only transactions that occurred before this date will be
-   *             considered for rebalancing
+   * @param name        the name of the portfolio.
+   * @param date        the date to rebalance. Only transactions that occurred before this date
+   *                    will be
+   *                    considered for rebalancing
+   * @param proportions map of all the stocks to their relative proportions. Proportions should
+   *                    be in decimal form, so 50% would be 0.5. All proportions must add up to 1
+   *                    .0. All the stocks in the map must also exist in the portfolio at the
+   *                    specified date.
    * @throws IOException              if a data fetching error occurs.
    * @throws IllegalArgumentException if the name of the stock doesn't exist, if the end date
    *                                  comes before the start date, or if any of the stocks in the
    *                                  portfolio didn't exist before the start date.
    */
-  void rebalancePortfolio(String name, LocalDate date) throws IOException, IllegalArgumentException;
+  void rebalancePortfolio(String name, LocalDate date, Map<String, Double> proportions) throws
+          IOException,
+          IllegalArgumentException;
 
   /**
    * Get the performance of a value, which is a list of the value of the portfolio across a

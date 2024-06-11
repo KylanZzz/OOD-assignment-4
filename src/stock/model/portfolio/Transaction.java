@@ -14,7 +14,7 @@ public abstract class Transaction implements Comparable<Transaction> {
   }
 
   // Takes in the result map of tickers to shares, then returns that same map after changing it
-  abstract Map<String, double> apply(Map<String, double> res);
+  abstract Map<String, Double> apply(Map<String, Double> res);
 
   @Override
   public int compareTo(Transaction o) {

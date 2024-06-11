@@ -14,7 +14,7 @@ public class SellTransaction extends Transaction {
   }
 
   @Override
-  Map<String, double> apply(Map<String, double> res) {
+  Map<String, Double> apply(Map<String, Double> res) {
     if (res.containsKey(ticker)) {
       throw new RuntimeException("The ticker does not exist in the portfolio at the time of this "
               + "transaction.");

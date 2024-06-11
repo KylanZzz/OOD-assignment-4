@@ -33,7 +33,7 @@ public interface PortfolioStockModel extends StockModel {
    * shares of that stock in the portfolio.
    * @throws IllegalArgumentException if the name of the ticker symbol does not exist.
    */
-  Map<String, double> getPortfolioContentsDecimal(String name, LocalDate date) throws IllegalArgumentException;
+  Map<String, Double> getPortfolioContentsDecimal(String name, LocalDate date) throws IllegalArgumentException;
 
   /**
    * @param name   the name of the portfolio.
@@ -84,7 +84,7 @@ public interface PortfolioStockModel extends StockModel {
    * @throws IOException              if a data fetching error occurs.
    * @throws IllegalArgumentException if the name of the portfolio doesn't exist.
    */
-  Map<String, double> getPortfolioDistribution(String name, LocalDate date) throws IOException,
+  Map<String, Double> getPortfolioDistribution(String name, LocalDate date) throws IOException,
           IllegalArgumentException;
 
   /**
@@ -94,8 +94,9 @@ public interface PortfolioStockModel extends StockModel {
    * @param name the name of the portfolio.
    * @return the filenames of the saved instances in sorted order of date (earliest to latest)
    * @throws IllegalArgumentException if the name of the portfolio doesn't exist.
+   * @throws IOException if an error occurs during file reading.
    */
-  List<String> getPortfolioSaves(String name) throws IllegalArgumentException;
+  List<String> getPortfolioSaves(String name) throws IllegalArgumentException, IOException;
 
   /**
    * Load a previous save of a portfolio from disk. The save file should be in the
@@ -149,7 +150,7 @@ public interface PortfolioStockModel extends StockModel {
    * @throws IllegalArgumentException if the start date is not before the end date or if the name
    *                                  of the ticker is invalid
    */
-  Map<LocalDate, double> getPortfolioPerformance(String name, LocalDate startDate,
+  Map<LocalDate, Double> getPortfolioPerformance(String name, LocalDate startDate,
                                                  LocalDate endDate) throws IllegalArgumentException,
           IOException;
 

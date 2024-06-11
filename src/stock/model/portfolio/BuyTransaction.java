@@ -14,7 +14,7 @@ public class BuyTransaction extends Transaction {
   }
 
   @Override
-  Map<String, double> apply(Map<String, double> res) {
+  Map<String, Double> apply(Map<String, Double> res) {
     if (!res.containsKey(ticker)) {
       res.put(ticker, shares);
     } else {

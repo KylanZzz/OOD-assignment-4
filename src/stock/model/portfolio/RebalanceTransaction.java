@@ -5,19 +5,19 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class RebalanceTransaction extends Transaction {
-  private final Map<String, double> prices;
+  private final Map<String, Double> prices;
 
   // stock, price at date
-  protected RebalanceTransaction(LocalDate date, Map<String, double> prices) {
+  protected RebalanceTransaction(LocalDate date, Map<String, Double> prices) {
     super(date);
     this.prices = prices;
   }
 
   // stock, shares
   @Override
-  Map<String, double> apply(Map<String, double> res) {
+  Map<String, Double> apply(Map<String, Double> res) {
     // stock, shares
-    var diff = new HashMap<String, double>();
+    var diff = new HashMap<String, Double>();
 
     int numStocks = res.keySet().size();
     double total = 0;

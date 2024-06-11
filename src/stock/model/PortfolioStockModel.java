@@ -13,6 +13,12 @@ public interface PortfolioStockModel extends StockModel {
   }
 
   @Override
+  default void removeStockFromPortfolio(String name, String ticker) {
+    throw new UnsupportedOperationException("This method is not supported. "
+            + "Please use sellStockFromPortfolio instead.");
+  }
+
+  @Override
   default Map<String, Integer> getPortfolioContents(String name) {
     throw new UnsupportedOperationException("This method is no longer supported. Please use "
             + "getPortfolioContentsDecimal instead");
@@ -22,7 +28,7 @@ public interface PortfolioStockModel extends StockModel {
    * Get the stocks and the corresponding shares in a portfolio.
    *
    * @param name the name of the portfolio.
-   * @param date the date to get the state of the protfolio at.
+   * @param date the date to get the state of the portfolio at.
    * @return a map where the keys are the tickers of all the stocks and values are the number of
    * shares of that stock in the portfolio.
    * @throws IllegalArgumentException if the name of the ticker symbol does not exist.

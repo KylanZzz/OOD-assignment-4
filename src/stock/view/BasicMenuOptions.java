@@ -53,7 +53,9 @@ public class BasicMenuOptions {
     return List.of("Calculate portfolio value",
             "Add stock to portfolio",
             "Remove stock from portfolio",
-            "Add stock to portfolio with date");
+            "Add stock to portfolio with specific date",
+            "Remove stock from portfolio with specific date",
+            "Calculate portfolio value with specific date");
   }
 }
 

@@ -2,6 +2,7 @@ package stock.view;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.time.LocalDate;
@@ -14,6 +15,7 @@ import java.util.List;
  */
 public class BasicStockView implements StockView {
   private final Appendable out;
+  private List<LocalDate> dateList;
 
   /**
    * Constructs a BasicStockView with a specified Appendable object to enable output.
@@ -22,6 +24,7 @@ public class BasicStockView implements StockView {
    */
   public BasicStockView(Appendable out) {
     this.out = out;
+    this.dateList = new ArrayList<>();
   }
 
   private void println(String message) {
@@ -104,12 +107,23 @@ public class BasicStockView implements StockView {
   @Override
   public void printManagePortfolioDouble(Map<String, Double> stocks, String name, LocalDate date) {
     println(String.format("Here are all the stocks in the %s portfolio:\n", name));
+    dateList.add(date);
 
-    var list = stocks.keySet().stream().sorted()
-            .map(it -> String.format("%-30s %-10.2f %s", it, stocks.get(it), date))
-            .collect(Collectors.toList());
+    List<String> sortedStockNames = new ArrayList<>(stocks.keySet());
+    Collections.sort(sortedStockNames);
 
-    list.add(0, String.format("%-30s %-10s %s", "Stock", "Shares", "Date"));
+    List<String> list = new ArrayList<>();
+    for (int i = 0; i < sortedStockNames.size(); i++) {
+      String stock = sortedStockNames.get(i);
+      Double shares = stocks.get(stock);
+      LocalDate stockDate = dateList.get(i);
+      list.add(String.format("%-30s %-30.2f %s", stock, shares, stockDate));
+    }
+//    var list = stocks.keySet().stream().sorted()
+//            .map(it -> String.format("%-30s %-30.2f %s", it, stocks.get(it), dateList.get(it)))
+//            .collect(Collectors.toList());
+
+    list.add(0, String.format("%-30s %-30s %s", "Stock", "Shares", "Date"));
     printList(list);
     println("");
 

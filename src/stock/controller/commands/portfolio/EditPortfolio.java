@@ -5,13 +5,14 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
+import stock.controller.commands.AdvancePortfolio.CompositionPortfolio;
 import stock.controller.commands.AdvancePortfolio.PurchaseStockWithDate;
+import stock.controller.commands.AdvancePortfolio.SellStockwithDate;
 import stock.controller.commands.stock.AddStock;
 import stock.controller.commands.stock.PortfolioValue;
 import stock.controller.commands.stock.RemoveStock;
 import stock.controller.commands.stock.StockCommand;
 import stock.model.PortfolioStockModel;
-import stock.model.StockModel;
 import stock.view.BasicMenuOptions;
 import stock.view.StockView;
 
@@ -50,6 +51,8 @@ public class EditPortfolio extends PortfolioCommand {
     commands.put("2", new AddStock(view, model, scanner, portfolioName));
     commands.put("3", new RemoveStock(view, portfolioModel, scanner, portfolioName));
     commands.put("4", new PurchaseStockWithDate(view, portfolioModel, scanner, portfolioName));
+    commands.put("5", new SellStockwithDate(view, portfolioModel, scanner, portfolioName));
+    commands.put("6", new CompositionPortfolio(view, portfolioModel, scanner, portfolioName));
   }
 
   /**

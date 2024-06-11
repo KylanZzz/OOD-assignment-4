@@ -22,11 +22,12 @@ public interface PortfolioStockModel extends StockModel {
    * Get the stocks and the corresponding shares in a portfolio.
    *
    * @param name the name of the portfolio.
+   * @param date the date to get the state of the protfolio at.
    * @return a map where the keys are the tickers of all the stocks and values are the number of
    * shares of that stock in the portfolio.
    * @throws IllegalArgumentException if the name of the ticker symbol does not exist.
    */
-  Map<String, Double> getPortfolioContentsDecimal(String name) throws IllegalArgumentException;
+  Map<String, double> getPortfolioContentsDecimal(String name, LocalDate date) throws IllegalArgumentException;
 
   /**
    * @param name   the name of the portfolio.
@@ -77,7 +78,7 @@ public interface PortfolioStockModel extends StockModel {
    * @throws IOException              if a data fetching error occurs.
    * @throws IllegalArgumentException if the name of the portfolio doesn't exist.
    */
-  Map<String, Double> getPortfolioDistribution(String name, LocalDate date) throws IOException,
+  Map<String, double> getPortfolioDistribution(String name, LocalDate date) throws IOException,
           IllegalArgumentException;
 
   /**
@@ -142,7 +143,7 @@ public interface PortfolioStockModel extends StockModel {
    * @throws IllegalArgumentException if the start date is not before the end date or if the name
    *                                  of the ticker is invalid
    */
-  Map<LocalDate, Double> getPortfolioPerformance(String name, LocalDate startDate,
+  Map<LocalDate, double> getPortfolioPerformance(String name, LocalDate startDate,
                                                  LocalDate endDate) throws IllegalArgumentException,
           IOException;
 

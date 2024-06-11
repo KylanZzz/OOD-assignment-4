@@ -2,6 +2,8 @@ package stock.model;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -11,16 +13,25 @@ public class PortfolioStockModelImpl implements PortfolioStockModel {
 
   private final DataSource dataSource;
   private final StockModel simpleModel;
+  private final List<Portfolio> portfolios;
 
   public PortfolioStockModelImpl(DataSource dataSource) {
     this.dataSource = dataSource;
     simpleModel = new BasicStockModel(dataSource);
+    portfolios = new ArrayList<>();
   }
 
   @Override
-  public Map<String, Double> getPortfolioContentsDecimal(String name) throws
+  public Map<String, double> getPortfolioContentsDecimal(String name, LocalDate date) throws
           IllegalArgumentException {
-    return null;
+
+    for (var port: portfolios) {
+      if (port.getName().equals(name)) {
+        return port.getComposition(date);
+      }
+    }
+
+    throw new IllegalArgumentException("Name of that portfolio doesn't exist");
   }
 
   @Override
@@ -89,7 +100,7 @@ public class PortfolioStockModelImpl implements PortfolioStockModel {
   }
 
   @Override
-  public Map<String, Double> getPortfolioDistribution(String name, LocalDate date) throws
+  public Map<String, double> getPortfolioDistribution(String name, LocalDate date) throws
           IOException, IllegalArgumentException {
     return null;
   }
@@ -118,7 +129,7 @@ public class PortfolioStockModelImpl implements PortfolioStockModel {
 
 
   @Override
-  public Map<LocalDate, Double> getPortfolioPerformance(String name, LocalDate startDate,
+  public Map<LocalDate, double> getPortfolioPerformance(String name, LocalDate startDate,
                                                         LocalDate endDate) throws
           IllegalArgumentException, IOException {
     return null;

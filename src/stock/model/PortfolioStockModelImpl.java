@@ -2,19 +2,17 @@ package stock.model;
 
 import java.io.IOException;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import stock.model.portfolio.Portfolio;
 
 public class PortfolioStockModelImpl implements PortfolioStockModel {
-  private final List<Portfolio> portfolios;
+
   private final DataSource dataSource;
   private final StockModel simpleModel;
 
   public PortfolioStockModelImpl(DataSource dataSource) {
-    this.portfolios = new ArrayList<>();
     this.dataSource = dataSource;
     simpleModel = new BasicStockModel(dataSource);
   }
@@ -113,10 +111,11 @@ public class PortfolioStockModelImpl implements PortfolioStockModel {
   }
 
   @Override
-  public void rebalancePortfolio(String name, LocalDate startDate, LocalDate endDate) throws
-          IOException, IllegalArgumentException {
+  public void rebalancePortfolio(String name, LocalDate date) throws IOException,
+          IllegalArgumentException {
 
   }
+
 
   @Override
   public Map<LocalDate, Double> getPortfolioPerformance(String name, LocalDate startDate,

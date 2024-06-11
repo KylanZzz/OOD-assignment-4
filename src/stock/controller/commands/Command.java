@@ -73,7 +73,7 @@ public abstract class Command {
     while (true) {
       String ticker = scanner.nextLine().toUpperCase();
       try {
-        if (model.stockExists(ticker)) {
+        if (portfolioModel.stockExists(ticker)) {
           return ticker;
         } else {
           view.printMessage("That stock does not exist! Please try again.");

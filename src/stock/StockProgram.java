@@ -6,6 +6,8 @@ import stock.controller.BasicStockController;
 import stock.controller.StockController;
 import stock.model.AlphaVantageDataSource;
 import stock.model.BasicStockModel;
+import stock.model.PortfolioStockModel;
+import stock.model.PortfolioStockModelImpl;
 import stock.model.StockModel;
 import stock.view.BasicStockView;
 import stock.view.StockView;
@@ -34,8 +36,9 @@ public class StockProgram {
 
     StockView view = new BasicStockView(System.out);
     // StockModel model = new BasicStockModel(new CSVDataSource("res/CSVData"));
-    StockModel model = new BasicStockModel(new AlphaVantageDataSource());
-    StockController controller = new BasicStockController(view, model,
+//    StockModel model = new BasicStockModel(new AlphaVantageDataSource());
+    PortfolioStockModel portfolioModel = new PortfolioStockModelImpl(new AlphaVantageDataSource());
+    StockController controller = new BasicStockController(view, portfolioModel,
             new InputStreamReader(System.in));
     controller.run();
   }

@@ -9,6 +9,7 @@ import stock.controller.commands.portfolio.DeletePortfolio;
 import stock.controller.commands.portfolio.EditPortfolio;
 import stock.controller.commands.portfolio.PortfolioCommand;
 import stock.controller.commands.portfolio.RenamePortfolio;
+import stock.model.PortfolioStockModel;
 import stock.model.StockModel;
 import stock.view.BasicMenuOptions;
 import stock.view.StockView;
@@ -28,11 +29,15 @@ public class ViewPortfolios extends Command {
    * then initializes the commands map.
    *
    * @param view    the view to be used for displaying messages
-   * @param model   the model to interact with stock data
+   * @param portfolioModel   the model to interact with stock data
    * @param scanner the scanner to read user inputs
    */
-  public ViewPortfolios(StockView view, StockModel model, Scanner scanner) {
-    super(view, model, scanner);
+//  public ViewPortfolios(StockView view, StockModel model, Scanner scanner) {
+//    super(view, model, scanner);
+//    commands = new HashMap<>();
+//  }
+  public ViewPortfolios(StockView view, PortfolioStockModel portfolioModel, Scanner scanner) {
+    super(view, portfolioModel, scanner);
     commands = new HashMap<>();
   }
 
@@ -43,14 +48,14 @@ public class ViewPortfolios extends Command {
    * any number afterwards (4+) to edit any portfolios they own.
    */
   protected void initializeCommands() {
-    commands.put("1", new CreatePortfolio(view, model, scanner));
-    commands.put("2", new DeletePortfolio(view, model, scanner));
-    commands.put("3", new RenamePortfolio(view, model, scanner));
+    commands.put("1", new CreatePortfolio(view, portfolioModel, scanner));
+    commands.put("2", new DeletePortfolio(view, portfolioModel, scanner));
+    commands.put("3", new RenamePortfolio(view, portfolioModel, scanner));
 
     int numOptions = BasicMenuOptions.viewPortfolios().size();
-    for (int i = 0; i < model.getPortfolios().size(); i++) {
+    for (int i = 0; i < portfolioModel.getPortfolios().size(); i++) {
       commands.put(Integer.toString(i + numOptions + 1),
-              new EditPortfolio(view, model, scanner, model.getPortfolios().get(i)));
+              new EditPortfolio(view, portfolioModel, scanner, portfolioModel.getPortfolios().get(i)));
     }
   }
 
@@ -65,7 +70,7 @@ public class ViewPortfolios extends Command {
 
     while (!choice.equals(BasicMenuOptions.exitKeyword())) {
       initializeCommands();
-      view.printViewPortfolios(model.getPortfolios());
+      view.printViewPortfolios(portfolioModel.getPortfolios());
       choice = scanner.nextLine();
 
       if (commands.containsKey(choice)) {

@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Scanner;
 
+import stock.model.PortfolioStockModel;
 import stock.model.StockModel;
 import stock.view.StockView;
 
@@ -21,8 +22,12 @@ public class PortfolioValue extends StockCommand {
    * @param scanner the input of the stock program.
    * @param portfolio the name of the portfolio.
    */
-  public PortfolioValue(StockView view, StockModel model, Scanner scanner, String portfolio) {
-    super(view, model, scanner, portfolio);
+//  public PortfolioValue(StockView view, StockModel model, Scanner scanner, String portfolio) {
+//    super(view, model, scanner, portfolio);
+//  }
+
+  public PortfolioValue(StockView view, PortfolioStockModel portfolioModel, Scanner scanner, String portfolio) {
+    super(view, portfolioModel, scanner, portfolio);
   }
 
   /**
@@ -39,7 +44,7 @@ public class PortfolioValue extends StockCommand {
     LocalDate date = getDateFromUser();
 
     try {
-      double value = model.getPortfolioValue(portfolio, date);
+      double value = portfolioModel.getPortfolioValue(portfolio, date);
       view.printMessage(String.format("The value of the portfolio %s at %s is %.2f.",
               portfolio, date, value));
     } catch (IOException e) {

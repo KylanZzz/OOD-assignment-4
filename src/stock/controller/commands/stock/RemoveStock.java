@@ -2,6 +2,7 @@ package stock.controller.commands.stock;
 
 import java.util.Scanner;
 
+import stock.model.PortfolioStockModel;
 import stock.model.StockModel;
 import stock.view.StockView;
 
@@ -15,13 +16,17 @@ public class RemoveStock extends StockCommand {
    * model, and source of input.
    *
    * @param view the view of the stock program.
-   * @param model the model of the stock program.
+   * @param portfolioModel the model of the stock program.
    * @param scanner the input of the stock program.
    * @param portfolio the name of the portfolio.
    */
-  public RemoveStock(StockView view, StockModel model, Scanner scanner, String portfolio) {
-    super(view, model, scanner, portfolio);
+//  public RemoveStock(StockView view, StockModel model, Scanner scanner, String portfolio) {
+//    super(view, model, scanner, portfolio);
+//  }
+  public RemoveStock(StockView view, PortfolioStockModel portfolioModel, Scanner scanner, String portfolio) {
+    super(view, portfolioModel, scanner, portfolio);
   }
+
 
   /**
    * Prompts the user for the ticker of the stock they would like to
@@ -38,12 +43,12 @@ public class RemoveStock extends StockCommand {
             + "that you would like to remove from portfolio %s.", portfolio));
     String ticker = getTickerFromUser();
 
-    if (!model.getPortfolioContents(portfolio).containsKey(ticker)) {
+    if (!portfolioModel.getPortfolioContents(portfolio).containsKey(ticker)) {
       view.printMessage("That stock is not in the portfolio.");
       return;
     }
 
-    model.removeStockFromPortfolio(portfolio, ticker);
+    portfolioModel.removeStockFromPortfolio(portfolio, ticker);
     view.printMessage(String.format("Successfully removed stock %s from portfolio %s.", ticker,
             portfolio));
   }

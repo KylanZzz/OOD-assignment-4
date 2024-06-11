@@ -9,6 +9,7 @@ import stock.controller.commands.stock.AddStock;
 import stock.controller.commands.stock.PortfolioValue;
 import stock.controller.commands.stock.RemoveStock;
 import stock.controller.commands.stock.StockCommand;
+import stock.model.PortfolioStockModel;
 import stock.model.StockModel;
 import stock.view.BasicMenuOptions;
 import stock.view.StockView;
@@ -25,23 +26,28 @@ public class EditPortfolio extends PortfolioCommand {
    * Constructs a new edit portfolio command.
    *
    * @param view          the view of the stock program.
-   * @param model         the model of the stock program.
+   * @param portfolioModel         the model of the stock program.
    * @param scanner       the input of the stock program.
    * @param portfolioName name of the portfolio to edit.
    */
-  public EditPortfolio(StockView view, StockModel model, Scanner scanner, String portfolioName) {
-    super(view, model, scanner);
+//  public EditPortfolio(StockView view, StockModel model, Scanner scanner, String portfolioName) {
+//    super(view, model, scanner);
+//    this.portfolioName = portfolioName;
+//    commands = new HashMap<>();
+//  }
+
+  public EditPortfolio(StockView view, PortfolioStockModel portfolioModel, Scanner scanner, String portfolioName) {
+    super(view, portfolioModel, scanner);
     this.portfolioName = portfolioName;
     commands = new HashMap<>();
   }
-
   /**
    * Initializes different commands that can be performed on the portfolio.
    */
   protected void initializeCommands() {
-    commands.put("1", new PortfolioValue(view, model, scanner, portfolioName));
+    commands.put("1", new PortfolioValue(view, portfolioModel, scanner, portfolioName));
     commands.put("2", new AddStock(view, model, scanner, portfolioName));
-    commands.put("3", new RemoveStock(view, model, scanner, portfolioName));
+    commands.put("3", new RemoveStock(view, portfolioModel, scanner, portfolioName));
     commands.put("4", new PurchaseStockWithDate(view, portfolioModel, scanner, portfolioName));
   }
 
@@ -55,7 +61,7 @@ public class EditPortfolio extends PortfolioCommand {
     String choice = "";
 
     while (!choice.equals(BasicMenuOptions.exitKeyword())) {
-      view.printManagePortfolio(model.getPortfolioContents(portfolioName), portfolioName);
+      view.printManagePortfolio(portfolioModel.getPortfolioContents(portfolioName), portfolioName);
       choice = scanner.nextLine();
 
       if (commands.containsKey(choice)) {

@@ -2,6 +2,7 @@ package stock.controller.commands.portfolio;
 
 import java.util.Scanner;
 
+import stock.model.PortfolioStockModel;
 import stock.model.StockModel;
 import stock.view.StockView;
 
@@ -15,11 +16,15 @@ public class RenamePortfolio extends PortfolioCommand {
    * model, and source of input.
    *
    * @param view the view of the stock program.
-   * @param model the model of the stock program.
+   * @param portfolioModel the model of the stock program.
    * @param scanner the input of the stock program.
    */
-  public RenamePortfolio(StockView view, StockModel model, Scanner scanner) {
-    super(view, model, scanner);
+//  public RenamePortfolio(StockView view, StockModel model, Scanner scanner) {
+//    super(view, model, scanner);
+//  }
+
+  public RenamePortfolio(StockView view, PortfolioStockModel portfolioModel, Scanner scanner) {
+    super(view, portfolioModel, scanner);
   }
 
   /**
@@ -32,7 +37,7 @@ public class RenamePortfolio extends PortfolioCommand {
   public void apply() {
     view.printMessage("What portfolio would you like to rename? (Please enter the name).");
     String oldName = scanner.nextLine().toUpperCase();
-    if (!model.getPortfolios().contains(oldName)) {
+    if (!portfolioModel.getPortfolios().contains(oldName)) {
       view.printMessage("A portfolio with that name does not exist!");
       return;
     }
@@ -40,12 +45,12 @@ public class RenamePortfolio extends PortfolioCommand {
     view.printMessage("What would you like to rename this portfolio to?");
     String newName = scanner.nextLine().toUpperCase();
 
-    if (model.getPortfolios().contains(newName)) {
+    if (portfolioModel.getPortfolios().contains(newName)) {
       view.printMessage("A portfolio with that name already exists!");
       return;
     }
 
-    model.renamePortfolio(oldName, newName);
+    portfolioModel.renamePortfolio(oldName, newName);
     view.printMessage(String.format("Successfully renamed portfolio %s to %s.", oldName, newName));
   }
 }

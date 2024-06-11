@@ -7,6 +7,7 @@ import stock.controller.commands.CalculateCrossover;
 import stock.controller.commands.CalculateGain;
 import stock.controller.commands.Command;
 import stock.controller.commands.ViewPortfolios;
+import stock.model.PortfolioStockModel;
 import stock.model.StockModel;
 import stock.view.BasicMenuOptions;
 import stock.view.StockView;
@@ -21,7 +22,9 @@ import java.util.Map;
 public class BasicStockController implements StockController {
 
   private final StockView view;
-  private final StockModel model;
+  private  StockModel model;
+  private  PortfolioStockModel portfolioModel;
+
   private final Scanner scanner;
   private final Map<String, Command> commands;
 
@@ -40,11 +43,19 @@ public class BasicStockController implements StockController {
     initializeCommands();
   }
 
+  public BasicStockController(StockView view, PortfolioStockModel portfolioModel, Readable in) {
+    scanner = new Scanner(in);
+    this.view = view;
+    this.portfolioModel = portfolioModel;
+    commands = new HashMap<>();
+    initializeCommands();
+  }
+
   protected void initializeCommands() {
-    commands.put("1", new CalculateGain(view, model, scanner));
-    commands.put("2", new CalculateAverage(view, model, scanner));
-    commands.put("3", new CalculateCrossover(view, model, scanner));
-    commands.put("4", new ViewPortfolios(view, model, scanner));
+    commands.put("1", new CalculateGain(view, portfolioModel, scanner));
+    commands.put("2", new CalculateAverage(view, portfolioModel, scanner));
+    commands.put("3", new CalculateCrossover(view, portfolioModel, scanner));
+    commands.put("4", new ViewPortfolios(view, portfolioModel, scanner));
   }
 
   /**

@@ -41,8 +41,7 @@ public class BasicMenuOptions {
   public static List<String> viewPortfolios() {
     return List.of("Create new portfolio",
             "Delete portfolio",
-            "Rename portfolio",
-            "Purchases the stocks and add to the portfolio");
+            "Rename portfolio");
   }
 
   /**
@@ -53,6 +52,8 @@ public class BasicMenuOptions {
   public static List<String> managePortfolio() {
     return List.of("Calculate portfolio value",
             "Add stock to portfolio",
-            "Remove stock from portfolio");
+            "Remove stock from portfolio",
+            "Add stock to portfolio with date");
   }
 }
+

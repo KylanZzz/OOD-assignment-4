@@ -16,9 +16,9 @@ import stock.model.StockModel;
  */
 public abstract class Command {
   protected final StockView view;
-  protected final StockModel model;
+  protected StockModel model;
+  protected PortfolioStockModel portfolioModel;
   protected final Scanner scanner;
-  protected LocalDate date;
 
   /**
    * Constructs a command with a stock's view, model, and source of input.
@@ -33,11 +33,10 @@ public abstract class Command {
     this.scanner = scanner;
   }
 
-  public Command(StockView view, PortfolioStockModel model, Scanner scanner, LocalDate date) {
+  public Command(StockView view, PortfolioStockModel portfolioModel, Scanner scanner) {
     this.view = view;
-    this.model = model;
+    this.portfolioModel = portfolioModel;
     this.scanner = scanner;
-    this.date = date;
   }
 
   /**

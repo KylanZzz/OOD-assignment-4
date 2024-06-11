@@ -1,6 +1,5 @@
 package stock.controller.commands.stock;
 
-import java.time.LocalDate;
 import java.util.Scanner;
 
 import stock.controller.commands.Command;
@@ -27,8 +26,9 @@ public abstract class StockCommand extends Command {
     this.portfolio = portfolio;
   }
 
-  public StockCommand(StockView view, PortfolioStockModel model, Scanner scanner, String portfolio, LocalDate date) {
-    super(view, model, scanner, date);
+  public StockCommand(StockView view, PortfolioStockModel portfolioModel, Scanner scanner, String portfolio) {
+    super(view, portfolioModel, scanner);
     this.portfolio = portfolio;
   }
 }
+

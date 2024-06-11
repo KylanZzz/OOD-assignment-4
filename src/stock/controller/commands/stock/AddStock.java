@@ -63,6 +63,7 @@ public class AddStock extends StockCommand {
       view.printMessage("Cannot purchase negative number of stocks.");
       return;
     }
+
     model.addStockToPortfolio(portfolio, ticker, shares);
     view.printMessage(String.format("Successfully purchased %d number of %s stocks in the %s "
             + "portfolio.", shares, ticker, portfolio));

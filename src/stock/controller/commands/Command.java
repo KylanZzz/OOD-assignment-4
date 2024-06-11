@@ -120,5 +120,19 @@ public abstract class Command {
     return date;
   }
 
+  protected final String getPortfolioNameFromUser() {
+    while (true) {
+      String name = scanner.nextLine().toUpperCase();
+      try {
+          portfolioModel.createNewPortfolioSave(name);
+          view.printMessage("That stock does not exist! Please try again.");
+
+      } catch (IOException e) {
+        view.printMessage("Error while fetching data: " + e.getMessage());
+      }
+    }
+
+  }
+
 
 }

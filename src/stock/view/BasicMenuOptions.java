@@ -54,8 +54,10 @@ public class BasicMenuOptions {
             "Add stock to portfolio",
             "Remove stock from portfolio",
             "Add stock to portfolio with specific date",
-            "Remove stock from portfolio with specific date",
-            "Calculate portfolio value with specific date");
+            "Remove stock from portfolio on specific date",
+            "Calculate portfolio value on specific date",
+            "Check the distribution of value on specific date",
+            "Save Portfolio");
   }
 }
 

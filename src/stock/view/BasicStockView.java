@@ -184,4 +184,18 @@ public class BasicStockView implements StockView {
   public void printMessage(String message) {
     println(message);
   }
+
+  @Override
+  public void printDistribution(Map<String, Double> stocks, String name, LocalDate date) {
+    println(String.format("Here are the distribution of the stocks in the %s portfolio at %s:\n", name, date));
+    var list = stocks.keySet().stream().sorted()
+            .map(it -> String.format("%-30s %-30.2f", it, stocks.get(it)))
+            .collect(Collectors.toList());
+    list.add(0, String.format("%-30s %s", "Stock", "Values"));
+    printList(list);
+    println("");
+
+    printOptionsPrompt();
+    printMenu(BasicMenuOptions.managePortfolio());
+  }
 }

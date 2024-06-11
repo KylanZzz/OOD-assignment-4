@@ -82,4 +82,14 @@ public interface StockView {
    * @param name the name of the portfolio.
    */
   void printManagePortfolioDouble(Map<String, Double> stocks, String name, LocalDate date);
+
+  /**
+   * Display the list of commands that the user can ask for.
+   *
+   * @param stocks the ticker of the stocks and the fractional quantity of the stocks.
+   * @param name the name of the portfolio.
+   */
+  void printDistribution(Map<String, Double> stocks, String name, LocalDate date);
+
+
 }

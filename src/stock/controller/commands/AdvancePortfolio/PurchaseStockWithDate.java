@@ -56,6 +56,7 @@ public class PurchaseStockWithDate extends StockCommand {
       return;
     }
 
+    view.printMessage("Please enter the date that you want to purchase the stocks: ");
     LocalDate date = getDateFromUser();
     try {
       portfolioModel.addStockToPortfolio(portfolio, ticker, shares, date);

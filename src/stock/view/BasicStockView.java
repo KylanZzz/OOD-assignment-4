@@ -101,6 +101,22 @@ public class BasicStockView implements StockView {
     printMenu(BasicMenuOptions.managePortfolio());
   }
 
+  @Override
+  public void printManagePortfolioDouble(Map<String, Double> stocks, String name, LocalDate date) {
+    println(String.format("Here are all the stocks in the %s portfolio:\n", name));
+
+    var list = stocks.keySet().stream().sorted()
+            .map(it -> String.format("%-30s %-10.2f %s", it, stocks.get(it), date))
+            .collect(Collectors.toList());
+
+    list.add(0, String.format("%-30s %-10s %s", "Stock", "Shares", "Date"));
+    printList(list);
+    println("");
+
+    printOptionsPrompt();
+    printMenu(BasicMenuOptions.managePortfolio());
+  }
+
   /**
    * Displays the dates of X-day crossovers for a specific stock starting from a given date.
    *

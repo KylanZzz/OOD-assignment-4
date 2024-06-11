@@ -1,5 +1,6 @@
 package stock.controller.commands.portfolio;
 
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -61,7 +62,10 @@ public class EditPortfolio extends PortfolioCommand {
     String choice = "";
 
     while (!choice.equals(BasicMenuOptions.exitKeyword())) {
-      view.printManagePortfolio(portfolioModel.getPortfolioContents(portfolioName), portfolioName);
+      view.printMessage("Enter the date that you add the stocks: ");
+      LocalDate date = getDateFromUser();
+
+      view.printManagePortfolioDouble(portfolioModel.getPortfolioContentsDecimal(portfolioName, date), portfolioName, date);
       choice = scanner.nextLine();
 
       if (commands.containsKey(choice)) {

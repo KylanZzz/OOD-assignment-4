@@ -5,6 +5,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -19,12 +20,14 @@ public class PortfolioStockModelImpl implements PortfolioStockModel {
   private final DataSource dataSource;
   private final StockModel simpleModel;
   private final List<Portfolio> portfolios;
-  private static final String portfoliosDirectory = "res/portfolio";
+  // "res/portfolio"
+  private final String portfoliosDirectory;
 
-  public PortfolioStockModelImpl(DataSource dataSource) {
+  public PortfolioStockModelImpl(DataSource dataSource, String portfoliosDirectory) {
     this.dataSource = dataSource;
     simpleModel = new BasicStockModel(dataSource);
     portfolios = new ArrayList<>();
+    this.portfoliosDirectory = portfoliosDirectory;
   }
 
   @Override
@@ -36,7 +39,7 @@ public class PortfolioStockModelImpl implements PortfolioStockModel {
   @Override
   public void addStockToPortfolio(String name, String ticker, int shares, LocalDate date) throws
           IOException, IllegalArgumentException {
-    getPortfolio(name).buyStock(ticker, date ,shares);
+    getPortfolio(name).buyStock(ticker, date, shares);
   }
 
   @Override
@@ -95,8 +98,11 @@ public class PortfolioStockModelImpl implements PortfolioStockModel {
     var port = getPortfolio(name);
 
     var prices = new HashMap<String, Double>();
-    for (var key: port.getComposition(date).keySet()) {
-      prices.put(key, dataSource.getClosingPrice(date, key));
+    for (var key : port.getComposition(date).keySet()) {
+      var dt = date;
+      while (!dataSource.stockExistsAtDate(dt, key) && !dt.equals(LocalDate.of(1990,1,
+              1))) dt = dt.minusDays(1);
+      prices.put(key, dataSource.getClosingPrice(dt, key));
     }
 
     return port.getValue(date, prices);
@@ -113,7 +119,7 @@ public class PortfolioStockModelImpl implements PortfolioStockModel {
     var port = getPortfolio(name);
 
     var prices = new HashMap<String, Double>();
-    for (var key: port.getComposition(date).keySet()) {
+    for (var key : port.getComposition(date).keySet()) {
       prices.put(key, dataSource.getClosingPrice(date, key));
     }
 
@@ -122,33 +128,29 @@ public class PortfolioStockModelImpl implements PortfolioStockModel {
 
   @Override
   public List<String> getPortfolioSaves(String name) throws IllegalArgumentException, IOException {
-    Path dir = Paths.get(portfoliosDirectory);
-    Stream<Path> stream = Files.list(dir);
-
-    List<String> fileNames = stream
-            .filter(file -> !Files.isDirectory(file)) // exclude directories
-            .map(Path::getFileName) // get all files in portfolios directory
-            .map(Path::toString) // convert to string
-            .filter(it -> it.toUpperCase()
-                    .startsWith(name.toUpperCase())) // filter for portfolio (case insensitive)
-            .collect(Collectors.toList()); // convert to list
-
-    return fileNames;
+    return getPortfolio(name).getAllSaves(portfoliosDirectory);
   }
 
   @Override
   public void loadPortfolioSave(String name, String fileSaveName) throws IOException,
           IllegalArgumentException {
-    getPortfolio(name).loadSave(portfoliosDirectory + "/" + fileSaveName);
+    getPortfolio(name).loadSave(portfoliosDirectory, fileSaveName);
   }
 
   @Override
   public void createNewPortfolioSave(String name) throws IOException, IllegalArgumentException {
-    getPortfolio(name).createSave(portfoliosDirectory);
+//    Format: [name]_[YYYY]-[MM]-[DD]T[HH]-[mm]-[ss]
+    String currTime = LocalDateTime.now().toString();
+    currTime = currTime.split("\\.")[0];
+    currTime = currTime.replace(':', '-');
+    String fileName = name + "_" + currTime;
+
+    getPortfolio(name).createSave(portfoliosDirectory, fileName);
   }
 
   @Override
-  public void rebalancePortfolio(String name, LocalDate date, Map<String, Double> proportions) throws IOException,
+  public void rebalancePortfolio(String name, LocalDate date,
+                                 Map<String, Double> proportions) throws IOException,
           IllegalArgumentException {
     var prices = getPrices(name, date);
 
@@ -169,18 +171,19 @@ public class PortfolioStockModelImpl implements PortfolioStockModel {
     return res;
   }
 
-  protected final HashMap<String, Double> getPrices(String name, LocalDate date) throws IOException {
+  protected final HashMap<String, Double> getPrices(String name, LocalDate date) throws
+          IOException {
     var port = getPortfolio(name);
 
     var prices = new HashMap<String, Double>();
-    for (var key: port.getComposition(date).keySet()) {
+    for (var key : port.getComposition(date).keySet()) {
       prices.put(key, dataSource.getClosingPrice(date, key));
     }
     return prices;
   }
 
   protected final Portfolio getPortfolio(String name) {
-    for (var port: portfolios) {
+    for (var port : portfolios) {
       if (port.getName().equals(name)) {
         return port;
       }

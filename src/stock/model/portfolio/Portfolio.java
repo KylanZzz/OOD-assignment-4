@@ -1,6 +1,15 @@
 package stock.model.portfolio;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.FilenameFilter;
+import java.io.IOException;
+import java.nio.file.DirectoryStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -11,6 +20,7 @@ import java.util.TreeSet;
 public class Portfolio {
   private final List<Transaction> transactions;
   private String name;
+  private final String FILE_EXTENSION = ".txt";
 
   public Portfolio(String name) {
     this.transactions = new ArrayList<>();
@@ -30,7 +40,8 @@ public class Portfolio {
   }
 
   // throws illegal argument if there isn't enough stocks bought to sell that many
-  public void sellStock(String ticker, LocalDate date, double shares) throws IllegalArgumentException {
+  public void sellStock(String ticker, LocalDate date, double shares) throws
+          IllegalArgumentException {
     var composition = getComposition(date);
 
     if (!composition.containsKey(ticker)) {
@@ -75,8 +86,10 @@ public class Portfolio {
 
   // hashmap of all the stocks in the portfolio with their closing prices at provided date
   // throws illegalArgument if hashmap doesn't have all the stocks
-  public Double getValue(LocalDate date, Map<String, Double> prices) throws IllegalArgumentException {
+  public Double getValue(LocalDate date, Map<String, Double> prices) throws
+          IllegalArgumentException {
     var composition = getComposition(date);
+
     // prices map DOESNT have all the stocks that portfolio does
     if (!prices.keySet().containsAll(composition.keySet())) {
       throw new IllegalArgumentException("Prices does not contain all the necessary stocks!");
@@ -91,7 +104,8 @@ public class Portfolio {
 
   // get value distribution (shares and value)
   // throws illegalArgument if hashmap doesn't have all the stocks
-  public Map<String, Double> getDistribution(LocalDate date, Map<String, Double> prices) throws IllegalArgumentException {
+  public Map<String, Double> getDistribution(LocalDate date, Map<String, Double> prices) throws
+          IllegalArgumentException {
     var composition = getComposition(date);
     // prices map DOESNT have all the stocks that portfolio does
     if (!prices.keySet().containsAll(composition.keySet())) {
@@ -105,11 +119,71 @@ public class Portfolio {
     return res;
   }
 
-  public void createSave(String folderName) {
+  public List<String> getAllSaves(String folderName) throws IOException {
+    try (DirectoryStream<Path> stream = Files.newDirectoryStream(Path.of(folderName),
+            name + "*")) {
+      List<String> output = new ArrayList<>();
+
+      for (Path entry : stream) {
+        // remove file extension
+        output.add(entry.getFileName().toString().replace(FILE_EXTENSION, ""));
+      }
+
+      return output;
+    } catch (IOException e) {
+      throw new IOException(
+              "An error occurred while trying to read all saves from " + folderName + ".", e);
+    }
+  }
+
+  public void createSave(String folderName, String fileName) throws IOException {
+    StringBuilder data = new StringBuilder();
+
+    for (var tran : transactions) {
+      data.append(tran.save()).append(System.lineSeparator());
+    }
+
+    try {
+      Path folderPath = Paths.get(folderName);
+      Path filePath = folderPath.resolve(fileName + FILE_EXTENSION);
+
+      Files.createDirectories(folderPath);
+      Files.write(filePath, data.toString().getBytes());
+
+    } catch (IOException e) {
+      throw new IOException("An error occurred while trying to save: " + fileName + ".", e);
+    }
+  }
+
+  public void loadSave(String folderName, String fileName) throws IOException {
+    Path filePath = Paths.get(folderName, fileName + FILE_EXTENSION);
+
+    try {
+      List<String> lines = Files.readAllLines(filePath);
+
+      transactions.clear();
+      for (String line : lines) {
+        transactions.add(parseTransaction(line));
+      }
+
+    } catch (IOException e) {
+      throw new IOException("An error occurred while trying to load save: " + fileName + ".", e);
+    }
 
   }
 
-  public void loadSave(String fileName) {
+  private Transaction parseTransaction(String line) throws IOException {
+    try {
+      String identifier = line.split(":")[0];
 
+      return switch (identifier) {
+        case "BUY" -> new BuyTransaction(line);
+        case "SELL" -> new SellTransaction(line);
+        case "REBALANCE" -> new RebalanceTransaction(line);
+        default -> throw new IllegalArgumentException("Incorrect identifier");
+      };
+    } catch (Exception e) {
+      throw new IOException("Error while loading save from file: Incorrect format.");
+    }
   }
 }

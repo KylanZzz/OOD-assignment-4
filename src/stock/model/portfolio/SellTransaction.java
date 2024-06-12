@@ -1,5 +1,6 @@
 package stock.model.portfolio;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Map;
 
@@ -21,6 +22,13 @@ public class SellTransaction extends Transaction {
     this.ticker = ticker;
   }
 
+  protected SellTransaction(String data) throws IOException {
+    super(data);
+    var split = data.split(",");
+    this.shares = Double.parseDouble(split[1]);
+    this.ticker = split[2];
+  }
+
   @Override
   Map<String, Double> apply(Map<String, Double> res) {
     if (!res.containsKey(ticker)) {
@@ -37,5 +45,17 @@ public class SellTransaction extends Transaction {
     }
 
     return res;
+  }
+
+  @Override
+  String save() {
+
+    return "SELL:" + String.join(",",
+            String.format("%02d/%02d/%04d",
+                    getDate().getMonthValue(),
+                    getDate().getDayOfMonth(),
+                    getDate().getYear()) + ","
+                    + shares + ","
+                    + ticker);
   }
 }

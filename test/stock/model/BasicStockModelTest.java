@@ -31,7 +31,7 @@ public class BasicStockModelTest {
    * and the BasicStockModel with this mock data source.
    */
   @Before
-  public void setup() {
+  public void setup() throws IOException {
     mockDataSource = new MockDataSource();
     model = new BasicStockModel(mockDataSource);
   }

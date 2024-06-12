@@ -2,6 +2,7 @@ package stock.model.portfolio;
 
 import org.junit.Test;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
@@ -94,5 +95,43 @@ public class SellTransactionTest {
     port = sell2.apply(port);
     expected = Map.of();
     assertTrue(comparePort(expected, port));
+  }
+
+  @Test
+  public void sellTransactionSavesCorrectly() {
+    Transaction sell = new SellTransaction(LocalDate.of(2024, 6, 13), 20.0, "NFLX");
+    String expected = "SELL:06/13/2024,20.0,NFLX";
+    assertEquals(expected, sell.save());
+  }
+
+  @Test
+  public void sellTransactionConstructedFromSaveStringWorks() throws IOException {
+    String data = "SELL:06/13/2024,20.0,NFLX";
+    Transaction sell = new SellTransaction(data);
+
+    Map<String, Double> port = new HashMap<>();
+    port.put("NFLX", 30.0);
+    port = sell.apply(port);
+
+    Map<String, Double> expected = Map.of("NFLX", 10.0);
+    assertTrue(comparePort(expected, port));
+  }
+
+  @Test
+  public void sellTransactionSaveAndReconstruct() throws IOException {
+    Transaction originalSell = new SellTransaction(LocalDate.of(2024, 6, 13), 20.0, "NFLX");
+    String saveString = originalSell.save();
+
+    Transaction reconstructedSell = new SellTransaction(saveString);
+
+    Map<String, Double> originalPort = new HashMap<>();
+    Map<String, Double> reconstructedPort = new HashMap<>();
+    originalPort.put("NFLX", 30.0);
+    reconstructedPort.put("NFLX", 30.0);
+
+    originalPort = originalSell.apply(originalPort);
+    reconstructedPort = reconstructedSell.apply(reconstructedPort);
+
+    assertTrue(comparePort(originalPort, reconstructedPort));
   }
 }

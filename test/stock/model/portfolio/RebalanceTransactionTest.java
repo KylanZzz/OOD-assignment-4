@@ -2,6 +2,7 @@ package stock.model.portfolio;
 
 import org.junit.Test;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
@@ -142,6 +143,57 @@ public class RebalanceTransactionTest {
     assertEquals(10.0, res.get("AAPL"), 0.01);
     assertEquals(20.0, res.get("GOOG"), 0.01);
     assertEquals(30.0, res.get("MSFT"), 0.01);
+  }
+
+  @Test
+  public void rebalanceTransactionSavesCorrectly() {
+    Map<String, Double> prices = Map.of("AAPL", 400.0, "AMZN", 100.0, "NFLX", 250.0);
+    Map<String, Double> proportions = Map.of("AAPL", 0.3, "AMZN", 0.4, "NFLX", 0.3);
+    Transaction rebalance = new RebalanceTransaction(LocalDate.of(2024, 6, 13), prices, proportions);
+    String expected = "REBALANCE:06/13/2024,AAPL=>400.0;AMZN=>100.0;NFLX=>250.0,AAPL=>0.3;AMZN=>0.4;NFLX=>0.3";
+    assertEquals(expected, rebalance.save());
+  }
+
+  @Test
+  public void rebalanceTransactionConstructedFromSaveStringWorks() throws IOException {
+    String data = "REBALANCE:06/13/2024,AAPL=>400.0;AMZN=>100.0;NFLX=>250.0,AAPL=>0.3;AMZN=>0.4;NFLX=>0.3";
+    Transaction rebalance = new RebalanceTransaction(data);
+
+    Map<String, Double> res = new HashMap<>();
+    res.put("AAPL", 10.0);
+    res.put("AMZN", 20.0);
+    res.put("NFLX", 30.0);
+
+    rebalance.apply(res);
+
+    double totalValue = res.get("AAPL") * 400.0 + res.get("AMZN") * 100.0 + res.get("NFLX") * 250.0;
+    assertEquals(totalValue * 0.3 / 400.0, res.get("AAPL"), 0.01);
+    assertEquals(totalValue * 0.4 / 100.0, res.get("AMZN"), 0.01);
+    assertEquals(totalValue * 0.3 / 250.0, res.get("NFLX"), 0.01);
+  }
+
+  @Test
+  public void rebalanceTransactionSaveAndReconstruct() throws IOException {
+    Map<String, Double> prices = Map.of("AAPL", 400.0, "AMZN", 100.0, "NFLX", 250.0);
+    Map<String, Double> proportions = Map.of("AAPL", 0.3, "AMZN", 0.4, "NFLX", 0.3);
+    Transaction originalRebalance = new RebalanceTransaction(LocalDate.of(2024, 6, 13), prices, proportions);
+    String saveString = originalRebalance.save();
+
+    Transaction reconstructedRebalance = new RebalanceTransaction(saveString);
+
+    Map<String, Double> originalPort = new HashMap<>();
+    Map<String, Double> reconstructedPort = new HashMap<>();
+    originalPort.put("AAPL", 10.0);
+    originalPort.put("AMZN", 20.0);
+    originalPort.put("NFLX", 30.0);
+    reconstructedPort.put("AAPL", 10.0);
+    reconstructedPort.put("AMZN", 20.0);
+    reconstructedPort.put("NFLX", 30.0);
+
+    originalRebalance.apply(originalPort);
+    reconstructedRebalance.apply(reconstructedPort);
+
+    assertEquals(originalPort, reconstructedPort);
   }
 
 }

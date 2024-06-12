@@ -2,6 +2,7 @@ package stock.model.portfolio;
 
 import org.junit.Test;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
@@ -52,6 +53,41 @@ public class BuyTransactionTest {
 
     Map<String, Double> expected = Map.of("AAPL", 5.0, "NFLX", 1.5, "AMZN", 4.2);
     assertEquals(expected, port);
+  }
+
+  @Test
+  public void buyTransactionSavesCorrectly() {
+    Transaction buy = new BuyTransaction(LocalDate.of(2024, 6, 13), 10.0, "AAPL");
+    String expected = "BUY:06/13/2024,10.0,AAPL";
+    assertEquals(expected, buy.save());
+  }
+
+  @Test
+  public void buyTransactionConstructedFromSaveStringWorks() throws IOException {
+    String data = "BUY:06/13/2024,10.0,AAPL";
+    Transaction buy = new BuyTransaction(data);
+
+    Map<String, Double> port = new HashMap<>();
+    port = buy.apply(port);
+
+    Map<String, Double> expected = Map.of("AAPL", 10.0);
+    assertEquals(expected, port);
+  }
+
+  @Test
+  public void buyTransactionSaveAndReconstruct() throws IOException {
+    Transaction originalBuy = new BuyTransaction(LocalDate.of(2024, 6, 13), 10.0, "AAPL");
+    String saveString = originalBuy.save();
+
+    Transaction reconstructedBuy = new BuyTransaction(saveString);
+
+    Map<String, Double> originalPort = new HashMap<>();
+    Map<String, Double> reconstructedPort = new HashMap<>();
+
+    originalPort = originalBuy.apply(originalPort);
+    reconstructedPort = reconstructedBuy.apply(reconstructedPort);
+
+    assertEquals(originalPort, reconstructedPort);
   }
 
 }

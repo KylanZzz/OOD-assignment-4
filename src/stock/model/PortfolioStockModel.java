@@ -63,20 +63,20 @@ public interface PortfolioStockModel extends StockModel {
   void sellStockFromPortfolio(String name, String ticker, int shares, LocalDate date) throws
           IOException, IllegalArgumentException;
 
-
-  /**
-   * Get the value of a portfolio on a specific date. This should now return 0 if the requested
-   * date was before the date of the first purchase in the portfolio.
-   *
-   * @param name the name of the portfolio.
-   * @param date the date to get value at.
-   * @return the value of the portfolio.
-   * @throws IOException              if an I/O error occurs during data fetching.
-   * @throws IllegalArgumentException if the name of the portfolio doesn't exist.
-   */
-  @Override
-  double getPortfolioValue(String name, LocalDate date) throws IOException,
-          IllegalArgumentException;
+//
+//  /**
+//   * Get the value of a portfolio on a specific date. This should now return 0 if the requested
+//   * date was before the date of the first purchase in the portfolio.
+//   *
+//   * @param name the name of the portfolio.
+//   * @param date the date to get value at.
+//   * @return the value of the portfolio.
+//   * @throws IOException              if an I/O error occurs during data fetching.
+//   * @throws IllegalArgumentException if the name of the portfolio doesn't exist.
+//   */
+//  @Override
+//  double getPortfolioValue(String name, LocalDate date) throws IOException,
+//          IllegalArgumentException;
 
   /**
    * @param name
@@ -98,9 +98,6 @@ public interface PortfolioStockModel extends StockModel {
    * @throws IOException              if an error occurs during file reading.
    */
   List<String> getPortfolioSaves(String name) throws IllegalArgumentException, IOException;
-  // name = "S&P500"
-  // return "S&P500_06_11_2024.txt"
-
 
   /**
    * Load a previous save of a portfolio from disk. The save file should be in the

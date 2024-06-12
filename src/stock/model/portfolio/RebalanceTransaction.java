@@ -90,7 +90,7 @@ public class RebalanceTransaction extends Transaction {
     out.append(",");
 
     // append prices map
-    for (var key: prices.keySet().stream().sorted().toList()) {
+    for (var key: prices.keySet().stream().sorted().collect(Collectors.toList())) {
       out.append(key).append("=>").append(prices.get(key)).append(";");
     }
     // remove last element separator
@@ -99,7 +99,7 @@ public class RebalanceTransaction extends Transaction {
     out.append(",");
 
     // append cost map
-    for (var key: proportions.keySet().stream().sorted().toList()) {
+    for (var key: proportions.keySet().stream().sorted().collect(Collectors.toList())) {
       out.append(key).append("=>").append(proportions.get(key)).append(";");
     }
     // remove last element separator

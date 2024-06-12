@@ -22,8 +22,8 @@ import static org.junit.Assert.assertEquals;
  */
 
 public class BasicStockModelTest {
-  private MockDataSource mockDataSource;
-  private BasicStockModel model;
+  protected MockDataSource mockDataSource;
+  protected StockModel model;
 
   /**
    * Sets up the environment for each test case.
@@ -309,7 +309,11 @@ public class BasicStockModelTest {
 
     model.createNewPortfolio("newPortfolio");
     model.createNewPortfolio("");
-    assertEquals(List.of("", "newPortfolio"), model.getPortfolios());
+
+    var out = model.getPortfolios();
+    Collections.sort(out);
+
+    assertEquals(List.of("", "newPortfolio"), out);
   }
 
   @Test(expected = IllegalArgumentException.class)
@@ -367,7 +371,9 @@ public class BasicStockModelTest {
     model.createNewPortfolio("first");
     model.createNewPortfolio("second");
     model.createNewPortfolio("third");
-    assertEquals(List.of("third", "first", "second"), model.getPortfolios());
+    var out = model.getPortfolios();
+    Collections.sort(out);
+    assertEquals(List.of("first", "second", "third"), out);
   }
 
   @Test

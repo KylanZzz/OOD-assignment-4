@@ -9,6 +9,9 @@ public class BuyTransaction extends Transaction {
 
   protected BuyTransaction(LocalDate date, double shares, String ticker) {
     super(date);
+    if (shares < 0) {
+      throw new IllegalArgumentException("Cannot buy less than 0 shares");
+    }
     this.shares = shares;
     this.ticker = ticker;
   }

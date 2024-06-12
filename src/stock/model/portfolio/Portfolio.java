@@ -1,17 +1,19 @@
 package stock.model.portfolio;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
 public class Portfolio {
-  private final Set<Transaction> transactions;
+  private final List<Transaction> transactions;
   private String name;
 
   public Portfolio(String name) {
-    this.transactions = new TreeSet<>();
+    this.transactions = new ArrayList<>();
     this.name = name;
   }
 
@@ -46,16 +48,25 @@ public class Portfolio {
 
   // hashmap of all the stocks in the portfolio with their closing prices at provided date
   // throws illegalArgument if hashmap doesn't have all the stocks
-  public void rebalance(LocalDate date, HashMap<String, Double> prices) throws IllegalArgumentException {
-    transactions.add(new RebalanceTransaction(date, new HashMap<String, Double>(prices)));
+  public void rebalance(LocalDate date, Map<String, Double> prices,
+                        Map<String, Double> proportions) throws IllegalArgumentException {
+
+    var composition = getComposition(date);
+    if (!composition.keySet().equals(proportions.keySet())) {
+      throw new IllegalArgumentException("The stocks in proportions is not the same as the stocks"
+              + " in prices.");
+    }
+
+    transactions.add(new RebalanceTransaction(date, new HashMap<>(prices),
+            new HashMap<>(proportions)));
   }
 
   // get the stocks and shares
   public Map<String, Double> getComposition(LocalDate date) throws IllegalArgumentException {
-    Map<String, Double> res = new HashMap<String, Double>();
+    Map<String, Double> res = new HashMap<>();
 
     for (var tran : transactions) {
-      if (tran.getDate().isAfter(date)) break;
+      if (tran.getDate().isAfter(date)) continue;
       res = tran.apply(res);
     }
 
@@ -64,7 +75,7 @@ public class Portfolio {
 
   // hashmap of all the stocks in the portfolio with their closing prices at provided date
   // throws illegalArgument if hashmap doesn't have all the stocks
-  public Double getValue(LocalDate date, HashMap<String, Double> prices) throws IllegalArgumentException {
+  public Double getValue(LocalDate date, Map<String, Double> prices) throws IllegalArgumentException {
     var composition = getComposition(date);
     // prices map DOESNT have all the stocks that portfolio does
     if (!prices.keySet().containsAll(composition.keySet())) {

@@ -64,6 +64,9 @@ public class PortfolioStockModelImpl implements PortfolioStockModel {
 
   @Override
   public void createNewPortfolio(String name) {
+    if (getPortfolioNames().contains(name)) {
+      throw new IllegalArgumentException("A portfolio with that name already exists!");
+    }
     portfolios.add(new Portfolio(name));
   }
 
@@ -73,13 +76,17 @@ public class PortfolioStockModelImpl implements PortfolioStockModel {
   }
 
   @Override
-  public void renamePortfolio(String oldName, String newName) {
+  public void renamePortfolio(String oldName, String newName) throws IllegalArgumentException {
+    if (getPortfolioNames().contains(newName)) {
+      throw new IllegalArgumentException("A portfolio with newName already exists!");
+    }
+
     getPortfolio(oldName).rename(newName);
   }
 
   @Override
   public List<String> getPortfolios() {
-    return portfolios.stream().map(Portfolio::getName).collect(Collectors.toList());
+    return getPortfolioNames();
   }
 
   @Override
@@ -141,11 +148,11 @@ public class PortfolioStockModelImpl implements PortfolioStockModel {
   }
 
   @Override
-  public void rebalancePortfolio(String name, LocalDate date) throws IOException,
+  public void rebalancePortfolio(String name, LocalDate date, Map<String, Double> proportions) throws IOException,
           IllegalArgumentException {
     var prices = getPrices(name, date);
 
-    getPortfolio(name).rebalance(date, prices);
+    getPortfolio(name).rebalance(date, prices, proportions);
   }
 
   @Override
@@ -179,5 +186,9 @@ public class PortfolioStockModelImpl implements PortfolioStockModel {
       }
     }
     throw new IllegalArgumentException("Name of that portfolio doesn't exist");
+  }
+
+  protected final List<String> getPortfolioNames() {
+    return portfolios.stream().map(Portfolio::getName).collect(Collectors.toList());
   }
 }

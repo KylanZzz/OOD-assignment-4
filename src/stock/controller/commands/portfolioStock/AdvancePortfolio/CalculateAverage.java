@@ -7,6 +7,7 @@ import java.util.Scanner;
 import stock.controller.commands.portfolioStock.PortfolioCommand;
 import stock.model.PortfolioStockModel;
 import stock.model.StockModel;
+import stock.view.PortfolioStockView;
 import stock.view.StockView;
 
 public class CalculateAverage extends PortfolioCommand {
@@ -14,12 +15,12 @@ public class CalculateAverage extends PortfolioCommand {
    * Constructs a calculate average command with a stock's view, model,
    * and source of input.
    *
-   * @param view    the view of the stock program.
+   * @param portfolioView    the view of the stock program.
    * @param portfolioModel   the model of the stock program.
    * @param scanner the input of the stock program.
    */
-  public CalculateAverage(StockView view, PortfolioStockModel portfolioModel, Scanner scanner) {
-    super(view, portfolioModel, scanner);
+  public CalculateAverage(PortfolioStockView portfolioView, PortfolioStockModel portfolioModel, Scanner scanner) {
+    super(portfolioView, portfolioModel, scanner);
   }
 
   /**
@@ -32,20 +33,20 @@ public class CalculateAverage extends PortfolioCommand {
    */
   @Override
   public void apply() {
-    view.printMessage("Please enter the ticker of the stock that you would like to know about:");
+    portfolioView.printMessage("Please enter the ticker of the stock that you would like to know about:");
     String ticker = getTickerFromUser();
 
-    view.printMessage("Please enter the ending date in the format MM/DD/YYYY:");
+    portfolioView.printMessage("Please enter the ending date in the format MM/DD/YYYY:");
     LocalDate endDate = getDateFromUser();
 
-    view.printMessage("Please enter the number of days.");
+    portfolioView.printMessage("Please enter the number of days.");
     int days = getPositiveFromUser(Integer.MAX_VALUE);
 
     try {
       double average = portfolioModel.getMovingDayAverage(endDate, days, ticker);
-      view.printStockAverage(ticker, endDate, days, average);
+      portfolioView.printStockAverage(ticker, endDate, days, average);
     } catch (IOException e) {
-      view.printMessage("Error while fetching data: " + e.getMessage());
+      portfolioView.printMessage("Error while fetching data: " + e.getMessage());
     }
   }
 }

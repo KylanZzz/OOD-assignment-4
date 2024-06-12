@@ -5,11 +5,12 @@ import java.util.Scanner;
 
 import stock.controller.commands.stock.StockCommand;
 import stock.model.PortfolioStockModel;
+import stock.view.PortfolioStockView;
 import stock.view.StockView;
 
 public class SavePortfolio extends StockPortfolioCommand {
-  public SavePortfolio(StockView view, PortfolioStockModel portfolioModel, Scanner scanner, String portfolio) {
-    super(view, portfolioModel, scanner, portfolio);
+  public SavePortfolio(PortfolioStockView portfolioView, PortfolioStockModel portfolioModel, Scanner scanner, String portfolio) {
+    super(portfolioView, portfolioModel, scanner, portfolio);
   }
 
   /**
@@ -17,14 +18,14 @@ public class SavePortfolio extends StockPortfolioCommand {
    */
   @Override
   public void apply() {
-    view.printMessage("Please input the name of the portfolio that you want to save: ");
+    portfolioView.printMessage("Please input the name of the portfolio that you want to save: ");
     String portfolioName = getPortfolioNameFromUser();
 
     try {
       portfolioModel.createNewPortfolioSave(portfolioName);
-      view.printMessage("You have successfully saved the portfolio!");
+      portfolioView.printMessage("You have successfully saved the portfolio!");
     } catch (IOException e) {
-      view.printMessage(String.format("Failed to save %s", portfolioName));
+      portfolioView.printMessage(String.format("Failed to save %s", portfolioName));
     }
 
   }

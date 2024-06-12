@@ -6,13 +6,14 @@ import java.util.Scanner;
 
 import stock.controller.commands.stock.StockCommand;
 import stock.model.PortfolioStockModel;
+import stock.view.PortfolioStockView;
 import stock.view.StockView;
 
 public class DistributionWithDate extends StockPortfolioCommand {
 
 
-  public DistributionWithDate(StockView view, PortfolioStockModel portfolioModel, Scanner scanner, String portfolio) {
-    super(view, portfolioModel, scanner, portfolio);
+  public DistributionWithDate(PortfolioStockView portfolioView, PortfolioStockModel portfolioModel, Scanner scanner, String portfolio) {
+    super(portfolioView, portfolioModel, scanner, portfolio);
   }
 
   /**
@@ -20,16 +21,16 @@ public class DistributionWithDate extends StockPortfolioCommand {
    */
   @Override
   public void apply() {
-    view.printMessage(String.format("What date would you like to know the value of portfolio %s " +
+    portfolioView.printMessage(String.format("What date would you like to know the value of portfolio %s " +
             "at? Please enter the date in the format MM/DD/YYYY.", portfolio));
     LocalDate date = getDateFromUser();
 
     try {
       portfolioModel.getPortfolioDistribution(portfolio, date);
-      view.printDistribution(portfolioModel.getPortfolioContentsDecimal(portfolio, date), portfolio, date);
+      portfolioView.printDistribution(portfolioModel.getPortfolioContentsDecimal(portfolio, date), portfolio, date);
 
     } catch (IOException e) {
-      view.printMessage("Error occurred while fetching data: " + e.getMessage());
+      portfolioView.printMessage("Error occurred while fetching data: " + e.getMessage());
     }
 
   }

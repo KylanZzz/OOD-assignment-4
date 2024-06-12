@@ -6,11 +6,12 @@ import java.util.Scanner;
 
 import stock.controller.commands.Command;
 import stock.model.PortfolioStockModel;
+import stock.view.PortfolioStockView;
 import stock.view.StockView;
 
 public class PortfolioCommand extends Command {
-  public PortfolioCommand(StockView view, PortfolioStockModel portfolioModel, Scanner scanner) {
-    super(view, portfolioModel, scanner);
+  public PortfolioCommand(PortfolioStockView portfolioView, PortfolioStockModel portfolioModel, Scanner scanner) {
+    super(portfolioView, portfolioModel, scanner);
   }
 
   /**
@@ -29,10 +30,10 @@ public class PortfolioCommand extends Command {
         if (portfolioModel.stockExists(ticker)) {
           return ticker;
         } else {
-          view.printMessage("That stock does not exist! Please try again.");
+          portfolioView.printMessage("That stock does not exist! Please try again.");
         }
       } catch (IOException e) {
-        view.printMessage("Error while fetching data: " + e.getMessage());
+        portfolioView.printMessage("Error while fetching data: " + e.getMessage());
       }
     }
   }
@@ -43,16 +44,16 @@ public class PortfolioCommand extends Command {
 
       try {
         portfolioModel.createNewPortfolioSave(name);
-        view.printMessage(String.format("You selected:  %s: ", name));
+        portfolioView.printMessage(String.format("You selected:  %s: ", name));
 
       } catch (IOException e) {
-        view.printMessage("Error while fetching data: " + e.getMessage());
+        portfolioView.printMessage("Error while fetching data: " + e.getMessage());
       }
     }
   }
 
   protected final String getPortfolioFileSaveName() {
-    view.printMessage("Please enter the name of the portfolio that you want to fetch: ");
+    portfolioView.printMessage("Please enter the name of the portfolio that you want to fetch: ");
     String name = scanner.nextLine().toUpperCase();
     List<String> PortfolioList = portfolioModel.getPortfolios();
     if (PortfolioList.contains(name)) {
@@ -64,7 +65,7 @@ public class PortfolioCommand extends Command {
   }
 
   protected final String getFileSaves() {
-    view.printMessage("Please select the file in this portfolio: ");
+    portfolioView.printMessage("Please select the file in this portfolio: ");
     String name = scanner.nextLine().toUpperCase();
     return name;
   }

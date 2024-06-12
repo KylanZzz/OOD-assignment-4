@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Scanner;
 
 import stock.model.PortfolioStockModel;
+import stock.view.PortfolioStockView;
 import stock.view.StockView;
 import stock.model.StockModel;
 
@@ -17,8 +18,10 @@ import stock.model.StockModel;
  * functions, such as for handling user input.
  */
 public abstract class Command {
-  protected final StockView view;
+  protected StockView view;
   protected StockModel model;
+  protected PortfolioStockView portfolioView;
+
   protected PortfolioStockModel portfolioModel;
   protected final Scanner scanner;
 
@@ -35,8 +38,8 @@ public abstract class Command {
     this.scanner = scanner;
   }
 
-  public Command(StockView view, PortfolioStockModel portfolioModel, Scanner scanner) {
-    this.view = view;
+  public Command(PortfolioStockView portfolioView, PortfolioStockModel portfolioModel, Scanner scanner) {
+    this.portfolioView = portfolioView;
     this.portfolioModel = portfolioModel;
     this.scanner = scanner;
   }

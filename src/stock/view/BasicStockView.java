@@ -1,8 +1,6 @@
 package stock.view;
 
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.time.LocalDate;
@@ -13,8 +11,7 @@ import java.util.List;
  * including menus, portfolios, and stock metrics. This class interacts with users through
  * an Appendable object which allows for flexible output destinations.
  */
-public class BasicStockView implements StockView {
-  private final Appendable out;
+public class BasicStockView extends AbstractBasicStockView implements StockView {
   private List<LocalDate> dateList;
 
   /**
@@ -23,34 +20,11 @@ public class BasicStockView implements StockView {
    * @param out The Appendable object to which all output will be directed.
    */
   public BasicStockView(Appendable out) {
-    this.out = out;
+    super(out);
     this.dateList = new ArrayList<>();
   }
 
-  private void println(String message) {
-    try {
-      out.append(message).append("\n");
-    } catch (IOException e) {
-      throw new RuntimeException("Unable to append message: " + message + " to view.");
-    }
-  }
 
-  private void printOptionsPrompt() {
-    println("Please type the number that corresponds with the choice you would like to pick, "
-            + "or type " + BasicMenuOptions.exitKeyword() + " to return/exit");
-  }
-
-  private void printMenu(List<String> options) {
-    for (int i = 0; i < options.size(); i++) {
-      println(String.format("%d. %s", i + 1, options.get(i)));
-    }
-  }
-
-  private void printList(List<String> list) {
-    for (String item : list) {
-      println(item);
-    }
-  }
 
   /**
    * Displays the welcome screen with a welcome message.
@@ -104,32 +78,6 @@ public class BasicStockView implements StockView {
     printMenu(BasicMenuOptions.managePortfolio());
   }
 
-  @Override
-  public void printManagePortfolioDouble(Map<String, Double> stocks, String name, LocalDate date) {
-    println(String.format("Here are all the stocks in the %s portfolio:\n", name));
-    dateList.add(date);
-
-    List<String> sortedStockNames = new ArrayList<>(stocks.keySet());
-    Collections.sort(sortedStockNames);
-
-    List<String> list = new ArrayList<>();
-    for (int i = 0; i < sortedStockNames.size(); i++) {
-      String stock = sortedStockNames.get(i);
-      Double shares = stocks.get(stock);
-      LocalDate stockDate = dateList.get(i);
-      list.add(String.format("%-30s %-30.2f %s", stock, shares, stockDate));
-    }
-//    var list = stocks.keySet().stream().sorted()
-//            .map(it -> String.format("%-30s %-30.2f %s", it, stocks.get(it), dateList.get(it)))
-//            .collect(Collectors.toList());
-
-    list.add(0, String.format("%-30s %-30s %s", "Stock", "Shares", "Date"));
-    printList(list);
-    println("");
-
-    printOptionsPrompt();
-    printMenu(BasicMenuOptions.managePortfolio());
-  }
 
   /**
    * Displays the dates of X-day crossovers for a specific stock starting from a given date.
@@ -185,30 +133,4 @@ public class BasicStockView implements StockView {
     println(message);
   }
 
-  @Override
-  public void printDistribution(Map<String, Double> stocks, String name, LocalDate date) {
-    println(String.format("Here are the distribution of the stocks in the %s portfolio at %s:\n", name, date));
-    var list = stocks.keySet().stream().sorted()
-            .map(it -> String.format("%-30s %-30.2f", it, stocks.get(it)))
-            .collect(Collectors.toList());
-    list.add(0, String.format("%-30s %s", "Stock", "Values"));
-    printList(list);
-    println("");
-
-    printOptionsPrompt();
-    printMenu(BasicMenuOptions.managePortfolio());
-  }
-
-  /**
-   * Display the list of commands that the user can ask for.
-   *
-   * @param fileName the name of the saved files.
-   */
-  @Override
-  public void printFileSaveName(List<String> fileName) {
-    for (int i = 0; i < fileName.size(); i++) {
-      println(String.format("%d. %s", i + 1, fileName.get(i)));
-    }
-
-  }
 }

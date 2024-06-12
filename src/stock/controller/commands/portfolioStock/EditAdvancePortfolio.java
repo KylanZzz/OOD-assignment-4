@@ -6,18 +6,21 @@ import java.util.Map;
 import java.util.Scanner;
 
 import stock.controller.commands.portfolio.EditPortfolio;
+import stock.controller.commands.portfolioStock.AdvancePortfolio.AddStock;
 import stock.controller.commands.portfolioStock.AdvancePortfolio.DistributionWithDate;
 import stock.controller.commands.portfolioStock.AdvancePortfolio.LoadPortfolio;
+import stock.controller.commands.portfolioStock.AdvancePortfolio.PortfolioValue;
 import stock.controller.commands.portfolioStock.AdvancePortfolio.PortfolioValueWithDate;
 import stock.controller.commands.portfolioStock.AdvancePortfolio.PurchaseStockWithDate;
+import stock.controller.commands.portfolioStock.AdvancePortfolio.RemoveStock;
 import stock.controller.commands.portfolioStock.AdvancePortfolio.SavePortfolio;
 import stock.controller.commands.portfolioStock.AdvancePortfolio.SellStockWithDate;
 import stock.controller.commands.portfolioStock.AdvancePortfolio.StockPortfolioCommand;
-import stock.controller.commands.stock.AddStock;
-import stock.controller.commands.stock.RemoveStock;
 import stock.controller.commands.stock.StockCommand;
 import stock.model.PortfolioStockModel;
 import stock.view.BasicMenuOptions;
+import stock.view.BasicPortfolioMenuOptions;
+import stock.view.PortfolioStockView;
 import stock.view.StockView;
 
 public class EditAdvancePortfolio extends PortfolioCommand {
@@ -27,13 +30,13 @@ public class EditAdvancePortfolio extends PortfolioCommand {
   /**
    * Constructs a new edit portfolio command.
    *
-   * @param view          the view of the stock program.
+   * @param portfolioView          the view of the stock program.
    * @param portfolioModel         the model of the stock program.
    * @param scanner       the input of the stock program.
    * @param portfolioName name of the portfolio to edit.
    */
-  public EditAdvancePortfolio(StockView view, PortfolioStockModel portfolioModel, Scanner scanner, String portfolioName) {
-    super(view, portfolioModel, scanner);
+  public EditAdvancePortfolio(PortfolioStockView portfolioView, PortfolioStockModel portfolioModel, Scanner scanner, String portfolioName) {
+    super(portfolioView, portfolioModel, scanner);
     this.portfolioName = portfolioName;
     commands = new HashMap<>();
   }
@@ -41,16 +44,15 @@ public class EditAdvancePortfolio extends PortfolioCommand {
    * Initializes different commands that can be performed on the portfolio.
    */
   protected void initializeCommands() {
-//    commands.put("1", new stock.controller.commands.stock.PortfolioValue(view, portfolioModel, scanner, portfolioName));
-//    commands.put("2", new AddStock(view, model, scanner, portfolioName));
-//    commands.put("3", new RemoveStock(view, portfolioModel, scanner, portfolioName));
-    commands.put("4", new PurchaseStockWithDate(view, portfolioModel, scanner, portfolioName));
-    commands.put("4", new PurchaseStockWithDate(view, portfolioModel, scanner, portfolioName));
-    commands.put("5", new SellStockWithDate(view, portfolioModel, scanner, portfolioName));
-    commands.put("6", new PortfolioValueWithDate(view, portfolioModel, scanner, portfolioName));
-    commands.put("7", new DistributionWithDate(view, portfolioModel, scanner, portfolioName));
-    commands.put("8", new SavePortfolio(view, portfolioModel, scanner, portfolioName));
-    commands.put("9", new LoadPortfolio(view, portfolioModel, scanner, portfolioName));
+    commands.put("1", new PortfolioValue(portfolioView, portfolioModel, scanner, portfolioName));
+    commands.put("2", new AddStock(portfolioView, portfolioModel, scanner, portfolioName));
+    commands.put("3", new RemoveStock(portfolioView, portfolioModel, scanner, portfolioName));
+    commands.put("4", new PurchaseStockWithDate(portfolioView, portfolioModel, scanner, portfolioName));
+    commands.put("5", new SellStockWithDate(portfolioView, portfolioModel, scanner, portfolioName));
+    commands.put("6", new PortfolioValueWithDate(portfolioView, portfolioModel, scanner, portfolioName));
+    commands.put("7", new DistributionWithDate(portfolioView, portfolioModel, scanner, portfolioName));
+    commands.put("8", new SavePortfolio(portfolioView, portfolioModel, scanner, portfolioName));
+    commands.put("9", new LoadPortfolio(portfolioView, portfolioModel, scanner, portfolioName));
 
   }
 
@@ -63,19 +65,19 @@ public class EditAdvancePortfolio extends PortfolioCommand {
     initializeCommands();
     String choice = "";
 
-    while (!choice.equals(BasicMenuOptions.exitKeyword())) {
-      view.printMessage("Enter the date that you add the stocks: ");
+    while (!choice.equals(BasicPortfolioMenuOptions.exitKeyword())) {
+      portfolioView.printMessage("Enter the date that you add the stocks: ");
       LocalDate date = getDateFromUser();
 
-      view.printManagePortfolioDouble(portfolioModel.getPortfolioContentsDecimal(portfolioName, date), portfolioName, date);
+      portfolioView.printManagePortfolioDouble(portfolioModel.getPortfolioContentsDecimal(portfolioName, date), portfolioName, date);
       choice = scanner.nextLine();
 
       if (commands.containsKey(choice)) {
         commands.get(choice).apply();
-      } else if (!choice.equals(BasicMenuOptions.exitKeyword())) {
-        view.printMessage("Invalid input. Please enter a valid choice (a number from 1 through "
-                + BasicMenuOptions.managePortfolio().size() + ") or "
-                + BasicMenuOptions.exitKeyword()
+      } else if (!choice.equals(BasicPortfolioMenuOptions.exitKeyword())) {
+        portfolioView.printMessage("Invalid input. Please enter a valid choice (a number from 1 through "
+                + BasicPortfolioMenuOptions.managePortfolio().size() + ") or "
+                + BasicPortfolioMenuOptions.exitKeyword()
                 + " to go back.");
       }
     }

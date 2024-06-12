@@ -6,10 +6,11 @@ import java.util.Scanner;
 
 import stock.controller.commands.portfolioStock.PortfolioCommand;
 import stock.model.PortfolioStockModel;
+import stock.view.PortfolioStockView;
 import stock.view.StockView;
 
 public class CalculateCrossover extends PortfolioCommand {
-  public CalculateCrossover(StockView view, PortfolioStockModel portfolioModel, Scanner scanner) {
+  public CalculateCrossover(PortfolioStockView view, PortfolioStockModel portfolioModel, Scanner scanner) {
     super(view, portfolioModel, scanner);
   }
 

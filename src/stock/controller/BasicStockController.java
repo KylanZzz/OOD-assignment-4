@@ -11,6 +11,8 @@ import stock.controller.commands.portfolioStock.ViewAdvancePortfolios;
 import stock.model.PortfolioStockModel;
 import stock.model.StockModel;
 import stock.view.BasicMenuOptions;
+import stock.view.BasicPortfolioMenuOptions;
+import stock.view.PortfolioStockView;
 import stock.view.StockView;
 import java.util.Map;
 
@@ -22,10 +24,8 @@ import java.util.Map;
  */
 public class BasicStockController implements StockController {
 
-  private final StockView view;
+  private  StockView view;
   private  StockModel model;
-  private  PortfolioStockModel portfolioModel;
-
   private final Scanner scanner;
   private final Map<String, Command> commands;
 
@@ -44,14 +44,6 @@ public class BasicStockController implements StockController {
     initializeCommands();
   }
 
-  public BasicStockController(StockView view, PortfolioStockModel portfolioModel, Readable in) {
-    scanner = new Scanner(in);
-    this.view = view;
-    this.portfolioModel = portfolioModel;
-    commands = new HashMap<>();
-    initializePortfolioCommands();
-  }
-
   protected void initializeCommands() {
     commands.put("1", new CalculateGain(view, model, scanner));
     commands.put("2", new CalculateAverage(view, model, scanner));
@@ -59,12 +51,6 @@ public class BasicStockController implements StockController {
     commands.put("4", new ViewPortfolios(view, model, scanner));
   }
 
-  protected void initializePortfolioCommands() {
-    commands.put("1", new stock.controller.commands.portfolioStock.AdvancePortfolio.CalculateGain(view, portfolioModel, scanner));
-    commands.put("2", new stock.controller.commands.portfolioStock.AdvancePortfolio.CalculateAverage(view, portfolioModel, scanner));
-    commands.put("3", new stock.controller.commands.portfolioStock.AdvancePortfolio.CalculateCrossover(view, portfolioModel, scanner));
-    commands.put("4", new ViewAdvancePortfolios(view, portfolioModel, scanner));
-  }
 
   /**
    * Starts the stock application. Displays the main menu, reads user input,
@@ -74,17 +60,17 @@ public class BasicStockController implements StockController {
   public void run() {
     String choice = "";
 
-    while (!choice.equals(BasicMenuOptions.exitKeyword())) {
+    while (!choice.equals(BasicPortfolioMenuOptions.exitKeyword())) {
       view.printMainMenu();
       choice = scanner.nextLine();
 
       if (commands.containsKey(choice)) {
         commands.get(choice).apply();
-      } else if (!choice.equals(BasicMenuOptions.exitKeyword())) {
+      } else if (!choice.equals(BasicPortfolioMenuOptions.exitKeyword())) {
 
         view.printMessage("Invalid input. Please enter a valid choice (a number "
                 + "from 1 through "
-                + BasicMenuOptions.mainMenu().size() + ") or " + BasicMenuOptions.exitKeyword()
+                + BasicPortfolioMenuOptions.mainMenu().size() + ") or " + BasicPortfolioMenuOptions.exitKeyword()
                 + " to exit the application.");
       }
     }

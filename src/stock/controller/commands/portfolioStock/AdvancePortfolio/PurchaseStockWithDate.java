@@ -10,6 +10,7 @@ import stock.controller.commands.portfolio.CreatePortfolio;
 import stock.controller.commands.stock.StockCommand;
 import stock.model.PortfolioStockModel;
 import stock.model.PortfolioStockModelImpl;
+import stock.view.PortfolioStockView;
 import stock.view.StockView;
 
 public class PurchaseStockWithDate extends StockPortfolioCommand {
@@ -18,12 +19,12 @@ public class PurchaseStockWithDate extends StockPortfolioCommand {
   /**
    * Constructs a command with a stock's view, model, and source of input.
    *
-   * @param view    the view of the stock program.
+   * @param portfolioView    the view of the stock program.
    * @param portfolioModel   the model of the stock program.
    * @param scanner the input of the stock program.
    */
-  public PurchaseStockWithDate(StockView view, PortfolioStockModel portfolioModel, Scanner scanner, String portfolio) {
-    super(view, portfolioModel, scanner, portfolio);
+  public PurchaseStockWithDate(PortfolioStockView portfolioView, PortfolioStockModel portfolioModel, Scanner scanner, String portfolio) {
+    super(portfolioView, portfolioModel, scanner, portfolio);
   }
 
   /**
@@ -31,39 +32,39 @@ public class PurchaseStockWithDate extends StockPortfolioCommand {
    */
   @Override
   public void apply() {
-    view.printMessage(String.format("Please enter the ticker of the stock "
+    portfolioView.printMessage(String.format("Please enter the ticker of the stock "
             + "that you would like to add to portfolio %s:", portfolio));
     String ticker = getTickerFromUser();
 
-    view.printMessage("Please enter the number of shares you would like to "
+    portfolioView.printMessage("Please enter the number of shares you would like to "
             + "purchase (you cannot buy fractional number of stocks): ");
     int shares;
     try {
       shares = scanner.nextInt();
       scanner.nextLine();
     } catch (InputMismatchException e) {
-      view.printMessage("Invalid input: not an integer, please try again.");
+      portfolioView.printMessage("Invalid input: not an integer, please try again.");
       scanner.nextLine();
       return;
     }
     if (shares == 0) {
-      view.printMessage("Cannot purchase 0 shares of a stock.");
+      portfolioView.printMessage("Cannot purchase 0 shares of a stock.");
       return;
     }
 
     if (shares < 0) {
-      view.printMessage("Cannot purchase negative number of stocks.");
+      portfolioView.printMessage("Cannot purchase negative number of stocks.");
       return;
     }
 
-    view.printMessage("Please enter the date that you want to purchase the stocks: ");
+    portfolioView.printMessage("Please enter the date that you want to purchase the stocks: ");
     LocalDate date = getDateFromUser();
     try {
       portfolioModel.addStockToPortfolio(portfolio, ticker, shares, date);
-      view.printMessage(String.format("Successfully purchased %d number of %s stocks at date %s in the %s "
+      portfolioView.printMessage(String.format("Successfully purchased %d number of %s stocks at date %s in the %s "
               + "portfolio.", shares, ticker, date, portfolio));
     } catch (IOException e) {
-      view.printMessage("Error occurred while fetching data: " + e.getMessage());
+      portfolioView.printMessage("Error occurred while fetching data: " + e.getMessage());
     }
   }
 }

@@ -13,6 +13,8 @@ import stock.controller.commands.portfolioStock.PortfolioCommand;
 import stock.model.PortfolioStockModel;
 import stock.model.StockModel;
 import stock.view.BasicMenuOptions;
+import stock.view.BasicPortfolioMenuOptions;
+import stock.view.PortfolioStockView;
 import stock.view.StockView;
 
 public class ViewAdvancePortfolios extends PortfolioCommand {
@@ -22,12 +24,12 @@ public class ViewAdvancePortfolios extends PortfolioCommand {
    * Constructs a ViewPortfolios command with the given view, model, and scanner,
    * then initializes the commands map.
    *
-   * @param view    the view to be used for displaying messages
+   * @param portfolioView    the view to be used for displaying messages
    * @param portfolioModel   the model to interact with stock data
    * @param scanner the scanner to read user inputs
    */
-  public ViewAdvancePortfolios(StockView view, PortfolioStockModel portfolioModel, Scanner scanner) {
-    super(view, portfolioModel, scanner);
+  public ViewAdvancePortfolios(PortfolioStockView portfolioView, PortfolioStockModel portfolioModel, Scanner scanner) {
+    super(portfolioView, portfolioModel, scanner);
     commands = new HashMap<>();
   }
 
@@ -39,14 +41,14 @@ public class ViewAdvancePortfolios extends PortfolioCommand {
    * any number afterwards (4+) to edit any portfolios they own.
    */
   protected void initializeCommands() {
-    commands.put("1", new CreatePortfolio(view, portfolioModel, scanner));
-    commands.put("2", new DeletePortfolio(view, portfolioModel, scanner));
-    commands.put("3", new RenamePortfolio(view, portfolioModel, scanner));
+    commands.put("1", new CreatePortfolio(portfolioView, portfolioModel, scanner));
+    commands.put("2", new DeletePortfolio(portfolioView, portfolioModel, scanner));
+    commands.put("3", new RenamePortfolio(portfolioView, portfolioModel, scanner));
 
-    int numOptions = BasicMenuOptions.viewPortfolios().size();
+    int numOptions = BasicPortfolioMenuOptions.viewPortfolios().size();
     for (int i = 0; i < portfolioModel.getPortfolios().size(); i++) {
       commands.put(Integer.toString(i + numOptions + 1),
-              new EditAdvancePortfolio(view, portfolioModel, scanner, portfolioModel.getPortfolios().get(i)));
+              new EditAdvancePortfolio(portfolioView, portfolioModel, scanner, portfolioModel.getPortfolios().get(i)));
     }
   }
 
@@ -59,17 +61,17 @@ public class ViewAdvancePortfolios extends PortfolioCommand {
   public void apply() {
     String choice = "";
 
-    while (!choice.equals(BasicMenuOptions.exitKeyword())) {
+    while (!choice.equals(BasicPortfolioMenuOptions.exitKeyword())) {
       initializeCommands();
-      view.printViewPortfolios(portfolioModel.getPortfolios());
+      portfolioView.printViewPortfolios(portfolioModel.getPortfolios());
       choice = scanner.nextLine();
 
       if (commands.containsKey(choice)) {
         commands.get(choice).apply();
-      } else if (!choice.equals(BasicMenuOptions.exitKeyword())) {
-        view.printMessage("Invalid input. Please enter a valid choice (a number from 1 through "
-                + BasicMenuOptions.viewPortfolios().size() + ") or " +
-                BasicMenuOptions.exitKeyword() + " to go back.");
+      } else if (!choice.equals(BasicPortfolioMenuOptions.exitKeyword())) {
+        portfolioView.printMessage("Invalid input. Please enter a valid choice (a number from 1 through "
+                + BasicPortfolioMenuOptions.viewPortfolios().size() + ") or " +
+                BasicPortfolioMenuOptions.exitKeyword() + " to go back.");
       }
     }
   }

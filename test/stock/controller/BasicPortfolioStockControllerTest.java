@@ -184,6 +184,7 @@ public class BasicPortfolioStockControllerTest extends BasicStockControllerTest 
 
     private StringBuilder log;
     private MockView mockViewHelper;
+
     public MockPortfolioView(StringBuilder log) {
       this.log = log;
       this.mockViewHelper = new MockView(log);
@@ -239,6 +240,11 @@ public class BasicPortfolioStockControllerTest extends BasicStockControllerTest 
       Collections.reverse(list);
       list.forEach(it -> log.append(it));
       log.append("\n");
+
+    }
+
+    @Override
+    public void printPortfolioOption() {
 
     }
 
@@ -306,3 +312,28 @@ public class BasicPortfolioStockControllerTest extends BasicStockControllerTest 
     return expectedViewLog.toString().equals(viewLog.toString()) && expectedModelLog.toString()
             .equals(modelLog.toString());
   }
+
+  String performancePrompt = "Please enter the name of the portfolio "
+          + "that you would like to see the performance: ";
+
+  String rebalancePortfolioNamePrompt = "Please enter the name of the portfolio "
+          + "that you would like to rebalance: ";
+
+
+  String invalidDate = "printMessageInvalid date: Please enter a valid date.";
+  String invalidDateFormat =
+          "printMessageIncorrect format: Please enter the date in the format "
+                  + "MM/DD/YYYY.";
+  String invalidInputInteger = "printMessageInvalid input: not an integer, please try again.";
+  String invalidInputDateOrder = "printMessageInvalid input: The end date must be after the "
+          + "start" + " date.";
+  String startDatePrompt = "printMessagePlease enter the starting date (inclusive) in the format "
+          + "MM/DD/YYYY:";
+  String endDatePrompt = "printMessagePlease enter the ending date (inclusive) in the format "
+          + "MM/DD/YYYY:";
+  String tickerIncorrect = "printMessageThat stock does not exist! Please try again.";
+
+
+
+
+}

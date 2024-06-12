@@ -3,10 +3,15 @@ package stock.controller.commands.portfolioStock.AdvancePortfolio;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+import stock.controller.BasicStockController;
+import stock.controller.StockController;
+import stock.controller.commands.Command;
+import stock.controller.commands.portfolioStock.PortfolioCommand;
 import stock.model.PortfolioStockModel;
 import stock.view.PortfolioStockView;
 
-public class AddStock extends StockPortfolioCommand{
+public class AddStock extends StockPortfolioCommand {
+
   public AddStock(PortfolioStockView portfolioView, PortfolioStockModel portfolioModel, Scanner scanner, String portfolio) {
     super(portfolioView, portfolioModel, scanner, portfolio);
   }

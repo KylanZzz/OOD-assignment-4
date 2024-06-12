@@ -20,10 +20,12 @@ public class PerformanceOverTime extends StockPortfolioCommand {
             + "that you would like to see the performance: ");
     String name = getPortfolioNameFromUserWOSave();
 
-    portfolioView.printMessage("Please enter the start date: ");
+    portfolioView.printMessage("Please enter the starting date (inclusive) in the format "
+            + "MM/DD/YYYY:");
     LocalDate startDate = getDateFromUser();
 
-    portfolioView.printMessage("Please enter the end date: ");
+    portfolioView.printMessage("Please enter the ending date (inclusive) in the format "
+            + "MM/DD/YYYY:");
     LocalDate endDate = getDateFromUser();
 
     try {

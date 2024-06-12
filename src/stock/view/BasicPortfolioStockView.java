@@ -40,10 +40,10 @@ public class BasicPortfolioStockView extends AbstractBasicStockView implements P
     list.add(0, String.format("%-30s %s", "Stock", "Shares"));
     printList(list);
     println("");
-
-    printOptionsPrompt();
-    printMenu(BasicPortfolioMenuOptions.managePortfolio());
   }
+
+
+
   /**
    * Displays a welcome screen to the user.
    */
@@ -196,6 +196,12 @@ public class BasicPortfolioStockView extends AbstractBasicStockView implements P
     });
 
     System.out.println("Scale: 1 * = " + max / MAX_ASTERISKS + " units");
+  }
+
+  @Override
+  public void printPortfolioOption() {
+    printOptionsPrompt();
+    printMenu(BasicPortfolioMenuOptions.managePortfolio());
   }
 
   private Map<LocalDate, Double> adjustDataPoints(Map<LocalDate, Double> performance, LocalDate startDate, LocalDate endDate, long daysBetween) {

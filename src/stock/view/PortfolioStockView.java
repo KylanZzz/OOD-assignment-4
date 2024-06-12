@@ -36,4 +36,7 @@ public interface PortfolioStockView extends StockView {
    * @param endDate the end date to calculate the performance of the portfolio.
    */
    void printPortfolioPerformance(Map<LocalDate, Double> performance, LocalDate startDate, LocalDate endDate);
+
+   void printPortfolioOption();
+
 }

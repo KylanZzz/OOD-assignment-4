@@ -7,6 +7,7 @@ import java.util.Scanner;
 
 import stock.controller.commands.portfolio.EditPortfolio;
 import stock.controller.commands.portfolioStock.AdvancePortfolio.AddStock;
+import stock.controller.commands.portfolioStock.AdvancePortfolio.DisplayPortfolio;
 import stock.controller.commands.portfolioStock.AdvancePortfolio.DistributionWithDate;
 import stock.controller.commands.portfolioStock.AdvancePortfolio.LoadPortfolio;
 import stock.controller.commands.portfolioStock.AdvancePortfolio.PerformanceOverTime;
@@ -46,17 +47,18 @@ public class EditAdvancePortfolio extends PortfolioCommand {
    * Initializes different commands that can be performed on the portfolio.
    */
   protected void initializeCommands() {
-    commands.put("1", new PortfolioValue(portfolioView, portfolioModel, scanner, portfolioName));
-    commands.put("2", new AddStock(portfolioView, portfolioModel, scanner, portfolioName));
-    commands.put("3", new RemoveStock(portfolioView, portfolioModel, scanner, portfolioName));
-    commands.put("4", new PurchaseStockWithDate(portfolioView, portfolioModel, scanner, portfolioName));
-    commands.put("5", new SellStockWithDate(portfolioView, portfolioModel, scanner, portfolioName));
-    commands.put("6", new PortfolioValueWithDate(portfolioView, portfolioModel, scanner, portfolioName));
-    commands.put("7", new DistributionWithDate(portfolioView, portfolioModel, scanner, portfolioName));
-    commands.put("8", new SavePortfolio(portfolioView, portfolioModel, scanner, portfolioName));
-    commands.put("9", new LoadPortfolio(portfolioView, portfolioModel, scanner, portfolioName));
-    commands.put("10", new RebalancePortfolio(portfolioView, portfolioModel, scanner, portfolioName));
-    commands.put("11", new PerformanceOverTime(portfolioView, portfolioModel, scanner, portfolioName));
+//    commands.put("1", new PortfolioValue(portfolioView, portfolioModel, scanner, portfolioName));
+//    commands.put("2", new AddStock(portfolioView, portfolioModel, scanner, portfolioName));
+//    commands.put("3", new RemoveStock(portfolioView, portfolioModel, scanner, portfolioName));
+    commands.put("1", new PurchaseStockWithDate(portfolioView, portfolioModel, scanner, portfolioName));
+    commands.put("2", new SellStockWithDate(portfolioView, portfolioModel, scanner, portfolioName));
+    commands.put("3", new PortfolioValueWithDate(portfolioView, portfolioModel, scanner, portfolioName));
+    commands.put("4", new DistributionWithDate(portfolioView, portfolioModel, scanner, portfolioName));
+    commands.put("5", new SavePortfolio(portfolioView, portfolioModel, scanner, portfolioName));
+    commands.put("6", new LoadPortfolio(portfolioView, portfolioModel, scanner, portfolioName));
+    commands.put("7", new RebalancePortfolio(portfolioView, portfolioModel, scanner, portfolioName));
+    commands.put("8", new PerformanceOverTime(portfolioView, portfolioModel, scanner, portfolioName));
+    commands.put("9", new DisplayPortfolio(portfolioView, portfolioModel, scanner, portfolioName));
   }
 
   /**
@@ -69,10 +71,7 @@ public class EditAdvancePortfolio extends PortfolioCommand {
     String choice = "";
 
     while (!choice.equals(BasicPortfolioMenuOptions.exitKeyword())) {
-      portfolioView.printMessage("Enter the date that you add the stocks: ");
-      LocalDate date = getDateFromUser();
-
-      portfolioView.printManagePortfolioDouble(portfolioModel.getPortfolioContentsDecimal(portfolioName, date), portfolioName, date);
+      portfolioView.printPortfolioOption();
       choice = scanner.nextLine();
 
       if (commands.containsKey(choice)) {

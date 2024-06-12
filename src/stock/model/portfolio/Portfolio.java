@@ -176,12 +176,16 @@ public class Portfolio {
     try {
       String identifier = line.split(":")[0];
 
-      return switch (identifier) {
-        case "BUY" -> new BuyTransaction(line);
-        case "SELL" -> new SellTransaction(line);
-        case "REBALANCE" -> new RebalanceTransaction(line);
-        default -> throw new IllegalArgumentException("Incorrect identifier");
-      };
+      switch (identifier) {
+        case "BUY":
+          return new BuyTransaction(line);
+        case "SELL":
+          return new SellTransaction(line);
+        case "REBALANCE":
+          return new RebalanceTransaction(line);
+        default:
+          throw new IllegalArgumentException("Incorrect identifier");
+      }
     } catch (Exception e) {
       throw new IOException("Error while loading save from file: Incorrect format.");
     }

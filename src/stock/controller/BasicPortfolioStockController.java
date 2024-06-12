@@ -39,7 +39,6 @@ public class BasicPortfolioStockController implements StockController {
     String choice = "";
 
     while (!choice.equals(BasicPortfolioMenuOptions.exitKeyword())) {
-      portfolioView.printWelcomeScreen();
       portfolioView.printMainMenu();
       choice = scanner.nextLine();
 

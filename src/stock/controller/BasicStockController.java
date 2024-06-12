@@ -61,7 +61,6 @@ public class BasicStockController implements StockController {
     String choice = "";
 
     while (!choice.equals(BasicPortfolioMenuOptions.exitKeyword())) {
-      view.printWelcomeScreen();
       view.printMainMenu();
       choice = scanner.nextLine();
 

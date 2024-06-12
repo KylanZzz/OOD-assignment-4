@@ -161,6 +161,7 @@ public class BasicPortfolioStockView extends AbstractBasicStockView implements P
     for (int i = 0; i < fileName.size(); i++) {
       println(String.format("%d. %s", i + 1, fileName.get(i)));
     }
+    printOptionsPrompt();
 
   }
 

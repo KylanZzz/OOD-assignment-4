@@ -82,15 +82,11 @@ public class PortfolioCommand extends Command {
   }
 
   protected final String getPortfolioFileSaveName() {
-    portfolioView.printMessage("Please enter the name of the portfolio that you want to fetch: ");
-    String name = scanner.nextLine().toUpperCase();
+//    portfolioView.printMessage("please enter the option by the number: ");
+    int option = scanner.nextInt();
+//    String name = scanner.nextLine().toUpperCase();
     List<String> PortfolioList = portfolioModel.getPortfolios();
-    if (PortfolioList.contains(name)) {
-      return name;
-    } else {
-//      view.printMessage("Name of that portfolio doesn't exist");
-      throw new IllegalArgumentException("Name of that portfolio doesn't exist");
-    }
+      return PortfolioList.get(option - 1);
   }
 
   protected final String getFileSaves() {

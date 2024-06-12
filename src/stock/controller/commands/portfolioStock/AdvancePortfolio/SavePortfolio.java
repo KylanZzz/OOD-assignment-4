@@ -18,14 +18,14 @@ public class SavePortfolio extends StockPortfolioCommand {
    */
   @Override
   public void apply() {
-    portfolioView.printMessage("Please input the name of the portfolio that you want to save: ");
-    String portfolioName = getPortfolioNameFromUser();
+//    portfolioView.printMessage("Please input the name of the portfolio that you want to save: ");
+//    String portfolioName = getPortfolioNameFromUser();
 
     try {
-      portfolioModel.createNewPortfolioSave(portfolioName);
+      portfolioModel.createNewPortfolioSave(portfolio);
       portfolioView.printMessage("You have successfully saved the portfolio!");
     } catch (IOException e) {
-      portfolioView.printMessage(String.format("Failed to save %s", portfolioName));
+      portfolioView.printMessage(String.format("Failed to save %s", portfolio));
     }
 
   }

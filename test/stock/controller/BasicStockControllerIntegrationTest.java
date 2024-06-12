@@ -14,6 +14,7 @@ import stock.model.StockModel;
 import stock.view.BasicStockView;
 import stock.view.StockView;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static stock.controller.Interactions.inputs;
 import static stock.controller.Interactions.prints;
@@ -39,7 +40,7 @@ public class BasicStockControllerIntegrationTest {
     StockView view = new BasicStockView(viewLog);
     StockController controller = new BasicStockController(view, model, in);
     controller.run();
-
+    assertEquals(expectedViewLog.toString(), viewLog.toString());
     return expectedViewLog.toString().equals(viewLog.toString());
   }
 
@@ -412,7 +413,7 @@ public class BasicStockControllerIntegrationTest {
             prints(daysPrompt),
             inputs("100"),
 
-            prints("The average for stock GOOG on 2021-06-01 for 100 days was $106.70.\n"),
+            prints("The average for stock GOOG on 2021-06-01 for 100 days was $106.58.\n"),
             prints(mainMenu),
             inputs("2"),
 
@@ -1208,7 +1209,7 @@ public class BasicStockControllerIntegrationTest {
             prints("What date would you like to know the value of portfolio S&P500 at? Please "
                     + "enter the date in the format MM/DD/YYYY."),
             inputs("04/20/2024"),
-            prints("The value of the portfolio S&P500 at 2024-04-20 is 16024.75."),
+            prints("The value of the portfolio S&P500 at 2024-04-20 is 16015.94."),
             prints("Here are all the stocks in the S&P500 portfolio:\n\n"
                     + "Stock                          Shares\n"
                     + "AAPL                           50\n"

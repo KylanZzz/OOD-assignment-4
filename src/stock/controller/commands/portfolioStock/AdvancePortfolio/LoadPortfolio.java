@@ -17,16 +17,15 @@ public class LoadPortfolio extends StockPortfolioCommand {
    */
   @Override
   public void apply() {
-    portfolioView.printMessage("Here is the list of the portfolios that you have saved: ");
-    String name = getPortfolioFileSaveName();
     try {
-      portfolioView.printFileSaveName(portfolioModel.getPortfolioSaves(name));
+      portfolioView.printFileSaveName(portfolioModel.getPortfolioSaves(portfolio));
+
     } catch (IOException e) {
       portfolioView.printMessage("Error occurred while fetching data: " + e.getMessage());
     }
-    String fileSaveName = getFileSaves();
+     String fileSaveName = getPortfolioFileSaveName();
     try {
-      portfolioModel.loadPortfolioSave(name, fileSaveName);
+      portfolioModel.loadPortfolioSave(portfolio, fileSaveName);
       portfolioView.printMessage("Successfully load the saved file!");
     } catch (IOException e) {
       portfolioView.printMessage("Error occurred while fetching data: " + e.getMessage());

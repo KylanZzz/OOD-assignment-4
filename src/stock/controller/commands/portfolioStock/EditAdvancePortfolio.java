@@ -9,6 +9,7 @@ import stock.controller.commands.portfolio.EditPortfolio;
 import stock.controller.commands.portfolioStock.AdvancePortfolio.AddStock;
 import stock.controller.commands.portfolioStock.AdvancePortfolio.DistributionWithDate;
 import stock.controller.commands.portfolioStock.AdvancePortfolio.LoadPortfolio;
+import stock.controller.commands.portfolioStock.AdvancePortfolio.PerformanceOverTime;
 import stock.controller.commands.portfolioStock.AdvancePortfolio.PortfolioValue;
 import stock.controller.commands.portfolioStock.AdvancePortfolio.PortfolioValueWithDate;
 import stock.controller.commands.portfolioStock.AdvancePortfolio.PurchaseStockWithDate;
@@ -55,7 +56,7 @@ public class EditAdvancePortfolio extends PortfolioCommand {
     commands.put("8", new SavePortfolio(portfolioView, portfolioModel, scanner, portfolioName));
     commands.put("9", new LoadPortfolio(portfolioView, portfolioModel, scanner, portfolioName));
     commands.put("10", new RebalancePortfolio(portfolioView, portfolioModel, scanner, portfolioName));
-
+    commands.put("11", new PerformanceOverTime(portfolioView, portfolioModel, scanner, portfolioName));
   }
 
   /**

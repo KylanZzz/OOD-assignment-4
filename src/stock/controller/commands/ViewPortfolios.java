@@ -37,11 +37,6 @@ public class ViewPortfolios extends Command {
     commands = new HashMap<>();
   }
 
-//  public ViewPortfolios(StockView view, PortfolioStockModel portfolioModel, Scanner scanner) {
-//    super(view, portfolioModel, scanner);
-//    commands = new HashMap<>();;
-//  }
-
   /**
    * Initializes commands for portfolio management: including creating, deleting,
    * renaming, and editing portfolios. The user should input 1 to create a new

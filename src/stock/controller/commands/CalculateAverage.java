@@ -21,9 +21,6 @@ public class CalculateAverage extends Command {
    * @param model the model of the stock program.
    * @param scanner the input of the stock program.
    */
-//  public CalculateAverage(StockView view, StockModel model, Scanner scanner) {
-//    super(view, model, scanner);
-//  }
   public CalculateAverage(StockView view, StockModel model, Scanner scanner) {
     super(view, model, scanner);
   }

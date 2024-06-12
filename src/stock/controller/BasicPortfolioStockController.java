@@ -1,4 +1,4 @@
-package stock.controller.commands.portfolioStock;
+package stock.controller;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -6,6 +6,7 @@ import java.util.Scanner;
 
 import stock.controller.StockController;
 import stock.controller.commands.Command;
+import stock.controller.commands.portfolioStock.ViewAdvancePortfolios;
 import stock.model.PortfolioStockModel;
 import stock.view.BasicPortfolioMenuOptions;
 import stock.view.PortfolioStockView;
@@ -38,6 +39,7 @@ public class BasicPortfolioStockController implements StockController {
     String choice = "";
 
     while (!choice.equals(BasicPortfolioMenuOptions.exitKeyword())) {
+      portfolioView.printWelcomeScreen();
       portfolioView.printMainMenu();
       choice = scanner.nextLine();
 

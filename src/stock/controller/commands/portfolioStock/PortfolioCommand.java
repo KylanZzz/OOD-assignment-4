@@ -1,7 +1,9 @@
 package stock.controller.commands.portfolioStock;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 import stock.controller.commands.Command;
@@ -38,17 +40,44 @@ public class PortfolioCommand extends Command {
     }
   }
 
+  protected final String getPortfolioNameFromUserWOSave() {
+    String name = scanner.nextLine().toUpperCase();
+     return name;
+  }
+
+  protected final Map<String, Double> getProportionsFromUser() {
+    Map<String, Double> proportions = new HashMap<>();
+    while (true) {
+      portfolioView.printMessage("Please enter the ticker: ");
+      String ticker = scanner.nextLine().toUpperCase();
+
+      portfolioView.printMessage("Please enter the proportion for this stock (Could be fractional): ");
+      while (!scanner.hasNextDouble()) {
+        portfolioView.printMessage("Invalid input. Please enter a numeric value for the proportion.");
+        scanner.next();
+      }
+      double weight = scanner.nextDouble();
+      scanner.nextLine();
+
+      proportions.put(ticker, weight);
+
+      portfolioView.printMessage("Please enter 'OK' when you finish or 'EDIT' to keep editing: ");
+      String input = scanner.nextLine().toUpperCase().trim();
+
+      if (input.equals("OK")) {
+        return proportions;
+      } else if (!input.equals("EDIT")) {
+        portfolioView.printMessage("Unrecognized command. Please enter 'OK' to finish or 'EDIT' to continue editing.");
+      }
+    }
+  }
+
   protected final String getPortfolioNameFromUser() {
     while (true) {
       String name = scanner.nextLine().toUpperCase();
 
-      try {
-        portfolioModel.createNewPortfolioSave(name);
-        portfolioView.printMessage(String.format("You selected:  %s: ", name));
-
-      } catch (IOException e) {
-        portfolioView.printMessage("Error while fetching data: " + e.getMessage());
-      }
+      portfolioView.printMessage(String.format("You selected:  %s: ", name));
+      return name;
     }
   }
 

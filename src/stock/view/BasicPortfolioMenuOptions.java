@@ -12,6 +12,8 @@ public class BasicPortfolioMenuOptions extends BasicMenuOptions {
             "Calculate portfolio value on specific date",
             "Check the distribution of value on specific date",
             "Save portfolio",
-            "Load the saved portfolio");
+            "Load the saved portfolio",
+            "Rebalance the portfolio");
+
   }
 }

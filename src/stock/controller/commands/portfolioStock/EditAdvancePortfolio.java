@@ -12,6 +12,7 @@ import stock.controller.commands.portfolioStock.AdvancePortfolio.LoadPortfolio;
 import stock.controller.commands.portfolioStock.AdvancePortfolio.PortfolioValue;
 import stock.controller.commands.portfolioStock.AdvancePortfolio.PortfolioValueWithDate;
 import stock.controller.commands.portfolioStock.AdvancePortfolio.PurchaseStockWithDate;
+import stock.controller.commands.portfolioStock.AdvancePortfolio.RebalancePortfolio;
 import stock.controller.commands.portfolioStock.AdvancePortfolio.RemoveStock;
 import stock.controller.commands.portfolioStock.AdvancePortfolio.SavePortfolio;
 import stock.controller.commands.portfolioStock.AdvancePortfolio.SellStockWithDate;
@@ -53,6 +54,7 @@ public class EditAdvancePortfolio extends PortfolioCommand {
     commands.put("7", new DistributionWithDate(portfolioView, portfolioModel, scanner, portfolioName));
     commands.put("8", new SavePortfolio(portfolioView, portfolioModel, scanner, portfolioName));
     commands.put("9", new LoadPortfolio(portfolioView, portfolioModel, scanner, portfolioName));
+    commands.put("10", new RebalancePortfolio(portfolioView, portfolioModel, scanner, portfolioName));
 
   }
 

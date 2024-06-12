@@ -1,14 +1,22 @@
 package stock.view;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.OptionalDouble;
 import java.util.stream.Collectors;
 
 public class BasicPortfolioStockView extends AbstractBasicStockView implements PortfolioStockView {
   private List<LocalDate> dateList;
+  private static final DateTimeFormatter MONTH_YEAR_FORMATTER  = DateTimeFormatter.ofPattern("MMM yyyy");
+  private static final DateTimeFormatter FULL_DATE_FORMATTER = DateTimeFormatter.ofPattern("dd MMM yyyy");
+  private static final int MAX_ASTERISKS = 50;
+  private static final int MIN_LINES = 5;
+  private static final int MAX_LINES = 30;
   private BasicStockView stockViewHelper;
   public BasicPortfolioStockView(Appendable out) {
     super(out);
@@ -155,4 +163,50 @@ public class BasicPortfolioStockView extends AbstractBasicStockView implements P
     }
 
   }
+
+  /**
+   * Display the chart of the performance of portfolio that the user can ask for.
+   *
+   * @param performance the performance of the portfolio.
+   * @param startDate the start date to calculate the performance of the portfolio.
+   * @param endDate the end date to calculate the performance of the portfolio.
+   */
+  @Override
+  public void printPortfolioPerformance(Map<LocalDate, Double> performance, LocalDate startDate, LocalDate endDate) {
+    if (performance == null || performance.isEmpty()) {
+      System.out.println("No performance data available.");
+      return;
+    }
+
+    long daysBetween = ChronoUnit.DAYS.between(startDate, endDate);
+
+    DateTimeFormatter dateFormatter = daysBetween <= 31 ? FULL_DATE_FORMATTER : MONTH_YEAR_FORMATTER;
+
+    Map<LocalDate, Double> adjustedPerformance = adjustDataPoints(performance, startDate, endDate, daysBetween);
+
+    OptionalDouble maxOptional = adjustedPerformance.values().stream().mapToDouble(Double::doubleValue).max();
+    if (!maxOptional.isPresent()) return;
+
+    double max = maxOptional.getAsDouble();
+    double scale = max > 0 ? MAX_ASTERISKS / max : 1;
+
+    adjustedPerformance.forEach((date, value) -> {
+      int numberOfAsterisks = (int) (value * scale);
+      System.out.println(dateFormatter.format(date) + ": " + "*".repeat(numberOfAsterisks));
+    });
+
+    System.out.println("Scale: 1 * = " + max / MAX_ASTERISKS + " units");
+  }
+
+  private Map<LocalDate, Double> adjustDataPoints(Map<LocalDate, Double> performance, LocalDate startDate, LocalDate endDate, long daysBetween) {
+    if (daysBetween < MIN_LINES) {
+      return performance;
+    }
+
+    int interval = (int) Math.ceil(daysBetween / (double) MAX_LINES);
+    return performance.entrySet().stream()
+            .filter(entry -> ChronoUnit.DAYS.between(startDate, entry.getKey()) % interval == 0)
+            .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+  }
+
 }

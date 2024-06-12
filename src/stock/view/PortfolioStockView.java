@@ -27,4 +27,13 @@ public interface PortfolioStockView extends StockView {
    * @param fileName the name of the saved files.
    */
   void printFileSaveName(List<String> fileName);
+
+  /**
+   * Display the chart of the performance of portfolio that the user can ask for.
+   *
+   * @param performance the performance of the portfolio.
+   * @param startDate the start date to calculate the performance of the portfolio.
+   * @param endDate the end date to calculate the performance of the portfolio.
+   */
+   void printPortfolioPerformance(Map<LocalDate, Double> performance, LocalDate startDate, LocalDate endDate);
 }

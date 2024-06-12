@@ -1,4 +1,4 @@
-package stock.controller.commands.AdvancePortfolio;
+package stock.controller.commands.portfolioStock.AdvancePortfolio;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -8,7 +8,7 @@ import stock.controller.commands.stock.StockCommand;
 import stock.model.PortfolioStockModel;
 import stock.view.StockView;
 
-public class PortfolioValueWithDate extends StockCommand {
+public class PortfolioValueWithDate extends StockPortfolioCommand {
   /**
    * Constructs a command with a stock's view, model, and source of input.
    *

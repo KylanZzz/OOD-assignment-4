@@ -4,6 +4,7 @@ import java.io.InputStreamReader;
 
 import stock.controller.BasicStockController;
 import stock.controller.StockController;
+import stock.controller.commands.portfolioStock.BasicPortfolioStockController;
 import stock.model.AlphaVantageDataSource;
 import stock.model.BasicStockModel;
 import stock.model.PortfolioStockModel;
@@ -38,7 +39,8 @@ public class StockProgram {
     // StockModel model = new BasicStockModel(new CSVDataSource("res/CSVData"));
 //    StockModel model = new BasicStockModel(new AlphaVantageDataSource());
     PortfolioStockModel portfolioModel = new PortfolioStockModelImpl(new AlphaVantageDataSource());
-    StockController controller = new BasicStockController(view, portfolioModel,
+
+    StockController controller = new BasicPortfolioStockController(view, portfolioModel,
             new InputStreamReader(System.in));
     controller.run();
   }

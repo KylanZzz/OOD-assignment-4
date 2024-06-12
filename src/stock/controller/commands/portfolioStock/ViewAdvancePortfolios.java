@@ -1,46 +1,36 @@
-package stock.controller.commands;
+package stock.controller.commands.portfolioStock;
 
 import java.util.HashMap;
-import java.util.Scanner;
 import java.util.Map;
+import java.util.Scanner;
 
-import stock.controller.commands.portfolio.CreatePortfolio;
-import stock.controller.commands.portfolio.DeletePortfolio;
+import stock.controller.commands.ViewPortfolios;
 import stock.controller.commands.portfolio.EditPortfolio;
-import stock.controller.commands.portfolio.PortfolioCommand;
-import stock.controller.commands.portfolio.RenamePortfolio;
+import stock.controller.commands.portfolioStock.AdvancePortfolio.CreatePortfolio;
+import stock.controller.commands.portfolioStock.AdvancePortfolio.DeletePortfolio;
+import stock.controller.commands.portfolioStock.AdvancePortfolio.RenamePortfolio;
+import stock.controller.commands.portfolioStock.PortfolioCommand;
 import stock.model.PortfolioStockModel;
 import stock.model.StockModel;
 import stock.view.BasicMenuOptions;
 import stock.view.StockView;
 
-/**
- * This command displays all the user's current portfolios to them,
- * as well as any actions that can be performed on them such as
- * creating a new portfolio, deleting an old one, or renaming a
- * portfolio.
- */
-public class ViewPortfolios extends Command {
-
-  private  Map<String, PortfolioCommand> commands;
+public class ViewAdvancePortfolios extends PortfolioCommand {
+  private final Map<String, PortfolioCommand> commands;
 
   /**
    * Constructs a ViewPortfolios command with the given view, model, and scanner,
    * then initializes the commands map.
    *
    * @param view    the view to be used for displaying messages
-   * @param model   the model to interact with stock data
+   * @param portfolioModel   the model to interact with stock data
    * @param scanner the scanner to read user inputs
    */
-  public ViewPortfolios(StockView view, StockModel model, Scanner scanner) {
-    super(view, model, scanner);
+  public ViewAdvancePortfolios(StockView view, PortfolioStockModel portfolioModel, Scanner scanner) {
+    super(view, portfolioModel, scanner);
     commands = new HashMap<>();
   }
 
-//  public ViewPortfolios(StockView view, PortfolioStockModel portfolioModel, Scanner scanner) {
-//    super(view, portfolioModel, scanner);
-//    commands = new HashMap<>();;
-//  }
 
   /**
    * Initializes commands for portfolio management: including creating, deleting,
@@ -49,14 +39,14 @@ public class ViewPortfolios extends Command {
    * any number afterwards (4+) to edit any portfolios they own.
    */
   protected void initializeCommands() {
-    commands.put("1", new CreatePortfolio(view, model, scanner));
-    commands.put("2", new DeletePortfolio(view, model, scanner));
-    commands.put("3", new RenamePortfolio(view, model, scanner));
+    commands.put("1", new CreatePortfolio(view, portfolioModel, scanner));
+    commands.put("2", new DeletePortfolio(view, portfolioModel, scanner));
+    commands.put("3", new RenamePortfolio(view, portfolioModel, scanner));
 
     int numOptions = BasicMenuOptions.viewPortfolios().size();
-    for (int i = 0; i < model.getPortfolios().size(); i++) {
+    for (int i = 0; i < portfolioModel.getPortfolios().size(); i++) {
       commands.put(Integer.toString(i + numOptions + 1),
-              new EditPortfolio(view, model, scanner, model.getPortfolios().get(i)));
+              new EditAdvancePortfolio(view, portfolioModel, scanner, portfolioModel.getPortfolios().get(i)));
     }
   }
 
@@ -71,7 +61,7 @@ public class ViewPortfolios extends Command {
 
     while (!choice.equals(BasicMenuOptions.exitKeyword())) {
       initializeCommands();
-      view.printViewPortfolios(model.getPortfolios());
+      view.printViewPortfolios(portfolioModel.getPortfolios());
       choice = scanner.nextLine();
 
       if (commands.containsKey(choice)) {

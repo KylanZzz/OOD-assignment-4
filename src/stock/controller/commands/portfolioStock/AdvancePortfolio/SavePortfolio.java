@@ -1,4 +1,4 @@
-package stock.controller.commands.AdvancePortfolio;
+package stock.controller.commands.portfolioStock.AdvancePortfolio;
 
 import java.io.IOException;
 import java.util.Scanner;
@@ -7,7 +7,7 @@ import stock.controller.commands.stock.StockCommand;
 import stock.model.PortfolioStockModel;
 import stock.view.StockView;
 
-public class SavePortfolio extends StockCommand {
+public class SavePortfolio extends StockPortfolioCommand {
   public SavePortfolio(StockView view, PortfolioStockModel portfolioModel, Scanner scanner, String portfolio) {
     super(view, portfolioModel, scanner, portfolio);
   }

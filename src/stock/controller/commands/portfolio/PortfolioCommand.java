@@ -15,7 +15,5 @@ public abstract class PortfolioCommand extends Command {
   public PortfolioCommand(StockView view, StockModel model, Scanner scanner) {
     super(view, model, scanner);
   }
-public PortfolioCommand(StockView view, PortfolioStockModel portfolioModel, Scanner scanner) {
-  super(view, portfolioModel, scanner);
-}
+
 }

@@ -1,30 +1,16 @@
-package stock.controller.commands;
+package stock.controller.commands.portfolioStock.AdvancePortfolio;
 
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Scanner;
 
+import stock.controller.commands.portfolioStock.PortfolioCommand;
 import stock.model.PortfolioStockModel;
-import stock.model.StockModel;
 import stock.view.StockView;
 
-/**
- * Command to calculate and display the x-day crossovers for a specified stock.
- * An x-day crossover is when the closing price of a stock at that day is greater
- * than the moving average for that stock over the last x days.
- */
-public class CalculateCrossover extends Command {
-
-  /**
-   * Constructs a calculate crossover command with a stock's view,
-   * model, and source of input.
-   *
-   * @param view the view of the stock program.
-   * @param model the model of the stock program.
-   * @param scanner the input of the stock program.
-   */
-  public CalculateCrossover(StockView view, StockModel model, Scanner scanner) {
-    super(view, model, scanner);
+public class CalculateCrossover extends PortfolioCommand {
+  public CalculateCrossover(StockView view, PortfolioStockModel portfolioModel, Scanner scanner) {
+    super(view, portfolioModel, scanner);
   }
 
   /**
@@ -49,7 +35,7 @@ public class CalculateCrossover extends Command {
     int days = getPositiveFromUser(Integer.MAX_VALUE);
 
     try {
-      var crossOvers = model.getCrossover(endDate, days, ticker);
+      var crossOvers = portfolioModel.getCrossover(endDate, days, ticker);
       view.printXDayCrossovers(ticker, endDate, days, crossOvers);
     } catch (IOException e) {
       view.printMessage("Error while fetching data: " + e.getMessage());

@@ -19,12 +19,8 @@ public class DeletePortfolio extends PortfolioCommand {
    * @param model the model of the stock program.
    * @param scanner the input of the stock program.
    */
-//  public DeletePortfolio(StockView view, StockModel model, Scanner scanner) {
-//    super(view, model, scanner);
-//  }
-
-  public DeletePortfolio(StockView view, PortfolioStockModel portfolioModel, Scanner scanner) {
-    super(view, portfolioModel, scanner);
+  public DeletePortfolio(StockView view, StockModel model, Scanner scanner) {
+    super(view, model, scanner);
   }
 
   /**
@@ -37,12 +33,12 @@ public class DeletePortfolio extends PortfolioCommand {
   public void apply() {
     view.printMessage("What portfolio would you like to delete?");
     String name = scanner.nextLine().toUpperCase();
-    if (!portfolioModel.getPortfolios().contains(name)) {
+    if (!model.getPortfolios().contains(name)) {
       view.printMessage("A portfolio with that name does not exist!");
       return;
     }
 
-    portfolioModel.deletePortfolio(name);
+    model.deletePortfolio(name);
     view.printMessage(String.format("Successfully deleted portfolio %s.", name));
   }
 }

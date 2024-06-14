@@ -3,14 +3,11 @@ package stock;
 import java.io.InputStreamReader;
 
 import stock.controller.BasicStockController;
-import stock.controller.PortfolioStockController;
 import stock.controller.StockController;
 import stock.model.AlphaVantageDataSource;
-import stock.model.PortfolioStockModel;
 import stock.model.PortfolioStockModelImpl;
 import stock.model.StockModel;
 import stock.view.BasicPortfolioStockView;
-import stock.view.PortfolioStockView;
 import stock.view.StockView;
 
 /**

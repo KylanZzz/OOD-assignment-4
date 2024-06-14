@@ -33,15 +33,53 @@ Note: If there are not enough data points available for the specified x days fro
 (meaning there is less historical data available for the stock), the calculation uses all the
 available data points up to the earliest available date.
 
---Manage Portfolios--
-Users can create, delete, rename, and edit investment portfolios. When creating a new portfolio,
+--Manage Portfolio--
+Users can create, delete, rename, edit portfolios, etc. When creating a new portfolio,
 users must provide a unique name. When editing a portfolio, users can add or remove stocks by
 specifying the ticker symbol and the number of shares (whole numbers only, fractional shares are
-not supported).
-Note: Inputting a unique ticker (a stock that is not already in a portfolio) when using 'Add Stock'
-will add a new stock with the inputted amount of shares in the portfolio. If the stock already
-exists in the portfolio, the input amount of shares will be added to the existing amount of shares.
+not supported directly through buying/selling, but can be achieved through rebalancing).
 Note: When renaming a portfolio, all its contents (stocks and # of shares) are kept
+
+--Buying Stock--
+Users can buy stock to a portfolio. This is similar to adding stock in the previous Basic stock
+program, but with the added benefit that users can now specify a date of the purchase. This
+transaction is time-independent, meaning the user can buy stock at any time, whenever they want.
+They can choose to buy a stock after all previous transactions, after all other transactions, or
+even in between transactions (in terms of date). The portfolio composition and value will be
+updated accordingly.
+
+--Selling Stock--
+Users can sell stock from a portfolio. Similar to removing stock in the previous Basic Stock Program,
+but like the buy transaction, users can also specify a date. This transaction is also time-
+independent, the meaning of which is described above. However, it will not allow users to sell
+a stock if there is not enough shares of that stock in the portfolio at the time of selling (or the
+stock simply doesn't exist in the portfolio). After selling all shares of a stock (shares reaches 0)
+it will no longer be shown in the portfolio composition until it is bought again.
+
+--Rebalance--
+Users can also choose to rebalance a portfolio. This means buying shares of some stocks and selling
+shares of others so that the proportion of value of each stock matches a user-inputted proportion.
+For example, if a portfolio started with 10 shares of stock A worth $5 each ($50 total), and 10
+shares of stock B worth $10 each ($100), rebalancing the portfolio to 50% stock A and 50% stock B
+would mean selling $25 of stock B (100 - 25 = 75 now) and buying $25 of stock A (50 + 25 = 75 now).
+This transaction is also time-independent, meaning it can be called at any time, on any date. Keep
+in mind that rebalancing will only allow you to give proportions to stocks that are valid on the date
+of rebalancing. For example, if in the previous example there was a Stock C that was bought after
+the date of rebalancing was called, it would NOT be included in the proportions for rebalancing. This
+is to ensure consistency.
+Note: Rebalancing does NOT change the value of a portfolio; the value of a portfolio before and after
+rebalancing should and will remain the same.
+Note: This change allows for fractional stocks in a portfolio, as sometimes rebalancing will not
+lead to whole numbers.
+
+--Composition of Portfolio--
+Users can find the composition of the portfolio (all the stocks and the number of shares of each
+stock) at a specific date. This will IGNORE all transactions (buy, sell, rebalance) AFTER the
+specified date.
+
+--Calculate Portfolio Distribution--
+Users can calculate the value of each stock (shares * value) at a date. The value of each stock at
+any given date should be equivalent to the total value of the portfolio.
 
 --Calculate Portfolio Value--
 Users can calculate the total value of their investment portfolio on a specific date based on the
@@ -50,6 +88,46 @@ prompted to enter the portfolio name and the date for which they want to calcula
 value.
 Note: If the closing price on the inputted date cannot be found, then the next earliest available
 closing price is used instead. If no other earlier closing price can be found, then 0 is assumed.
+
+--Calculate Portfolio Performance--
+Users can calculate the performance of a portfolio between two dates. The performance of a portfolio
+is simply the value of the portfolio at various times. This performance is displayed on a graph
+of portfolio value versus time (date). Keep in mind that this should only be performed between two
+dates where NO TRANSACTIONS have occurred. This is because transactions such as buying and selling
+would affect the actual value of the portfolio but not the performance (IE: increasing shares
+would make it seem like the portfolio value has increased, but is not reflective of high performance
+because that increase may only be a result of the increased shares that were bought)
+
+--Saving a Portfolio--
+Users can also save a portfolio to disk. This is done by logging all transactions, then writing to
+a .txt file. The name of the file is saved as such:
+    [name of portfolio]_[year]-[month]-[day]T[hour]-[minutes]-[seconds].txt
+where the date/time used is the date/time that the save was created. This naming is AUTOMATICALLY
+DONE and CANNOT BE CHANGED.
+If you would like to create your own saves, use this format:
+    [name of portfolio]_[your own custom identifier].txt
+Only save files that start with the name of the portfolio followed by an underscore '_' will be
+recognized as a valid save. Furthermore, each line in a save file represents a transaction that was
+made to the portfolio; The order of these lines doesn't matter (you can put the earliest transaction
+at the top, bottom, or anywhere in between). Here is how to format each transaction in a save file:
+    BUY:MM/DD/YYYY,[shares],[ticker]
+            IE: BUY:04/20/2005,200.0,AAPL
+    SELL:MM/DD/YYYY,[shares],[ticker]
+            IE: SELL:04/20/2005,100.0,AAPL
+    REBALANCE:MM/DD/YYYY,[ticker1]=>[price1];[ticker2]=>[price2],[ticker1]=>[proportion1],[ticker2]=>[proportion2]
+        Where ticker#=>price# is the ticker of a stock and the price of that stock at the given date
+        and ticker#=>proportion# is the relative value proportion of a stock to rebalance to.
+            IE: REBALANCE:04/21/2005,AAPL=>1.1213207210798;AMZN=>1.6835,AAPL=>0.5;AMZN=>0.5
+
+--Loading a Portfolio--
+After creating a save (whether through the program or manually written), users can choose to load
+a portfolio save into an existing portfolio. The contents of a save can only be loaded into a
+portfolio with the same name as the save (case insensitive). For example, if I created a save with a
+portfolio named S&P500, restarted the program, I would have to create a portfolio named S&P500 again
+in order to load the save that I created before. The reason this was implemented this way was to
+safeguard against accidental data corruption from the users side. While it may seem inconvenient at
+first, designing loading this way ensures that all saves correspond to the correct portfolio and
+no portfolio can be "crossed" with another.
 
 --Configuration--
 The application is currently configured to use the AlphaVantage API to retrieve stock data, with
@@ -72,9 +150,3 @@ The CSV files themselves should have the first row as:
 and each subsequent row should contain the corresponding data values in the same order.
 Note: The first row must be formatted exactly as specified above, and each row must have all
 fields present with no extra or missing fields.
-
---Share Purchasing Restrictions--
-One important restriction is that the program does not allow users to purchase fractional shares.
-This design choice reflects the real-world limitation where most brokers do not support fractional
-share purchases. Users can only buy whole numbers of shares, ensuring that the simulation remains
-realistic.

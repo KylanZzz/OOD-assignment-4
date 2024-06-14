@@ -1,9 +1,7 @@
 package stock.controller;
 
 import stock.model.PortfolioStockModel;
-import stock.model.StockModel;
 import stock.view.PortfolioStockView;
-import stock.view.StockView;
 
 public class PortfolioStockController extends BasicStockController {
   /**

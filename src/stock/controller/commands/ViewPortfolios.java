@@ -3,13 +3,11 @@ package stock.controller.commands;
 import java.util.HashMap;
 import java.util.Scanner;
 import java.util.Map;
-
 import stock.controller.commands.portfolio.CreatePortfolio;
 import stock.controller.commands.portfolio.DeletePortfolio;
 import stock.controller.commands.portfolio.EditPortfolio;
 import stock.controller.commands.portfolio.PortfolioCommand;
 import stock.controller.commands.portfolio.RenamePortfolio;
-import stock.model.PortfolioStockModel;
 import stock.model.StockModel;
 import stock.view.BasicMenuOptions;
 import stock.view.StockView;
@@ -73,7 +71,8 @@ public class ViewPortfolios extends Command {
       if (commands.containsKey(choice)) {
         commands.get(choice).apply();
       } else if (!choice.equals(BasicMenuOptions.exitKeyword())) {
-        view.printMessage("Invalid input. Please enter a valid choice or to go back.");
+        view.printMessage("Invalid input. Please enter a valid choice or "
+                + BasicMenuOptions.exitKeyword() + " to go back.");
       }
     }
   }

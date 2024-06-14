@@ -51,8 +51,8 @@ public abstract class Command {
         view.printMessage("Invalid input: not an integer, please try again.");
         scanner.nextLine();
       } catch (IllegalArgumentException e) {
-        view.printMessage("Invalid input: not a valid number. Please enter a number from 1 to " +
-                max);
+        view.printMessage("Invalid input: not a valid number. Please enter a number from 1 to "
+                + max);
         choice = -1;
         scanner.nextLine();
       }
@@ -102,8 +102,8 @@ public abstract class Command {
       } catch (DateTimeException e) {
         view.printMessage("Invalid date: Please enter a valid date.");
       } catch (InputMismatchException e) {
-        view.printMessage("Invalid date: Date has not passed yet, please enter a date before or " +
-                "equal to today.");
+        view.printMessage("Invalid date: Date has not passed yet, please enter a date before or "
+                + "equal to today.");
       } catch (Exception e) {
         view.printMessage("Incorrect format: Please enter the date in the format MM/DD/YYYY.");
       }

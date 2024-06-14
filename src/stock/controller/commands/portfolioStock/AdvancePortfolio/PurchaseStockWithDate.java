@@ -4,17 +4,17 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.InputMismatchException;
 import java.util.Scanner;
-
-import stock.controller.commands.Command;
-import stock.controller.commands.portfolio.CreatePortfolio;
 import stock.controller.commands.portfolioStock.StockPortfolioCommand;
-import stock.controller.commands.stock.StockCommand;
 import stock.model.PortfolioStockModel;
-import stock.model.PortfolioStockModelImpl;
 import stock.model.StockModel;
 import stock.view.PortfolioStockView;
 import stock.view.StockView;
 
+/**
+ * Command class for purchasing stocks on a specified date to add to a stock portfolio.
+ * This command prompts the user to enter stock details and the purchase date, then
+ * executes the addition of the specified stock to the portfolio.
+ */
 public class PurchaseStockWithDate extends StockPortfolioCommand {
 
 
@@ -25,7 +25,8 @@ public class PurchaseStockWithDate extends StockPortfolioCommand {
    * @param model   the model of the stock program.
    * @param scanner the input of the stock program.
    */
-  public PurchaseStockWithDate(StockView view, StockModel model, Scanner scanner, String portfolio) {
+  public PurchaseStockWithDate(StockView view, StockModel model,
+                               Scanner scanner, String portfolio) {
     super(view, model, scanner, portfolio);
   }
 
@@ -66,7 +67,8 @@ public class PurchaseStockWithDate extends StockPortfolioCommand {
     LocalDate date = getDateFromUser();
     try {
       portfolioModel.addStockToPortfolio(portfolio, ticker, shares, date);
-      portfolioView.printMessage(String.format("Successfully purchased %d shares of %s stocks at date %s in the %s "
+      portfolioView.printMessage(String.format("Successfully purchased %d shares "
+              + "of %s stocks at date %s in the %s "
               + "portfolio.", shares, ticker, date, portfolio));
       portfolioView.printMessage("");
     } catch (IOException e) {

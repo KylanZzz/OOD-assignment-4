@@ -4,13 +4,17 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.InputMismatchException;
 import java.util.Scanner;
-
 import stock.controller.commands.portfolioStock.StockPortfolioCommand;
 import stock.model.PortfolioStockModel;
 import stock.model.StockModel;
 import stock.view.PortfolioStockView;
 import stock.view.StockView;
 
+/**
+ * Command class responsible for selling stocks from a specified portfolio on a given date.
+ * This command facilitates user interaction for stock sale transactions based
+ * on specified parameters.
+ */
 public class SellStockWithDate extends StockPortfolioCommand {
 
   /**
@@ -32,9 +36,8 @@ public class SellStockWithDate extends StockPortfolioCommand {
     PortfolioStockModel portfolioModel = (PortfolioStockModel) model;
     PortfolioStockView portfolioView = (PortfolioStockView) view;
 
-
-
-    portfolioView.printMessage("Please enter the date that you want to sell the stocks in the format MM/DD/YYYY: ");
+    portfolioView.printMessage("Please enter the date that you want to "
+            + "sell the stocks in the format MM/DD/YYYY: ");
     LocalDate date = getDateFromUser();
 
     if (portfolioModel.getPortfolioContentsDecimal(portfolio, date).isEmpty()) {
@@ -69,11 +72,11 @@ public class SellStockWithDate extends StockPortfolioCommand {
 
     try {
       portfolioModel.sellStockFromPortfolio(portfolio, ticker, shares, date);
-      portfolioView.printMessage(String.format("Successfully sold %d number of %s stocks from date %s in the %s "
+      portfolioView.printMessage(String.format("Successfully sold %d number "
+              + "of %s stocks from date %s in the %s "
               + "portfolio.", shares, ticker, date, portfolio));
     } catch (IOException e) {
       portfolioView.printMessage("Error occurred while fetching data: " + e.getMessage());
     }
-
   }
 }

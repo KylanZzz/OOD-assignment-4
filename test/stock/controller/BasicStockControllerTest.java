@@ -10,13 +10,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-
 import stock.model.PortfolioStockModel;
 import stock.model.StockModel;
 import stock.view.BasicMenuOptions;
 import stock.view.PortfolioStockView;
 import stock.view.StockView;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static stock.controller.Interactions.inputs;
@@ -1004,8 +1002,6 @@ public class BasicStockControllerTest
   @Test
   public void managePortfolioMenuHandlesInvalidInput() {
     assertTrue(runTest(false, prints("printMainMenu"), inputs("4"),
-//            prints("printViewPortfoliosS&P500NASDAQ"), inputs("4"),
-
             prints("printViewPortfoliosS&P500NASDAQ"), inputs("invalid"),
 
             prints("printMessageInvalid input. Please enter a valid choice or EXIT to go back."), prints("printViewPortfoliosS&P500NASDAQ"), inputs("10"),

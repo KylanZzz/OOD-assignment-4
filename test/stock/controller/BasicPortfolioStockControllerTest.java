@@ -10,13 +10,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-
 import stock.model.PortfolioStockModel;
 import stock.model.StockModel;
 import stock.view.BasicMenuOptions;
 import stock.view.PortfolioStockView;
 import stock.view.StockView;
-
 import static org.junit.Assert.*;
 import static stock.controller.Interactions.inputs;
 import static stock.controller.Interactions.modelLog;
@@ -100,20 +98,17 @@ public class BasicPortfolioStockControllerTest extends BasicStockControllerTest 
 
     @Override
     public void createNewPortfolio(String name) {
-//      log.append("createNewPortfolio").append(name).append("\n");
       mockModelHelper.createNewPortfolio(name);
     }
 
     @Override
     public void deletePortfolio(String name) {
-//      log.append("deletePortfolio").append(name).append("\n");
       mockModelHelper.deletePortfolio(name);
 
     }
 
     @Override
     public void renamePortfolio(String oldName, String newName) {
-//      log.append("renamePortfolio").append(oldName).append(newName).append("\n");
       mockModelHelper.renamePortfolio(oldName, newName);
 
     }
@@ -181,9 +176,12 @@ public class BasicPortfolioStockControllerTest extends BasicStockControllerTest 
         throw new IOException("getPortfolioPerformanceIOExceptionMessage");
       }
       log.append("getPortfolioPerformance").append(name).append(startDate).append(endDate).append("\n");
-      return Map.of(LocalDate.of(2024, 1, 1), 10.0, LocalDate.of(2024, 1, 2),
-              15.0, LocalDate.of(2024, 1, 3), 20.0, LocalDate.of(2024, 1, 4), 15.0,
-              LocalDate.of(2024, 1, 5), 25.0, LocalDate.of(2024, 1, 6), 5.0);
+      return Map.of(LocalDate.of(2024, 1, 1), 10.0,
+              LocalDate.of(2024, 1, 2), 15.0,
+              LocalDate.of(2024, 1, 3), 20.0,
+              LocalDate.of(2024, 1, 4), 15.0,
+              LocalDate.of(2024, 1, 5), 25.0,
+              LocalDate.of(2024, 1, 6), 5.0);
     }
   }
 
@@ -939,8 +937,6 @@ public class BasicPortfolioStockControllerTest extends BasicStockControllerTest 
             prints("printOptionsPrompt"),
             prints("printMenu"),
             inputs("4"),
-//            prints("printOptionsPrompt"),
-//            prints("printMenu"),
             inputs("1"),
             prints("printMessagePlease enter the ticker of the stock that you would like to add to portfolio S&P500:"),inputs("AAPL"),
             prints("printMessagePlease enter the number of shares you would like to purchase (you cannot buy fractional number of stocks): "),
@@ -972,8 +968,6 @@ public class BasicPortfolioStockControllerTest extends BasicStockControllerTest 
   @Test
   public void managePortfolioMenuHandlesInvalidInput() {
     assertTrue(runTest(false, prints("printMainMenu"), inputs("4"),
-//            prints("printViewPortfoliosS&P500NASDAQ"), inputs("4"),
-
             prints("printViewPortfoliosS&P500NASDAQ"), inputs("invalid"),
 
             prints("printMessageInvalid input. Please enter a valid choice or EXIT to go back."), prints("printViewPortfoliosS&P500NASDAQ"), inputs("10"),
@@ -998,8 +992,6 @@ public class BasicPortfolioStockControllerTest extends BasicStockControllerTest 
   public void controllerHandlesGetPortfolioValueIOException() {
     assertTrue(runTest(false, prints("printMainMenu"), inputs("4"),
 
-//            prints("printViewPortfoliosS&P500NASDAQ"), inputs("4"),
-
             prints("printViewPortfoliosS&P500NASDAQ"), inputs("1"),
 
             prints("printMessageWhat is the name of the portfolio you would like to create?"), inputs("01/01/2021"),
@@ -1017,8 +1009,6 @@ public class BasicPortfolioStockControllerTest extends BasicStockControllerTest 
   @Test
   public void calculatePortfolioValue() {
     assertTrue(runTest(false, prints("printMainMenu"), inputs("4"),
-
-//            prints("printViewPortfoliosS&P500NASDAQ"), inputs("4"),
 
             prints("printViewPortfoliosS&P500NASDAQ"), inputs("1"),
 

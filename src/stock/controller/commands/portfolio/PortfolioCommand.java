@@ -1,9 +1,7 @@
 package stock.controller.commands.portfolio;
 
 import java.util.Scanner;
-
 import stock.controller.commands.Command;
-import stock.model.PortfolioStockModel;
 import stock.model.StockModel;
 import stock.view.StockView;
 

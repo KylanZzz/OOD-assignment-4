@@ -1,11 +1,8 @@
 package stock.controller.commands.portfolio;
 
-import java.io.IOException;
-import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
-
 import stock.controller.commands.portfolioStock.AdvancePortfolio.DisplayPortfolio;
 import stock.controller.commands.portfolioStock.AdvancePortfolio.DistributionWithDate;
 import stock.controller.commands.portfolioStock.AdvancePortfolio.LoadPortfolio;
@@ -16,7 +13,6 @@ import stock.controller.commands.portfolioStock.AdvancePortfolio.RebalancePortfo
 import stock.controller.commands.portfolioStock.AdvancePortfolio.SavePortfolio;
 import stock.controller.commands.portfolioStock.AdvancePortfolio.SellStockWithDate;
 import stock.controller.commands.stock.StockCommand;
-import stock.model.PortfolioStockModel;
 import stock.model.StockModel;
 import stock.view.BasicMenuOptions;
 import stock.view.PortfolioStockView;
@@ -72,11 +68,6 @@ public class EditPortfolio extends PortfolioCommand {
     String choice = "";
 
     while (!choice.equals(BasicMenuOptions.exitKeyword())) {
-//      if (!(model instanceof PortfolioStockModel)) {
-//        view.printMessage("model is not compatible.");
-//        return;
-//      }
-      PortfolioStockModel portfolioModel = (PortfolioStockModel) model;
       PortfolioStockView portfolioView = (PortfolioStockView) view;
 
 
@@ -86,7 +77,8 @@ public class EditPortfolio extends PortfolioCommand {
       if (commands.containsKey(choice)) {
         commands.get(choice).apply();
       } else if (!choice.equals(BasicMenuOptions.exitKeyword())) {
-        portfolioView.printMessage("Invalid input. Please enter a valid choice (a number from 1 through "
+        portfolioView.printMessage("Invalid input. Please enter a valid choice "
+                + "(a number from 1 through "
                 + BasicMenuOptions.managePortfolio().size() + ") or "
                 + BasicMenuOptions.exitKeyword()
                 + " to go back.");

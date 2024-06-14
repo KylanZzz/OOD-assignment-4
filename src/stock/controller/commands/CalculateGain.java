@@ -3,8 +3,6 @@ package stock.controller.commands;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Scanner;
-
-import stock.model.PortfolioStockModel;
 import stock.model.StockModel;
 import stock.view.StockView;
 
@@ -21,10 +19,6 @@ public class CalculateGain extends Command {
    * @param model the model of the stock program.
    * @param scanner the input of the stock program.
    */
-//  public CalculateGain(StockView view, StockModel model, Scanner scanner) {
-//    super(view, model, scanner);
-//  }
-
   public CalculateGain(StockView view, StockModel model, Scanner scanner) {
     super(view, model, scanner);
   }

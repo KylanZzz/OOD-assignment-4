@@ -2,15 +2,28 @@ package stock.controller.commands.portfolioStock.AdvancePortfolio;
 
 import java.io.IOException;
 import java.util.Scanner;
-
 import stock.controller.commands.portfolioStock.StockPortfolioCommand;
-import stock.controller.commands.stock.StockCommand;
 import stock.model.PortfolioStockModel;
 import stock.model.StockModel;
 import stock.view.PortfolioStockView;
 import stock.view.StockView;
 
+/**
+ * Command class responsible for loading a saved stock portfolio from a file.
+ * It extends the StockPortfolioCommand which provides basic command structure.
+ * This class handles user interaction to load the contents of
+ * a previously saved portfolio from persistent storage.
+ */
 public class LoadPortfolio extends StockPortfolioCommand {
+
+  /**
+   * Constructs a DisplayPortfolio command object.
+   *
+   * @param view     The view used to interact with the user.
+   * @param model    The model used for portfolio data manipulation.
+   * @param scanner  The scanner to read user input.
+   * @param portfolio The name of the portfolio to display.
+   */
   public LoadPortfolio(StockView view, StockModel model, Scanner scanner, String portfolio) {
     super(view, model, scanner, portfolio);
   }
@@ -33,7 +46,7 @@ public class LoadPortfolio extends StockPortfolioCommand {
       portfolioView.printMessage("Error occurred while fetching data: " + e.getMessage());
     }
 
-     String fileSaveName = getPortfolioFileSaveName();
+    String fileSaveName = getPortfolioFileSaveName();
     try {
       portfolioModel.loadPortfolioSave(portfolio, fileSaveName);
       portfolioView.printMessage("Successfully load the saved file!");

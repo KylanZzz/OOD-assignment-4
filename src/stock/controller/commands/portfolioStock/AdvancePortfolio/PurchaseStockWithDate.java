@@ -7,9 +7,11 @@ import java.util.Scanner;
 
 import stock.controller.commands.Command;
 import stock.controller.commands.portfolio.CreatePortfolio;
+import stock.controller.commands.portfolioStock.StockPortfolioCommand;
 import stock.controller.commands.stock.StockCommand;
 import stock.model.PortfolioStockModel;
 import stock.model.PortfolioStockModelImpl;
+import stock.model.StockModel;
 import stock.view.PortfolioStockView;
 import stock.view.StockView;
 
@@ -19,12 +21,12 @@ public class PurchaseStockWithDate extends StockPortfolioCommand {
   /**
    * Constructs a command with a stock's view, model, and source of input.
    *
-   * @param portfolioView    the view of the stock program.
-   * @param portfolioModel   the model of the stock program.
+   * @param view    the view of the stock program.
+   * @param model   the model of the stock program.
    * @param scanner the input of the stock program.
    */
-  public PurchaseStockWithDate(PortfolioStockView portfolioView, PortfolioStockModel portfolioModel, Scanner scanner, String portfolio) {
-    super(portfolioView, portfolioModel, scanner, portfolio);
+  public PurchaseStockWithDate(StockView view, StockModel model, Scanner scanner, String portfolio) {
+    super(view, model, scanner, portfolio);
   }
 
   /**
@@ -32,6 +34,9 @@ public class PurchaseStockWithDate extends StockPortfolioCommand {
    */
   @Override
   public void apply() {
+    PortfolioStockModel portfolioModel = (PortfolioStockModel) model;
+    PortfolioStockView portfolioView = (PortfolioStockView) view;
+
     portfolioView.printMessage(String.format("Please enter the ticker of the stock "
             + "that you would like to add to portfolio %s:", portfolio));
     String ticker = getTickerFromUser();
@@ -57,7 +62,7 @@ public class PurchaseStockWithDate extends StockPortfolioCommand {
       return;
     }
 
-    portfolioView.printMessage("Please enter the date that you want to purchase the stocks: ");
+    portfolioView.printMessage("Please enter the starting date (inclusive) in the format MM/DD/YYYY: ");
     LocalDate date = getDateFromUser();
     try {
       portfolioModel.addStockToPortfolio(portfolio, ticker, shares, date);

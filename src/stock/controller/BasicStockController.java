@@ -7,12 +7,8 @@ import stock.controller.commands.CalculateCrossover;
 import stock.controller.commands.CalculateGain;
 import stock.controller.commands.Command;
 import stock.controller.commands.ViewPortfolios;
-import stock.controller.commands.portfolioStock.ViewAdvancePortfolios;
-import stock.model.PortfolioStockModel;
 import stock.model.StockModel;
-import stock.view.BasicMenuOptions;
 import stock.view.BasicPortfolioMenuOptions;
-import stock.view.PortfolioStockView;
 import stock.view.StockView;
 import java.util.Map;
 

@@ -7,35 +7,36 @@ import java.util.Map;
 import java.util.Scanner;
 
 import stock.controller.commands.Command;
-import stock.model.PortfolioStockModel;
-import stock.view.PortfolioStockView;
+import stock.controller.commands.stock.StockCommand;
+import stock.model.StockModel;
 import stock.view.StockView;
 
-public class PortfolioCommand extends Command {
-  public PortfolioCommand(PortfolioStockView portfolioView, PortfolioStockModel portfolioModel, Scanner scanner) {
-    super(portfolioView, portfolioModel, scanner);
+public class StockPortfolioCommand extends StockCommand {
+  public StockPortfolioCommand(StockView view, StockModel model, Scanner scanner, String portfolio) {
+    super(view, model, scanner, portfolio);
+  }
+
+  @Override
+  public void apply() {
+
   }
 
   /**
    * Executes the command.
    */
-  @Override
-  public void apply() {
-
-  }
 
   @Override
   protected final String getTickerFromUser() {
     while (true) {
       String ticker = scanner.nextLine().toUpperCase();
       try {
-        if (portfolioModel.stockExists(ticker)) {
+        if (model.stockExists(ticker)) {
           return ticker;
         } else {
-          portfolioView.printMessage("That stock does not exist! Please try again.");
+          view.printMessage("That stock does not exist! Please try again.");
         }
       } catch (IOException e) {
-        portfolioView.printMessage("Error while fetching data: " + e.getMessage());
+        view.printMessage("Error while fetching data: " + e.getMessage());
       }
     }
   }
@@ -48,12 +49,12 @@ public class PortfolioCommand extends Command {
   protected final Map<String, Double> getProportionsFromUser() {
     Map<String, Double> proportions = new HashMap<>();
     while (true) {
-      portfolioView.printMessage("Please enter the ticker: ");
+      view.printMessage("Please enter the ticker: ");
       String ticker = scanner.nextLine().toUpperCase();
 
-      portfolioView.printMessage("Please enter the proportion for this stock (Could be fractional): ");
+      view.printMessage("Please enter the proportion for this stock (Could be fractional): ");
       while (!scanner.hasNextDouble()) {
-        portfolioView.printMessage("Invalid input. Please enter a numeric value for the proportion.");
+        view.printMessage("Invalid input. Please enter a numeric value for the proportion.");
         scanner.next();
       }
       double weight = scanner.nextDouble();
@@ -61,13 +62,13 @@ public class PortfolioCommand extends Command {
 
       proportions.put(ticker, weight);
 
-      portfolioView.printMessage("Please enter 'OK' when you finish or 'EDIT' to keep editing: ");
+      view.printMessage("Please enter 'OK' when you finish or 'EDIT' to keep editing: ");
       String input = scanner.nextLine().toUpperCase().trim();
 
       if (input.equals("OK")) {
         return proportions;
       } else if (!input.equals("EDIT")) {
-        portfolioView.printMessage("Unrecognized command. Please enter 'OK' to finish or 'EDIT' to continue editing.");
+        view.printMessage("Unrecognized command. Please enter 'OK' to finish or 'EDIT' to continue editing.");
       }
     }
   }
@@ -76,7 +77,7 @@ public class PortfolioCommand extends Command {
     while (true) {
       String name = scanner.nextLine().toUpperCase();
 
-      portfolioView.printMessage(String.format("You selected:  %s: ", name));
+      view.printMessage(String.format("You selected:  %s: ", name));
       return name;
     }
   }
@@ -85,12 +86,12 @@ public class PortfolioCommand extends Command {
 //    portfolioView.printMessage("please enter the option by the number: ");
     int option = scanner.nextInt();
 //    String name = scanner.nextLine().toUpperCase();
-    List<String> PortfolioList = portfolioModel.getPortfolios();
+    List<String> PortfolioList = model.getPortfolios();
       return PortfolioList.get(option - 1);
   }
 
   protected final String getFileSaves() {
-    portfolioView.printMessage("Please select the file in this portfolio: ");
+    view.printMessage("Please select the file in this portfolio: ");
     String name = scanner.nextLine().toUpperCase();
     return name;
   }

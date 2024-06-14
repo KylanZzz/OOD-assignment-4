@@ -6,27 +6,32 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
+import stock.controller.commands.portfolioStock.StockPortfolioCommand;
 import stock.model.PortfolioStockModel;
+import stock.model.StockModel;
 import stock.view.PortfolioStockView;
+import stock.view.StockView;
 
 public class RebalancePortfolio extends StockPortfolioCommand {
-  public RebalancePortfolio(PortfolioStockView portfolioView, PortfolioStockModel portfolioModel, Scanner scanner, String portfolio) {
-    super(portfolioView, portfolioModel, scanner, portfolio);
+  public RebalancePortfolio(StockView view, StockModel model, Scanner scanner, String portfolio) {
+    super(view, model, scanner, portfolio);
   }
 
   @Override
   public void apply() {
+    PortfolioStockModel portfolioModel = (PortfolioStockModel) model;
+    PortfolioStockView portfolioView = (PortfolioStockView) view;
+
     portfolioView.printMessage("Please enter the name of the portfolio "
             + "that you would like to rebalance: ");
     String name = getPortfolioNameFromUserWOSave();
 
-    portfolioView.printMessage("Please enter the date "
-            + "that you would like to rebalance for: ");
+    portfolioView.printMessage("What date would you like to rebalance for? Please enter the date in the format MM/DD/YYYY.: ");
 
     LocalDate date = getDateFromUser();
 
-    portfolioView.printMessage("Please enter the proportions "
-            + "that you would like to rebalance for: ");
+    portfolioView.printMessage("What proportions would you want to rebalance to? "
+            + "Please enter the proportion in the decimal format : ");
 
     Map<String, Double> proportions = new HashMap<>();
     try {

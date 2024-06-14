@@ -182,8 +182,8 @@ public class BasicPortfolioStockControllerTest extends BasicStockControllerTest 
       }
       log.append("getPortfolioPerformance").append(name).append(startDate).append(endDate).append("\n");
       return Map.of(LocalDate.of(2024, 1, 1), 10.0, LocalDate.of(2024, 1, 2),
-              15.0, LocalDate.of(2024, 1, 3), 20.0, LocalDate.of(2024, 1, 3), 15.0,
-              LocalDate.of(2024, 1, 4), 25.0, LocalDate.of(2024, 1, 5), 5.0);
+              15.0, LocalDate.of(2024, 1, 3), 20.0, LocalDate.of(2024, 1, 4), 15.0,
+              LocalDate.of(2024, 1, 5), 25.0, LocalDate.of(2024, 1, 6), 5.0);
     }
   }
 
@@ -897,8 +897,7 @@ public class BasicPortfolioStockControllerTest extends BasicStockControllerTest 
             prints("printOptionsPrompt"),
             prints("printMenu"),
             inputs("4"),
-//            prints("printOptionsPrompt"),
-//            prints("printMenu"),
+
             inputs("1"),
             prints("printMessagePlease enter the ticker of the stock that you would like to add to portfolio S&P500:"),inputs("AAPL"),
             prints("printMessagePlease enter the number of shares you would like to purchase (you cannot buy fractional number of stocks): "),
@@ -1058,7 +1057,112 @@ public class BasicPortfolioStockControllerTest extends BasicStockControllerTest 
             prints("printMainMenu"), inputs("EXIT")));
   }
 
-//  @Test
-//  public void DisplayPortfolio
+  @Test
+  public void DisplayPortfolio() {
+    assertTrue(runTest(false, prints("printMainMenu"), inputs("4"),
+            prints("printViewPortfoliosS&P500NASDAQ"), inputs("1"),
+
+
+            prints("printMessageWhat is the name of the portfolio you would like to create?"), inputs("ASjkdsf"),
+            prints("printMessageSuccessfully created portfolio ASJKDSF."),
+            modelLog("createNewPortfolioASJKDSF"),
+            prints("printViewPortfoliosS&P500NASDAQ"),
+            prints("printOptionsPrompt"),
+            prints("printMenu"),
+            inputs("4"),
+
+            inputs("9"),
+            prints("printMessageWhat date would you like to know the composition of portfolio S&P500 at? Please enter the date in the format MM/DD/YYYY "), inputs("12/23/2023"),
+            prints("printManagePortfolioDoubleS&P500NFLXAMZNAAPL5.515.510.5"),
+
+            prints("printOptionsPrompt"),
+            prints("printMenu"), inputs("EXIT"),
+
+            prints("printViewPortfoliosS&P500NASDAQ"), inputs("EXIT"),
+
+            prints("printMainMenu"), inputs("EXIT")));
+  }
+
+  @Test
+  public void DistributionWithDate() {
+    assertTrue(runTest(false, prints("printMainMenu"), inputs("4"),
+            prints("printViewPortfoliosS&P500NASDAQ"), inputs("1"),
+
+
+            prints("printMessageWhat is the name of the portfolio you would like to create?"), inputs("ASjkdsf"),
+            prints("printMessageSuccessfully created portfolio ASJKDSF."),
+            modelLog("createNewPortfolioASJKDSF"),
+            prints("printViewPortfoliosS&P500NASDAQ"),
+            prints("printOptionsPrompt"),
+            prints("printMenu"),
+            inputs("4"),
+
+            inputs("4"),
+            prints("printMessageWhat date would you like to know the value of portfolio S&P500 at? Please enter the date in the format MM/DD/YYYY."), inputs("12/23/2023"),
+            prints("printDistributionS&P500GOOGAMZNAAPL0.250.250.25"),
+            modelLog("getPortfolioDistributionS&P5002023-12-23"),
+            prints("printOptionsPrompt"),
+            prints("printMenu"), inputs("EXIT"),
+
+            prints("printViewPortfoliosS&P500NASDAQ"), inputs("EXIT"),
+
+            prints("printMainMenu"), inputs("EXIT")));
+  }
+
+  @Test
+  public void LoadPortfolio() {
+    assertTrue(runTest(false, prints("printMainMenu"), inputs("4"),
+            prints("printViewPortfoliosS&P500NASDAQ"), inputs("1"),
+
+
+            prints("printMessageWhat is the name of the portfolio you would like to create?"), inputs("ASjkdsf"),
+            prints("printMessageSuccessfully created portfolio ASJKDSF."),
+            modelLog("createNewPortfolioASJKDSF"),
+            prints("printViewPortfoliosS&P500NASDAQ"),
+            prints("printOptionsPrompt"),
+            prints("printMenu"),
+            inputs("4"),
+
+            inputs("5"),
+
+            prints("printMessageYou have successfully saved the portfolio!"),
+            modelLog("createNewPortfolioSaveS&P500"),
+            prints("printMessage"), prints("printOptionsPrompt"), prints("printMenu"), inputs("EXIT"),
+
+            prints("printViewPortfoliosS&P500NASDAQ"), inputs("EXIT"),
+
+            prints("printMainMenu"), inputs("EXIT")));
+  }
+
+  @Test
+  public void PerformanceOverTime() {
+    assertTrue(runTest(false, prints("printMainMenu"), inputs("4"),
+            prints("printViewPortfoliosS&P500NASDAQ"), inputs("1"),
+
+
+            prints("printMessageWhat is the name of the portfolio you would like to create?"), inputs("ASjkdsf"),
+            prints("printMessageSuccessfully created portfolio ASJKDSF."),
+            modelLog("createNewPortfolioASJKDSF"),
+            prints("printViewPortfoliosS&P500NASDAQ"),
+            prints("printOptionsPrompt"),
+            prints("printMenu"),
+            inputs("4"),
+
+            inputs("8"),
+
+            prints("printMessagePlease enter the starting date (inclusive) in the format MM/DD/YYYY:"),
+            inputs("12/23/2023"),
+            prints("printMessagePlease enter the ending date (inclusive) in the format MM/DD/YYYY:"),
+            inputs("05/12/2024"),
+            prints("printPortfolioPerformance2023-12-232024-05-125.025.02024-01-062024-01-052024-01-042024-01-032024-01-022024-01-0120.015.015.010.0"),
+            prints("printMessagePerformance of portfolio S&P500 from 2023-12-23 to 2024-05-12"),
+            modelLog("getPortfolioPerformanceS&P5002023-12-232024-05-12"),
+            modelLog("getPortfolioPerformanceS&P5002023-12-232024-05-12"),
+            prints("printMessage"), prints("printOptionsPrompt"), prints("printMenu"), inputs("EXIT"),
+
+            prints("printViewPortfoliosS&P500NASDAQ"), inputs("EXIT"),
+
+            prints("printMainMenu"), inputs("EXIT")));
+  }
 
 }

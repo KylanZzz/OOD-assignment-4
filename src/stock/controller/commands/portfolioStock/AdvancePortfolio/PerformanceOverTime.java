@@ -21,9 +21,6 @@ public class PerformanceOverTime extends StockPortfolioCommand {
     PortfolioStockModel portfolioModel = (PortfolioStockModel) model;
     PortfolioStockView portfolioView = (PortfolioStockView) view;
 
-    portfolioView.printMessage("Please enter the name of the portfolio "
-            + "that you would like to see the performance: ");
-    String name = getPortfolioNameFromUserWOSave();
 
     portfolioView.printMessage("Please enter the starting date (inclusive) in the format "
             + "MM/DD/YYYY:");
@@ -34,8 +31,11 @@ public class PerformanceOverTime extends StockPortfolioCommand {
     LocalDate endDate = getDateFromUser();
 
     try {
-      portfolioView.printPortfolioPerformance(portfolioModel.getPortfolioPerformance(name, startDate, endDate), startDate, endDate);
-      portfolioView.printMessage(String.format("Performance of portfolio %s from %s to %s", name, startDate, endDate));
+      portfolioView.printPortfolioPerformance(portfolioModel.getPortfolioPerformance(portfolio, startDate, endDate), startDate, endDate);
+      if (portfolioModel.getPortfolioPerformance(portfolio, startDate, endDate).isEmpty()) {
+        return;
+      }
+      portfolioView.printMessage(String.format("Performance of portfolio %s from %s to %s", portfolio, startDate, endDate));
       portfolioView.printMessage("");
     } catch (IOException e) {
       throw new RuntimeException(e);

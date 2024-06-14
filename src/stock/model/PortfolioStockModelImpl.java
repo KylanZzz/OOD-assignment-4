@@ -120,7 +120,10 @@ public class PortfolioStockModelImpl implements PortfolioStockModel {
 
     var prices = new HashMap<String, Double>();
     for (var key : port.getComposition(date).keySet()) {
-      prices.put(key, dataSource.getClosingPrice(date, key));
+      var dt = date;
+      while (!dataSource.stockExistsAtDate(dt, key) && !dt.equals(LocalDate.of(1990,1,
+              1))) dt = dt.minusDays(1);
+      prices.put(key, dataSource.getClosingPrice(dt, key));
     }
 
     return getPortfolio(name).getDistribution(date, prices);

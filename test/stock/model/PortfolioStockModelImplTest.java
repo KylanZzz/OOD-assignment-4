@@ -158,13 +158,22 @@ public class PortfolioStockModelImplTest extends BasicStockModelTest {
   public void testGetPortfolioDistributionWithTransactions() throws IOException {
     portModel.createNewPortfolio("testPortfolio");
 
-    portModel.addStockToPortfolio("testPortfolio", "AMZN", 10, LocalDate.of(2023, 1, 1));
-    portModel.addStockToPortfolio("testPortfolio", "GOOG", 20, LocalDate.of(2023, 1, 2));
+    portModel.addStockToPortfolio("testPortfolio", "AMZN", 10, LocalDate.of(2024, 1, 1));
+    portModel.addStockToPortfolio("testPortfolio", "GOOG", 20, LocalDate.of(2024, 1, 2));
 
-    mockDataSource.setStockExistsAtDate(LocalDate.of(2023, 1, 3));
-    mockDataSource.setClosingPrice(LocalDate.of(2023, 1, 3), 2500.0);
+    //LocalDate.of(2024, 05, 04),
+    //          LocalDate.of(2024, 5, 6),
+    //          LocalDate.of(2024, 5, 7),
+    //          LocalDate.of(2024,5,8),
+    //          LocalDate.of(2024,5,9),
+    //          LocalDate.of(2024,5,12),
+    //          LocalDate.of(2024,5,15));
 
-    Map<String, Double> distribution = portModel.getPortfolioDistribution("testPortfolio", LocalDate.of(2023, 1, 3));
+    mockDataSource.setStockExistsAtDate(LocalDate.of(2024, 5, 4));
+    mockDataSource.setClosingPrice(LocalDate.of(2024, 5, 4), 2500.0);
+
+    Map<String, Double> distribution = portModel.getPortfolioDistribution("testPortfolio",
+            LocalDate.of(2024, 5, 6));
 
     Map<String, Double> expectedDistribution = new HashMap<>();
     expectedDistribution.put("AMZN", 10 * 2500.0);
@@ -299,5 +308,48 @@ public class PortfolioStockModelImplTest extends BasicStockModelTest {
     } catch (IOException e) {
       fail("Failed to get data from datasource");
     }
+  }
+
+  @Test
+  public void testRebalancePortfolioForOneStock() throws IOException {
+    portModel.createNewPortfolio("portfolio1");
+
+    portModel.addStockToPortfolio("portfolio1", "A", 40, LocalDate.of(1, 1, 2));
+
+    mockDataSource.setStockExistsAtDate(LocalDate.of(1, 1, 3));
+    mockDataSource.setClosingPrice(LocalDate.of(1, 1, 3), 30.0);
+
+    Map<String, Double> proportions = Map.of("A", 1.0);
+    portModel.rebalancePortfolio("portfolio1", LocalDate.of(1, 1, 3), proportions);
+
+    Map<String, Double> expectedComposition = Map.of("A", 40.0);
+    assertEquals(expectedComposition, portModel.getPortfolioContentsDecimal("portfolio1", LocalDate.of(1, 1, 3)));
+  }
+
+  @Test
+  public void testRebalancePortfolioForMultipleStocks() throws IOException {
+    portModel.createNewPortfolio("portfolio1");
+
+    portModel.addStockToPortfolio("portfolio1", "A", 10, LocalDate.of(1, 1, 2));
+    portModel.addStockToPortfolio("portfolio1", "AMZN", 20, LocalDate.of(1, 1, 3));
+    portModel.addStockToPortfolio("portfolio1", "GOOG", 30, LocalDate.of(1, 1, 4));
+
+    mockDataSource.setStockExistsAtDate(LocalDate.of(1, 1, 5));
+
+    Map<String, Double> prices = Map.of("A", 2.0, "AMZN", 4.0, "GOOG", 6.0);
+    mockDataSource.setClosingPrice(LocalDate.of(1, 1, 5), 2.0);
+
+    Map<String, Double> proportions = Map.of("A", 0.1, "AMZN", 0.4, "GOOG", 0.5);
+    portModel.rebalancePortfolio("portfolio1", LocalDate.of(1, 1, 5), proportions);
+
+    Map<String, Double> composition = portModel.getPortfolioContentsDecimal("portfolio1", LocalDate.of(1, 1, 5));
+
+    double totalValue =
+            composition.get("A") * prices.get("A") + composition.get("AMZN") * prices.get("AMZN") + composition.get("GOOG") * prices.get("GOOG");
+    assertEquals(288.0, totalValue, 0.01);
+
+    assertEquals(12.0, composition.get("A") * prices.get("A"), 0.01);
+    assertEquals(96.0, composition.get("AMZN") * prices.get("AMZN"), 0.01);
+    assertEquals(180.0, composition.get("GOOG") * prices.get("GOOG"), 0.01);
   }
 }

@@ -29,10 +29,9 @@ public class BasicPortfolioStockView extends AbstractBasicStockView implements P
    *
    * @param stocks the ticker of the stocks and the fractional quantity of the stocks.
    * @param name   the name of the portfolio.
-   * @param date
    */
   @Override
-  public void printManagePortfolioDouble(Map<String, Double> stocks, String name, LocalDate date) {
+  public void printManagePortfolioDouble(Map<String, Double> stocks, String name) {
     println(String.format("Here are all the stocks in the %s portfolio:\n", name));
     var list = stocks.keySet().stream().sorted()
             .map(it -> String.format("%-30s %-10.2f", it, stocks.get(it)))
@@ -141,14 +140,12 @@ public class BasicPortfolioStockView extends AbstractBasicStockView implements P
   public void printDistribution(Map<String, Double> stocks, String name, LocalDate date) {
     println(String.format("Here are the distribution of the stocks in the %s portfolio at %s:\n", name, date));
     var list = stocks.keySet().stream().sorted()
-            .map(it -> String.format("%-30s %-30.2f", it, stocks.get(it)))
+            .map(it -> String.format("%-30s %-30s", it, '$' + String.format("%.2f", stocks.get(it))))
             .collect(Collectors.toList());
     list.add(0, String.format("%-30s %s", "Stock", "Values"));
     printList(list);
     println("");
 
-    printOptionsPrompt();
-    printMenu(BasicPortfolioMenuOptions.managePortfolio());
   }
 
   /**
@@ -161,8 +158,8 @@ public class BasicPortfolioStockView extends AbstractBasicStockView implements P
     for (int i = 0; i < fileName.size(); i++) {
       println(String.format("%d. %s", i + 1, fileName.get(i)));
     }
+    println("");
     printOptionsPrompt();
-
   }
 
   /**
@@ -175,7 +172,7 @@ public class BasicPortfolioStockView extends AbstractBasicStockView implements P
   @Override
   public void printPortfolioPerformance(Map<LocalDate, Double> performance, LocalDate startDate, LocalDate endDate) {
     if (performance == null || performance.isEmpty()) {
-      System.out.println("No performance data available.");
+      println("No performance data available.");
       return;
     }
 
@@ -193,10 +190,12 @@ public class BasicPortfolioStockView extends AbstractBasicStockView implements P
 
     adjustedPerformance.forEach((date, value) -> {
       int numberOfAsterisks = (int) (value * scale);
-      System.out.println(dateFormatter.format(date) + ": " + "*".repeat(numberOfAsterisks));
+      println(dateFormatter.format(date) + ": " + "*".repeat(numberOfAsterisks));
     });
 
-    System.out.println("Scale: 1 * = " + max / MAX_ASTERISKS + " units");
+    println("Scale: * = " + Math.round(max / MAX_ASTERISKS));
+    println("");
+
   }
 
   @Override

@@ -3,13 +3,8 @@ package stock.controller.commands;
 import java.io.IOException;
 import java.time.DateTimeException;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.InputMismatchException;
-import java.util.List;
 import java.util.Scanner;
-
-import stock.model.PortfolioStockModel;
-import stock.view.PortfolioStockView;
 import stock.view.StockView;
 import stock.model.StockModel;
 
@@ -20,9 +15,6 @@ import stock.model.StockModel;
 public abstract class Command {
   protected StockView view;
   protected StockModel model;
-  protected PortfolioStockView portfolioView;
-
-  protected PortfolioStockModel portfolioModel;
   protected final Scanner scanner;
 
   /**
@@ -38,11 +30,6 @@ public abstract class Command {
     this.scanner = scanner;
   }
 
-  public Command(PortfolioStockView portfolioView, PortfolioStockModel portfolioModel, Scanner scanner) {
-    this.portfolioView = portfolioView;
-    this.portfolioModel = portfolioModel;
-    this.scanner = scanner;
-  }
 
   /**
    * Executes the command.

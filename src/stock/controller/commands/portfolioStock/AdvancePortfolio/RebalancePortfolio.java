@@ -6,32 +6,31 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
+import stock.controller.commands.portfolioStock.StockPortfolioCommand;
 import stock.model.PortfolioStockModel;
+import stock.model.StockModel;
 import stock.view.PortfolioStockView;
+import stock.view.StockView;
 
 public class RebalancePortfolio extends StockPortfolioCommand {
-  public RebalancePortfolio(PortfolioStockView portfolioView, PortfolioStockModel portfolioModel, Scanner scanner, String portfolio) {
-    super(portfolioView, portfolioModel, scanner, portfolio);
+  public RebalancePortfolio(StockView view, StockModel model, Scanner scanner, String portfolio) {
+    super(view, model, scanner, portfolio);
   }
 
   @Override
   public void apply() {
-    portfolioView.printMessage("Please enter the name of the portfolio "
-            + "that you would like to rebalance: ");
-    String name = getPortfolioNameFromUserWOSave();
+    PortfolioStockModel portfolioModel = (PortfolioStockModel) model;
+    PortfolioStockView portfolioView = (PortfolioStockView) view;
 
-    portfolioView.printMessage("Please enter the date "
-            + "that you would like to rebalance for: ");
 
+    portfolioView.printMessage("What date would you like to rebalance for? Please enter the date in the format MM/DD/YYYY: ");
     LocalDate date = getDateFromUser();
 
-    portfolioView.printMessage("Please enter the proportions "
-            + "that you would like to rebalance for: ");
+    Map<String, Double> proportions = getProportionsFromUser(date);
 
-    Map<String, Double> proportions = new HashMap<>();
     try {
-      portfolioModel.rebalancePortfolio(name, date, proportions);
-      portfolioView.printDistribution(proportions, name, date);
+      portfolioModel.rebalancePortfolio(portfolio, date, proportions);
+      portfolioView.printDistribution(portfolioModel.getPortfolioDistribution(portfolio, date), portfolio, date);
     } catch (IOException e) {
       portfolioView.printMessage("Error occurred while fetching data: " + e.getMessage());
     }

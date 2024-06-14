@@ -4,9 +4,11 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
-import stock.controller.StockController;
+import stock.controller.commands.CalculateAverage;
+import stock.controller.commands.CalculateCrossover;
+import stock.controller.commands.CalculateGain;
 import stock.controller.commands.Command;
-import stock.controller.commands.portfolioStock.ViewAdvancePortfolios;
+import stock.controller.commands.ViewPortfolios;
 import stock.model.PortfolioStockModel;
 import stock.view.BasicPortfolioMenuOptions;
 import stock.view.PortfolioStockView;
@@ -25,10 +27,10 @@ public class BasicPortfolioStockController implements StockController {
   }
 
   protected void initializePortfolioCommands() {
-    commands.put("1", new stock.controller.commands.portfolioStock.AdvancePortfolio.CalculateGain(portfolioView, portfolioModel, scanner));
-    commands.put("2", new stock.controller.commands.portfolioStock.AdvancePortfolio.CalculateAverage(portfolioView, portfolioModel, scanner));
-    commands.put("3", new stock.controller.commands.portfolioStock.AdvancePortfolio.CalculateCrossover(portfolioView, portfolioModel, scanner));
-    commands.put("4", new ViewAdvancePortfolios(portfolioView, portfolioModel, scanner));
+    commands.put("1", new CalculateGain(portfolioView, portfolioModel, scanner));
+    commands.put("2", new CalculateAverage(portfolioView, portfolioModel, scanner));
+    commands.put("3", new CalculateCrossover(portfolioView, portfolioModel, scanner));
+    commands.put("4", new ViewPortfolios(portfolioView, portfolioModel, scanner));
   }
 
   /**

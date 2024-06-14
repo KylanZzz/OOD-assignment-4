@@ -48,6 +48,7 @@ public class ViewPortfolios extends Command {
     commands.put("2", new DeletePortfolio(view, model, scanner));
     commands.put("3", new RenamePortfolio(view, model, scanner));
 
+
     int numOptions = BasicMenuOptions.viewPortfolios().size();
     for (int i = 0; i < model.getPortfolios().size(); i++) {
       commands.put(Integer.toString(i + numOptions + 1),

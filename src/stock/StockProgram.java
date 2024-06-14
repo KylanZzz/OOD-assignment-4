@@ -37,18 +37,17 @@ public class StockProgram {
    */
   public static void main(String[] args) {
 
-    StockView view = new BasicStockView(System.out);
-    PortfolioStockView portfolioView= new BasicPortfolioStockView(System.out);
+//    StockView view = new BasicPortfolioStockView(System.out) {
+//    };
+    StockView view= new BasicPortfolioStockView(System.out);
 //     StockModel model = new BasicStockModel(new CSVDataSource("res/CSVData"));
-//    StockModel model = new BasicStockModel(new AlphaVantageDataSource());
-//    StockController controller = new BasicStockController(portfolioView, model,
-//            new InputStreamReader(System.in));
-
-    PortfolioStockModel portfolioModel =
-            new PortfolioStockModelImpl(new AlphaVantageDataSource(), "res/portfolio");
-
-    StockController controller = new BasicPortfolioStockController(portfolioView, portfolioModel,
+//     StockModel model =
+//            new BasicStockModel(new AlphaVantageDataSource(), "res/portfolio");
+//
+    StockModel model = new PortfolioStockModelImpl(new AlphaVantageDataSource(), "port");
+    StockController controller = new BasicStockController(view, model,
             new InputStreamReader(System.in));
+
     controller.run();
   }
 }

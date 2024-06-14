@@ -16,4 +16,5 @@ public abstract class PortfolioCommand extends Command {
     super(view, model, scanner);
   }
 
+
 }

@@ -7,12 +7,8 @@ import stock.controller.commands.CalculateCrossover;
 import stock.controller.commands.CalculateGain;
 import stock.controller.commands.Command;
 import stock.controller.commands.ViewPortfolios;
-import stock.controller.commands.portfolioStock.ViewAdvancePortfolios;
-import stock.model.PortfolioStockModel;
 import stock.model.StockModel;
-import stock.view.BasicMenuOptions;
 import stock.view.BasicPortfolioMenuOptions;
-import stock.view.PortfolioStockView;
 import stock.view.StockView;
 import java.util.Map;
 
@@ -67,10 +63,7 @@ public class BasicStockController implements StockController {
       if (commands.containsKey(choice)) {
         commands.get(choice).apply();
       } else if (!choice.equals(BasicPortfolioMenuOptions.exitKeyword())) {
-
-        view.printMessage("Invalid input. Please enter a valid choice (a number "
-                + "from 1 through "
-                + BasicPortfolioMenuOptions.mainMenu().size() + ") or " + BasicPortfolioMenuOptions.exitKeyword()
+        view.printMessage("Invalid input. Please enter a valid choice or " + BasicPortfolioMenuOptions.exitKeyword()
                 + " to exit the application.");
       }
     }

@@ -15,4 +15,5 @@ public class BasicPortfolioMenuOptions extends BasicMenuOptions {
             "Performance chart for the portfolio",
             "Composition of the portfolio");
   }
+
 }

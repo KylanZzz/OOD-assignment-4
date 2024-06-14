@@ -20,10 +20,11 @@ public class DisplayPortfolio extends StockPortfolioCommand {
     PortfolioStockModel portfolioModel = (PortfolioStockModel) model;
     PortfolioStockView portfolioView = (PortfolioStockView) view;
 
-    portfolioView.printMessage("Enter the date that you add the stocks: ");
+    portfolioView.printMessage("What date would you like to know the composition of portfolio %s"
+            + "at? Please enter the date in the format MM/DD/YYYY ");
     LocalDate date = getDateFromUser();
 
-    portfolioView.printManagePortfolioDouble(portfolioModel.getPortfolioContentsDecimal(portfolio, date), portfolio, date);
+    portfolioView.printManagePortfolioDouble(portfolioModel.getPortfolioContentsDecimal(portfolio, date), portfolio);
 
   }
 }

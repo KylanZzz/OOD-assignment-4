@@ -63,10 +63,7 @@ public class BasicStockController implements StockController {
       if (commands.containsKey(choice)) {
         commands.get(choice).apply();
       } else if (!choice.equals(BasicPortfolioMenuOptions.exitKeyword())) {
-
-        view.printMessage("Invalid input. Please enter a valid choice (a number "
-                + "from 1 through "
-                + BasicPortfolioMenuOptions.mainMenu().size() + ") or " + BasicPortfolioMenuOptions.exitKeyword()
+        view.printMessage("Invalid input. Please enter a valid choice or " + BasicPortfolioMenuOptions.exitKeyword()
                 + " to exit the application.");
       }
     }

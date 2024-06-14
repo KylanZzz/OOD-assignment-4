@@ -36,7 +36,7 @@ public class PerformanceOverTime extends StockPortfolioCommand {
     try {
       portfolioView.printPortfolioPerformance(portfolioModel.getPortfolioPerformance(name, startDate, endDate), startDate, endDate);
       portfolioView.printMessage(String.format("Performance of portfolio %s from %s to %s", name, startDate, endDate));
-
+      portfolioView.printMessage("");
     } catch (IOException e) {
       throw new RuntimeException(e);
     }

@@ -31,11 +31,12 @@ public class DistributionWithDate extends StockPortfolioCommand {
     LocalDate date = getDateFromUser();
 
     try {
-      portfolioModel.getPortfolioDistribution(portfolio, date);
-      portfolioView.printDistribution(portfolioModel.getPortfolioContentsDecimal(portfolio, date), portfolio, date);
+      portfolioView.printDistribution(portfolioModel.getPortfolioDistribution(portfolio, date), portfolio, date);
 
     } catch (IOException e) {
       portfolioView.printMessage("Error occurred while fetching data: " + e.getMessage());
     }
   }
+
+
 }

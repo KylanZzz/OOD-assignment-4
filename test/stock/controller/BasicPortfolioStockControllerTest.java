@@ -192,7 +192,7 @@ public class BasicPortfolioStockControllerTest extends BasicStockControllerTest 
     }
 
     @Override
-    public void printManagePortfolioDouble(Map<String, Double> stocks, String name, LocalDate date) {
+    public void printManagePortfolioDouble(Map<String, Double> stocks, String name) {
       log.append("printManagePortfolioDouble").append(name);
       List<String> list = new ArrayList<>();
       for (var s : stocks.entrySet()) {

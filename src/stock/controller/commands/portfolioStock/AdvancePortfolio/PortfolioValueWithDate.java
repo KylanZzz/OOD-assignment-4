@@ -37,7 +37,7 @@ public class PortfolioValueWithDate extends StockPortfolioCommand {
 
     try {
       double value = portfolioModel.getPortfolioValue(portfolio, date);
-      portfolioView.printMessage(String.format("The value of the portfolio %s at %s is %.2f.",
+      portfolioView.printMessage(String.format("The value of the portfolio %s at %s is $%.2f.",
               portfolio, date, value));
     } catch (IOException e) {
       portfolioView.printMessage("Error occurred while fetching data: " + e.getMessage());

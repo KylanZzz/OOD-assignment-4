@@ -11,7 +11,7 @@ public interface PortfolioStockView extends StockView {
    * @param stocks the ticker of the stocks and the fractional quantity of the stocks.
    * @param name the name of the portfolio.
    */
-  void printManagePortfolioDouble(Map<String, Double> stocks, String name, LocalDate date);
+  void printManagePortfolioDouble(Map<String, Double> stocks, String name);
 
   /**
    * Display the list of commands that the user can ask for.

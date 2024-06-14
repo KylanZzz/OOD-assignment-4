@@ -26,6 +26,8 @@ public class SavePortfolio extends StockPortfolioCommand {
     try {
       portfolioModel.createNewPortfolioSave(portfolio);
       portfolioView.printMessage("You have successfully saved the portfolio!");
+      portfolioView.printMessage("");
+
     } catch (IOException e) {
       portfolioView.printMessage(String.format("Failed to save %s", portfolio));
     }

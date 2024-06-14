@@ -32,9 +32,19 @@ public class SellStockWithDate extends StockPortfolioCommand {
     PortfolioStockModel portfolioModel = (PortfolioStockModel) model;
     PortfolioStockView portfolioView = (PortfolioStockView) view;
 
+
+
+    portfolioView.printMessage("Please enter the date that you want to sell the stocks in the format MM/DD/YYYY: ");
+    LocalDate date = getDateFromUser();
+
+    if (portfolioModel.getPortfolioContentsDecimal(portfolio, date).isEmpty()) {
+      view.printMessage(String.format("You haven't buy any stock to this portfolio at %s", date));
+      return;
+    }
+
     portfolioView.printMessage(String.format("Please enter the ticker of the stock "
             + "that you would like to sell from portfolio %s:", portfolio));
-    String ticker = getTickerFromUser();
+    String ticker = getTickerInPortfolioFromUser(date);
 
     portfolioView.printMessage("Please enter the number of shares you would like to "
             + "sell (you cannot sell fractional number of stocks): ");
@@ -56,12 +66,10 @@ public class SellStockWithDate extends StockPortfolioCommand {
       portfolioView.printMessage("Cannot sell negative number of stocks.");
       return;
     }
-    portfolioView.printMessage("Please enter the date that you want to sell the stocks: ");
-    LocalDate date = getDateFromUser();
 
     try {
       portfolioModel.sellStockFromPortfolio(portfolio, ticker, shares, date);
-      portfolioView.printMessage(String.format("Successfully sold %d number of %s stocks at date %s in the %s "
+      portfolioView.printMessage(String.format("Successfully sold %d number of %s stocks from date %s in the %s "
               + "portfolio.", shares, ticker, date, portfolio));
     } catch (IOException e) {
       portfolioView.printMessage("Error occurred while fetching data: " + e.getMessage());

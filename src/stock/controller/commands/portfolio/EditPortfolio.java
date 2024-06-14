@@ -15,10 +15,6 @@ import stock.controller.commands.portfolioStock.AdvancePortfolio.PurchaseStockWi
 import stock.controller.commands.portfolioStock.AdvancePortfolio.RebalancePortfolio;
 import stock.controller.commands.portfolioStock.AdvancePortfolio.SavePortfolio;
 import stock.controller.commands.portfolioStock.AdvancePortfolio.SellStockWithDate;
-import stock.controller.commands.ps.PPurchaseStock;
-import stock.controller.commands.stock.AddStock;
-import stock.controller.commands.stock.PortfolioValue;
-import stock.controller.commands.stock.RemoveStock;
 import stock.controller.commands.stock.StockCommand;
 import stock.model.PortfolioStockModel;
 import stock.model.StockModel;

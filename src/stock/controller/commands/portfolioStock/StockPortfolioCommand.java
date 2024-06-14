@@ -1,6 +1,8 @@
 package stock.controller.commands.portfolioStock;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -8,7 +10,9 @@ import java.util.Scanner;
 
 import stock.controller.commands.Command;
 import stock.controller.commands.stock.StockCommand;
+import stock.model.PortfolioStockModel;
 import stock.model.StockModel;
+import stock.view.PortfolioStockView;
 import stock.view.StockView;
 
 public class StockPortfolioCommand extends StockCommand {
@@ -30,6 +34,7 @@ public class StockPortfolioCommand extends StockCommand {
     while (true) {
       String ticker = scanner.nextLine().toUpperCase();
       try {
+
         if (model.stockExists(ticker)) {
           return ticker;
         } else {
@@ -41,36 +46,70 @@ public class StockPortfolioCommand extends StockCommand {
     }
   }
 
+  protected final String getTickerInPortfolioFromUser(LocalDate date) {
+    PortfolioStockModel portfolioModel = (PortfolioStockModel) model;
+    PortfolioStockView portfolioView = (PortfolioStockView) view;
+
+    while (true) {
+      String ticker = scanner.nextLine().toUpperCase();
+      if (portfolioModel.getPortfolioContentsDecimal(portfolio, date).containsKey(ticker)) {
+        return ticker;
+      } else {
+        portfolioView.printMessage("Please enter the stock that you bought before that date: ");
+      }
+    }
+  }
+
   protected final String getPortfolioNameFromUserWOSave() {
     String name = scanner.nextLine().toUpperCase();
      return name;
   }
 
-  protected final Map<String, Double> getProportionsFromUser() {
+  protected final Map<String, Double> getProportionsFromUser(LocalDate date) {
+    PortfolioStockView portfolioView = (PortfolioStockView) view;
+    PortfolioStockModel portfolioModel = (PortfolioStockModel) model;
     Map<String, Double> proportions = new HashMap<>();
-    while (true) {
-      view.printMessage("Please enter the ticker: ");
-      String ticker = scanner.nextLine().toUpperCase();
+    double counter = 0;
+    int portfolioSize = portfolioModel.getPortfolioContentsDecimal(portfolio, date).size();
 
-      view.printMessage("Please enter the proportion for this stock (Could be fractional): ");
+    portfolioView.printManagePortfolioDouble(portfolioModel.getPortfolioContentsDecimal(portfolio, date), portfolio);
+    for (int i = 0; i < portfolioSize; i++) {
+
+      portfolioView.printMessage("Please enter the ticker you have not entered before: ");
+      String ticker = getTickerInPortfolioFromUser(date);
+
+      portfolioView.printMessage("Make sure that the proportion of all stocks can be add up to 1.00! ");
+      portfolioView.printMessage("Please enter the proportion for this stock in the decimal format: ");
       while (!scanner.hasNextDouble()) {
-        view.printMessage("Invalid input. Please enter a numeric value for the proportion.");
+        portfolioView.printMessage("Invalid input. Please enter a numeric value for the proportion.");
         scanner.next();
       }
+
       double weight = scanner.nextDouble();
       scanner.nextLine();
 
-      proportions.put(ticker, weight);
-
-      view.printMessage("Please enter 'OK' when you finish or 'EDIT' to keep editing: ");
-      String input = scanner.nextLine().toUpperCase().trim();
-
-      if (input.equals("OK")) {
-        return proportions;
-      } else if (!input.equals("EDIT")) {
-        view.printMessage("Unrecognized command. Please enter 'OK' to finish or 'EDIT' to continue editing.");
+      while (weight > 1.0 || counter > 1.0) {
+        portfolioView.printMessage("Invalid input. Please enter a value that will not make over 1.00: ");
+        weight = scanner.nextDouble();
+        scanner.nextLine();
       }
+
+      counter += weight;
+
+      if (i == portfolioSize - 1) {
+        while(counter != 1.00) {
+          counter -= weight;
+          portfolioView.printMessage("The proportion of the last stock did not add up to 1.00, "
+                  + "pleas enter the proportion for the last ticker again: ");
+          weight = scanner.nextDouble();
+          scanner.nextLine();
+          counter += weight;
+        }
+      }
+
+      proportions.put(ticker, weight);
     }
+    return proportions;
   }
 
   protected final String getPortfolioNameFromUser() {
@@ -83,14 +122,22 @@ public class StockPortfolioCommand extends StockCommand {
   }
 
   protected final String getPortfolioFileSaveName() {
-//    portfolioView.printMessage("please enter the option by the number: ");
-    int option = scanner.nextInt();
-//    String name = scanner.nextLine().toUpperCase();
-    List<String> PortfolioList = model.getPortfolios();
-      return PortfolioList.get(option - 1);
+    PortfolioStockView portfolioView = (PortfolioStockView) view;
+    PortfolioStockModel portfolioModel = (PortfolioStockModel) model;
+
+    int option = -1;
+    List<String> PortfolioList = new ArrayList<>();
+    try {
+      PortfolioList = portfolioModel.getPortfolioSaves(portfolio);
+      option = getPositiveFromUser(PortfolioList.size());
+    } catch (IOException e) {
+      portfolioView.printMessage("Error occurred while fetching data: " + e.getMessage());
+      ;
+    }
+    return PortfolioList.get(option - 1);
   }
 
-  protected final String getFileSaves() {
+  protected final String getFileSavesName() {
     view.printMessage("Please select the file in this portfolio: ");
     String name = scanner.nextLine().toUpperCase();
     return name;

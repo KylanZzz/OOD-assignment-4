@@ -62,12 +62,13 @@ public class PurchaseStockWithDate extends StockPortfolioCommand {
       return;
     }
 
-    portfolioView.printMessage("Please enter the starting date (inclusive) in the format MM/DD/YYYY: ");
+    portfolioView.printMessage("Please enter the date in the format MM/DD/YYYY: ");
     LocalDate date = getDateFromUser();
     try {
       portfolioModel.addStockToPortfolio(portfolio, ticker, shares, date);
-      portfolioView.printMessage(String.format("Successfully purchased %d number of %s stocks at date %s in the %s "
+      portfolioView.printMessage(String.format("Successfully purchased %d shares of %s stocks at date %s in the %s "
               + "portfolio.", shares, ticker, date, portfolio));
+      portfolioView.printMessage("");
     } catch (IOException e) {
       portfolioView.printMessage("Error occurred while fetching data: " + e.getMessage());
     }

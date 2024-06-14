@@ -24,15 +24,21 @@ public class LoadPortfolio extends StockPortfolioCommand {
     PortfolioStockView portfolioView = (PortfolioStockView) view;
 
     try {
+      if (portfolioModel.getPortfolioSaves(portfolio).isEmpty()) {
+        return;
+      }
       portfolioView.printFileSaveName(portfolioModel.getPortfolioSaves(portfolio));
 
     } catch (IOException e) {
       portfolioView.printMessage("Error occurred while fetching data: " + e.getMessage());
     }
+
      String fileSaveName = getPortfolioFileSaveName();
     try {
       portfolioModel.loadPortfolioSave(portfolio, fileSaveName);
       portfolioView.printMessage("Successfully load the saved file!");
+      portfolioView.printMessage("");
+
     } catch (IOException e) {
       portfolioView.printMessage("Error occurred while fetching data: " + e.getMessage());
     }

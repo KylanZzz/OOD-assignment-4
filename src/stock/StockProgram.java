@@ -1,13 +1,17 @@
 package stock;
 
 import java.io.InputStreamReader;
+
+import stock.controller.BasicStockController;
 import stock.controller.PortfolioStockController;
 import stock.controller.StockController;
 import stock.model.AlphaVantageDataSource;
 import stock.model.PortfolioStockModel;
 import stock.model.PortfolioStockModelImpl;
+import stock.model.StockModel;
 import stock.view.BasicPortfolioStockView;
 import stock.view.PortfolioStockView;
+import stock.view.StockView;
 
 /**
  * The {@code StockProgram} class serves as the entry point for the stock application.
@@ -39,11 +43,9 @@ public class StockProgram {
     //            new InputStreamReader(System.in));
     //
     //     StockModel model = new BasicStockModel(new CSVDataSource("res/CSVData"));
-    PortfolioStockModel model =
-            new PortfolioStockModelImpl(new AlphaVantageDataSource(), "res/portfolio");
-    PortfolioStockView view = new BasicPortfolioStockView(System.out);
-
-    StockController controller = new PortfolioStockController(view, model,
+    StockView view= new BasicPortfolioStockView(System.out);
+    StockModel model = new PortfolioStockModelImpl(new AlphaVantageDataSource(), "res/portfolio");
+    StockController controller = new BasicStockController(view, model,
             new InputStreamReader(System.in));
 
     controller.run();

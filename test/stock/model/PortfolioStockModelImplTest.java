@@ -186,15 +186,14 @@ public class PortfolioStockModelImplTest extends BasicStockModelTest {
   public void testGetPortfolioDistributionIgnoresFutureTransactions() throws IOException {
     portModel.createNewPortfolio("futureTransactionsPortfolio");
 
-    portModel.addStockToPortfolio("futureTransactionsPortfolio", "A", 10, LocalDate.of(2023, 1, 1));
-    portModel.addStockToPortfolio("futureTransactionsPortfolio", "GOOG", 20, LocalDate.of(2023, 1, 2));
-    portModel.addStockToPortfolio("futureTransactionsPortfolio", "AMZN", 30, LocalDate.of(2023, 1, 4));
+    portModel.addStockToPortfolio("futureTransactionsPortfolio", "A", 10, LocalDate.of(2024,5,4));
+    portModel.addStockToPortfolio("futureTransactionsPortfolio", "GOOG", 20, LocalDate.of(2024,5, 6));
+    portModel.addStockToPortfolio("futureTransactionsPortfolio", "AMZN", 30, LocalDate.of(2024,5,8));
 
-    mockDataSource.setStockExistsAtDate(LocalDate.of(2023, 1, 3));
-    mockDataSource.setStockExistsAtDate(LocalDate.of(2023, 1, 3));
-    mockDataSource.setClosingPrice(LocalDate.of(2023, 1, 3), 2500.0); // GOOG
+    mockDataSource.setStockExistsAtDate(LocalDate.of(2024,5,7));
+    mockDataSource.setClosingPrice(LocalDate.of(2024,5,7), 2500.0); // GOOG
 
-    Map<String, Double> distribution = portModel.getPortfolioDistribution("futureTransactionsPortfolio", LocalDate.of(2023, 1, 3));
+    Map<String, Double> distribution = portModel.getPortfolioDistribution("futureTransactionsPortfolio", LocalDate.of(2024,5,7));
 
     Map<String, Double> expectedDistribution = new HashMap<>();
     expectedDistribution.put("A", 10 * 2500.0);
@@ -246,12 +245,14 @@ public class PortfolioStockModelImplTest extends BasicStockModelTest {
   @Test
   public void testGetPortfolioDistribution() throws IOException {
     portModel.createNewPortfolio("testPortfolio");
-    portModel.addStockToPortfolio("testPortfolio", "A", 10, LocalDate.of(2023, 1, 1));
-    portModel.addStockToPortfolio("testPortfolio", "AMZN", 20, LocalDate.of(2023, 1, 2));
+    portModel.addStockToPortfolio("testPortfolio", "A", 10, LocalDate.of(2023, 5, 4));
+    portModel.addStockToPortfolio("testPortfolio", "AMZN", 20, LocalDate.of(2023, 5, 6));
 
-    mockDataSource.setClosingPrice(LocalDate.of(2023, 1, 2), 2800.0); // GOOG
+    mockDataSource.setStockExistsAtDate(LocalDate.of(2024, 5, 4));
+    mockDataSource.setClosingPrice(LocalDate.of(2024, 5, 4), 2800.0); // GOOG
 
-    Map<String, Double> distribution = portModel.getPortfolioDistribution("testPortfolio", LocalDate.of(2023, 1, 2));
+    Map<String, Double> distribution = portModel.getPortfolioDistribution("testPortfolio",
+            LocalDate.of(2024, 5, 6));
 
     Map<String, Double> expectedDistribution = Map.of(
             "A",  10 * 2800.0,

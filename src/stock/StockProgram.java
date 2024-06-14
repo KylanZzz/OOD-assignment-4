@@ -44,7 +44,7 @@ public class StockProgram {
 //     StockModel model =
 //            new BasicStockModel(new AlphaVantageDataSource(), "res/portfolio");
 //
-    StockModel model = new PortfolioStockModelImpl(new AlphaVantageDataSource(), "port");
+    StockModel model = new PortfolioStockModelImpl(new AlphaVantageDataSource(), "res/portfolio");
     StockController controller = new BasicStockController(view, model,
             new InputStreamReader(System.in));
 

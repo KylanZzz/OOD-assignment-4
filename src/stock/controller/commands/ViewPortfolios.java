@@ -73,8 +73,7 @@ public class ViewPortfolios extends Command {
       if (commands.containsKey(choice)) {
         commands.get(choice).apply();
       } else if (!choice.equals(BasicMenuOptions.exitKeyword())) {
-        view.printMessage("Invalid input. Please enter a valid choice (a number from 1 through "
-                + BasicMenuOptions.viewPortfolios().size() + ") or " +
+        view.printMessage("Invalid input. Please enter a valid choice or " +
                 BasicMenuOptions.exitKeyword() + " to go back.");
       }
     }

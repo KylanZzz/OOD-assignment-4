@@ -18,11 +18,10 @@ public interface StockModel {
    * Get the gain/loss of a stock.
    *
    * @param startDate the start date for calculating the gain/loss.
-   * @param endDate the end date for calculating the cost.
-   * @param ticker the ticker of the Stock.
-   * @return the amount of the cost that been gain/lost in x-day (positive for a gain and
-   *         negative for a loss)
-   *
+   * @param endDate   the end date for calculating the cost.
+   * @param ticker    the ticker of the Stock.
+   * @return          the amount of the cost that been gain/lost in x-day (positive for a gain and
+   *                  negative for a loss)
    * @throws IOException if an I/O error occurs during data fetching.
    */
   double getGainOverTime(LocalDate startDate, LocalDate endDate, String ticker) throws IOException;
@@ -33,22 +32,20 @@ public interface StockModel {
    * @param endDate the end date for calculating the moving average. This is the date up to which
    *                the average is calculated, and the calculation will count the last x days
    *                before this date (including the end date itself).
-   * @param days the number of days to calculate the average.
-   * @param ticker the ticker of the Stock.
+   * @param days    the number of days to calculate the average.
+   * @param ticker  the ticker of the Stock.
    * @return the x-day moving average.
-   *
    * @throws IOException if an I/O error occurs during data fetching.
    */
   double getMovingDayAverage(LocalDate endDate, int days, String ticker) throws IOException;
 
   /**
    * Get the crossover of x-day of the stock.
-   * 
-   * @param endDate the end day of the crossover.
-   * @param days the amount of period to examine the crossover.
-   * @param ticker the ticker of the stock.
-   * @return which days are x-day crossovers
    *
+   * @param endDate the end day of the crossover.
+   * @param days    the amount of period to examine the crossover.
+   * @param ticker  the ticker of the stock.
+   * @return which days are x-day crossovers
    * @throws IOException if an I/O error occurs during data fetching.
    */
   List<LocalDate> getCrossover(LocalDate endDate, int days, String ticker) throws IOException;
@@ -79,8 +76,8 @@ public interface StockModel {
    * Get the stocks and the corresponding shares in a portfolio.
    *
    * @param name the name of the portfolio.
-   * @return a map where the keys are the tickers of all the stocks and values are the number of
-   *     shares of that stock in the portfolio.
+   * @return      a map where the keys are the tickers of all the stocks and values are the number
+   *              of shares of that stock in the portfolio.
    */
   Map<String, Integer> getPortfolioContents(String name);
 
@@ -97,7 +94,6 @@ public interface StockModel {
    * @param name the name of the portfolio.
    * @param date the date to get value at.
    * @return the value of the portfolio.
-   *
    * @throws IOException if an I/O error occurs during data fetching.
    */
   double getPortfolioValue(String name, LocalDate date) throws IOException;
@@ -106,7 +102,7 @@ public interface StockModel {
    * Add a new stock to a certain portfolio. If the stock is already in the portfolio, then add the
    * specified number of shares of that stock to the portfolio.
    *
-   * @param name the name of the portfolio.
+   * @param name   the name of the portfolio.
    * @param shares the number of shares of this stock.
    * @param ticker the ticker of the stock.
    */
@@ -115,7 +111,7 @@ public interface StockModel {
   /**
    * Remove a stock from a certain portfolio.
    *
-   * @param name the name of the portfolio.
+   * @param name   the name of the portfolio.
    * @param ticker the ticker of the stock.
    */
   void removeStockFromPortfolio(String name, String ticker);

@@ -1,45 +1,74 @@
 package stock.model.portfolio;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.FilenameFilter;
 import java.io.IOException;
 import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-import java.util.TreeSet;
 
+/**
+ * The Portfolio class represents a collection of transactions involving various stocks.
+ * It provides functionality to buy and sell stocks, rebalance the portfolio, and retrieve
+ * the portfolio's composition, value, and value distribution at a specific date.
+ */
 public class Portfolio {
   private final List<Transaction> transactions;
   private String name;
   private final String FILE_EXTENSION = ".txt";
 
+  /**
+   * Constructs a Portfolio with the specified name.
+   *
+   * @param name the name of the portfolio
+   */
   public Portfolio(String name) {
     this.transactions = new ArrayList<>();
     this.name = name;
   }
 
+  /**
+   * Gets the name of the portfolio.
+   *
+   * @return the name of the portfolio
+   */
   public String getName() {
     return name;
   }
 
+  /**
+   * Renames the portfolio to the specified new name.
+   *
+   * @param newName the new name for the portfolio
+   */
   public void rename(String newName) {
     this.name = newName;
   }
 
+  /**
+   * Adds a buy transaction to the portfolio.
+   *
+   * @param ticker the stock ticker symbol
+   * @param date   the date of the buy transaction
+   * @param shares the number of shares to buy
+   */
   public void buyStock(String ticker, LocalDate date, double shares) {
     transactions.add(new BuyTransaction(date, shares, ticker));
   }
 
-  // throws illegal argument if there isn't enough stocks bought to sell that many
+  /**
+   * Adds a sell transaction to the portfolio.
+   *
+   * @param ticker the stock ticker symbol
+   * @param date   the date of the sell transaction
+   * @param shares the number of shares to sell
+   * @throws IllegalArgumentException if there are not enough shares to sell or if the stock was
+   *                                  not previously bought
+   */
   public void sellStock(String ticker, LocalDate date, double shares) throws
           IllegalArgumentException {
     var composition = getComposition(date);
@@ -57,8 +86,15 @@ public class Portfolio {
     transactions.add(new SellTransaction(date, shares, ticker));
   }
 
-  // hashmap of all the stocks in the portfolio with their closing prices at provided date
-  // throws illegalArgument if hashmap doesn't have all the stocks
+  /**
+   * Rebalances the portfolio on a given date with specified stock prices and proportions.
+   *
+   * @param date        the date of the rebalance transaction
+   * @param prices      a map of stock tickers to their prices
+   * @param proportions a map of stock tickers to their desired proportions in the portfolio
+   * @throws IllegalArgumentException if the proportions do not match the current stocks in the
+   *                                  portfolio
+   */
   public void rebalance(LocalDate date, Map<String, Double> prices,
                         Map<String, Double> proportions) throws IllegalArgumentException {
 
@@ -72,20 +108,34 @@ public class Portfolio {
             new HashMap<>(proportions)));
   }
 
-  // get the stocks and shares
+  /**
+   * Gets the composition of the portfolio on a specific date.
+   *
+   * @param date the date to get the composition at
+   * @return a map of stock tickers to the number of shares held
+   * @throws IllegalArgumentException if the date is invalid
+   */
   public Map<String, Double> getComposition(LocalDate date) throws IllegalArgumentException {
     Map<String, Double> res = new HashMap<>();
 
     for (var tran : transactions) {
-      if (tran.getDate().isAfter(date)) continue;
+      if (tran.getDate().isAfter(date)) {
+        continue;
+      }
       res = tran.apply(res);
     }
 
     return res;
   }
 
-  // hashmap of all the stocks in the portfolio with their closing prices at provided date
-  // throws illegalArgument if hashmap doesn't have all the stocks
+  /**
+   * Gets the value of the portfolio on a specific date.
+   *
+   * @param date   the date to get the value at
+   * @param prices a map of stock tickers to their prices on the specified date
+   * @return the total value of the portfolio
+   * @throws IllegalArgumentException if the prices map does not contain all the necessary stocks
+   */
   public Double getValue(LocalDate date, Map<String, Double> prices) throws
           IllegalArgumentException {
     var composition = getComposition(date);
@@ -102,8 +152,14 @@ public class Portfolio {
     return res;
   }
 
-  // get value distribution (shares and value)
-  // throws illegalArgument if hashmap doesn't have all the stocks
+  /**
+   * Gets the value distribution of the portfolio on a specific date.
+   *
+   * @param date   the date to get the value distribution at
+   * @param prices a map of stock tickers to their prices on the specified date
+   * @return a map of stock tickers to their value in the portfolio
+   * @throws IllegalArgumentException if the prices map does not contain all the necessary stocks
+   */
   public Map<String, Double> getDistribution(LocalDate date, Map<String, Double> prices) throws
           IllegalArgumentException {
     var composition = getComposition(date);
@@ -119,6 +175,13 @@ public class Portfolio {
     return res;
   }
 
+  /**
+   * Gets all save files for this portfolio in the specified folder.
+   *
+   * @param folderName the name of the folder to search for save files
+   * @return a list of save file names without the file extension
+   * @throws IOException if an error occurs while reading the folder
+   */
   public List<String> getAllSaves(String folderName) throws IOException {
     try (DirectoryStream<Path> stream = Files.newDirectoryStream(Path.of(folderName),
             name + "*")) {
@@ -136,6 +199,13 @@ public class Portfolio {
     }
   }
 
+  /**
+   * Creates a save file for this portfolio in the specified folder with the specified file name.
+   *
+   * @param folderName the name of the folder to save the file in
+   * @param fileName   the name of the save file
+   * @throws IOException if an error occurs while creating or writing to the file
+   */
   public void createSave(String folderName, String fileName) throws IOException {
     StringBuilder data = new StringBuilder();
 
@@ -155,6 +225,14 @@ public class Portfolio {
     }
   }
 
+  /**
+   * Loads a save file into this portfolio from the specified folder with the specified file name.
+   *
+   * @param folderName the name of the folder containing the save file
+   * @param fileName   the name of the save file
+   * @throws IOException if an error occurs while reading the file or if the file is incorrectly
+   *                     formatted
+   */
   public void loadSave(String folderName, String fileName) throws IOException {
     Path filePath = Paths.get(folderName, fileName + FILE_EXTENSION);
 

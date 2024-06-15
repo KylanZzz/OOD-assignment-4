@@ -20,30 +20,6 @@ public interface PortfolioStockModel extends StockModel {
             + "Please use addStockToPortfolio with date parameter.");
   }
 
-  @Override
-  default void removeStockFromPortfolio(String name, String ticker) {
-    throw new UnsupportedOperationException("This method is not supported. "
-            + "Please use sellStockFromPortfolio instead.");
-  }
-
-  @Override
-  default Map<String, Integer> getPortfolioContents(String name) {
-    throw new UnsupportedOperationException("This method is no longer supported. Please use "
-            + "getPortfolioContentsDecimal instead");
-  }
-
-  /**
-   * Get the stocks and the corresponding shares in a portfolio.
-   *
-   * @param name the name of the portfolio.
-   * @param date the date to get the state of the portfolio at.
-   * @return a map where the keys are the tickers of all the stocks and values are the number of
-   * shares of that stock in the portfolio.
-   * @throws IllegalArgumentException if the name of the ticker symbol does not exist.
-   */
-  Map<String, Double> getPortfolioContentsDecimal(String name, LocalDate date) throws
-          IllegalArgumentException;
-
   /**
    * Add the stock to the portfolio with date.
    *
@@ -59,6 +35,30 @@ public interface PortfolioStockModel extends StockModel {
    */
   void addStockToPortfolio(String name, String ticker, int shares, LocalDate date) throws
           IOException, IllegalArgumentException;
+
+  @Override
+  default void removeStockFromPortfolio(String name, String ticker) {
+    throw new UnsupportedOperationException(
+            "This method is not supported. " + "Please use sellStockFromPortfolio instead.");
+  }
+
+  @Override
+  default Map<String, Integer> getPortfolioContents(String name) {
+    throw new UnsupportedOperationException("This method is no longer supported. Please use "
+            + "getPortfolioContentsDecimal instead");
+  }
+
+  /**
+   * Get the stocks and the corresponding shares in a portfolio.
+   *
+   * @param name        the name of the portfolio.
+   * @param date        the date to get the state of the portfolio at.
+   * @return            a map where the keys are the tickers of all the stocks and values are the number of
+   *                    shares of that stock in the portfolio.
+   * @throws IllegalArgumentException if the name of the ticker symbol does not exist.
+   */
+  Map<String, Double> getPortfolioContentsDecimal(String name, LocalDate date) throws
+          IllegalArgumentException;
 
   /**
    * sell the stock from the portfolio using given date.
@@ -154,8 +154,7 @@ public interface PortfolioStockModel extends StockModel {
    *                                  portfolio didn't exist before the start date.
    */
   void rebalancePortfolio(String name, LocalDate date, Map<String, Double> proportions) throws
-          IOException,
-          IllegalArgumentException;
+          IOException, IllegalArgumentException;
 
   /**
    * Get the performance of a value, which is a list of the value of the portfolio across a
@@ -164,8 +163,8 @@ public interface PortfolioStockModel extends StockModel {
    * @param name      the name of the portfolio.
    * @param startDate the starting date of the stock.
    * @param endDate   the ending date of the stock.
-   * @return a map of the value of the portfolio at each date from startDate to endDate, with
-   * one-day intervals in between.
+   * @return                  a map of the value of the portfolio at each date from startDate
+   *                          to endDate, with one-day intervals in between.
    * @throws IOException              if a data fetching error occurs
    * @throws IllegalArgumentException if the start date is not before the end date or if the name
    *                                  of the ticker is invalid

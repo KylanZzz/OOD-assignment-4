@@ -7,13 +7,22 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 
-// REBALANCE:MM/DD/YYYY,AAPL=>400.0;AMZN=>100.0;NFLX=>250.0,AAPL=>0.3;AMZN=>0.4;NFLX=>0.3
+/**
+ * Represents a rebalance transaction within a portfolio. This transaction adjusts the portfolio
+ * to ensure that the specified stocks meet the given proportions at the specified prices.
+ */
 public class RebalanceTransaction extends Transaction {
   private final Map<String, Double> prices;
   private final Map<String, Double> proportions;
   private static final double epsilon = 0.01;
 
-  // stock, price at date
+  /**
+   * Constructs a RebalanceTransaction with the specified date, stock prices, and proportions.
+   *
+   * @param date        the date of the rebalance transaction
+   * @param prices      the map of stock tickers to their prices
+   * @param proportions the map of stock tickers to their proportions in the portfolio
+   */
   protected RebalanceTransaction(LocalDate date, Map<String, Double> prices,
                                  Map<String, Double> proportions) {
     super(date);
@@ -21,6 +30,13 @@ public class RebalanceTransaction extends Transaction {
     this.prices = prices;
   }
 
+  /**
+   * Constructs a RebalanceTransaction from a string representation of the transaction data.
+   *
+   * @param data the string representation of the rebalance transaction data
+   * @throws IOException if there is an error reading the data or if the data is formatted
+   * incorrectly
+   */
   protected RebalanceTransaction(String data) throws IOException {
     super(data);
     var split = data.split(",");
@@ -44,7 +60,14 @@ public class RebalanceTransaction extends Transaction {
     map.put(split[0], Double.parseDouble(split[1]));
   }
 
-  // stock, shares
+  /**
+   * Applies the rebalance transaction to the provided map of tickers to shares, adjusting the
+   * number of shares to meet the specified proportions.
+   *
+   * @param res the map of tickers to shares
+   * @return the updated map after applying the rebalance transaction
+   * @throws RuntimeException if the proportions do not add up to 100% (1.00)
+   */
   @Override
   Map<String, Double> apply(Map<String, Double> res) {
     // stock, value
@@ -76,6 +99,11 @@ public class RebalanceTransaction extends Transaction {
     return res;
   }
 
+  /**
+   * Saves the rebalance transaction as a single-line string.
+   *
+   * @return the string representation of the rebalance transaction
+   */
   @Override
   String save() {
     // append the name qualifier and date
@@ -90,7 +118,7 @@ public class RebalanceTransaction extends Transaction {
     out.append(",");
 
     // append prices map
-    for (var key: prices.keySet().stream().sorted().collect(Collectors.toList())) {
+    for (var key : prices.keySet().stream().sorted().collect(Collectors.toList())) {
       out.append(key).append("=>").append(prices.get(key)).append(";");
     }
     // remove last element separator
@@ -99,7 +127,7 @@ public class RebalanceTransaction extends Transaction {
     out.append(",");
 
     // append cost map
-    for (var key: proportions.keySet().stream().sorted().collect(Collectors.toList())) {
+    for (var key : proportions.keySet().stream().sorted().collect(Collectors.toList())) {
       out.append(key).append("=>").append(proportions.get(key)).append(";");
     }
     // remove last element separator

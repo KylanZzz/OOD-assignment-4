@@ -1,9 +1,6 @@
 package stock.model;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -11,18 +8,26 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import stock.model.portfolio.Portfolio;
 
+/**
+ * A simple implementation of the PortfolioStockModel. It takes in a datasource, which is the stream
+ * where the model will take in data. This can be an API, CSV file, etc. It also takes in a
+ * folder path where all portfolio saves will be stored.
+ */
 public class PortfolioStockModelImpl implements PortfolioStockModel {
 
   private final DataSource dataSource;
   private final StockModel simpleModel;
   private final List<Portfolio> portfolios;
-  // "res/portfolio"
   private final String portfoliosDirectory;
 
+  /**
+   * Constructs a new PortfolioStockModel.
+   * @param dataSource          the datastream that the stock data comes from.
+   * @param portfoliosDirectory the directory path that portfolio saves will be saved to.
+   */
   public PortfolioStockModelImpl(DataSource dataSource, String portfoliosDirectory) {
     this.dataSource = dataSource;
     simpleModel = new BasicStockModel(dataSource);
@@ -100,8 +105,10 @@ public class PortfolioStockModelImpl implements PortfolioStockModel {
     var prices = new HashMap<String, Double>();
     for (var key : port.getComposition(date).keySet()) {
       var dt = date;
-      while (!dataSource.stockExistsAtDate(dt, key) && !dt.equals(LocalDate.of(1990,1,
-              1))) dt = dt.minusDays(1);
+      while (!dataSource.stockExistsAtDate(dt, key) && !dt.equals(LocalDate.of(1990, 1,
+              1))) {
+        dt = dt.minusDays(1);
+      }
       prices.put(key, dataSource.getClosingPrice(dt, key));
     }
 
@@ -121,8 +128,10 @@ public class PortfolioStockModelImpl implements PortfolioStockModel {
     var prices = new HashMap<String, Double>();
     for (var key : port.getComposition(date).keySet()) {
       var dt = date;
-      while (!dataSource.stockExistsAtDate(dt, key) && !dt.equals(LocalDate.of(1990,1,
-              1))) dt = dt.minusDays(1);
+      while (!dataSource.stockExistsAtDate(dt, key) && !dt.equals(LocalDate.of(1990, 1,
+              1))) {
+        dt = dt.minusDays(1);
+      }
       prices.put(key, dataSource.getClosingPrice(dt, key));
     }
 
@@ -142,7 +151,6 @@ public class PortfolioStockModelImpl implements PortfolioStockModel {
 
   @Override
   public void createNewPortfolioSave(String name) throws IOException, IllegalArgumentException {
-//    Format: [name]_[YYYY]-[MM]-[DD]T[HH]-[mm]-[ss]
     String currTime = LocalDateTime.now().toString();
     currTime = currTime.split("\\.")[0];
     currTime = currTime.replace(':', '-');

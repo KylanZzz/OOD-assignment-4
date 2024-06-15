@@ -7,20 +7,26 @@ extensibility.
 
 --Model--
 At the highest level, a stock model performs tasks such as retrieving stock data, calculating
-gain/loss, moving averages, and crossovers, which is defined by the StockModel interface.
+gain/loss, moving averages, and crossovers, which is defined by the PortfolioStockModel interface.
 
-The BasicStockModel class implements the StockModel interface and provides simple implementations
-for these functionalities. It interacts with data sources to fetch stock data and perform
-calculations.
+The PortfolioStockModelImpl class implements the PortfolioStockModel interface and provides simple
+implementations for these functionalities. It interacts with data sources to fetch stock data and
+perform calculations.
 
-The BasicModelModel constructor takes in a DataSource, which is our representation of a data stream
-for stock data. Currently, there are two data sources implemented:
+The PortfolioStockModelImpl constructor takes in a DataSource (and a filepath to store portfolio
+saves), which is our representation of a data streamfor stock data. Currently, there are two data
+sources implemented:
 - AlphaVantageDataSource: This implementation uses the AlphaVantage API to retrieve real-time and
 historical stock data. It requires an API key for access and retrieves data over the internet.
 - CSVDataSource: This implementation reads stock data from CSV files stored locally on the user's
 computer. The CSV files must be placed in the res/CSVData directory and named according to the
 stock ticker symbol (e.g., AAPL.csv for Apple Inc.). There is no example CSV data shown; the user
 must download and get this data on their own.
+
+The PortfolioStockModel is also in charge of managing all file portfolio operations. This includes
+creating new portfolios, adding stocks to them, performing calculations on them, and also creating/
+loading saves. This is done through an external Portfolio class, where composition is used instead
+of inheritance.
 
 --Controller--
 
@@ -65,7 +71,10 @@ Additionally, we also unit tested each data source we implemented, including the
 AlphaVantage API DataSource. These tests ensured that each data source correctly retrieved and
 processed stock data. For the CSVDataSource, we verified that it could correctly parse CSV files
 and return the correct information. For the AlphaVantage API Data Source, we checked that calls to
-the API worked properly, and correct errors were thrown in the case that the API did not work.
+the API worked properly, and correct errors were thrown in the case that the API did not work. The
+functions for portfolios such as adding/selling stock, rebalancing, saving, and loading were all
+tested through the portfolio test class. This isolates the functionality of a portfolio transactions
+which ensures encapsulation.
 
 The Controller was unit tested by mocking both the model and view simultaneously.
 MockModel simulates the behavior of the StockModel interface and logs method calls, which allows

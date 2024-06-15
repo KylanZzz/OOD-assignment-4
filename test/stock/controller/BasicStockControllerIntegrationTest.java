@@ -344,16 +344,20 @@ public class BasicStockControllerIntegrationTest {
     assertTrue(runTest(
             prints(mainMenu),
             inputs("0"),
-            prints("Invalid input. Please enter a valid choice or EXIT to exit the application."),
+            prints("Invalid input. Please enter a valid choice or EXIT to exit the "
+                    + "application."),
             prints(mainMenu),
             inputs("-1"),
-            prints("Invalid input. Please enter a valid choice or EXIT to exit the application."),
+            prints("Invalid input. Please enter a valid choice or EXIT to exit the "
+                    + "application."),
             prints(mainMenu),
             inputs("5"),
-            prints("Invalid input. Please enter a valid choice or EXIT to exit the application."),
+            prints("Invalid input. Please enter a valid choice or EXIT to exit the" +
+                    " application."),
             prints(mainMenu),
             inputs("6"),
-            prints("Invalid input. Please enter a valid choice or EXIT to exit the application."),
+            prints("Invalid input. Please enter a valid choice or EXIT to exit the " +
+                    "application."),
             prints(mainMenu),
             inputs("4"),
             prints(managePortfoliosMenu),
@@ -525,28 +529,32 @@ public class BasicStockControllerIntegrationTest {
             prints(portfolioNamePrompt),
             inputs("KYLAN'S PORTFOLIO"),
             prints(portfolioCreatedMessage + "KYLAN'S PORTFOLIO."),
-            prints(managePortfoliosMenu + "\n4. View/Edit: S&P500\n5. View/Edit: NASDAQ\n6. View/Edit: KYLAN'S PORTFOLIO"),
+            prints(managePortfoliosMenu + "\n4. View/Edit: S&P500\n5. View/Edit: NASDAQ\n6. "
+                    + "View/Edit: KYLAN'S PORTFOLIO"),
 
             // Attempt to create a duplicate portfolio "NASDAQ"
             inputs("1"),
             prints(portfolioNamePrompt),
             inputs("NASDAQ"),
             prints(duplicatePortfolioMessage),
-            prints(managePortfoliosMenu + "\n4. View/Edit: S&P500\n5. View/Edit: NASDAQ\n6. View/Edit: KYLAN'S PORTFOLIO"),
+            prints(managePortfoliosMenu + "\n4. View/Edit: S&P500\n5. View/Edit: NASDAQ\n6."
+                    + " View/Edit: KYLAN'S PORTFOLIO"),
 
             // Attempt to create a duplicate portfolio "S&P500"
             inputs("1"),
             prints(portfolioNamePrompt),
             inputs("S&P500"),
             prints(duplicatePortfolioMessage),
-            prints(managePortfoliosMenu + "\n4. View/Edit: S&P500\n5. View/Edit: NASDAQ\n6. View/Edit: KYLAN'S PORTFOLIO"),
+            prints(managePortfoliosMenu + "\n4. View/Edit: S&P500\n5. View/Edit: NASDAQ\n6. "
+                    + "View/Edit: KYLAN'S PORTFOLIO"),
 
             // Deleting NASDAQ portfolio
             inputs("2"),
             prints("What portfolio would you like to delete?"),
             inputs("NASDAQ"),
             prints(portfolioDeletedMessage + "NASDAQ."),
-            prints(managePortfoliosMenu + "\n4. View/Edit: S&P500\n5. View/Edit: KYLAN'S PORTFOLIO"),
+            prints(managePortfoliosMenu + "\n4. View/Edit: S&P500\n5. View/Edit: KYLAN'S "
+                    + "PORTFOLIO"),
 
             // Deleting KYLAN'S PORTFOLIO
             inputs("2"),
@@ -601,7 +609,8 @@ public class BasicStockControllerIntegrationTest {
 
             // Access the newly created portfolio
             inputs("4"),
-            prints("Please type the number that corresponds with the choice you would like to pick, or type EXIT to return/exit"),
+            prints("Please type the number that corresponds with the choice you would like to "
+                    + "pick, or type EXIT to return/exit"),
             prints("1. Buy stock to portfolio\n"
                     + "2. Sell stock from portfolio\n"
                     +"3. Calculate portfolio value on specific date\n"

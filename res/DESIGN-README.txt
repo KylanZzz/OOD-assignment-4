@@ -23,30 +23,38 @@ stock ticker symbol (e.g., AAPL.csv for Apple Inc.). There is no example CSV dat
 must download and get this data on their own.
 
 --Controller--
-The controller performs two main tasks: Handling user input and orchestrating information and logic
-flow between the model and view.
 
-The BasicStockController implements the StockController interface and has a single function: run().
-This is the starting point of the program and must be called in order for the program to begin.
-It also utilizes the Command design interface, which defines certain Commands that the controller
-calls upon receiving user input.
+The controller performs two main tasks: handling user input and orchestrating the flow of
+information and logic between the model and view.
 
-The Command class is an abstract class that defines the apply() method, which is implemented by
-various concrete command classes. Each concrete command class (e.g., CalculateGain,
-CalculateAverage, CalculateCrossover, ViewPortfolios) handles a specific user request. The reason
-an abstract class was used instead of an interface here is because there are several helper methods
-that all commands are able to use (mainly for parsing input) that are placed in the parent Command
-class.
+The BasicStockController and PortfolioStockController both implement the StockController interface
+and have a single function: run(). In addition, PortfolioStockController extends
+BasicStockController, which allows the program to retain the original functionalities.
+This setup is the starting point of the program and must be called for the program to begin.
+It also utilizes the Command design pattern, which defines specific commands that the controller
+invokes upon receiving user input. The Command class is an abstract class that defines the apply()
+method, which is implemented by various concrete command classes. Each concrete command class (e.g.,
+CalculateGain, CalculateAverage, CalculateCrossover, ViewPortfolios) handles a specific user
+request. An abstract class was used instead of an interface because there are several helper methods
+ that all commands can use (mainly for parsing input) that are placed in the parent Command class.
+Building on the original structure we had defined, StockPortfolioCommand adds new functionalities as
+ the program calls on PortfolioStockController. For all new features, they all extend
+ StockPortfolioCommand. As StockPortfolioCommand plays a similar role to PortfolioCommand,
+ they both extend the abstract Command class.
 
-There are several commands that also act as "menus", which keep looping until a specific user input
-is detected ("EXIT" in this case).
+Several commands also act as "menus," which continue looping until a specific user input is
+detected ("EXIT" in this case).
+
 
 --View--
-The view is in charge of displaying data to the user.
+The view is responsible for displaying data to the user.
 
-The BasicStockView implements the StockView interface and displays this data by printing text to
-the terminal. It simply receives input from the controller and then displays that information,
- formatted in a visually appealing way.
+The BasicStockView implements the StockView interface and displays data by printing text to
+the terminal. It simply receives input from the controller and then displays that information in a
+visually appealing format.
+
+To introduce new features to the user, BasicPortfolioView extends BasicStockView and implements the
+ PortfolioStockView to present new information to users as BasicStockView did.
 
 --Testing--
 The Model was tested using a combination of unit tests and mock data sources. We implemented a

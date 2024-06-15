@@ -3,8 +3,6 @@ package stock.controller.commands.stock;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Scanner;
-
-import stock.model.PortfolioStockModel;
 import stock.model.StockModel;
 import stock.view.StockView;
 

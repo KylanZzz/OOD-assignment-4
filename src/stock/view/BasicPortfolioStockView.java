@@ -10,14 +10,27 @@ import java.util.Map;
 import java.util.OptionalDouble;
 import java.util.stream.Collectors;
 
+/**
+ * Provides a basic text-based user interface for displaying stock-related information,
+ * including menus, portfolios, and stock metrics. This class interacts with users through
+ * an Appendable object which allows for flexible output destinations.
+ */
 public class BasicPortfolioStockView extends AbstractBasicStockView implements PortfolioStockView {
   private List<LocalDate> dateList;
-  private static final DateTimeFormatter MONTH_YEAR_FORMATTER  = DateTimeFormatter.ofPattern("MMM yyyy");
-  private static final DateTimeFormatter FULL_DATE_FORMATTER = DateTimeFormatter.ofPattern("dd MMM yyyy");
+  private static final DateTimeFormatter MONTH_YEAR_FORMATTER
+          = DateTimeFormatter.ofPattern("MMM yyyy");
+  private static final DateTimeFormatter FULL_DATE_FORMATTER
+          = DateTimeFormatter.ofPattern("dd MMM yyyy");
   private static final int MAX_ASTERISKS = 50;
   private static final int MIN_LINES = 5;
   private static final int MAX_LINES = 30;
   private BasicStockView stockViewHelper;
+
+  /**
+   * Constructs a BasicStockView with a specified Appendable object to enable output.
+   *
+   * @param out The Appendable object to which all output will be directed.
+   */
   public BasicPortfolioStockView(Appendable out) {
     super(out);
     this.stockViewHelper = new BasicStockView(out);
@@ -138,9 +151,11 @@ public class BasicPortfolioStockView extends AbstractBasicStockView implements P
    */
   @Override
   public void printDistribution(Map<String, Double> stocks, String name, LocalDate date) {
-    println(String.format("Here are the distribution of the stocks in the %s portfolio at %s:\n", name, date));
+    println(String.format("Here are the distribution of the stocks in the %s "
+            + "portfolio at %s:\n", name, date));
     var list = stocks.keySet().stream().sorted()
-            .map(it -> String.format("%-30s %-30s", it, '$' + String.format("%.2f", stocks.get(it))))
+            .map(it -> String.format("%-30s %-30s", it, '$'
+                    + String.format("%.2f", stocks.get(it))))
             .collect(Collectors.toList());
     list.add(0, String.format("%-30s %s", "Stock", "Values"));
     printList(list);
@@ -170,7 +185,8 @@ public class BasicPortfolioStockView extends AbstractBasicStockView implements P
    * @param endDate the end date to calculate the performance of the portfolio.
    */
   @Override
-  public void printPortfolioPerformance(Map<LocalDate, Double> performance, LocalDate startDate, LocalDate endDate) {
+  public void printPortfolioPerformance(Map<LocalDate, Double> performance,
+                                        LocalDate startDate, LocalDate endDate) {
     if (performance == null || performance.isEmpty()) {
       println("No performance data available.");
       return;
@@ -178,12 +194,17 @@ public class BasicPortfolioStockView extends AbstractBasicStockView implements P
 
     long daysBetween = ChronoUnit.DAYS.between(startDate, endDate);
 
-    DateTimeFormatter dateFormatter = daysBetween <= 31 ? FULL_DATE_FORMATTER : MONTH_YEAR_FORMATTER;
+    DateTimeFormatter dateFormatter = daysBetween <= 31
+            ? FULL_DATE_FORMATTER : MONTH_YEAR_FORMATTER;
 
-    Map<LocalDate, Double> adjustedPerformance = adjustDataPoints(performance, startDate, endDate, daysBetween);
+    Map<LocalDate, Double> adjustedPerformance
+            = adjustDataPoints(performance, startDate, endDate, daysBetween);
 
-    OptionalDouble maxOptional = adjustedPerformance.values().stream().mapToDouble(Double::doubleValue).max();
-    if (!maxOptional.isPresent()) return;
+    OptionalDouble maxOptional
+            = adjustedPerformance.values().stream().mapToDouble(Double::doubleValue).max();
+    if (!maxOptional.isPresent()) {
+      return;
+    }
 
     double max = maxOptional.getAsDouble();
     double scale = max > 0 ? MAX_ASTERISKS / max : 1;
@@ -204,7 +225,10 @@ public class BasicPortfolioStockView extends AbstractBasicStockView implements P
     printMenu(BasicPortfolioMenuOptions.managePortfolio());
   }
 
-  private Map<LocalDate, Double> adjustDataPoints(Map<LocalDate, Double> performance, LocalDate startDate, LocalDate endDate, long daysBetween) {
+  private Map<LocalDate, Double> adjustDataPoints(Map<LocalDate, Double> performance,
+                                                  LocalDate startDate,
+                                                  LocalDate endDate,
+                                                  long daysBetween) {
     if (daysBetween < MIN_LINES) {
       return performance;
     }

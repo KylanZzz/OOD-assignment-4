@@ -4,6 +4,11 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Defines the contract for a user interface component in a stock market application.
+ * Implementations of this interface are responsible for;
+ * displaying various types of stock-related information to the user.
+ */
 public interface PortfolioStockView extends StockView {
   /**
    * Display the list of commands that the user can ask for.
@@ -35,8 +40,13 @@ public interface PortfolioStockView extends StockView {
    * @param startDate the start date to calculate the performance of the portfolio.
    * @param endDate the end date to calculate the performance of the portfolio.
    */
-   void printPortfolioPerformance(Map<LocalDate, Double> performance, LocalDate startDate, LocalDate endDate);
+  void printPortfolioPerformance(Map<LocalDate, Double> performance,
+                                  LocalDate startDate,
+                                  LocalDate endDate);
 
-   void printPortfolioOption();
+  /**
+   * Display the option of the portfolio to the user.
+   */
+  void printPortfolioOption();
 
 }

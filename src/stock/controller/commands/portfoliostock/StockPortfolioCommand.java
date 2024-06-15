@@ -1,4 +1,4 @@
-package stock.controller.commands.portfolioStock;
+package stock.controller.commands.portfoliostock;
 
 import java.io.IOException;
 import java.time.LocalDate;

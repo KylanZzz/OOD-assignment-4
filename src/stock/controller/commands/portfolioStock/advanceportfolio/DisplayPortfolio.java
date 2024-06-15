@@ -1,4 +1,4 @@
-package stock.controller.commands.portfolioStock.AdvancePortfolio;
+package stock.controller.commands.portfolioStock.advanceportfolio;
 
 import java.time.LocalDate;
 import java.util.Scanner;

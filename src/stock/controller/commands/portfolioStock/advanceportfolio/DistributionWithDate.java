@@ -1,6 +1,7 @@
-package stock.controller.commands.portfolioStock.AdvancePortfolio;
+package stock.controller.commands.portfolioStock.advanceportfolio;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.Scanner;
 import stock.controller.commands.portfolioStock.StockPortfolioCommand;
 import stock.model.PortfolioStockModel;
@@ -9,12 +10,13 @@ import stock.view.PortfolioStockView;
 import stock.view.StockView;
 
 /**
- * Command class responsible for loading a saved stock portfolio from a file.
+ * Command class responsible for displaying the distribution of a
+ * stock portfolio's value at a specified date.
  * It extends the StockPortfolioCommand which provides basic command structure.
- * This class handles user interaction to load the contents of
- * a previously saved portfolio from persistent storage.
+ * This class handles user input to fetch and display the value
+ * distribution of the portfolio on a given date.
  */
-public class LoadPortfolio extends StockPortfolioCommand {
+public class DistributionWithDate extends StockPortfolioCommand {
 
   /**
    * Constructs a DisplayPortfolio command object.
@@ -24,7 +26,7 @@ public class LoadPortfolio extends StockPortfolioCommand {
    * @param scanner  The scanner to read user input.
    * @param portfolio The name of the portfolio to display.
    */
-  public LoadPortfolio(StockView view, StockModel model, Scanner scanner, String portfolio) {
+  public DistributionWithDate(StockView view, StockModel model, Scanner scanner, String portfolio) {
     super(view, model, scanner, portfolio);
   }
 
@@ -36,24 +38,18 @@ public class LoadPortfolio extends StockPortfolioCommand {
     PortfolioStockModel portfolioModel = (PortfolioStockModel) model;
     PortfolioStockView portfolioView = (PortfolioStockView) view;
 
+    portfolioView.printMessage(String.format("What date would you like"
+            + " to know the value of portfolio %s "
+            + "at? Please enter the date in the format MM/DD/YYYY.", portfolio));
+    LocalDate date = getDateFromUser();
+
     try {
-      if (portfolioModel.getPortfolioSaves(portfolio).isEmpty()) {
-        return;
-      }
-      portfolioView.printFileSaveName(portfolioModel.getPortfolioSaves(portfolio));
-
-    } catch (IOException e) {
-      portfolioView.printMessage("Error occurred while fetching data: " + e.getMessage());
-    }
-
-    String fileSaveName = getPortfolioFileSaveName();
-    try {
-      portfolioModel.loadPortfolioSave(portfolio, fileSaveName);
-      portfolioView.printMessage("Successfully load the saved file!");
-      portfolioView.printMessage("");
-
+      portfolioView.printDistribution(portfolioModel
+              .getPortfolioDistribution(portfolio, date), portfolio, date);
     } catch (IOException e) {
       portfolioView.printMessage("Error occurred while fetching data: " + e.getMessage());
     }
   }
+
+
 }

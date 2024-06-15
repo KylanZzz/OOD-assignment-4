@@ -651,7 +651,5 @@ public class BasicStockControllerIntegrationTest {
             prints(mainMenu),
             inputs("EXIT")
     ));
-
   }
-
 }

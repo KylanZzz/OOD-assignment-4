@@ -3,6 +3,12 @@ package stock.controller;
 import stock.model.PortfolioStockModel;
 import stock.view.PortfolioStockView;
 
+/**
+ * A simple implementation of a stock controller that extends on BasicStocker. It allows the user to analyze
+ * stocks such as finding the x-day average, gain/loss over a period of time,
+ * as well as creating portfolios and analyzing their value through text-based
+ * input.
+ */
 public class PortfolioStockController extends BasicStockController {
   /**
    * Constructs a BasicStockController with the given view, model, and input

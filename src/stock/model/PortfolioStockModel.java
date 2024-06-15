@@ -5,7 +5,15 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * The PortfolioStockModel interface provides methods for managing stock portfolios and
+ * performing various financial calculations such as calculating gains, moving averages,
+ * and detecting crossovers.
+ * It also includes methods for portfolio management, such as creating,
+ * deleting, and renaming portfolios, as well as adding and removing stocks from portfolios.
+ */
 public interface PortfolioStockModel extends StockModel {
+
   @Override
   default void addStockToPortfolio(String name, String ticker, int shares) {
     throw new UnsupportedOperationException("This method is not supported. "
@@ -37,6 +45,8 @@ public interface PortfolioStockModel extends StockModel {
           IllegalArgumentException;
 
   /**
+   * Add the stock to the portfolio with date.
+   *
    * @param name   the name of the portfolio.
    * @param ticker the name of the stock.
    * @param shares the quantity of the stock.
@@ -51,6 +61,8 @@ public interface PortfolioStockModel extends StockModel {
           IOException, IllegalArgumentException;
 
   /**
+   * sell the stock from the portfolio using given date.
+   *
    * @param name   the name of the portfolio.
    * @param ticker the name of the stock.
    * @param shares the quantity of the stock.
@@ -63,24 +75,26 @@ public interface PortfolioStockModel extends StockModel {
   void sellStockFromPortfolio(String name, String ticker, int shares, LocalDate date) throws
           IOException, IllegalArgumentException;
 
-//
-//  /**
-//   * Get the value of a portfolio on a specific date. This should now return 0 if the requested
-//   * date was before the date of the first purchase in the portfolio.
-//   *
-//   * @param name the name of the portfolio.
-//   * @param date the date to get value at.
-//   * @return the value of the portfolio.
-//   * @throws IOException              if an I/O error occurs during data fetching.
-//   * @throws IllegalArgumentException if the name of the portfolio doesn't exist.
-//   */
-//  @Override
-//  double getPortfolioValue(String name, LocalDate date) throws IOException,
-//          IllegalArgumentException;
+  //
+  //  /**
+  //   * Get the value of a portfolio on a specific date. This should now return 0 if the requested
+  //   * date was before the date of the first purchase in the portfolio.
+  //   *
+  //   * @param name the name of the portfolio.
+  //   * @param date the date to get value at.
+  //   * @return the value of the portfolio.
+  //   * @throws IOException              if an I/O error occurs during data fetching.
+  //   * @throws IllegalArgumentException if the name of the portfolio doesn't exist.
+  //   */
+  //  @Override
+  //  double getPortfolioValue(String name, LocalDate date) throws IOException,
+  //          IllegalArgumentException;
 
   /**
-   * @param name
-   * @param date
+   * To get the distribution of certain portfolio by a date.
+   *
+   * @param name the name of the portfolio.
+   * @param date the date that the user want to fetch.
    * @return A map of the stocks in the portfolio to their respective value.
    * @throws IOException              if a data fetching error occurs.
    * @throws IllegalArgumentException if the name of the portfolio doesn't exist.
@@ -100,9 +114,7 @@ public interface PortfolioStockModel extends StockModel {
   List<String> getPortfolioSaves(String name) throws IllegalArgumentException, IOException;
 
   /**
-   * Load a previous save of a portfolio from disk. The save file should be in the
-   * format:
-   * //TODO: format of save file
+   * Load a previous save of a portfolio from disk.
    *
    * @param name         the name of the portfolio.
    * @param fileSaveName the name of the portfolio save file that you would like to load.

@@ -7,7 +7,12 @@ import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+
+
+/**
+ * A class that helps to test the functionalities of SellTransaction class.
+ */
 
 public class SellTransactionTest {
   private static final double epsilon = 0.01;

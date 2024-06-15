@@ -12,7 +12,6 @@ import java.util.List;
  * an Appendable object which allows for flexible output destinations.
  */
 public class BasicStockView extends AbstractBasicStockView implements StockView {
-  private List<LocalDate> dateList;
 
   /**
    * Constructs a BasicStockView with a specified Appendable object to enable output.
@@ -21,7 +20,7 @@ public class BasicStockView extends AbstractBasicStockView implements StockView 
    */
   public BasicStockView(Appendable out) {
     super(out);
-    this.dateList = new ArrayList<>();
+    List<LocalDate> dateList = new ArrayList<>();
   }
 
 

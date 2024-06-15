@@ -14,8 +14,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
+
+/**
+ * A class that helps to test the functionalities of Portfolio class.
+ */
 public class PortfolioTest {
 
   private Path testDir;

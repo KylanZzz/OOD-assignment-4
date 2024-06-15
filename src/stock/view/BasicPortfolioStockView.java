@@ -4,7 +4,6 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.OptionalDouble;
@@ -16,7 +15,6 @@ import java.util.stream.Collectors;
  * an Appendable object which allows for flexible output destinations.
  */
 public class BasicPortfolioStockView extends AbstractBasicStockView implements PortfolioStockView {
-  private List<LocalDate> dateList;
   private static final DateTimeFormatter MONTH_YEAR_FORMATTER
           = DateTimeFormatter.ofPattern("MMM yyyy");
   private static final DateTimeFormatter FULL_DATE_FORMATTER
@@ -34,7 +32,7 @@ public class BasicPortfolioStockView extends AbstractBasicStockView implements P
   public BasicPortfolioStockView(Appendable out) {
     super(out);
     this.stockViewHelper = new BasicStockView(out);
-    this.dateList = new ArrayList<>();
+    List<LocalDate> dateList = new ArrayList<>();
   }
 
   /**
@@ -147,7 +145,7 @@ public class BasicPortfolioStockView extends AbstractBasicStockView implements P
    *
    * @param stocks the ticker of the stocks and the fractional quantity of the stocks.
    * @param name   the name of the portfolio.
-   * @param date
+   * @param date   the date of the distribution.
    */
   @Override
   public void printDistribution(Map<String, Double> stocks, String name, LocalDate date) {

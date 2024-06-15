@@ -7,7 +7,7 @@ same directory as assignment-4.jar:
                         |--assignment-4.jar
                         |--res/
                             |--APIData/
-                            |--CSVData/
+                            |--portfolio/
                             |--stocksData/
                                 |--tickersList.txt
                             ...
@@ -15,63 +15,48 @@ same directory as assignment-4.jar:
 Note: This should be the default as soon as you unzipped the files, but if any of the files/folders
 are missing, please create the directories and .txt file with those EXACT names. Then, copy the
 contents of tickerList.txt from:
-
-https://github.com/KylanZzz/OOD-assignment-4/blob/main/res/stocksData/tickerList.txt
+    https://github.com/KylanZzz/OOD-assignment-4/blob/main/res/stocksData/tickerList.txt
 
 
 --Running the Program--
 
-This section contains instructions on running the Stocks Program, detailing examples of creating a
-portfolio with three different stocks and a second portfolio with two different stocks, as well as
-querying their values on a specific date.
+This section contains instructions on running the Stocks Program, detailing an example of how to
+create a portfolio, add three unique stocks to it at three distinct dates, then query the value of
+the portfolio at two separate dates.
 
 1. Run the program
     $java -jar assignment-4.jar
 2. Select manage portfolios
     $4
-3. Create the first portfolio
+3. Create the portfolio
     $1
     $S&P500
-4. Edit the first portfolio
+4. Edit the portfolio
     $4
-4. Add first stock to the first portfolio
-    $2
+5. Add first stock
+    $1
     $AAPL
-    $17
-5. Add second stock to the first portfolio
-    $2
+    $100
+    $04/20/2024
+6. Add second stock
+    $1
     $AMZN
-    $28
-6. Add third stock to the first portfolio
-    $2
-    $GOOG
-    $3
-7. Calculate the value of the first portfolio on 01/20/2023
-    $1
-    $01/20/2023
-8. Return to the portfolio manager
-    $EXIT
-9. Create a second portfolio
-    $1
-    $NASDAQ
-10. Edit the second portfolio
-    $4
-11. Add first stock to the second portfolio
-    $2
-    $NFLX
-    $50
-11. Add second stock to the second portfolio
-    $2
-    $NVDA
     $200
-12. Calculate value of second portfolio on 04/20/2013
+    $04/22/2024
+7. Add third stock
     $1
-    $04/20/2013
-13. Exit the portfolio editor
+    $NFLX
+    $250
+    $04/24/2024
+8. Calculate value of portfolio at first date
+    $3
+    $04/25/2024
+9. Calculate value of portfolio at second date
+    $3
+    $04/27/2024
+10. Exit application
     $EXIT
-14. Exit the portfolio manager
     $EXIT
-15. Exit the application
     $EXIT
 
 --Valid Stocks--

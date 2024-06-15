@@ -1,5 +1,6 @@
 ***Stock Program***
 
+
 Features:
 --IMPORTANT--
 All input (Ticker symbols, portfolio names, etc.) are CASE INSENSITIVE!
@@ -15,6 +16,7 @@ period.
 Note: If neither the start date nor the end date have data, but data is available in between,
 the program will return 0 because the end date is required for comparison.
 
+
 --Calculate x-Day Moving Average of a Stock--
 Users can calculate the x-day moving average of a stock, which is the average of the closing prices
 over the last x days from a specified date. The application prompts the user to enter the ticker
@@ -23,6 +25,7 @@ Note: The x-day moving average is calculated based on the last x days the stock 
 Note: If there are not enough data points available for the specified x days from the end date
 (meaning there is less historical data available for the stock), the calculation uses all the
 available closing prices up to the earliest available date.
+
 
 --Calculate x-Day Crossovers for a Stock--
 The application can identify days when the stock's closing price was greater than the x-day moving
@@ -33,12 +36,14 @@ Note: If there are not enough data points available for the specified x days fro
 (meaning there is less historical data available for the stock), the calculation uses all the
 available data points up to the earliest available date.
 
+
 --Manage Portfolio--
 Users can create, delete, rename, edit portfolios, etc. When creating a new portfolio,
 users must provide a unique name. When editing a portfolio, users can add or remove stocks by
 specifying the ticker symbol and the number of shares (whole numbers only, fractional shares are
 not supported directly through buying/selling, but can be achieved through rebalancing).
 Note: When renaming a portfolio, all its contents (stocks and # of shares) are kept
+
 
 --Buying Stock--
 Users can buy stock to a portfolio. This is similar to adding stock in the previous Basic stock
@@ -48,6 +53,7 @@ They can choose to buy a stock after all previous transactions, after all other 
 even in between transactions (in terms of date). The portfolio composition and value will be
 updated accordingly.
 
+
 --Selling Stock--
 Users can sell stock from a portfolio. Similar to removing stock in the previous Basic Stock Program,
 but like the buy transaction, users can also specify a date. This transaction is also time-
@@ -55,6 +61,7 @@ independent, the meaning of which is described above. However, it will not allow
 a stock if there is not enough shares of that stock in the portfolio at the time of selling (or the
 stock simply doesn't exist in the portfolio). After selling all shares of a stock (shares reaches 0)
 it will no longer be shown in the portfolio composition until it is bought again.
+
 
 --Rebalance--
 Users can also choose to rebalance a portfolio. This means buying shares of some stocks and selling
@@ -72,14 +79,17 @@ rebalancing should and will remain the same.
 Note: This change allows for fractional stocks in a portfolio, as sometimes rebalancing will not
 lead to whole numbers.
 
+
 --Composition of Portfolio--
 Users can find the composition of the portfolio (all the stocks and the number of shares of each
 stock) at a specific date. This will IGNORE all transactions (buy, sell, rebalance) AFTER the
 specified date.
 
+
 --Calculate Portfolio Distribution--
 Users can calculate the value of each stock (shares * value) at a date. The value of each stock at
 any given date should be equivalent to the total value of the portfolio.
+
 
 --Calculate Portfolio Value--
 Users can calculate the total value of their investment portfolio on a specific date based on the
@@ -89,6 +99,7 @@ value.
 Note: If the closing price on the inputted date cannot be found, then the next earliest available
 closing price is used instead. If no other earlier closing price can be found, then 0 is assumed.
 
+
 --Calculate Portfolio Performance--
 Users can calculate the performance of a portfolio between two dates. The performance of a portfolio
 is simply the value of the portfolio at various times. This performance is displayed on a graph
@@ -97,6 +108,7 @@ dates where NO TRANSACTIONS have occurred. This is because transactions such as 
 would affect the actual value of the portfolio but not the performance (IE: increasing shares
 would make it seem like the portfolio value has increased, but is not reflective of high performance
 because that increase may only be a result of the increased shares that were bought)
+
 
 --Saving a Portfolio--
 Users can also save a portfolio to disk. This is done by logging all transactions, then writing to
@@ -110,14 +122,18 @@ Only save files that start with the name of the portfolio followed by an undersc
 recognized as a valid save. Furthermore, each line in a save file represents a transaction that was
 made to the portfolio; The order of these lines doesn't matter (you can put the earliest transaction
 at the top, bottom, or anywhere in between). Here is how to format each transaction in a save file:
+
     BUY:MM/DD/YYYY,[shares],[ticker]
             IE: BUY:04/20/2005,200.0,AAPL
+
     SELL:MM/DD/YYYY,[shares],[ticker]
             IE: SELL:04/20/2005,100.0,AAPL
+
     REBALANCE:MM/DD/YYYY,[ticker1]=>[price1];[ticker2]=>[price2],[ticker1]=>[proportion1],[ticker2]=>[proportion2]
         Where ticker#=>price# is the ticker of a stock and the price of that stock at the given date
         and ticker#=>proportion# is the relative value proportion of a stock to rebalance to.
             IE: REBALANCE:04/21/2005,AAPL=>1.1213207210798;AMZN=>1.6835,AAPL=>0.5;AMZN=>0.5
+
 
 --Loading a Portfolio--
 After creating a save (whether through the program or manually written), users can choose to load
@@ -129,20 +145,14 @@ safeguard against accidental data corruption from the users side. While it may s
 first, designing loading this way ensures that all saves correspond to the correct portfolio and
 no portfolio can be "crossed" with another.
 
+
 --Configuration--
 The application is currently configured to use the AlphaVantage API to retrieve stock data, with
 the unlimited key that was provided to us by the professor.
 
-This configuration is set in the main function of the BasicStockController class and can be
-changed by altering the constructor of the model. Another data source that has been implemented
-is to directly support CSV files. This works by replacing this line in stock program:
-    ${StockModel model = new BasicStockModel(new AlphaVantageDataSource());}
-with this line:
-    ${StockModel model = new BasicStockModel(new CSVDataSource("res/CSVData"));}
-
-This secondary data source will instead retrieve data from CSV files on the user's local computer.
-All stock data using this method must be stored in the res/CSVData folder as .csv files, and named
-in the following format:
+A secondary data source can be configured so that the program will instead retrieve data from CSV
+files on the user's local computer. All stock data using this method must be stored in the
+res/CSVData folder as .csv files, and named in the following format:
     [Ticker Symbol in all UPPERCASE LETTERS].csv
         IE: "AAPL.csv" for Apple Inc. "AMZN.csv" for Amazon.com Inc
 The CSV files themselves should have the first row as:

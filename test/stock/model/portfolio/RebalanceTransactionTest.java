@@ -20,7 +20,7 @@ public class RebalanceTransactionTest {
     var res = new HashMap<String, Double>();
     Map<String, Double> prices = Map.of();
     Map<String, Double> proportions = Map.of();
-    var reb = new RebalanceTransaction(LocalDate.of(1,1,1), prices, proportions);
+    var reb = new RebalanceTransaction(LocalDate.of(1, 1, 1), prices, proportions);
     reb.apply(res);
 
     assertEquals(Map.of(), res);
@@ -32,7 +32,7 @@ public class RebalanceTransactionTest {
     res.put("AAPL", 10.0);
     Map<String, Double> prices = Map.of("AAPL", 30.0);
     Map<String, Double> proportions = Map.of("AAPL", 1.0);
-    var reb = new RebalanceTransaction(LocalDate.of(1,1,1), prices, proportions);
+    var reb = new RebalanceTransaction(LocalDate.of(1, 1, 1), prices, proportions);
     reb.apply(res);
 
     assertEquals(Map.of("AAPL", 10.0), res);
@@ -48,7 +48,7 @@ public class RebalanceTransactionTest {
 
     Map<String, Double> prices = Map.of("A", 2.0, "B", 4.0, "C", 6.0);
     Map<String, Double> proportions = Map.of("A", 0.1, "B", 0.4, "C", 0.5);
-    var reb = new RebalanceTransaction(LocalDate.of(1,1,1), prices, proportions);
+    var reb = new RebalanceTransaction(LocalDate.of(1, 1, 1), prices, proportions);
     reb.apply(res);
 
     // total = 10 * 2 + 20 * 4 + 6 * 30 = 20 + 80 + 180 = $280
@@ -63,7 +63,7 @@ public class RebalanceTransactionTest {
     assertEquals(28.0, res.get("A") * 2.0, 0.01);
   }
 
-  @Test (expected = RuntimeException.class)
+  @Test(expected = RuntimeException.class)
   public void rebalanceThrowsExceptionWhenProportionsAreGreaterThanZero() {
     var res = new HashMap<String, Double>();
 
@@ -74,39 +74,39 @@ public class RebalanceTransactionTest {
     Map<String, Double> prices = Map.of("A", 2.0, "B", 4.0, "C", 6.0);
     // proportions don't add up to 1.0          0.1 + 0.5 + 0.5 = 1.1 != 1.0
     Map<String, Double> proportions = Map.of("A", 0.1, "B", 0.5, "C", 0.5);
-    var reb = new RebalanceTransaction(LocalDate.of(1,1,1), prices, proportions);
+    var reb = new RebalanceTransaction(LocalDate.of(1, 1, 1), prices, proportions);
     reb.apply(res);
   }
 
-  @Test (expected = RuntimeException.class)
+  @Test(expected = RuntimeException.class)
   public void rebalanceWithZeroProportionsThrowsException() {
     var res = new HashMap<String, Double>();
     res.put("AAPL", 10.0);
     Map<String, Double> prices = Map.of("AAPL", 30.0);
     Map<String, Double> proportions = Map.of("AAPL", 0.0);
-    var reb = new RebalanceTransaction(LocalDate.of(1,1,1), prices, proportions);
+    var reb = new RebalanceTransaction(LocalDate.of(1, 1, 1), prices, proportions);
     reb.apply(res);
 
     assertEquals(0.0, res.get("AAPL"), 0.01);
   }
 
-  @Test (expected = RuntimeException.class)
+  @Test(expected = RuntimeException.class)
   public void rebalanceWithNegativeProportionsThrowsException() {
     var res = new HashMap<String, Double>();
     res.put("AAPL", 10.0);
     Map<String, Double> prices = Map.of("AAPL", 30.0);
     Map<String, Double> proportions = Map.of("AAPL", -0.5);
-    var reb = new RebalanceTransaction(LocalDate.of(1,1,1), prices, proportions);
+    var reb = new RebalanceTransaction(LocalDate.of(1, 1, 1), prices, proportions);
     reb.apply(res);
   }
 
-  @Test (expected = RuntimeException.class)
+  @Test(expected = RuntimeException.class)
   public void rebalanceWithExcessiveProportionsThrowsException() {
     var res = new HashMap<String, Double>();
     res.put("AAPL", 10.0);
     Map<String, Double> prices = Map.of("AAPL", 30.0);
     Map<String, Double> proportions = Map.of("AAPL", 1.5);
-    var reb = new RebalanceTransaction(LocalDate.of(1,1,1), prices, proportions);
+    var reb = new RebalanceTransaction(LocalDate.of(1, 1, 1), prices, proportions);
     reb.apply(res);
   }
 
@@ -117,7 +117,7 @@ public class RebalanceTransactionTest {
     res.put("GOOG", 20.0);
     Map<String, Double> prices = Map.of("AAPL", 30.0, "GOOG", 50.0);
     Map<String, Double> proportions = Map.of("AAPL", 0.5, "GOOG", 0.5);
-    var reb = new RebalanceTransaction(LocalDate.of(1,1,1), prices, proportions);
+    var reb = new RebalanceTransaction(LocalDate.of(1, 1, 1), prices, proportions);
     reb.apply(res);
 
     double totalValue = res.get("AAPL") * prices.get("AAPL") + res.get("GOOG") * prices.get("GOOG");
@@ -134,14 +134,15 @@ public class RebalanceTransactionTest {
     res.put("MSFT", 30.0);
 
     Map<String, Double> prices = Map.of("AAPL", 30.0, "GOOG", 50.0, "MSFT", 40.0);
-    double totalValue = res.get("AAPL") * prices.get("AAPL") + res.get("GOOG") * prices.get("GOOG") + res.get("MSFT") * prices.get("MSFT");
+    double totalValue = res.get("AAPL") * prices.get("AAPL") + res.get("GOOG") * prices.get("GOOG")
+            + res.get("MSFT") * prices.get("MSFT");
     Map<String, Double> proportions = Map.of(
             "AAPL", (res.get("AAPL") * prices.get("AAPL")) / totalValue,
             "GOOG", (res.get("GOOG") * prices.get("GOOG")) / totalValue,
             "MSFT", (res.get("MSFT") * prices.get("MSFT")) / totalValue
     );
 
-    var reb = new RebalanceTransaction(LocalDate.of(1,1,1), prices, proportions);
+    var reb = new RebalanceTransaction(LocalDate.of(1, 1, 1), prices, proportions);
     reb.apply(res);
 
     assertEquals(10.0, res.get("AAPL"), 0.01);
@@ -153,14 +154,19 @@ public class RebalanceTransactionTest {
   public void rebalanceTransactionSavesCorrectly() {
     Map<String, Double> prices = Map.of("AAPL", 400.0, "AMZN", 100.0, "NFLX", 250.0);
     Map<String, Double> proportions = Map.of("AAPL", 0.3, "AMZN", 0.4, "NFLX", 0.3);
-    Transaction rebalance = new RebalanceTransaction(LocalDate.of(2024, 6, 13), prices, proportions);
-    String expected = "REBALANCE:06/13/2024,AAPL=>400.0;AMZN=>100.0;NFLX=>250.0,AAPL=>0.3;AMZN=>0.4;NFLX=>0.3";
+    Transaction rebalance =
+            new RebalanceTransaction(LocalDate.of(2024, 6, 13), prices, proportions);
+    String expected =
+            "REBALANCE:06/13/2024,AAPL=>400.0;AMZN=>100.0;NFLX=>250.0,AAPL=>0.3;AMZN=>0.4;NFLX=>0"
+                    + ".3";
     assertEquals(expected, rebalance.save());
   }
 
   @Test
   public void rebalanceTransactionConstructedFromSaveStringWorks() throws IOException {
-    String data = "REBALANCE:06/13/2024,AAPL=>400.0;AMZN=>100.0;NFLX=>250.0,AAPL=>0.3;AMZN=>0.4;NFLX=>0.3";
+    String data =
+            "REBALANCE:06/13/2024,AAPL=>400.0;AMZN=>100.0;NFLX=>250.0,AAPL=>0.3;AMZN=>0.4;NFLX=>0"
+                    + ".3";
     Transaction rebalance = new RebalanceTransaction(data);
 
     Map<String, Double> res = new HashMap<>();
@@ -180,7 +186,8 @@ public class RebalanceTransactionTest {
   public void rebalanceTransactionSaveAndReconstruct() throws IOException {
     Map<String, Double> prices = Map.of("AAPL", 400.0, "AMZN", 100.0, "NFLX", 250.0);
     Map<String, Double> proportions = Map.of("AAPL", 0.3, "AMZN", 0.4, "NFLX", 0.3);
-    Transaction originalRebalance = new RebalanceTransaction(LocalDate.of(2024, 6, 13), prices, proportions);
+    Transaction originalRebalance =
+            new RebalanceTransaction(LocalDate.of(2024, 6, 13), prices, proportions);
     String saveString = originalRebalance.save();
 
     Transaction reconstructedRebalance = new RebalanceTransaction(saveString);

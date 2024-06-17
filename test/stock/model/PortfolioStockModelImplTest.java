@@ -42,18 +42,18 @@ public class PortfolioStockModelImplTest extends BasicStockModelTest {
       newMap.put("AAPL", 600.0);
       portModel.createNewPortfolio("Portfolios");
       portModel.addStockToPortfolio("Portfolios", "AAPL", 400,
-              LocalDate.of(1,1,1));
+              LocalDate.of(1, 1, 1));
       portModel.addStockToPortfolio("Portfolios", "AAPL", 200,
-              LocalDate.of(1,1,2));
+              LocalDate.of(1, 1, 2));
       assertEquals(newMap, portModel.getPortfolioContentsDecimal("Portfolios",
-              LocalDate.of(1,1,
-              3)));
+              LocalDate.of(1, 1,
+                      3)));
 
       newMap.put("GOOG", 20.0);
       portModel.addStockToPortfolio("Portfolios", "GOOG", 20,
-              LocalDate.of(1,1,3));
+              LocalDate.of(1, 1, 3));
       assertEquals(newMap, portModel.getPortfolioContentsDecimal("Portfolios",
-              LocalDate.of(1,1,4)));
+              LocalDate.of(1, 1, 4)));
     } catch (IOException e) {
       fail("Failed test: I/O Error");
     }
@@ -62,8 +62,9 @@ public class PortfolioStockModelImplTest extends BasicStockModelTest {
   @Override
   public void testAddStockToPortfolioFailed() {
     portModel.createNewPortfolio("Portfolios");
-    portModel.getPortfolioContentsDecimal("Portfolios2",
-            LocalDate.of(1,1,1));
+    Map<String, Double> map = new HashMap<>();
+    assertEquals(map, portModel.getPortfolioContentsDecimal("Portfolios2",
+            LocalDate.of(1, 1, 1)));
   }
 
   @Override
@@ -71,11 +72,11 @@ public class PortfolioStockModelImplTest extends BasicStockModelTest {
     try {
       portModel.createNewPortfolio("Portfolio");
       portModel.addStockToPortfolio("Portfolio", "AAPL", 400,
-              LocalDate.of(1,1,1));
+              LocalDate.of(1, 1, 1));
       portModel.addStockToPortfolio("Portfolio", "GOOG", 200,
-              LocalDate.of(1,1,2));
+              LocalDate.of(1, 1, 2));
       portModel.sellStockFromPortfolio("Portfolio", "A", 200,
-              LocalDate.of(1,1,3));
+              LocalDate.of(1, 1, 3));
     } catch (IOException e) {
       fail("Failed test: I/O Error");
     }
@@ -86,9 +87,9 @@ public class PortfolioStockModelImplTest extends BasicStockModelTest {
     try {
       portModel.createNewPortfolio("port");
       portModel.addStockToPortfolio("port", "A", 60,
-              LocalDate.of(1,1,1));
+              LocalDate.of(1, 1, 1));
       portModel.addStockToPortfolio("port", "GOOG", 500,
-              LocalDate.of(1,1,3));
+              LocalDate.of(1, 1, 3));
       LocalDate date = LocalDate.of(2024, 5, 12);
       mockDataSource.setClosingPrice(date, 2);
       mockDataSource.setStockExistsAtDate(date);
@@ -103,11 +104,11 @@ public class PortfolioStockModelImplTest extends BasicStockModelTest {
     try {
       portModel.createNewPortfolio("firstPortfolio");
       portModel.addStockToPortfolio("firstPortfolio", "GOOG", 30,
-              LocalDate.of(1,1,3));
+              LocalDate.of(1, 1, 3));
       Map<String, Double> newMap = new HashMap<>();
       newMap.put("GOOG", 30.0);
       assertEquals(newMap, portModel.getPortfolioContentsDecimal("firstPortfolio",
-              LocalDate.of(1,1,5)));
+              LocalDate.of(1, 1, 5)));
     } catch (IOException e) {
       fail("Failed to get data from datasource");
     }
@@ -118,8 +119,8 @@ public class PortfolioStockModelImplTest extends BasicStockModelTest {
     try {
       portModel.createNewPortfolio("firstPortfolio");
       portModel.addStockToPortfolio("firstPortfolio", "GOOG", 30,
-              LocalDate.of(1,1,5));
-      portModel.getPortfolioContentsDecimal("port", LocalDate.of(1,5,1));
+              LocalDate.of(1, 1, 5));
+      portModel.getPortfolioContentsDecimal("port", LocalDate.of(1, 5, 1));
     } catch (IOException e) {
       fail("Failed to get data from datasource");
     }
@@ -130,11 +131,11 @@ public class PortfolioStockModelImplTest extends BasicStockModelTest {
     try {
       portModel.createNewPortfolio("Portfolio");
       portModel.addStockToPortfolio("Portfolio", "AAPL", 400,
-              LocalDate.of(1,2,3));
+              LocalDate.of(1, 2, 3));
       portModel.addStockToPortfolio("Portfolio", "GOOG", 200,
-              LocalDate.of(2,3,4));
+              LocalDate.of(2, 3, 4));
       portModel.sellStockFromPortfolio("Portfolio2", "GOOG", 200,
-              LocalDate.of(3,4,5));
+              LocalDate.of(3, 4, 5));
     } catch (IOException e) {
       fail("Failed to get data from datasource");
     }
@@ -147,15 +148,15 @@ public class PortfolioStockModelImplTest extends BasicStockModelTest {
       Map<String, Double> newMap = new HashMap<>();
       portModel.createNewPortfolio("Portfolio");
       portModel.addStockToPortfolio("Portfolio", "AAPL", 400,
-              LocalDate.of(1,1,5));
+              LocalDate.of(1, 1, 5));
       portModel.addStockToPortfolio("Portfolio", "GOOG", 200,
-              LocalDate.of(1,1,6));
+              LocalDate.of(1, 1, 6));
       portModel.sellStockFromPortfolio("Portfolio", "GOOG", 200,
-              LocalDate.of(1,1,8));
+              LocalDate.of(1, 1, 8));
 
       newMap.put("AAPL", 400.0);
       assertEquals(newMap, portModel.getPortfolioContentsDecimal("Portfolio",
-              LocalDate.of(1,1,8)));
+              LocalDate.of(1, 1, 8)));
     } catch (IOException e) {
       fail("Failed to get data from datasource");
     }
@@ -165,9 +166,9 @@ public class PortfolioStockModelImplTest extends BasicStockModelTest {
   public void getPortfolioValueNoTicker() throws IOException {
     portModel.createNewPortfolio("port");
     portModel.addStockToPortfolio("port", "AAPL", 60,
-            LocalDate.of(1,2,3));
+            LocalDate.of(1, 2, 3));
     portModel.addStockToPortfolio("port", "GOOG", 500,
-            LocalDate.of(1,2,5));
+            LocalDate.of(1, 2, 5));
     LocalDate date = LocalDate.of(2022, 12, 03);
     mockDataSource.setClosingPrice(date, 2);
     mockDataSource.setStockExistsAtDate(date);
@@ -218,19 +219,19 @@ public class PortfolioStockModelImplTest extends BasicStockModelTest {
     portModel.createNewPortfolio("futureTransactionsPortfolio");
 
     portModel.addStockToPortfolio("futureTransactionsPortfolio", "A", 10,
-            LocalDate.of(2024,5,4));
+            LocalDate.of(2024, 5, 4));
     portModel.addStockToPortfolio("futureTransactionsPortfolio", "GOOG", 20,
-            LocalDate.of(2024,5, 6));
+            LocalDate.of(2024, 5, 6));
     portModel.addStockToPortfolio("futureTransactionsPortfolio", "AMZN", 30,
-            LocalDate.of(2024,5,8));
+            LocalDate.of(2024, 5, 8));
 
-    mockDataSource.setStockExistsAtDate(LocalDate.of(2024,5,7));
-    mockDataSource.setClosingPrice(LocalDate.of(2024,5,7), 2500.0);
+    mockDataSource.setStockExistsAtDate(LocalDate.of(2024, 5, 7));
+    mockDataSource.setClosingPrice(LocalDate.of(2024, 5, 7), 2500.0);
     // GOOG
 
     Map<String, Double> distribution =
             portModel.getPortfolioDistribution("futureTransactionsPortfolio",
-                    LocalDate.of(2024,5,7));
+                    LocalDate.of(2024, 5, 7));
 
     Map<String, Double> expectedDistribution = new HashMap<>();
     expectedDistribution.put("A", 10 * 2500.0);
@@ -260,10 +261,10 @@ public class PortfolioStockModelImplTest extends BasicStockModelTest {
     portModel.createNewPortfolio("testPortfolio");
 
     portModel.addStockToPortfolio("testPortfolio", "A", 10,
-            LocalDate.of(2024,5,6));
+            LocalDate.of(2024, 5, 6));
     portModel.createNewPortfolioSave("testPortfolio");
     portModel.addStockToPortfolio("testPortfolio", "AMZN", 20,
-            LocalDate.of(2024,5,7));
+            LocalDate.of(2024, 5, 7));
     portModel.createNewPortfolioSave("testPortfolio");
 
     List<String> saves = portModel.getPortfolioSaves("testPortfolio");
@@ -273,14 +274,14 @@ public class PortfolioStockModelImplTest extends BasicStockModelTest {
 
     Map<String, Double> expectedComposition = Map.of("A", 10.0, "AMZN", 20.0);
     assertEquals(expectedComposition, portModel.getPortfolioContentsDecimal("testPortfolio",
-            LocalDate.of(2024,5,7)));
+            LocalDate.of(2024, 5, 7)));
 
-    mockDataSource.setClosingPrice(LocalDate.of(2024,5,7), 100.0);
-    mockDataSource.setStockExistsAtDate(LocalDate.of(2024,5,7));
+    mockDataSource.setClosingPrice(LocalDate.of(2024, 5, 7), 100.0);
+    mockDataSource.setStockExistsAtDate(LocalDate.of(2024, 5, 7));
     double expectedValue = 10.0 * 100.0 + 20.0 * 100.0;
     assertEquals(expectedValue, portModel.getPortfolioValue("testPortfolio",
             LocalDate.of(2024, 5
-            , 7)), 0.01);
+                    , 7)), 0.01);
   }
 
   @Test
@@ -299,7 +300,7 @@ public class PortfolioStockModelImplTest extends BasicStockModelTest {
             LocalDate.of(2024, 5, 6));
 
     Map<String, Double> expectedDistribution = Map.of(
-            "A",  10 * 2800.0,
+            "A", 10 * 2800.0,
             "AMZN", 20 * 2800.0
     );
 

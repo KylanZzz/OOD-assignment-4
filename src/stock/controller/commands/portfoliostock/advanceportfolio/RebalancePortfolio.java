@@ -1,10 +1,10 @@
-package stock.controller.commands.portfolioStock.advanceportfolio;
+package stock.controller.commands.portfoliostock.advanceportfolio;
 
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Map;
 import java.util.Scanner;
-import stock.controller.commands.portfolioStock.StockPortfolioCommand;
+import stock.controller.commands.portfoliostock.StockPortfolioCommand;
 import stock.model.PortfolioStockModel;
 import stock.model.StockModel;
 import stock.view.PortfolioStockView;

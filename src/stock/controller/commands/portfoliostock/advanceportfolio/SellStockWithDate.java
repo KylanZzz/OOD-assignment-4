@@ -1,22 +1,21 @@
-package stock.controller.commands.portfolioStock.advanceportfolio;
+package stock.controller.commands.portfoliostock.advanceportfolio;
 
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.InputMismatchException;
 import java.util.Scanner;
-import stock.controller.commands.portfolioStock.StockPortfolioCommand;
+import stock.controller.commands.portfoliostock.StockPortfolioCommand;
 import stock.model.PortfolioStockModel;
 import stock.model.StockModel;
 import stock.view.PortfolioStockView;
 import stock.view.StockView;
 
 /**
- * Command class for purchasing stocks on a specified date to add to a stock portfolio.
- * This command prompts the user to enter stock details and the purchase date, then
- * executes the addition of the specified stock to the portfolio.
+ * Command class responsible for selling stocks from a specified portfolio on a given date.
+ * This command facilitates user interaction for stock sale transactions based
+ * on specified parameters.
  */
-public class PurchaseStockWithDate extends StockPortfolioCommand {
-
+public class SellStockWithDate extends StockPortfolioCommand {
 
   /**
    * Constructs a command with a stock's view, model, and source of input.
@@ -25,8 +24,7 @@ public class PurchaseStockWithDate extends StockPortfolioCommand {
    * @param model   the model of the stock program.
    * @param scanner the input of the stock program.
    */
-  public PurchaseStockWithDate(StockView view, StockModel model,
-                               Scanner scanner, String portfolio) {
+  public SellStockWithDate(StockView view, StockModel model, Scanner scanner, String portfolio) {
     super(view, model, scanner, portfolio);
   }
 
@@ -38,12 +36,22 @@ public class PurchaseStockWithDate extends StockPortfolioCommand {
     PortfolioStockModel portfolioModel = (PortfolioStockModel) model;
     PortfolioStockView portfolioView = (PortfolioStockView) view;
 
+    portfolioView.printMessage("Please enter the date that you want to "
+            + "sell the stocks in the format MM/DD/YYYY: ");
+    LocalDate date = getDateFromUser();
+
+    if (portfolioModel.getPortfolioContentsDecimal(portfolio, date).isEmpty()) {
+      view.printMessage(String.format("You haven't buy any stock to this portfolio at %s", date));
+      return;
+    }
+
     portfolioView.printMessage(String.format("Please enter the ticker of the stock "
-            + "that you would like to add to portfolio %s:", portfolio));
-    String ticker = getTickerFromUser();
+            + "that you would like to sell from portfolio %s:", portfolio));
+    String ticker = getTickerInPortfolioFromUser(date);
 
     portfolioView.printMessage("Please enter the number of shares you would like to "
-            + "purchase (you cannot buy fractional number of stocks): ");
+            + "sell (you cannot sell fractional number of stocks): ");
+
     int shares;
     try {
       shares = scanner.nextInt();
@@ -54,23 +62,19 @@ public class PurchaseStockWithDate extends StockPortfolioCommand {
       return;
     }
     if (shares == 0) {
-      portfolioView.printMessage("Cannot purchase 0 shares of a stock.");
+      portfolioView.printMessage("Cannot sell 0 shares of a stock.");
       return;
     }
-
     if (shares < 0) {
-      portfolioView.printMessage("Cannot purchase negative number of stocks.");
+      portfolioView.printMessage("Cannot sell negative number of stocks.");
       return;
     }
 
-    portfolioView.printMessage("Please enter the date in the format MM/DD/YYYY: ");
-    LocalDate date = getDateFromUser();
     try {
-      portfolioModel.addStockToPortfolio(portfolio, ticker, shares, date);
-      portfolioView.printMessage(String.format("Successfully purchased %d shares "
-              + "of %s stocks at date %s in the %s "
+      portfolioModel.sellStockFromPortfolio(portfolio, ticker, shares, date);
+      portfolioView.printMessage(String.format("Successfully sold %d number "
+              + "of %s stocks from date %s in the %s "
               + "portfolio.", shares, ticker, date, portfolio));
-      portfolioView.printMessage("");
     } catch (IOException e) {
       portfolioView.printMessage("Error occurred while fetching data: " + e.getMessage());
     }

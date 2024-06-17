@@ -53,8 +53,8 @@ public interface PortfolioStockModel extends StockModel {
    *
    * @param name        the name of the portfolio.
    * @param date        the date to get the state of the portfolio at.
-   * @return            a map where the keys are the tickers of all the stocks and values are the number of
-   *                    shares of that stock in the portfolio.
+   * @return            a map where the keys are the tickers of all the stocks and values are the
+   *                    number of shares of that stock in the portfolio.
    * @throws IllegalArgumentException if the name of the ticker symbol does not exist.
    */
   Map<String, Double> getPortfolioContentsDecimal(String name, LocalDate date) throws

@@ -8,12 +8,10 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 import stock.model.AlphaVantageDataSource;
-import stock.model.BasicStockModel;
 import stock.model.DataSource;
 import stock.model.PortfolioStockModelImpl;
 import stock.model.StockModel;
 import stock.view.BasicPortfolioStockView;
-import stock.view.BasicStockView;
 import stock.view.StockView;
 
 import static org.junit.Assert.assertEquals;
@@ -613,13 +611,13 @@ public class BasicStockControllerIntegrationTest {
                     + "pick, or type EXIT to return/exit"),
             prints("1. Buy stock to portfolio\n"
                     + "2. Sell stock from portfolio\n"
-                    +"3. Calculate portfolio value on specific date\n"
-                    +"4. Check the distribution of value on specific date\n"
-                    +"5. Save portfolio\n"
-                    +"6. Load the saved portfolio\n"
-                    +"7. Rebalance the portfolio\n"
-                    +"8. Performance chart for the portfolio\n"
-                    +"9. Composition of the portfolio"),
+                    + "3. Calculate portfolio value on specific date\n"
+                    + "4. Check the distribution of value on specific date\n"
+                    + "5. Save portfolio\n"
+                    + "6. Load the saved portfolio\n"
+                    + "7. Rebalance the portfolio\n"
+                    + "8. Performance chart for the portfolio\n"
+                    + "9. Composition of the portfolio"),
             inputs("EXIT"), // Exit from view/edit NASDAQ portfolio
 
             prints(managePortfoliosMenu + "\n4. View/Edit: NASDAQ"),

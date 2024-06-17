@@ -36,7 +36,7 @@ public class SellTransaction extends Transaction {
    *
    * @param data the string representation of the sell transaction data
    * @throws IOException if there is an error reading the data or if the data is formatted
-   * incorrectly
+   *                     incorrectly
    */
   protected SellTransaction(String data) throws IOException {
     super(data);

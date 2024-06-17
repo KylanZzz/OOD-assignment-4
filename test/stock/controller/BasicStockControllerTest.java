@@ -10,11 +10,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+
 import stock.model.PortfolioStockModel;
 import stock.model.StockModel;
 import stock.view.BasicMenuOptions;
 import stock.view.PortfolioStockView;
 import stock.view.StockView;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static stock.controller.Interactions.inputs;
@@ -26,8 +28,7 @@ import static stock.controller.Interactions.prints;
  * the controller correctly passes information from the model
  * to the view and handles user input properly.
  */
-public class BasicStockControllerTest
-{
+public class BasicStockControllerTest {
 
   protected final class MockModel implements PortfolioStockModel {
     private StringBuilder log;
@@ -107,7 +108,13 @@ public class BasicStockControllerTest
       if (throwIOException) {
         log.append("addStockToPortfolioIOException\n");
       }
-      log.append("addStockToPortfolio").append(name).append(ticker).append(shares).append(date).append("\n");
+      log.append("addStockToPortfolio").append(name).append(ticker).append(shares).append(date)
+              .append("\n");
+    }
+
+    @Override
+    public void addStockToPortfolio(String name, String ticker, int shares) {
+      log.append("addStockToPortfolio").append(name).append(ticker).append(shares).append("\n");
     }
 
     @Override
@@ -116,7 +123,8 @@ public class BasicStockControllerTest
       if (throwIOException) {
         log.append("sellStockFromPortfolioIOException\n");
       }
-      log.append("sellStockFromPortfolio").append(name).append(ticker).append(shares).append(date).append("\n");
+      log.append("sellStockFromPortfolio").append(name).append(ticker).append(shares).append(date)
+              .append("\n");
 
     }
 
@@ -132,7 +140,8 @@ public class BasicStockControllerTest
     }
 
     @Override
-    public List<String> getPortfolioSaves(String name) throws IllegalArgumentException, IOException {
+    public List<String> getPortfolioSaves(String name) throws IllegalArgumentException,
+            IOException {
       if (throwIOException) {
         log.append("getPortfolioSavesIOException\n");
         throw new IOException("getPortfolioSavesIOExceptionMessage");
@@ -142,7 +151,8 @@ public class BasicStockControllerTest
     }
 
     @Override
-    public void loadPortfolioSave(String name, String fileSaveName) throws IOException, IllegalArgumentException {
+    public void loadPortfolioSave(String name, String fileSaveName) throws IOException,
+            IllegalArgumentException {
       log.append("loadPortfolioSave").append(name).append(fileSaveName).append("\n");
     }
 
@@ -153,17 +163,22 @@ public class BasicStockControllerTest
     }
 
     @Override
-    public void rebalancePortfolio(String name, LocalDate date, Map<String, Double> proportions) throws IOException, IllegalArgumentException {
+    public void rebalancePortfolio(String name, LocalDate date,
+                                   Map<String, Double> proportions) throws IOException,
+            IllegalArgumentException {
       log.append("rebalancePortfolio").append(name).append(date).append(proportions).append("\n");
     }
 
     @Override
-    public Map<LocalDate, Double> getPortfolioPerformance(String name, LocalDate startDate, LocalDate endDate) throws IllegalArgumentException, IOException {
+    public Map<LocalDate, Double> getPortfolioPerformance(String name, LocalDate startDate,
+                                                          LocalDate endDate) throws
+            IllegalArgumentException, IOException {
       if (throwIOException) {
         log.append("getPortfolioPerformanceIOException\n");
         throw new IOException("getPortfolioPerformanceIOExceptionMessage");
       }
-      log.append("getPortfolioPerformance").append(name).append(startDate).append(endDate).append("\n");
+      log.append("getPortfolioPerformance").append(name).append(startDate).append(endDate)
+              .append("\n");
       return Map.of(LocalDate.of(2024, 1, 1), 10.0, LocalDate.of(2024, 1, 2),
               15.0, LocalDate.of(2024, 1, 3), 20.0, LocalDate.of(2024, 1, 3), 15.0,
               LocalDate.of(2024, 1, 4), 25.0, LocalDate.of(2024, 1, 5), 5.0);
@@ -183,11 +198,6 @@ public class BasicStockControllerTest
         throw new IOException("portfolioValueIOExceptionMessage");
       }
       return 400;
-    }
-
-    @Override
-    public void addStockToPortfolio(String name, String ticker, int shares) {
-      log.append("addStockToPortfolio").append(name).append(ticker).append(shares).append("\n");
     }
 
     @Override
@@ -307,7 +317,8 @@ public class BasicStockControllerTest
     }
 
     @Override
-    public void printPortfolioPerformance(Map<LocalDate, Double> performance, LocalDate startDate, LocalDate endDate) {
+    public void printPortfolioPerformance(Map<LocalDate, Double> performance, LocalDate startDate,
+                                          LocalDate endDate) {
       log.append("printPortfolioPerformance").append(startDate).append(endDate);
       List<String> list = new ArrayList<>();
       for (var s : performance.entrySet()) {
@@ -343,7 +354,6 @@ public class BasicStockControllerTest
     StockView view = new MockView(viewLog);
     StockModel model = new MockModel(modelLog, throwException);
     StockController controller = new BasicStockController(view, model, in);
-
 
 
     controller.run();
@@ -743,16 +753,20 @@ public class BasicStockControllerTest
 
             prints("printViewPortfoliosS&P500NASDAQ"), inputs("0"),
 
-            prints("printMessageInvalid input. Please enter a valid choice or EXIT to go back."), prints("printViewPortfoliosS&P500NASDAQ"),
+            prints("printMessageInvalid input. Please enter a valid choice or EXIT to go back."),
+            prints("printViewPortfoliosS&P500NASDAQ"),
             inputs("10"),
 
-            prints("printMessageInvalid input. Please enter a valid choice or EXIT to go back."), prints("printViewPortfoliosS&P500NASDAQ"),
+            prints("printMessageInvalid input. Please enter a valid choice or EXIT to go back."),
+            prints("printViewPortfoliosS&P500NASDAQ"),
             inputs("a"),
 
-            prints("printMessageInvalid input. Please enter a valid choice or EXIT to go back."), prints("printViewPortfoliosS&P500NASDAQ"),
+            prints("printMessageInvalid input. Please enter a valid choice or EXIT to go back."),
+            prints("printViewPortfoliosS&P500NASDAQ"),
             inputs("-1"),
 
-            prints("printMessageInvalid input. Please enter a valid choice or EXIT to go back."), prints("printViewPortfoliosS&P500NASDAQ"),
+            prints("printMessageInvalid input. Please enter a valid choice or EXIT to go back."),
+            prints("printViewPortfoliosS&P500NASDAQ"),
             inputs("EXIT"),
 
             prints("printMainMenu"), inputs("EXIT")));
@@ -766,7 +780,8 @@ public class BasicStockControllerTest
 
             prints("printViewPortfoliosS&P500NASDAQ"), inputs("1"),
 
-            prints("printMessageWhat is the name of the portfolio you would like to create?"), inputs("ASjkdsf"),
+            prints("printMessageWhat is the name of the portfolio you would like to create?"),
+            inputs("ASjkdsf"),
             prints("printMessageSuccessfully created portfolio ASJKDSF."),
             modelLog("createNewPortfolioASJKDSF"),
             prints("printViewPortfoliosS&P500NASDAQ"),
@@ -774,11 +789,16 @@ public class BasicStockControllerTest
             prints("printMenu"),
             inputs("4"),
             inputs("1"),
-            prints("printMessagePlease enter the ticker of the stock that you would like to add to portfolio S&P500:"),inputs("AAPL"),
-            prints("printMessagePlease enter the number of shares you would like to purchase (you cannot buy fractional number of stocks): "),
+            prints("printMessagePlease enter the ticker of the stock that you would like to add "
+                    + "to portfolio S&P500:"),
+            inputs("AAPL"),
+            prints("printMessagePlease enter the number of shares you would like to purchase (you"
+                    + " cannot buy fractional number of stocks): "),
             inputs("19"),
-            prints("printMessagePlease enter the date in the format MM/DD/YYYY: "), inputs("12/23/2023"),
-            prints("printMessageSuccessfully purchased 19 shares of AAPL stocks at date 2023-12-23 in the S&P500 portfolio."),
+            prints("printMessagePlease enter the date in the format MM/DD/YYYY: "),
+            inputs("12/23/2023"),
+            prints("printMessageSuccessfully purchased 19 shares of AAPL stocks at date "
+                    + "2023-12-23 in the S&P500 portfolio."),
             modelLog("addStockToPortfolioS&P500AAPL192023-12-23"),
             prints("printMessage"),
             prints("printOptionsPrompt"),
@@ -798,7 +818,8 @@ public class BasicStockControllerTest
             prints("printViewPortfoliosS&P500NASDAQ"), inputs("1"),
 
 
-            prints("printMessageWhat is the name of the portfolio you would like to create?"), inputs("ASjkdsf"),
+            prints("printMessageWhat is the name of the portfolio you would like to create?"),
+            inputs("ASjkdsf"),
             prints("printMessageSuccessfully created portfolio ASJKDSF."),
             modelLog("createNewPortfolioASJKDSF"),
             prints("printViewPortfoliosS&P500NASDAQ"),
@@ -806,7 +827,9 @@ public class BasicStockControllerTest
             prints("printMenu"),
             inputs("4"),
             inputs("1"),
-            prints("printMessagePlease enter the ticker of the stock that you would like to add to portfolio S&P500:"),inputs("asdfs"),
+            prints("printMessagePlease enter the ticker of the stock that you would like to add "
+                    + "to portfolio S&P500:"),
+            inputs("asdfs"),
             prints(tickerIncorrect), inputs("$%^YTG"),
 
             prints(tickerIncorrect), inputs("7654rfgy"),
@@ -818,13 +841,16 @@ public class BasicStockControllerTest
             prints(tickerIncorrect), inputs("WSDF"),
 
             prints(tickerIncorrect), inputs("AAPL"),
-            prints("printMessagePlease enter the number of shares you would like to purchase (you cannot buy fractional number of stocks): "),
+            prints("printMessagePlease enter the number of shares you would like to purchase (you"
+                    + " cannot buy fractional number of stocks): "),
             inputs("19"),
-            prints("printMessagePlease enter the date in the format MM/DD/YYYY: "), inputs("12/23/2023"),
-            prints("printMessageSuccessfully purchased 19 shares of AAPL stocks at date 2023-12-23 in the S&P500 portfolio."),
+            prints("printMessagePlease enter the date in the format MM/DD/YYYY: "),
+            inputs("12/23/2023"),
+            prints("printMessageSuccessfully purchased 19 shares of AAPL stocks at date "
+                    + "2023-12-23 in the S&P500 portfolio."),
             modelLog("addStockToPortfolioS&P500AAPL192023-12-23"),
             prints("printMessage"),
-            prints("printOptionsPrompt"), prints("printMenu"),inputs("EXIT"),
+            prints("printOptionsPrompt"), prints("printMenu"), inputs("EXIT"),
 
             prints("printViewPortfoliosS&P500NASDAQ"), inputs("EXIT"),
 
@@ -838,7 +864,8 @@ public class BasicStockControllerTest
 
             prints("printViewPortfoliosS&P500NASDAQ"), inputs("1"),
 
-            prints("printMessageWhat is the name of the portfolio you would like to create?"), inputs("ASjkdsf"),
+            prints("printMessageWhat is the name of the portfolio you would like to create?"),
+            inputs("ASjkdsf"),
             prints("printMessageSuccessfully created portfolio ASJKDSF."),
             modelLog("createNewPortfolioASJKDSF"),
             prints("printViewPortfoliosS&P500NASDAQ"),
@@ -847,7 +874,9 @@ public class BasicStockControllerTest
             inputs("4"),
 
             inputs("1"),
-            prints("printMessagePlease enter the ticker of the stock that you would like to add to portfolio S&P500:"),inputs("AAPL"),
+            prints("printMessagePlease enter the ticker of the stock that you would like to add "
+                    + "to portfolio S&P500:"),
+            inputs("AAPL"),
             prints("printMessagePlease enter the number of shares you would like to purchase "
                     + "(you" + " cannot buy fractional number of stocks): "), inputs("$%^&"),
             prints("printMessageInvalid input: not an integer, please try again."),
@@ -890,23 +919,31 @@ public class BasicStockControllerTest
 
             prints("printMessagePlease enter the number of shares you would like to purchase "
                     + "(you" + " cannot buy fractional number of stocks): "), inputs("50"),
-            prints("printMessagePlease enter the date in the format MM/DD/YYYY: "), inputs("12/23/2023"),
+            prints("printMessagePlease enter the date in the format MM/DD/YYYY: "),
+            inputs("12/23/2023"),
 
-            prints("printMessageSuccessfully purchased 50 shares of AAPL stocks at date 2023-12-23 in the S&P500 portfolio."),
+            prints("printMessageSuccessfully purchased 50 shares of AAPL stocks at date "
+                    + "2023-12-23 in the S&P500 portfolio."),
             modelLog("addStockToPortfolioS&P500AAPL502023-12-23"),
             prints("printMessage"),
             prints("printOptionsPrompt"),
             prints("printMenu"), inputs("2"),
 
-            prints("printMessagePlease enter the date that you want to sell the stocks in the format MM/DD/YYYY: "),
-            inputs("12/30/2023"), prints("printMessagePlease enter the ticker of the stock that you would like to sell from portfolio S&P500:")
+            prints("printMessagePlease enter the date that you want to sell the stocks in the "
+                    + "format MM/DD/YYYY: "),
+            inputs("12/30/2023"),
+            prints("printMessagePlease enter the ticker of the stock that you would like to sell "
+                    + "from portfolio S&P500:")
 
 
-            ,inputs("AAPL"),
-            prints("printMessagePlease enter the number of shares you would like to sell (you cannot sell fractional number of stocks): "),
-            inputs("12"), prints("printMessageSuccessfully sold 12 number of AAPL stocks from date 2023-12-30 in the S&P500 portfolio."),
+            , inputs("AAPL"),
+            prints("printMessagePlease enter the number of shares you would like to sell (you "
+                    + "cannot sell fractional number of stocks): "),
+            inputs("12"),
+            prints("printMessageSuccessfully sold 12 number of AAPL stocks from date 2023-12-30 "
+                    + "in the S&P500 portfolio."),
             modelLog("sellStockFromPortfolioS&P500AAPL122023-12-30"),
-            prints("printOptionsPrompt"), prints("printMenu"),inputs("EXIT"),
+            prints("printOptionsPrompt"), prints("printMenu"), inputs("EXIT"),
 
             prints("printViewPortfoliosS&P500NASDAQ"), inputs("EXIT"),
 
@@ -921,7 +958,8 @@ public class BasicStockControllerTest
             prints("printViewPortfoliosS&P500NASDAQ"), inputs("1"),
 
 
-            prints("printMessageWhat is the name of the portfolio you would like to create?"), inputs("ASjkdsf"),
+            prints("printMessageWhat is the name of the portfolio you would like to create?"),
+            inputs("ASjkdsf"),
             prints("printMessageSuccessfully created portfolio ASJKDSF."),
             modelLog("createNewPortfolioASJKDSF"),
             prints("printViewPortfoliosS&P500NASDAQ"),
@@ -930,25 +968,36 @@ public class BasicStockControllerTest
             inputs("4"),
 
             inputs("1"),
-            prints("printMessagePlease enter the ticker of the stock that you would like to add to portfolio S&P500:"),inputs("AAPL"),
-            prints("printMessagePlease enter the number of shares you would like to purchase (you cannot buy fractional number of stocks): "),
+            prints("printMessagePlease enter the ticker of the stock that you would like to add "
+                    + "to portfolio S&P500:"),
+            inputs("AAPL"),
+            prints("printMessagePlease enter the number of shares you would like to purchase (you"
+                    + " cannot buy fractional number of stocks): "),
             inputs("19"),
-            prints("printMessagePlease enter the date in the format MM/DD/YYYY: "), inputs("12/23/2023"),
-            prints("printMessageSuccessfully purchased 19 shares of AAPL stocks at date 2023-12-23 in the S&P500 portfolio."),
+            prints("printMessagePlease enter the date in the format MM/DD/YYYY: "),
+            inputs("12/23/2023"),
+            prints("printMessageSuccessfully purchased 19 shares of AAPL stocks at date "
+                    + "2023-12-23 in the S&P500 portfolio."),
             modelLog("addStockToPortfolioS&P500AAPL192023-12-23"),
             prints("printMessage"),
             prints("printOptionsPrompt"),
             prints("printMenu"), inputs("2"),
 
-            prints("printMessagePlease enter the date that you want to sell the stocks in the format MM/DD/YYYY: "),
-            inputs("12/30/2023"), prints("printMessagePlease enter the ticker of the stock that you would like to sell from portfolio S&P500:")
+            prints("printMessagePlease enter the date that you want to sell the stocks in the "
+                    + "format MM/DD/YYYY: "),
+            inputs("12/30/2023"),
+            prints("printMessagePlease enter the ticker of the stock that you would like to sell "
+                    + "from portfolio S&P500:")
 
 
-            ,inputs("AAPL"),
-            prints("printMessagePlease enter the number of shares you would like to sell (you cannot sell fractional number of stocks): "),
-            inputs("12"), prints("printMessageSuccessfully sold 12 number of AAPL stocks from date 2023-12-30 in the S&P500 portfolio."),
+            , inputs("AAPL"),
+            prints("printMessagePlease enter the number of shares you would like to sell (you "
+                    + "cannot sell fractional number of stocks): "),
+            inputs("12"),
+            prints("printMessageSuccessfully sold 12 number of AAPL stocks from date 2023-12-30 "
+                    + "in the S&P500 portfolio."),
             modelLog("sellStockFromPortfolioS&P500AAPL122023-12-30"),
-            prints("printOptionsPrompt"), prints("printMenu"),inputs("EXIT"),
+            prints("printOptionsPrompt"), prints("printMenu"), inputs("EXIT"),
 
             prints("printViewPortfoliosS&P500NASDAQ"), inputs("EXIT"),
 
@@ -963,7 +1012,8 @@ public class BasicStockControllerTest
             prints("printViewPortfoliosS&P500NASDAQ"), inputs("1"),
 
 
-            prints("printMessageWhat is the name of the portfolio you would like to create?"), inputs("ASjkdsf"),
+            prints("printMessageWhat is the name of the portfolio you would like to create?"),
+            inputs("ASjkdsf"),
             prints("printMessageSuccessfully created portfolio ASJKDSF."),
             modelLog("createNewPortfolioASJKDSF"),
             prints("printViewPortfoliosS&P500NASDAQ"),
@@ -972,26 +1022,42 @@ public class BasicStockControllerTest
             inputs("4"),
 
             inputs("1"),
-            prints("printMessagePlease enter the ticker of the stock that you would like to add to portfolio S&P500:"),inputs("AAPL"),
-            prints("printMessagePlease enter the number of shares you would like to purchase (you cannot buy fractional number of stocks): "),
+            prints("printMessagePlease enter the ticker of the stock that you would like to add "
+                    + "to portfolio S&P500:"),
+            inputs("AAPL"),
+            prints("printMessagePlease enter the number of shares you would like to purchase (you"
+                    + " cannot buy fractional number of stocks): "),
             inputs("19"),
-            prints("printMessagePlease enter the date in the format MM/DD/YYYY: "), inputs("12/23/2023"),
-            prints("printMessageSuccessfully purchased 19 shares of AAPL stocks at date 2023-12-23 in the S&P500 portfolio."),
+            prints("printMessagePlease enter the date in the format MM/DD/YYYY: "),
+            inputs("12/23/2023"),
+            prints("printMessageSuccessfully purchased 19 shares of AAPL stocks at date "
+                    + "2023-12-23 in the S&P500 portfolio."),
             modelLog("addStockToPortfolioS&P500AAPL192023-12-23"),
             prints("printMessage"),
             prints("printOptionsPrompt"),
             prints("printMenu"), inputs("2"),
 
-            prints("printMessagePlease enter the date that you want to sell the stocks in the format MM/DD/YYYY: "),
-            inputs("12/30/2023"), prints("printMessagePlease enter the ticker of the stock that you would like to sell from portfolio S&P500:"),
+            prints("printMessagePlease enter the date that you want to sell the stocks in the "
+                    + "format MM/DD/YYYY: "),
+            inputs("12/30/2023"),
+            prints("printMessagePlease enter the ticker of the stock that you would like to sell "
+                    + "from portfolio S&P500:"),
 
 
-            inputs("XYZ123"), prints("printMessagePlease enter the stock that you bought before that date: "), inputs("GOOGL"),  prints("printMessagePlease enter the stock that you bought before that date: "), inputs("NFLX100"),
-            prints("printMessagePlease enter the stock that you bought before that date: "),inputs("AAPL"),
-            prints("printMessagePlease enter the number of shares you would like to sell (you cannot sell fractional number of stocks): "),
-            inputs("12"), prints("printMessageSuccessfully sold 12 number of AAPL stocks from date 2023-12-30 in the S&P500 portfolio."),
+            inputs("XYZ123"),
+            prints("printMessagePlease enter the stock that you bought before that date: "),
+            inputs("GOOGL"),
+            prints("printMessagePlease enter the stock that you bought before that date: "),
+            inputs("NFLX100"),
+            prints("printMessagePlease enter the stock that you bought before that date: "),
+            inputs("AAPL"),
+            prints("printMessagePlease enter the number of shares you would like to sell (you "
+                    + "cannot sell fractional number of stocks): "),
+            inputs("12"),
+            prints("printMessageSuccessfully sold 12 number of AAPL stocks from date 2023-12-30 "
+                    + "in the S&P500 portfolio."),
             modelLog("sellStockFromPortfolioS&P500AAPL122023-12-30"),
-            prints("printOptionsPrompt"), prints("printMenu"),inputs("EXIT"),
+            prints("printOptionsPrompt"), prints("printMenu"), inputs("EXIT"),
 
             prints("printViewPortfoliosS&P500NASDAQ"), inputs("EXIT"),
 
@@ -1004,17 +1070,23 @@ public class BasicStockControllerTest
     assertTrue(runTest(false, prints("printMainMenu"), inputs("4"),
             prints("printViewPortfoliosS&P500NASDAQ"), inputs("invalid"),
 
-            prints("printMessageInvalid input. Please enter a valid choice or EXIT to go back."), prints("printViewPortfoliosS&P500NASDAQ"), inputs("10"),
+            prints("printMessageInvalid input. Please enter a valid choice or EXIT to go back."),
+            prints("printViewPortfoliosS&P500NASDAQ"), inputs("10"),
 
-            prints("printMessageInvalid input. Please enter a valid choice or EXIT to go back."), prints("printViewPortfoliosS&P500NASDAQ"), inputs("0"),
+            prints("printMessageInvalid input. Please enter a valid choice or EXIT to go back."),
+            prints("printViewPortfoliosS&P500NASDAQ"), inputs("0"),
 
-            prints("printMessageInvalid input. Please enter a valid choice or EXIT to go back."), prints("printViewPortfoliosS&P500NASDAQ"), inputs("1+1"),
+            prints("printMessageInvalid input. Please enter a valid choice or EXIT to go back."),
+            prints("printViewPortfoliosS&P500NASDAQ"), inputs("1+1"),
 
-            prints("printMessageInvalid input. Please enter a valid choice or EXIT to go back."), prints("printViewPortfoliosS&P500NASDAQ"), inputs("-5"),
+            prints("printMessageInvalid input. Please enter a valid choice or EXIT to go back."),
+            prints("printViewPortfoliosS&P500NASDAQ"), inputs("-5"),
 
-            prints("printMessageInvalid input. Please enter a valid choice or EXIT to go back."), prints("printViewPortfoliosS&P500NASDAQ"), inputs("2.5"),
+            prints("printMessageInvalid input. Please enter a valid choice or EXIT to go back."),
+            prints("printViewPortfoliosS&P500NASDAQ"), inputs("2.5"),
 
-            prints("printMessageInvalid input. Please enter a valid choice or EXIT to go back."), inputs("EXIT"),
+            prints("printMessageInvalid input. Please enter a valid choice or EXIT to go back."),
+            inputs("EXIT"),
 
             prints("printViewPortfoliosS&P500NASDAQ"), inputs("EXIT"),
 
@@ -1028,7 +1100,8 @@ public class BasicStockControllerTest
 
             prints("printViewPortfoliosS&P500NASDAQ"), inputs("1"),
 
-            prints("printMessageWhat is the name of the portfolio you would like to create?"), inputs("01/01/2021"),
+            prints("printMessageWhat is the name of the portfolio you would like to create?"),
+            inputs("01/01/2021"),
             modelLog("createNewPortfolio01/01/2021"),
 
             prints("printMessageSuccessfully created portfolio 01/01/2021."),
@@ -1044,11 +1117,10 @@ public class BasicStockControllerTest
   public void calculatePortfolioValue() {
     assertTrue(runTest(false, prints("printMainMenu"), inputs("4"),
 
-//            prints("printViewPortfoliosS&P500NASDAQ"), inputs("4"),
-
             prints("printViewPortfoliosS&P500NASDAQ"), inputs("1"),
 
-            prints("printMessageWhat is the name of the portfolio you would like to create?"), inputs("PortfoliosS&P500NASDAQ"),
+            prints("printMessageWhat is the name of the portfolio you would like to create?"),
+            inputs("PortfoliosS&P500NASDAQ"),
             modelLog("createNewPortfolioPORTFOLIOSS&P500NASDAQ"),
 
 

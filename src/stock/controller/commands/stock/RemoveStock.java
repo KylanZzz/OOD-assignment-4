@@ -18,9 +18,6 @@ public class RemoveStock extends StockCommand {
    * @param scanner the input of the stock program.
    * @param portfolio the name of the portfolio.
    */
-//  public RemoveStock(StockView view, StockModel model, Scanner scanner, String portfolio) {
-//    super(view, model, scanner, portfolio);
-//  }
   public RemoveStock(StockView view, StockModel model, Scanner scanner, String portfolio) {
     super(view, model, scanner, portfolio);
   }

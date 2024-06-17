@@ -35,7 +35,7 @@ public class RebalanceTransaction extends Transaction {
    *
    * @param data the string representation of the rebalance transaction data
    * @throws IOException if there is an error reading the data or if the data is formatted
-   * incorrectly
+   *                     incorrectly
    */
   protected RebalanceTransaction(String data) throws IOException {
     super(data);

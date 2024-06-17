@@ -17,7 +17,7 @@ import stock.view.StockView;
  * Abstract class providing base functionalities to interact with stock portfolios,
  * including common utility methods to fetch user inputs in a structured manner.
  */
-public class StockPortfolioCommand extends StockCommand {
+public abstract class StockPortfolioCommand extends StockCommand {
 
   /**
    * Constructs a StockPortfolioCommand with necessary context for portfolio operations.
@@ -30,11 +30,6 @@ public class StockPortfolioCommand extends StockCommand {
   public StockPortfolioCommand(StockView view, StockModel model,
                                Scanner scanner, String portfolio) {
     super(view, model, scanner, portfolio);
-  }
-
-  @Override
-  public void apply() {
-
   }
 
   /**
@@ -142,7 +137,6 @@ public class StockPortfolioCommand extends StockCommand {
       option = getPositiveFromUser(portfolioList.size());
     } catch (IOException e) {
       portfolioView.printMessage("Error occurred while fetching data: " + e.getMessage());
-      ;
     }
     return portfolioList.get(option - 1);
   }

@@ -100,43 +100,73 @@ public class SimpleFeaturesStockView implements FeaturesStockView {
   private void createManagePortfolioFrame(String portfolioName) {
     portfolioFrame = new JFrame();
     portfolioLabel = new JLabel();
-    portfolioPanel = new JPanel();
+    portfolioPanel = new JPanel(new GridBagLayout());  // Use GridBagLayout
+    GridBagConstraints gbc = new GridBagConstraints();
+    gbc.gridwidth = GridBagConstraints.REMAINDER;
+    gbc.fill = GridBagConstraints.HORIZONTAL;
+    gbc.insets = new Insets(20, 5, 15, 5);  // Increased top and bottom margin
+
+    // Share
     JLabel sharesLabel = new JLabel("Shares: ");
-    JTextField sharesText = new JTextField("Enter your text here");
+    JTextField sharesText = new JTextField(10);
+
+    sharesLabel.setFont(new Font("MV Boli", Font.PLAIN, 20));
+
+    // Ticker
+    JLabel tickerLabel = new JLabel("Ticker: ");
+    JTextField tickerText = new JTextField(10);
+    tickerLabel.setFont(new Font("MV Boli", Font.PLAIN, 20));
+
+    // Date
+    JLabel dateLabel = new JLabel("Date: ");
+    dateLabel.setFont(new Font("MV Boli", Font.PLAIN, 20));
+    JLabel monthLabel = new JLabel("Month");
+    JTextField monthText = new JTextField(5);
+    JLabel dayLabel = new JLabel("Date");
+    JTextField dayText = new JTextField(5);
+    JLabel yearLabel = new JLabel("Year");
+    JTextField yearText = new JTextField(8);
+
+    // Buy Stock
+    JPanel buySellPanel = new JPanel();
+    JButton buyStockButton = new JButton("Buy Stock");
+    buyStockButton.setFont(new Font("MV Boli", Font.BOLD, 16));
+    buyStockButton.setForeground(Color.WHITE);
+    buyStockButton.setBackground(Color.BLACK);
+    gbc.gridx = 1;
+    gbc.gridy = GridBagConstraints.RELATIVE;
+    buySellPanel.add(buyStockButton);
+//    gbc.insets = new Insets(20, 10, 5, 5);
+
+
 
 
     portfolioFrame.setTitle(portfolioName);
-    portfolioFrame.setSize(900, 1300);
+    portfolioFrame.setSize(700, 1300);
     portfolioFrame.setMinimumSize(new Dimension(300, 600));
-    portfolioFrame.setLayout(new FlowLayout());
+    portfolioFrame.setLayout(new BorderLayout());
 
-    sharesLabel.setBounds(5, 20, 30, 60);
-    sharesLabel.setFont(new Font("MV Boli", Font.PLAIN, 20));
+    portfolioPanel.add(sharesLabel);
+    portfolioPanel.add(sharesText, gbc);
+    portfolioPanel.add(tickerLabel);
+    portfolioPanel.add(tickerText, gbc);
+    portfolioPanel.add(dateLabel);
+    portfolioPanel.add(monthLabel);
+    portfolioPanel.add(monthText);
+    portfolioPanel.add(dayLabel);
+    portfolioPanel.add(dayText);
+    portfolioPanel.add(yearLabel);
+    portfolioPanel.add(yearText);
+    gbc.gridx = 1;
+    gbc.gridy = GridBagConstraints.RELATIVE;
+    portfolioPanel.add(buyStockButton, gbc);
+//    gbc.insets = new Insets(20, 20, 5, 200);
 
-    sharesText.setBounds(5, 10, 30, 60);
-
-    JLabel tickerLabel = new JLabel("Ticker: ");
-    tickerLabel.setFont(new Font("MV Boli", Font.PLAIN, 20));
-
-    JTextField tickerText = new JTextField("Enter Here");
-
-    tickerLabel.setBounds(5, 20, 50, 60);
-    tickerText.setBounds(5, 10, 50, 60);
-
-
-    portfolioFrame.add(sharesLabel);
-    portfolioFrame.add(sharesText);
-    portfolioFrame.add(tickerLabel);
-    portfolioFrame.add(tickerText);
-
-    JLabel DateLabel = new JLabel("Date: ");
-    JTextField monthText = new JTextField("MM:__");
-    JTextField dayText = new JTextField("DD:__");
-    JTextField yearText = new JTextField("YYYY:____");
-
-
-    portfolioLabel = new JLabel();
-
+    portfolioPanel.add(buySellPanel);
+    JPanel topMargin = new JPanel();
+//    topMargin.setPreferredSize(new Dimension(0, 5));
+    portfolioFrame.add(topMargin, BorderLayout.CENTER);
+    portfolioFrame.add(portfolioPanel, BorderLayout.NORTH);
 
     portfolioFrame.pack();
     portfolioFrame.setVisible(true);

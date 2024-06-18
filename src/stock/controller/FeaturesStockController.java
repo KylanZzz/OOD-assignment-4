@@ -53,7 +53,7 @@ public class FeaturesStockController implements PortfolioStockFeatures {
 
   @Override
   public void choosePortfolio(String name) {
-    view.displayEditPortfolio(name);
+    if (!name.isEmpty()) view.displayEditPortfolio(name);
   }
 
   @Override

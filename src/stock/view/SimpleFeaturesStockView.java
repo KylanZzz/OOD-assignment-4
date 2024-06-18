@@ -47,6 +47,7 @@ public class SimpleFeaturesStockView implements FeaturesStockView {
 
   public SimpleFeaturesStockView(String title) {
     init(title);
+    initPortfolioWindow();
   }
 
   private void init(String title) {
@@ -116,6 +117,12 @@ public class SimpleFeaturesStockView implements FeaturesStockView {
   }
 
   private void createManagePortfolioFrame(String portfolioName) {
+    initPortfolioWindow();
+    portfolioFrame.setTitle(portfolioName);
+    portfolioFrame.setVisible(true);
+  }
+
+  private void initPortfolioWindow() {
     portfolioFrame = new JFrame();
     portfolioLabel = new JLabel();
     portfolioPanel = new JPanel(new GridBagLayout());  // Use GridBagLayout
@@ -187,7 +194,6 @@ public class SimpleFeaturesStockView implements FeaturesStockView {
     DisplayingPanel.add(labelPanel, "Label");
     DisplayingPanel.add(tablePanel, "Table");
 
-    portfolioFrame.setTitle(portfolioName);
     portfolioFrame.setSize(700, 1300);
     portfolioFrame.setMinimumSize(new Dimension(300, 600));
     portfolioFrame.setLayout(new BorderLayout());
@@ -210,9 +216,7 @@ public class SimpleFeaturesStockView implements FeaturesStockView {
     portfolioFrame.add(topMargin, BorderLayout.CENTER);
     portfolioFrame.add(portfolioPanel, BorderLayout.NORTH);
     portfolioFrame.add(DisplayingPanel, BorderLayout.CENTER);
-
     portfolioFrame.pack();
-    portfolioFrame.setVisible(true);
   }
 
   @Override
@@ -224,20 +228,21 @@ public class SimpleFeaturesStockView implements FeaturesStockView {
             features.createPortfolio(createPortfolioInput.getText()));
 
     editPortfolioButton.addActionListener(it ->
-            features.choosePortfolio((String) portfolioDropdown.getSelectedItem()));
+    features.choosePortfolio((String) portfolioDropdown.getSelectedItem()));
 
     compositionButton.addActionListener(it -> {
+      cardLayout.show(DisplayingPanel, "Table");
       features.getComposition(
-              createPortfolioInput.getText(),
+              portfolioFrame.getTitle(),
               sharesText.getText(),
               monthText.getText(),
               dayText.getText(),
               yearText.getText(),
               tickerText.getText());
-      cardLayout.show(DisplayingPanel, "Table");
     });
 
     ValueButton.addActionListener(it -> {
+      cardLayout.show(DisplayingPanel, "Label");
       features.getValue(
               createPortfolioInput.getText(),
               sharesText.getText(),
@@ -245,10 +250,10 @@ public class SimpleFeaturesStockView implements FeaturesStockView {
               dayText.getText(),
               yearText.getText(),
               tickerText.getText());
-      cardLayout.show(DisplayingPanel, "Label");
     });
 
     buyStockButton.addActionListener(it -> {
+      cardLayout.show(DisplayingPanel, "Label");
       features.buyStock(
               createPortfolioInput.getText(),
               tickerText.getText(),
@@ -256,10 +261,10 @@ public class SimpleFeaturesStockView implements FeaturesStockView {
               monthText.getText(),
               dayText.getText(),
               yearText.getText());
-      cardLayout.show(DisplayingPanel, "Label");
     });
 
     sellStockButton.addActionListener(it -> {
+      cardLayout.show(DisplayingPanel, "Label");
       features.sellStock(
               createPortfolioInput.getText(),
               tickerText.getText(),
@@ -267,7 +272,6 @@ public class SimpleFeaturesStockView implements FeaturesStockView {
               monthText.getText(),
               dayText.getText(),
               yearText.getText());
-      cardLayout.show(DisplayingPanel, "Label");
     });
   }
 

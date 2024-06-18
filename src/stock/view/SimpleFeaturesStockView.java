@@ -58,7 +58,7 @@ public class SimpleFeaturesStockView implements FeaturesStockView {
     mainFrame = new JFrame();
     mainFrame.setTitle(title);
     mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    mainFrame.setMinimumSize(new Dimension(300,100));
+    mainFrame.setMinimumSize(new Dimension(400,300));
     this.mainPanel = new JPanel();
     mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
 
@@ -71,6 +71,7 @@ public class SimpleFeaturesStockView implements FeaturesStockView {
     createPortfolioPanel.add(new JLabel("Name:"));
     createPortfolioPanel.add(createPortfolioInput);
     createPortfolioPanel.add(newPortfolioButton);
+    createPortfolioPanel.add(Box.createVerticalStrut(50));
     mainPanel.add(createPortfolioPanel);
 
     //Set up load portfolio save file input
@@ -80,16 +81,19 @@ public class SimpleFeaturesStockView implements FeaturesStockView {
     loadPortfolioSaveButton = new JButton("Load Save");
     loadPortfolioPanel.add(getPortfolioSaveButton);
     loadPortfolioPanel.add(loadPortfolioSaveButton);
+    loadPortfolioPanel.add(Box.createVerticalStrut(50));
     mainPanel.add(loadPortfolioPanel);
 
     //Create display save label
     loadPortfolioLabel = new JLabel(" ");
     loadPortfolioLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+    mainPanel.add(Box.createVerticalStrut(25));
     mainPanel.add(loadPortfolioLabel);
 
     //Create display results label
     createPortfolioLabel = new JLabel(" ");
     createPortfolioLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+    mainPanel.add(Box.createVerticalStrut(25));
     mainPanel.add(createPortfolioLabel);
 
     //Portfolio Dropdown
@@ -99,6 +103,7 @@ public class SimpleFeaturesStockView implements FeaturesStockView {
     portfolioSelectorPanel.add(portfolioDropdown);
     editPortfolioButton = new JButton("Edit");
     portfolioSelectorPanel.add(editPortfolioButton);
+    portfolioSelectorPanel.add(Box.createVerticalStrut(50));
     mainPanel.add(portfolioSelectorPanel);
 
     mainFrame.getContentPane().add(mainPanel);

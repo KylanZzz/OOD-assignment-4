@@ -64,7 +64,11 @@ public class FeaturesStockController implements PortfolioStockFeatures {
 
   @Override
   public void choosePortfolio(String name) {
-    if (!name.isEmpty()) view.displayEditPortfolio(name);
+    if (name != null && !name.isBlank()) {
+      view.displayEditPortfolio(name);
+    } else {
+      view.displayErrorMessage("Please create a new portfolio or load one from a save first.");
+    }
   }
 
   @Override
@@ -163,14 +167,19 @@ public class FeaturesStockController implements PortfolioStockFeatures {
 
   private boolean isValidInput(String portfolio, String ticker, String shares, String month,
                                String day, String year) {
-    portfolio = portfolio.toUpperCase();
+    portfolio = portfolio.toUpperCase().stripLeading().stripTrailing();
+    shares = shares.toUpperCase().stripLeading().stripTrailing();
+    month = month.toUpperCase().stripLeading().stripTrailing();
+    day = day.toUpperCase().stripLeading().stripTrailing();
+    year = year.toUpperCase().stripLeading().stripTrailing();
+
     if (!model.getPortfolios().contains(portfolio)) {
       view.displayErrorMessage("Portfolio with that name does not exist.");
       return false;
     }
 
-    if (portfolio.isEmpty()) {
-      view.displayErrorMessage("Portfolio cannot be an empty string!");
+    if (portfolio.isEmpty() || ticker.isEmpty() || shares.isEmpty() || month.isEmpty() || day.isEmpty()) {
+      view.displayErrorMessage("Make sure all fields are filled out!");
       return false;
     }
 

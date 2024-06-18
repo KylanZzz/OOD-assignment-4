@@ -46,6 +46,13 @@ public class FeaturesStockController implements PortfolioStockFeatures {
 
   @Override
   public void loadPortfolio(String filePath) {
+    filePath = filePath.stripLeading().stripTrailing();
+
+    if (filePath.isEmpty()) {
+      view.displayErrorMessage("Please choose a file path to load!");
+      return;
+    }
+
     try {
       model.loadPortfolioSave(filePath);
       view.displayLoadedPortfolio(filePath);
@@ -63,6 +70,9 @@ public class FeaturesStockController implements PortfolioStockFeatures {
   @Override
   public void buyStock(String portfolio, String ticker, String shares, String month, String day,
                        String year) {
+    ticker = ticker.toUpperCase();
+    portfolio = portfolio.toUpperCase();
+
     if (isValidInput(portfolio, ticker, shares, month, day, year)) {
       int sh = Integer.parseInt(shares);
 
@@ -79,6 +89,9 @@ public class FeaturesStockController implements PortfolioStockFeatures {
   @Override
   public void sellStock(String portfolio, String ticker, String shares, String month, String day,
                         String year) {
+    ticker = ticker.toUpperCase();
+    portfolio = portfolio.toUpperCase();
+
     if (isValidInput(portfolio, ticker, shares, month, day, year)) {
       int sh = Integer.parseInt(shares);
 
@@ -94,6 +107,9 @@ public class FeaturesStockController implements PortfolioStockFeatures {
   @Override
   public void getComposition(String portfolio, String month, String day, String year, String share,
                              String ticker) {
+    ticker = ticker.toUpperCase();
+    portfolio = portfolio.toUpperCase();
+
     LocalDate date = getValidDate(month, day, year);
     if (date == null) return;
 
@@ -102,10 +118,10 @@ public class FeaturesStockController implements PortfolioStockFeatures {
       return;
     }
 
-    if (!share.isEmpty() || !ticker.isEmpty()) {
-      view.displayErrorMessage("Ticker and share must be empty in order to get composition.");
-      return;
-    }
+//    if (!share.isEmpty() || !ticker.isEmpty()) {
+//      view.displayErrorMessage("Ticker and share must be empty in order to get composition.");
+//      return;
+//    }
 
     view.displayComposition(model.getPortfolioContentsDecimal(portfolio, date));
   }
@@ -121,10 +137,10 @@ public class FeaturesStockController implements PortfolioStockFeatures {
       return;
     }
 
-    if (!share.isEmpty() || !ticker.isEmpty()) {
-      view.displayErrorMessage("Ticker and share must be empty in order to calculate value.");
-      return;
-    }
+//    if (!share.isEmpty() || !ticker.isEmpty()) {
+//      view.displayErrorMessage("Ticker and share must be empty in order to calculate value.");
+//      return;
+//    }
 
     try {
       view.displayValue(model.getPortfolioValue(portfolio, date));
@@ -135,6 +151,8 @@ public class FeaturesStockController implements PortfolioStockFeatures {
 
   @Override
   public void savePortfolio(String portfolio) {
+    portfolio = portfolio.toUpperCase();
+
     try {
       model.createNewPortfolioSave(portfolio);
       view.displayCreatedSave(portfolio);

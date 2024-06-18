@@ -3,6 +3,7 @@ package stock.controller;
 import java.io.IOException;
 import java.time.DateTimeException;
 import java.time.LocalDate;
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Map;
 
@@ -71,6 +72,16 @@ public class FeaturesStockController implements PortfolioStockFeatures {
     LocalDate date = getValidDate(month, day, year);
     if (date == null) return;
 
+    if (portfolio.isEmpty()) {
+      view.displayErrorMessage("Portfolio cannot be an empty string!");
+      return;
+    }
+
+    if (!share.isEmpty() || !ticker.isEmpty()) {
+      view.displayErrorMessage("Ticker and share fields are empty in order to get composition.");
+      return;
+    }
+
     view.displayComposition(model.getPortfolioContentsDecimal(portfolio, date));
   }
 
@@ -78,6 +89,16 @@ public class FeaturesStockController implements PortfolioStockFeatures {
   public void getValue(String portfolio, String month, String day, String year, String share, String ticker) {
     LocalDate date = getValidDate(month, day, year);
     if (date == null) return;
+
+    if (portfolio.isEmpty()) {
+      view.displayErrorMessage("Portfolio cannot be an empty string!");
+      return;
+    }
+
+    if (!share.isEmpty() || !ticker.isEmpty()) {
+      view.displayErrorMessage("Ticker and share fields are empty in order to calculate value.");
+      return;
+    }
 
     try {
       view.displayValue(model.getPortfolioValue(portfolio, date));
@@ -91,12 +112,23 @@ public class FeaturesStockController implements PortfolioStockFeatures {
 
   }
 
-  private LocalDate getValidDate(int month, int day, int year) {
+  private LocalDate getValidDate(String month, String day, String year) {
+    int y;
+    int m;
+    int d;
     try {
-      return LocalDate.of(year, month, day);
+      y = Integer.parseInt(year);
+      m = Integer.parseInt(month);
+      d = Integer.parseInt(day);
+    } catch (Exception e) {
+      view.displayErrorMessage("Dates entered must be Integers only!");
+      return null;
+    }
+
+    try {
+      return LocalDate.of(y, m, d);
     } catch (DateTimeException e) {
-      view.displayErrorMessage("Invalid date! Please enter a positive, valid integer in all "
-              + "fields.");
+      view.displayErrorMessage("Invalid date! Please enter a positive, valid date.");
       return null;
     }
   }

@@ -56,18 +56,18 @@ public class FeaturesStockController implements PortfolioStockFeatures {
     if (!name.isEmpty()) view.displayEditPortfolio(name);
   }
 
+    @Override
+    public void buyStock(String portfolio, String ticker, String shares, String month, String day, String year) {
+
+    }
+
+    @Override
+    public void sellStock(String portfolio, String ticker, String shares, String month, String day, String year) {
+
+    }
+
   @Override
-  public void buyStock(String portfolio, String ticker, int shares, int month, int day, int year) {
-
-  }
-
-  @Override
-  public void sellStock(String portfolio, String ticker, int shares, int month, int day, int year) {
-
-  }
-
-  @Override
-  public void getComposition(String portfolio, int month, int day, int year) {
+  public void getComposition(String portfolio, String month, String day, String year, String share, String ticker) {
     LocalDate date = getValidDate(month, day, year);
     if (date == null) return;
 
@@ -75,7 +75,7 @@ public class FeaturesStockController implements PortfolioStockFeatures {
   }
 
   @Override
-  public void getValue(String portfolio, int month, int day, int year) {
+  public void getValue(String portfolio, String month, String day, String year, String share, String ticker) {
     LocalDate date = getValidDate(month, day, year);
     if (date == null) return;
 

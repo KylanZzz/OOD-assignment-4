@@ -120,26 +120,29 @@ public class SimpleFeaturesStockView implements FeaturesStockView {
     // Date
     JLabel dateLabel = new JLabel("Date: ");
     dateLabel.setFont(new Font("MV Boli", Font.PLAIN, 20));
-    JLabel monthLabel = new JLabel("Month");
+    JLabel monthLabel = new JLabel("Month ");
     JTextField monthText = new JTextField(5);
-    JLabel dayLabel = new JLabel("Date");
+    JLabel dayLabel = new JLabel("Date ");
     JTextField dayText = new JTextField(5);
-    JLabel yearLabel = new JLabel("Year");
+    JLabel yearLabel = new JLabel("Year ");
     JTextField yearText = new JTextField(8);
 
     // Buy Stock
-    JPanel buySellPanel = new JPanel();
+    JPanel buySellPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
     JButton buyStockButton = new JButton("Buy Stock");
     buyStockButton.setFont(new Font("MV Boli", Font.BOLD, 16));
     buyStockButton.setForeground(Color.WHITE);
     buyStockButton.setBackground(Color.BLACK);
-    gbc.gridx = 1;
-    gbc.gridy = GridBagConstraints.RELATIVE;
+//    gbc.gridx = 1;
+//    gbc.gridy = GridBagConstraints.RELATIVE;
+
+    JButton sellStockButton = new JButton("Sell Stock");
+    sellStockButton.setFont(new Font("MV Boli", Font.BOLD, 16));
+    sellStockButton.setForeground(Color.WHITE);
+    sellStockButton.setBackground(Color.BLACK);
+
     buySellPanel.add(buyStockButton);
-//    gbc.insets = new Insets(20, 10, 5, 5);
-
-
-
+    buySellPanel.add(sellStockButton);
 
     portfolioFrame.setTitle(portfolioName);
     portfolioFrame.setSize(700, 1300);
@@ -156,15 +159,10 @@ public class SimpleFeaturesStockView implements FeaturesStockView {
     portfolioPanel.add(dayLabel);
     portfolioPanel.add(dayText);
     portfolioPanel.add(yearLabel);
-    portfolioPanel.add(yearText);
-    gbc.gridx = 1;
-    gbc.gridy = GridBagConstraints.RELATIVE;
-    portfolioPanel.add(buyStockButton, gbc);
-//    gbc.insets = new Insets(20, 20, 5, 200);
-
+    portfolioPanel.add(yearText, gbc);
     portfolioPanel.add(buySellPanel);
     JPanel topMargin = new JPanel();
-//    topMargin.setPreferredSize(new Dimension(0, 5));
+    topMargin.setPreferredSize(new Dimension(0, 5));
     portfolioFrame.add(topMargin, BorderLayout.CENTER);
     portfolioFrame.add(portfolioPanel, BorderLayout.NORTH);
 

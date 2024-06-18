@@ -7,13 +7,13 @@ public interface PortfolioStockFeatures {
 
   void choosePortfolio(String name);
 
-  void buyStock(String portfolio, String ticker, int shares, int month, int day, int year);
+  void buyStock(String portfolio, String ticker, String shares, String month, String day, String year);
 
-  void sellStock(String portfolio, String ticker, int shares, int month, int day, int year);
+  void sellStock(String portfolio, String ticker, String shares, String month, String day, String year);
 
-  void getComposition(String portfolio, int month, int day, int year);
+  void getComposition(String portfolio, String month, String day, String year, String share, String ticker);
 
-  void getValue(String portfolio, int month, int day, int year);
+  void getValue(String portfolio, String month, String day, String year, String share, String ticker);
 
   void savePortfolio(String portfolio);
 }

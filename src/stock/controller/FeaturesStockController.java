@@ -6,6 +6,7 @@ import java.time.LocalDate;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
 
 import stock.model.AlphaVantageDataSource;
 import stock.model.PortfolioStockModel;
@@ -57,18 +58,40 @@ public class FeaturesStockController implements PortfolioStockFeatures {
     if (!name.isEmpty()) view.displayEditPortfolio(name);
   }
 
-    @Override
-    public void buyStock(String portfolio, String ticker, String shares, String month, String day, String year) {
+  @Override
+  public void buyStock(String portfolio, String ticker, String shares, String month, String day,
+                       String year) {
+    if (isValidInput(portfolio, ticker, shares, month, day, year)) {
+      int sh = Integer.parseInt(shares);
 
+      try {
+        model.addStockToPortfolio(portfolio, ticker, sh, getValidDate(month, day, year));
+        view.displayBoughtStock(ticker, sh);
+      } catch (Exception e) {
+        view.displayErrorMessage(e.getMessage());
+      }
     }
+  }
 
-    @Override
-    public void sellStock(String portfolio, String ticker, String shares, String month, String day, String year) {
-
-    }
 
   @Override
-  public void getComposition(String portfolio, String month, String day, String year, String share, String ticker) {
+  public void sellStock(String portfolio, String ticker, String shares, String month, String day,
+                        String year) {
+    if (isValidInput(portfolio, ticker, shares, month, day, year)) {
+      int sh = Integer.parseInt(shares);
+
+      try {
+        model.sellStockFromPortfolio(portfolio, ticker, sh, getValidDate(month, day, year));
+        view.displaySoldStock(ticker, sh);
+      } catch (Exception e) {
+        view.displayErrorMessage(e.getMessage());
+      }
+    }
+  }
+
+  @Override
+  public void getComposition(String portfolio, String month, String day, String year, String share,
+                             String ticker) {
     LocalDate date = getValidDate(month, day, year);
     if (date == null) return;
 
@@ -78,7 +101,7 @@ public class FeaturesStockController implements PortfolioStockFeatures {
     }
 
     if (!share.isEmpty() || !ticker.isEmpty()) {
-      view.displayErrorMessage("Ticker and share fields are empty in order to get composition.");
+      view.displayErrorMessage("Ticker and share must be empty in order to get composition.");
       return;
     }
 
@@ -86,7 +109,8 @@ public class FeaturesStockController implements PortfolioStockFeatures {
   }
 
   @Override
-  public void getValue(String portfolio, String month, String day, String year, String share, String ticker) {
+  public void getValue(String portfolio, String month, String day, String year, String share,
+                       String ticker) {
     LocalDate date = getValidDate(month, day, year);
     if (date == null) return;
 
@@ -96,7 +120,7 @@ public class FeaturesStockController implements PortfolioStockFeatures {
     }
 
     if (!share.isEmpty() || !ticker.isEmpty()) {
-      view.displayErrorMessage("Ticker and share fields are empty in order to calculate value.");
+      view.displayErrorMessage("Ticker and share must be empty in order to calculate value.");
       return;
     }
 
@@ -109,7 +133,54 @@ public class FeaturesStockController implements PortfolioStockFeatures {
 
   @Override
   public void savePortfolio(String portfolio) {
+    try {
+      model.createNewPortfolioSave(portfolio);
+      view.displayCreatedSave(portfolio);
+    } catch (Exception e) {
+      view.displayErrorMessage(e.getMessage());
+    }
+  }
 
+  private boolean isValidInput(String portfolio, String ticker, String shares, String month,
+                               String day, String year) {
+    if (!model.getPortfolios().contains(portfolio)) {
+      view.displayErrorMessage("Portfolio with that name does not exist.");
+      return false;
+    }
+
+    if (portfolio.isEmpty()) {
+      view.displayErrorMessage("Portfolio cannot be an empty string!");
+      return false;
+    }
+
+    LocalDate date = getValidDate(month, day, year);
+    if (date == null) {
+      return false;
+    }
+
+    int sh;
+    try {
+      sh = Integer.parseInt(shares);
+    } catch (Exception e) {
+      view.displayErrorMessage("Number of shares must be an Integer.");
+      return false;
+    }
+
+    if (sh < 0) {
+      view.displayErrorMessage("Number of shares must be a positive.");
+      return false;
+    }
+
+    try {
+      if (!model.stockExists(ticker)) {
+        view.displayErrorMessage("Ticker does not exist.");
+        return false;
+      }
+    } catch (Exception e) {
+      view.displayErrorMessage(e.getMessage());
+    }
+
+    return true;
   }
 
   private LocalDate getValidDate(String month, String day, String year) {

@@ -18,7 +18,7 @@ public interface FeaturesStockView {
 
   void displayPortfolios(List<String> names);
 
-  void displayCreatedSave(String name, String filepath);
+  void displayCreatedSave(String name);
 
   void displayCreatedPortfolio(String portfolio);
 

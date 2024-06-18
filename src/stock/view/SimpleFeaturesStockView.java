@@ -7,11 +7,27 @@ import java.util.Map;
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.table.DefaultTableModel;
 
 import stock.controller.PortfolioStockFeatures;
 import stock.view.FeaturesStockView;
 
 public class SimpleFeaturesStockView implements FeaturesStockView {
+  private JButton buyStockButton;
+  private JTextField sharesText;
+  private JTextField monthText;
+  private JTextField dayText;
+  private JTextField yearText;
+  private JTextField tickerText;
+  private JButton sellStockButton = new JButton("Sell Stock");
+  private JButton compositionButton = new JButton("Get Composition");
+  private JButton ValueButton = new JButton("Get Value");
+  private JLabel valueLabel;
+  private CardLayout cardLayout;
+  private JPanel cardPanel;
+  private JTable table;
+  private JLabel label;
+  private JFrame mainFrame;
   private JButton commandButton;
   private JFrame portfolioFrame;
   private JLabel portfolioLabel;
@@ -33,7 +49,7 @@ public class SimpleFeaturesStockView implements FeaturesStockView {
 
   private void init(String title) {
     // Set up main frame
-    JFrame mainFrame = new JFrame();
+    mainFrame = new JFrame();
     mainFrame.setTitle(title);
     mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     mainFrame.setMinimumSize(new Dimension(300,100));
@@ -101,6 +117,12 @@ public class SimpleFeaturesStockView implements FeaturesStockView {
     portfolioFrame = new JFrame();
     portfolioLabel = new JLabel();
     portfolioPanel = new JPanel(new GridBagLayout());  // Use GridBagLayout
+    DefaultTableModel model = new DefaultTableModel();
+    model.addColumn("Ticker");
+    model.addColumn("Shares");
+    JTable table = new JTable(model);
+    JScrollPane scrollPane = new JScrollPane(table);
+
     GridBagConstraints gbc = new GridBagConstraints();
     gbc.gridwidth = GridBagConstraints.REMAINDER;
     gbc.fill = GridBagConstraints.HORIZONTAL;
@@ -108,13 +130,13 @@ public class SimpleFeaturesStockView implements FeaturesStockView {
 
     // Share
     JLabel sharesLabel = new JLabel("Shares: ");
-    JTextField sharesText = new JTextField(10);
+    sharesText = new JTextField(10);
 
     sharesLabel.setFont(new Font("MV Boli", Font.PLAIN, 20));
 
     // Ticker
     JLabel tickerLabel = new JLabel("Ticker: ");
-    JTextField tickerText = new JTextField(10);
+    tickerText = new JTextField(10);
     tickerLabel.setFont(new Font("MV Boli", Font.PLAIN, 20));
 
     // Date
@@ -125,24 +147,38 @@ public class SimpleFeaturesStockView implements FeaturesStockView {
     JLabel dayLabel = new JLabel("Date ");
     JTextField dayText = new JTextField(5);
     JLabel yearLabel = new JLabel("Year ");
-    JTextField yearText = new JTextField(8);
+    JTextField yearText = new JTextField(5);
 
-    // Buy Stock
-    JPanel buySellPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
-    JButton buyStockButton = new JButton("Buy Stock");
+    // All the functions of the portfolio
+    JPanel FunctionPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
+
+    buyStockButton = new JButton("Buy Stock");
     buyStockButton.setFont(new Font("MV Boli", Font.BOLD, 16));
     buyStockButton.setForeground(Color.WHITE);
     buyStockButton.setBackground(Color.BLACK);
 //    gbc.gridx = 1;
 //    gbc.gridy = GridBagConstraints.RELATIVE;
 
-    JButton sellStockButton = new JButton("Sell Stock");
+    sellStockButton = new JButton("Sell Stock");
     sellStockButton.setFont(new Font("MV Boli", Font.BOLD, 16));
     sellStockButton.setForeground(Color.WHITE);
     sellStockButton.setBackground(Color.BLACK);
 
-    buySellPanel.add(buyStockButton);
-    buySellPanel.add(sellStockButton);
+    compositionButton = new JButton("Get Composition");
+    compositionButton.setFont(new Font("MV Boli", Font.BOLD, 16));
+    compositionButton.setForeground(Color.WHITE);
+    compositionButton.setBackground(Color.BLACK);
+
+    ValueButton = new JButton("Get Value");
+    ValueButton.setFont(new Font("MV Boli", Font.BOLD, 16));
+    ValueButton.setForeground(Color.WHITE);
+    ValueButton.setBackground(Color.BLACK);
+
+    FunctionPanel.add(buyStockButton);
+    FunctionPanel.add(sellStockButton);
+    FunctionPanel.add(compositionButton);
+    FunctionPanel.add(ValueButton);
+
 
     portfolioFrame.setTitle(portfolioName);
     portfolioFrame.setSize(700, 1300);
@@ -160,11 +196,15 @@ public class SimpleFeaturesStockView implements FeaturesStockView {
     portfolioPanel.add(dayText);
     portfolioPanel.add(yearLabel);
     portfolioPanel.add(yearText, gbc);
-    portfolioPanel.add(buySellPanel);
+    portfolioPanel.add(FunctionPanel);
+    portfolioFrame.add(scrollPane);
+
     JPanel topMargin = new JPanel();
     topMargin.setPreferredSize(new Dimension(0, 5));
     portfolioFrame.add(topMargin, BorderLayout.CENTER);
     portfolioFrame.add(portfolioPanel, BorderLayout.NORTH);
+    portfolioFrame.add(FunctionPanel, BorderLayout.WEST);
+    portfolioFrame.add(scrollPane, BorderLayout.SOUTH);
 
     portfolioFrame.pack();
     portfolioFrame.setVisible(true);
@@ -176,15 +216,30 @@ public class SimpleFeaturesStockView implements FeaturesStockView {
     newPortfolioButton.addActionListener(it -> features.createPortfolio(createPortfolioInput.getText()));
     editPortfolioButton.addActionListener(it -> features.choosePortfolio(
             (String) portfolioDropdown.getSelectedItem()));
+    compositionButton.addActionListener(it -> features.getComposition(sharesText.getText(),
+            monthText.getText(), dayText.getText(), yearText.getText(), sharesText.getText(), tickerText.getText()));
   }
 
   @Override
   public void displayComposition(Map<String, Double> composition) {
+    cardLayout = new CardLayout();
+    cardPanel = new JPanel();
+    DefaultTableModel model = new DefaultTableModel();
+    model.addColumn("Ticker");
+    model.addColumn("Value");
 
+    for (Map.Entry<String, Double> entry : composition.entrySet()) {
+      model.addRow(new Object[]{entry.getKey(), entry.getValue()});
+    }
+    cardPanel.add(new JScrollPane(table), "Table");
+    portfolioFrame.add(cardPanel, BorderLayout.SOUTH);
   }
 
   @Override
   public void displayValue(double value) {
+    valueLabel = new JLabel("Value: " + value, JLabel.CENTER);
+    cardPanel.add(label, "valueLabel");
+    portfolioFrame.add(cardPanel, BorderLayout.SOUTH);
 
   }
 
@@ -207,7 +262,7 @@ public class SimpleFeaturesStockView implements FeaturesStockView {
   }
 
   @Override
-  public void displayCreatedSave(String name, String filepath) {
+  public void displayCreatedSave(String portfolioName) {
 
   }
 
@@ -228,8 +283,7 @@ public class SimpleFeaturesStockView implements FeaturesStockView {
 
   @Override
   public void displayErrorMessage(String message) {
-    //TODO: Create a new window to display error message (temporarily printing)
-    System.out.println(message);
+    JOptionPane.showMessageDialog(mainFrame, message, "Error", JOptionPane.ERROR_MESSAGE);
   }
 
 }

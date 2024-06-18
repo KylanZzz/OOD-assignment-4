@@ -152,7 +152,7 @@ public class SimpleFeaturesStockView implements FeaturesStockView {
     dateLabel.setFont(new Font("MV Boli", Font.PLAIN, 20));
     JLabel monthLabel = new JLabel("Month ");
     monthText = new JTextField(5);
-    JLabel dayLabel = new JLabel("Date ");
+    JLabel dayLabel = new JLabel("Day ");
     dayText = new JTextField(5);
     JLabel yearLabel = new JLabel("Year ");
     yearText = new JTextField(5);

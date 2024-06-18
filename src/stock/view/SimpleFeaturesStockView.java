@@ -112,7 +112,8 @@ public class SimpleFeaturesStockView implements FeaturesStockView {
   private void createNewGetPortfolioSaveFrame() {
     JFileChooser portfolioSaveInput = new JFileChooser("./res/portfolio");
     portfolioSaveInput.setDialogTitle("Please pick the save file");
-    portfolioSaveInput.setFileFilter(new FileNameExtensionFilter("Text Files", "txt"));
+    portfolioSaveInput.setFileFilter(new FileNameExtensionFilter("Text Files",
+            "txt"));
     int result = portfolioSaveInput.showOpenDialog(null);
 
     if (result == JFileChooser.APPROVE_OPTION) {
@@ -236,7 +237,8 @@ public class SimpleFeaturesStockView implements FeaturesStockView {
   @Override
   public void addFeatures(PortfolioStockFeatures features) {
     loadPortfolioSaveButton.addActionListener(it ->
-            features.loadPortfolio(loadPortfolioLabel.getText().replace("Selected: ", "")));
+            features.loadPortfolio(loadPortfolioLabel.getText().replace("Selected: ",
+                    "")));
 
     newPortfolioButton.addActionListener(it ->
             features.createPortfolio(createPortfolioInput.getText()));

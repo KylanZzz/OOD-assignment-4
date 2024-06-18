@@ -13,6 +13,9 @@ import stock.controller.PortfolioStockFeatures;
 import stock.view.FeaturesStockView;
 
 public class SimpleFeaturesStockView implements FeaturesStockView {
+  private JPanel savePanel;
+  private JButton saveButton;
+
   private JTable table;
   private JScrollPane tablePanel;
   private DefaultTableModel tableModel;
@@ -46,11 +49,11 @@ public class SimpleFeaturesStockView implements FeaturesStockView {
   private JComboBox<String> portfolioDropdown;
 
   public SimpleFeaturesStockView(String title) {
-    init(title);
+    initMainWindow(title);
     initPortfolioWindow();
   }
 
-  private void init(String title) {
+  private void initMainWindow(String title) {
     // Set up main frame
     mainFrame = new JFrame();
     mainFrame.setTitle(title);
@@ -193,6 +196,12 @@ public class SimpleFeaturesStockView implements FeaturesStockView {
     DisplayingPanel.add(labelPanel, "Label");
     DisplayingPanel.add(tablePanel, "Table");
 
+    savePanel = new JPanel(new BorderLayout());
+    saveButton = new JButton("Save Portfolio");
+    saveButton.setFont(new Font("MV Boli", Font.BOLD, 16));
+
+    savePanel.add(saveButton, BorderLayout.CENTER);
+
     portfolioFrame.setSize(700, 1300);
     portfolioFrame.setMinimumSize(new Dimension(300, 600));
     portfolioFrame.setLayout(new BorderLayout());
@@ -215,6 +224,8 @@ public class SimpleFeaturesStockView implements FeaturesStockView {
     portfolioFrame.add(topMargin, BorderLayout.CENTER);
     portfolioFrame.add(portfolioPanel, BorderLayout.NORTH);
     portfolioFrame.add(DisplayingPanel, BorderLayout.CENTER);
+    portfolioFrame.add(savePanel, BorderLayout.SOUTH);
+
     portfolioFrame.pack();
   }
 
@@ -272,6 +283,12 @@ public class SimpleFeaturesStockView implements FeaturesStockView {
               dayText.getText(),
               yearText.getText());
     });
+
+    saveButton.addActionListener(it -> {
+      cardLayout.show(DisplayingPanel, "Label");
+      features.savePortfolio(
+              portfolioFrame.getTitle());
+    });
   }
 
   @Override
@@ -285,7 +302,7 @@ public class SimpleFeaturesStockView implements FeaturesStockView {
 
   @Override
   public void displayValue(double value) {
-    displayLabel.setText("The value of this portfolio on this date is: " + value);
+    displayLabel.setText("The value of this portfolio on this date is: " + "$" + value);
   }
 
   @Override
@@ -308,7 +325,7 @@ public class SimpleFeaturesStockView implements FeaturesStockView {
 
   @Override
   public void displayCreatedSave(String portfolioName) {
-    createPortfolioLabel.setText("Successfully created: " + portfolioName);
+    displayLabel.setText("Successfully saved: " + portfolioName);
   }
 
   @Override

@@ -214,7 +214,7 @@ public class SimpleFeaturesStockView implements FeaturesStockView {
             (String) portfolioDropdown.getSelectedItem()));
     compositionButton.addActionListener(it -> features.getComposition(sharesText.getText(),
             monthText.getText(), dayText.getText(), yearText.getText(), sharesText.getText(), tickerText.getText()));
-    ValueButton.addActionListener(it -> features.getValue());
+//    ValueButton.addActionListener(it -> features.getValue());
   }
 
   @Override

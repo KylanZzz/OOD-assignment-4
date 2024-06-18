@@ -27,6 +27,8 @@ public class FeaturesStockController implements PortfolioStockFeatures {
 
   @Override
   public void createPortfolio(String name) {
+    name = name.stripTrailing().stripLeading();
+
     if (name.isEmpty()) {
       view.displayErrorMessage("Cannot create a nameless portfolio!");
       return;

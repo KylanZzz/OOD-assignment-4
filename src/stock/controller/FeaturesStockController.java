@@ -145,6 +145,7 @@ public class FeaturesStockController implements PortfolioStockFeatures {
 
   private boolean isValidInput(String portfolio, String ticker, String shares, String month,
                                String day, String year) {
+    portfolio = portfolio.toUpperCase();
     if (!model.getPortfolios().contains(portfolio)) {
       view.displayErrorMessage("Portfolio with that name does not exist.");
       return false;

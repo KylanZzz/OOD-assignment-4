@@ -117,7 +117,6 @@ public class SimpleFeaturesStockView implements FeaturesStockView {
   }
 
   private void createManagePortfolioFrame(String portfolioName) {
-    initPortfolioWindow();
     portfolioFrame.setTitle(portfolioName);
     portfolioFrame.setVisible(true);
   }
@@ -234,28 +233,28 @@ public class SimpleFeaturesStockView implements FeaturesStockView {
       cardLayout.show(DisplayingPanel, "Table");
       features.getComposition(
               portfolioFrame.getTitle(),
-              sharesText.getText(),
               monthText.getText(),
               dayText.getText(),
               yearText.getText(),
+              sharesText.getText(),
               tickerText.getText());
     });
 
     ValueButton.addActionListener(it -> {
       cardLayout.show(DisplayingPanel, "Label");
       features.getValue(
-              createPortfolioInput.getText(),
-              sharesText.getText(),
+              portfolioFrame.getTitle(),
               monthText.getText(),
               dayText.getText(),
               yearText.getText(),
+              sharesText.getText(),
               tickerText.getText());
     });
 
     buyStockButton.addActionListener(it -> {
       cardLayout.show(DisplayingPanel, "Label");
       features.buyStock(
-              createPortfolioInput.getText(),
+              portfolioFrame.getTitle(),
               tickerText.getText(),
               sharesText.getText(),
               monthText.getText(),
@@ -266,7 +265,7 @@ public class SimpleFeaturesStockView implements FeaturesStockView {
     sellStockButton.addActionListener(it -> {
       cardLayout.show(DisplayingPanel, "Label");
       features.sellStock(
-              createPortfolioInput.getText(),
+              portfolioFrame.getTitle(),
               tickerText.getText(),
               sharesText.getText(),
               monthText.getText(),

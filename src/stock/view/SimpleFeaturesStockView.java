@@ -154,25 +154,21 @@ public class SimpleFeaturesStockView implements FeaturesStockView {
 
     buyStockButton = new JButton("Buy Stock");
     buyStockButton.setFont(new Font("MV Boli", Font.BOLD, 16));
-    buyStockButton.setForeground(Color.WHITE);
-    buyStockButton.setBackground(Color.BLACK);
+    buyStockButton.setForeground(Color.BLACK);
 //    gbc.gridx = 1;
 //    gbc.gridy = GridBagConstraints.RELATIVE;
 
     sellStockButton = new JButton("Sell Stock");
     sellStockButton.setFont(new Font("MV Boli", Font.BOLD, 16));
-    sellStockButton.setForeground(Color.WHITE);
-    sellStockButton.setBackground(Color.BLACK);
+    sellStockButton.setForeground(Color.BLACK);
 
     compositionButton = new JButton("Get Composition");
     compositionButton.setFont(new Font("MV Boli", Font.BOLD, 16));
-    compositionButton.setForeground(Color.WHITE);
-    compositionButton.setBackground(Color.BLACK);
+    compositionButton.setForeground(Color.BLACK);
 
     ValueButton = new JButton("Get Value");
     ValueButton.setFont(new Font("MV Boli", Font.BOLD, 16));
-    ValueButton.setForeground(Color.WHITE);
-    ValueButton.setBackground(Color.BLACK);
+    ValueButton.setForeground(Color.BLACK);
 
     FunctionPanel.add(buyStockButton);
     FunctionPanel.add(sellStockButton);
@@ -218,6 +214,7 @@ public class SimpleFeaturesStockView implements FeaturesStockView {
             (String) portfolioDropdown.getSelectedItem()));
     compositionButton.addActionListener(it -> features.getComposition(sharesText.getText(),
             monthText.getText(), dayText.getText(), yearText.getText(), sharesText.getText(), tickerText.getText()));
+    ValueButton.addActionListener(it -> features.getValue());
   }
 
   @Override

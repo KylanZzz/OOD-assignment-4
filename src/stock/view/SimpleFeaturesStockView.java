@@ -231,6 +231,7 @@ public class SimpleFeaturesStockView implements FeaturesStockView {
     portfolioFrame.add(savePanel, BorderLayout.SOUTH);
 
     portfolioFrame.pack();
+    portfolioFrame.setLocationRelativeTo(null);
   }
 
   @Override

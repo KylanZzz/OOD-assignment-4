@@ -15,7 +15,6 @@ import stock.view.FeaturesStockView;
 public class SimpleFeaturesStockView implements FeaturesStockView {
   private JPanel savePanel;
   private JButton saveButton;
-
   private JTable table;
   private JScrollPane tablePanel;
   private DefaultTableModel tableModel;
@@ -151,11 +150,11 @@ public class SimpleFeaturesStockView implements FeaturesStockView {
     JLabel dateLabel = new JLabel("Date: ");
     dateLabel.setFont(new Font("MV Boli", Font.PLAIN, 20));
     JLabel monthLabel = new JLabel("Month ");
-    monthText = new JTextField(5);
+    monthText = new JTextField(12);
     JLabel dayLabel = new JLabel("Day ");
-    dayText = new JTextField(5);
+    dayText = new JTextField(12);
     JLabel yearLabel = new JLabel("Year ");
-    yearText = new JTextField(5);
+    yearText = new JTextField(12);
 
     // All the functions of the portfolio
     JPanel FunctionPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
@@ -206,7 +205,7 @@ public class SimpleFeaturesStockView implements FeaturesStockView {
 
     savePanel.add(saveButton, BorderLayout.CENTER);
 
-    portfolioFrame.setSize(700, 1300);
+    portfolioFrame.setSize(500, 600);
     portfolioFrame.setMinimumSize(new Dimension(300, 600));
     portfolioFrame.setLayout(new BorderLayout());
 

@@ -33,10 +33,8 @@ public class SimpleFeaturesStockView implements FeaturesStockView {
   private JButton compositionButton;
   private JButton ValueButton;
   private JFrame mainFrame;
-  private JButton commandButton;
   private JFrame portfolioFrame;
   private JLabel portfolioLabel;
-  private Border portfolioBorder;
   private JPanel portfolioPanel;
   private JPanel mainPanel;
   private JLabel loadPortfolioLabel;
@@ -188,7 +186,7 @@ public class SimpleFeaturesStockView implements FeaturesStockView {
     JPanel labelPanel = new JPanel(new BorderLayout());
     labelPanel.add(displayLabel, BorderLayout.CENTER);
 
-    String[] columnNames = {"Ticker", "Shares"};
+    String[] columnNames = {"Tickers", "Shares"};
     tableModel = new DefaultTableModel(columnNames, 0);
     table = new JTable(tableModel);
     tablePanel = new JScrollPane(table);
@@ -196,6 +194,7 @@ public class SimpleFeaturesStockView implements FeaturesStockView {
     DisplayingPanel.add(labelPanel, "Label");
     DisplayingPanel.add(tablePanel, "Table");
 
+    // save portfolio
     savePanel = new JPanel(new BorderLayout());
     saveButton = new JButton("Save Portfolio");
     saveButton.setFont(new Font("MV Boli", Font.BOLD, 16));

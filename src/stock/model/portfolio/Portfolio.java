@@ -188,8 +188,8 @@ public class Portfolio {
       List<String> output = new ArrayList<>();
 
       for (Path entry : stream) {
-        // remove file extension
-        output.add(entry.getFileName().toString().replace(FILE_EXTENSION, ""));
+        // KEEP file extension
+        output.add(entry.getFileName().toString());
       }
 
       return output;
@@ -234,18 +234,13 @@ public class Portfolio {
    *                     formatted
    */
   public void loadSave(String folderName, String fileName) throws IOException {
-    Path filePath = Paths.get(folderName, fileName + FILE_EXTENSION);
+    Path filePath = Paths.get(folderName, fileName);
 
-    try {
-      List<String> lines = Files.readAllLines(filePath);
+    List<String> lines = Files.readAllLines(filePath);
 
-      transactions.clear();
-      for (String line : lines) {
-        transactions.add(parseTransaction(line));
-      }
-
-    } catch (IOException e) {
-      throw new IOException("An error occurred while trying to load save: " + fileName + ".", e);
+    transactions.clear();
+    for (String line : lines) {
+      transactions.add(parseTransaction(line));
     }
 
   }

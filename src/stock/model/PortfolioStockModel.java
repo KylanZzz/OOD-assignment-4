@@ -116,14 +116,13 @@ public interface PortfolioStockModel extends StockModel {
   /**
    * Load a previous save of a portfolio from disk.
    *
-   * @param name         the name of the portfolio.
    * @param fileSaveName the name of the portfolio save file that you would like to load.
    * @throws IOException              if an I/O error occurs.
    * @throws IllegalArgumentException if the name of the portfolio doesn't exist, or the name of
    *                                  the file is not in the res/portfolios/${portfolio name}
    *                                  directory.
    */
-  void loadPortfolioSave(String name, String fileSaveName) throws IOException,
+  void loadPortfolioSave(String fileSaveName) throws IOException,
           IllegalArgumentException;
 
   /**

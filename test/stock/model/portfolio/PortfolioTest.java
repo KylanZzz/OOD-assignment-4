@@ -459,19 +459,19 @@ public class PortfolioTest {
     // Create 3 saves. Wait in between so save names dont overlap
     portfolio.buyStock("AAPL", LocalDate.of(2023, 5, 20), 10.0);
     portfolio.createSave(testDir.toString(), "portfolio3_save1");
-    assertEquals(List.of("portfolio3_save1"),
+    assertEquals(List.of("portfolio3_save1.txt"),
             portfolio.getAllSaves(testDir.toString()).stream().sorted()
                     .collect(Collectors.toList()));
 
     portfolio.buyStock("AMZN", LocalDate.of(2023, 5, 22), 15.0);
     portfolio.createSave(testDir.toString(), "portfolio3_save2");
-    assertEquals(List.of("portfolio3_save1", "portfolio3_save2"),
+    assertEquals(List.of("portfolio3_save1.txt", "portfolio3_save2.txt"),
             portfolio.getAllSaves(testDir.toString()).stream().sorted()
                     .collect(Collectors.toList()));
 
     portfolio.buyStock("NFLX", LocalDate.of(2023, 5, 23), 25.0);
     portfolio.createSave(testDir.toString(), "portfolio3_save3");
-    assertEquals(List.of("portfolio3_save1", "portfolio3_save2", "portfolio3_save3"),
+    assertEquals(List.of("portfolio3_save1.txt", "portfolio3_save2.txt", "portfolio3_save3.txt"),
             portfolio.getAllSaves(testDir.toString()).stream().sorted()
                     .collect(Collectors.toList()));
   }
@@ -481,13 +481,13 @@ public class PortfolioTest {
     Portfolio portfolio = new Portfolio("portfolio3");
     portfolio.buyStock("AAPL", LocalDate.of(2023, 5, 20), 10.0);
     portfolio.createSave(testDir.toString(), "portfolio3_save1");
-    assertEquals(List.of("portfolio3_save1"), portfolio.getAllSaves(testDir.toString()));
+    assertEquals(List.of("portfolio3_save1.txt"), portfolio.getAllSaves(testDir.toString()));
 
     Portfolio portfolio2 = new Portfolio("otherPortfolio");
     portfolio2.buyStock("NFLX", LocalDate.of(2023, 5, 23), 25.0);
     portfolio2.createSave(testDir.toString(), "otherPortfolio_save1");
-    assertEquals(List.of("portfolio3_save1"), portfolio.getAllSaves(testDir.toString()));
-    assertEquals(List.of("otherPortfolio_save1"), portfolio2.getAllSaves(testDir.toString()));
+    assertEquals(List.of("portfolio3_save1.txt"), portfolio.getAllSaves(testDir.toString()));
+    assertEquals(List.of("otherPortfolio_save1.txt"), portfolio2.getAllSaves(testDir.toString()));
   }
 
   @Test
@@ -502,7 +502,7 @@ public class PortfolioTest {
     Files.write(filePath, "".getBytes());
 
     Portfolio loadedPortfolio = new Portfolio("portfolio1");
-    loadedPortfolio.loadSave(folderName, fileName);
+    loadedPortfolio.loadSave(folderName, fileName + ".txt");
 
     assertEquals(Map.of(), loadedPortfolio.getComposition(LocalDate.of(1, 1, 1)));
     assertEquals((Double) 0.0,
@@ -522,7 +522,7 @@ public class PortfolioTest {
     Files.write(filePath, content.getBytes());
 
     Portfolio loadedPortfolio = new Portfolio("portfolio2");
-    loadedPortfolio.loadSave(folderName, fileName);
+    loadedPortfolio.loadSave(folderName, fileName + ".txt");
 
     Map<String, Double> expectedComposition = Map.of("AAPL", 10.0, "AMZN", 15.0, "NFLX", 5.0);
     assertEquals(expectedComposition, loadedPortfolio.getComposition(LocalDate.of(2023, 6, 1)));
@@ -546,7 +546,7 @@ public class PortfolioTest {
     Files.write(filePath, content.getBytes());
 
     Portfolio loadedPortfolio = new Portfolio("portfolio3");
-    loadedPortfolio.loadSave(folderName, fileName);
+    loadedPortfolio.loadSave(folderName, fileName + ".txt");
 
     Map<String, Double> expectedComposition = Map.of("GOOG", 9.5, "AAPL", 23.75);
     assertEquals(expectedComposition, loadedPortfolio.getComposition(LocalDate.of(2023, 6, 1)));
@@ -576,7 +576,7 @@ public class PortfolioTest {
     portfolio.createSave(folderName, fileName);
 
     Portfolio loadedPortfolio = new Portfolio("portfolio1");
-    loadedPortfolio.loadSave(folderName, fileName);
+    loadedPortfolio.loadSave(folderName, fileName + ".txt");
 
     assertEquals(expectedComposition, loadedPortfolio.getComposition(LocalDate.of(2023, 5, 24)));
     assertEquals(expectedValue, loadedPortfolio.getValue(LocalDate.of(2023, 5, 24), prices), 0.01);

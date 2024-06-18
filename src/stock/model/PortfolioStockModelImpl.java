@@ -144,9 +144,15 @@ public class PortfolioStockModelImpl implements PortfolioStockModel {
   }
 
   @Override
-  public void loadPortfolioSave(String name, String fileSaveName) throws IOException,
+  public void loadPortfolioSave(String fileSaveName) throws IOException,
           IllegalArgumentException {
-    getPortfolio(name).loadSave(portfoliosDirectory, fileSaveName);
+    String name = fileSaveName.split("_")[0];
+    try {
+      getPortfolio(name).loadSave(portfoliosDirectory, fileSaveName);
+    } catch (IllegalArgumentException e) {
+      createNewPortfolio(name);
+      getPortfolio(name).loadSave(portfoliosDirectory, fileSaveName);
+    }
   }
 
   @Override

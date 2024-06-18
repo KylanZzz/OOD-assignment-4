@@ -270,7 +270,7 @@ public class PortfolioStockModelImplTest extends BasicStockModelTest {
     List<String> saves = portModel.getPortfolioSaves("testPortfolio");
     String latestSave = saves.get(0); // Assuming the latest save is at index 0
 
-    portModel.loadPortfolioSave("testPortfolio", latestSave);
+    portModel.loadPortfolioSave(latestSave);
 
     Map<String, Double> expectedComposition = Map.of("A", 10.0, "AMZN", 20.0);
     assertEquals(expectedComposition, portModel.getPortfolioContentsDecimal("testPortfolio",

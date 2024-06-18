@@ -48,7 +48,7 @@ public class LoadPortfolio extends StockPortfolioCommand {
 
     String fileSaveName = getPortfolioFileSaveName();
     try {
-      portfolioModel.loadPortfolioSave(portfolio, fileSaveName);
+      portfolioModel.loadPortfolioSave(fileSaveName);
       portfolioView.printMessage("Successfully load the saved file!");
       portfolioView.printMessage("");
 

@@ -151,9 +151,9 @@ public class BasicStockControllerTest {
     }
 
     @Override
-    public void loadPortfolioSave(String name, String fileSaveName) throws IOException,
+    public void loadPortfolioSave(String fileSaveName) throws IOException,
             IllegalArgumentException {
-      log.append("loadPortfolioSave").append(name).append(fileSaveName).append("\n");
+      log.append("loadPortfolioSave").append(fileSaveName).append("\n");
     }
 
     @Override

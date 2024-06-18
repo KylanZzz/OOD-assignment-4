@@ -5,12 +5,9 @@ import java.util.List;
 import java.util.Map;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
-
 import stock.controller.PortfolioStockFeatures;
-import stock.view.FeaturesStockView;
 
 public class SimpleFeaturesStockView implements FeaturesStockView {
   private JPanel savePanel;

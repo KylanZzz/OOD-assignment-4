@@ -21,7 +21,7 @@ import java.util.Set;
  * facilitates downloading and processing stock data from the API.
  */
 public class AlphaVantageDataSource extends CSVDataSource {
-  private static final String API_KEY = "W0M1JOKC82EZEQA8";
+  private static final String API_KEY = "XVLMEBWYJ9X5CYWJ";
 
   //  3FKL0E8WUDB1EOMS
 

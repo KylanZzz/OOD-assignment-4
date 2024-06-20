@@ -37,8 +37,7 @@ public class RebalancePortfolio extends StockPortfolioCommand {
     PortfolioStockView portfolioView = (PortfolioStockView) view;
 
 
-    portfolioView.printMessage("What date would you like to rebalance for? "
-            + "Please enter the date in the format MM/DD/YYYY: ");
+    portfolioView.printMessage("What date would you like to rebalance for?");
     LocalDate date = getDateFromUser();
 
     Map<String, Double> proportions = getProportionsFromUser(date);

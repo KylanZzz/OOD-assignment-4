@@ -78,21 +78,20 @@ public abstract class Command {
 
   protected final LocalDate getDateFromUser() {
     LocalDate date = null;
+
     while (date == null) {
+      view.printMessage("Please input the year: ");
+      String yearInput = scanner.nextLine();
+
+      view.printMessage("Please input the month: ");
+      String monthInput = scanner.nextLine();
+
+      view.printMessage("Please input the day: ");
+      String dayInput = scanner.nextLine();
+
       try {
-        String input = scanner.nextLine();
-        String[] split = input.split("/");
-
-        if (split.length != 3) {
-          throw new IllegalArgumentException();
-        }
-
-        int month = Integer.parseInt(split[0]);
-        int day = Integer.parseInt(split[1]);
-        int year = Integer.parseInt(split[2]);
-
-        date = LocalDate.of(year, month, day);
-
+        date = LocalDate.of(Integer.parseInt(yearInput), Integer.parseInt(monthInput),
+                Integer.parseInt(dayInput));
         if (date.isAfter(LocalDate.now())) {
           date = null;
           throw new InputMismatchException();
@@ -108,8 +107,43 @@ public abstract class Command {
         view.printMessage("Incorrect format: Please enter the date in the format MM/DD/YYYY.");
       }
     }
-
-    return date;
+      return date;
   }
+
+  //  protected final LocalDate getDateFromUser() {
+  //    LocalDate date = null;
+  //    while (date == null) {
+  //      try {
+  //        String input = scanner.nextLine();
+  //        String[] split = input.split("/");
+  //
+  //        if (split.length != 3) {
+  //          throw new IllegalArgumentException();
+  //        }
+  //
+  //        int month = Integer.parseInt(split[0]);
+  //        int day = Integer.parseInt(split[1]);
+  //        int year = Integer.parseInt(split[2]);
+  //
+  //        date = LocalDate.of(year, month, day);
+  //
+  //        if (date.isAfter(LocalDate.now())) {
+  //          date = null;
+  //          throw new InputMismatchException();
+  //        }
+  //      } catch (NumberFormatException e) {
+  //        view.printMessage("Invalid input: not an integer, please try again.");
+  //      } catch (DateTimeException e) {
+  //        view.printMessage("Invalid date: Please enter a valid date.");
+  //      } catch (InputMismatchException e) {
+  //        view.printMessage("Invalid date: Date has not passed yet, please enter a date before or "
+  //                + "equal to today.");
+  //      } catch (Exception e) {
+  //        view.printMessage("Incorrect format: Please enter the date in the format MM/DD/YYYY.");
+  //      }
+  //    }
+  //
+  //    return date;
+  //  }
 
 }

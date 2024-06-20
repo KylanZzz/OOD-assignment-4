@@ -37,7 +37,7 @@ public class SellStockWithDate extends StockPortfolioCommand {
     PortfolioStockView portfolioView = (PortfolioStockView) view;
 
     portfolioView.printMessage("Please enter the date that you want to "
-            + "sell the stocks in the format MM/DD/YYYY: ");
+            + "sell the stocks!");
     LocalDate date = getDateFromUser();
 
     if (portfolioModel.getPortfolioContentsDecimal(portfolio, date).isEmpty()) {

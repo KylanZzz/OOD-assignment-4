@@ -22,7 +22,7 @@ public class BasicPortfolioStockView extends AbstractBasicStockView implements P
   private static final int MAX_ASTERISKS = 50;
   private static final int MIN_LINES = 5;
   private static final int MAX_LINES = 30;
-  private BasicStockView stockViewHelper;
+  private StockView stockViewHelper;
 
   /**
    * Constructs a BasicStockView with a specified Appendable object to enable output.

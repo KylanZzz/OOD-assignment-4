@@ -35,6 +35,8 @@ public class PortfolioValue extends StockCommand {
   public void apply() {
     view.printMessage(String.format("What date would you like to know the value of portfolio %s " +
             "at? Please enter the date in the format MM/DD/YYYY.", portfolio));
+    view.printMessage(String.format("What date would you like to know the value of portfolio %s " +
+            "at?", portfolio));
     LocalDate date = getDateFromUser();
 
     try {

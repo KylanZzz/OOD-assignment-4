@@ -40,7 +40,7 @@ public class CalculateCrossover extends Command {
     view.printMessage("Please enter the ticker of the stock that you would like to know about:");
     String ticker = getTickerFromUser();
 
-    view.printMessage("Please enter the ending date in the format MM/DD/YYYY:");
+    view.printMessage("Please enter the ending date!");
     LocalDate endDate = getDateFromUser();
 
     view.printMessage("Please enter the number of days.");

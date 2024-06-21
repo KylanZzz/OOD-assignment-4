@@ -16,9 +16,14 @@ public class BasicMenuOptions {
    *
    * @return "EXIT" when the user needs to quit the program.
    */
+//  public static String exitKeyword() {
+//    return "EXIT";
+//  }
+
   public static String exitKeyword() {
-    return "EXIT";
+    return "0";
   }
+
 
 
   /**

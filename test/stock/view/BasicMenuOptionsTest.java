@@ -15,7 +15,7 @@ public class BasicMenuOptionsTest {
 
   @Test
   public void testExitKeyword() {
-    assertEquals("EXIT", BasicMenuOptions.exitKeyword());
+    assertEquals("0", BasicMenuOptions.exitKeyword());
   }
 
   @Test

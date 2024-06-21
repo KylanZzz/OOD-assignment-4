@@ -45,22 +45,25 @@ public class BasicPortfolioStockControllerIntegrationTest {
 
   String mainMenu =
           "Please type the number that corresponds with the choice you would like to pick, or "
-                  + "type EXIT to return/exit\n"
+                  + "type 0 to return/exit\n"
                   + "1. Get the gain/loss of stock over period of time\n"
                   + "2. Get x-day moving average of a stock\n"
                   + "3. Get x-day crossovers for a stock\n"
                   + "4. Manage portfolios";
   String managePortfoliosMenu =
           "Please type the number that corresponds with the choice you would like to pick, or "
-                  + "type EXIT to return/exit\n"
+                  + "type 0 to return/exit\n"
                   + "1. Create new portfolio\n"
                   + "2. Delete portfolio\n"
                   + "3. Rename portfolio";
   String tickerPrompt = "Please enter the ticker of the stock that you would like to know about:";
-  String startDatePrompt = "Please enter the starting date (inclusive) in the format MM/DD/YYYY:";
-  String endDatePrompt = "Please enter the ending date (inclusive) in the format MM/DD/YYYY:";
+  String startDatePrompt = "Please enter the starting date (inclusive)!";
+  String endDatePrompt = "Please enter the ending date (inclusive)!";
+  String yearPrompt = "Please input the year: ";
+  String monthPrompt = "Please input the month: ";
+  String dayPrompt = "Please input the day: ";
   String tickerIncorrect = "That stock does not exist! Please try again.";
-  String invalidDateFormat = "Incorrect format: Please enter the date in the format MM/DD/YYYY.";
+  String invalidDateFormat = "Invalid date: Please enter a valid date.";
   String invalidInputInteger = "Invalid input: not an integer, please try again.";
   String invalidDate = "Invalid date: Please enter a valid date.";
   String futureDateError =
@@ -68,9 +71,9 @@ public class BasicPortfolioStockControllerIntegrationTest {
                   + "date before or equal to today.";
   String invalidInputMessage =
           "Invalid input. Please enter a valid choice (a number from 1 through 4) "
-                  + "or EXIT to exit the application.";
+                  + "or 0 to exit the application.";
   String daysPrompt = "Please enter the number of days.";
-  String datePrompt = "Please enter the ending date in the format MM/DD/YYYY:";
+  String datePrompt = "Please enter the ending date!";
   String portfolioNamePrompt = "What is the name of the portfolio you would like to create?";
   String portfolioCreatedMessage = "Successfully created portfolio ";
   String duplicatePortfolioMessage = "A portfolio with that name already exists!";
@@ -80,7 +83,7 @@ public class BasicPortfolioStockControllerIntegrationTest {
                   + "fractional number of stocks): ";
   String viewEditPortfolioMenu =
           "Please type the number that corresponds with the choice you would like to pick, or "
-                  + "type EXIT to return/exit\n"
+                  + "type 0 to return/exit\n"
                   + "1. Calculate portfolio value\n"
                   + "2. Add stock to portfolio\n"
                   + "3. Remove stock from portfolio";
@@ -100,7 +103,7 @@ public class BasicPortfolioStockControllerIntegrationTest {
   public void programRunsAndExits() {
     assertTrue(runTest(
             prints(mainMenu),
-            inputs("EXIT")
+            inputs("0")
     ));
   }
 
@@ -114,14 +117,31 @@ public class BasicPortfolioStockControllerIntegrationTest {
             inputs("AAPL"),
 
             prints(startDatePrompt),
-            inputs("4/20/2013"),
+
+            prints(yearPrompt),
+            inputs("2013"),
+
+            prints(monthPrompt),
+            inputs("4"),
+
+            prints(dayPrompt),
+            inputs("20"),
 
             prints(endDatePrompt),
-            inputs("4/20/2024"),
+
+            prints(yearPrompt),
+            inputs("2024"),
+
+            prints(monthPrompt),
+            inputs("4"),
+
+            prints(dayPrompt),
+            inputs("20"),
+
 
             prints("The gain for stock AAPL from 2013-04-20 to 2024-04-20 was $152.56.\n"),
             prints(mainMenu),
-            inputs("EXIT")
+            inputs("0")
     ));
   }
 
@@ -135,10 +155,24 @@ public class BasicPortfolioStockControllerIntegrationTest {
             inputs("AAPL"),
 
             prints(startDatePrompt),
-            inputs("4/20/2013"),
+            prints(yearPrompt),
+            inputs("2013"),
+
+            prints(monthPrompt),
+            inputs("4"),
+
+            prints(dayPrompt),
+            inputs("20"),
 
             prints(endDatePrompt),
-            inputs("4/20/2024"),
+            prints(yearPrompt),
+            inputs("2024"),
+
+            prints(monthPrompt),
+            inputs("4"),
+
+            prints(dayPrompt),
+            inputs("20"),
 
             prints("The gain for stock AAPL from 2013-04-20 to 2024-04-20 was $152.56.\n"),
             prints(mainMenu),
@@ -148,10 +182,24 @@ public class BasicPortfolioStockControllerIntegrationTest {
             inputs("AMZN"),
 
             prints(startDatePrompt),
-            inputs("1/1/2018"),
+            prints(yearPrompt),
+            inputs("2018"),
+
+            prints(monthPrompt),
+            inputs("1"),
+
+            prints(dayPrompt),
+            inputs("1"),
 
             prints(endDatePrompt),
-            inputs("3/20/2024"),
+            prints(yearPrompt),
+            inputs("2024"),
+
+            prints(monthPrompt),
+            inputs("3"),
+
+            prints(dayPrompt),
+            inputs("20"),
 
             prints("The gain for stock AMZN from 2018-01-01 to 2024-03-20 was $118.70.\n"),
             prints(mainMenu),
@@ -161,14 +209,28 @@ public class BasicPortfolioStockControllerIntegrationTest {
             inputs("AAPL"),
 
             prints(startDatePrompt),
-            inputs("4/20/2013"),
+            prints(yearPrompt),
+            inputs("2013"),
+
+            prints(monthPrompt),
+            inputs("4"),
+
+            prints(dayPrompt),
+            inputs("20"),
 
             prints(endDatePrompt),
-            inputs("4/20/2024"),
+            prints(yearPrompt),
+            inputs("2024"),
+
+            prints(monthPrompt),
+            inputs("4"),
+
+            prints(dayPrompt),
+            inputs("20"),
 
             prints("The gain for stock AAPL from 2013-04-20 to 2024-04-20 was $152.56.\n"),
             prints(mainMenu),
-            inputs("EXIT")
+            inputs("0")
     ));
   }
 
@@ -221,14 +283,27 @@ public class BasicPortfolioStockControllerIntegrationTest {
             inputs("AAPL"),
 
             prints(startDatePrompt),
-            inputs("04/20/2005"),
+            prints(yearPrompt),
+            inputs("2005"),
+
+            prints(monthPrompt),
+            inputs("4"),
+
+            prints(dayPrompt),
+            inputs("20"),
 
             prints(endDatePrompt),
-            inputs("04/20/2013"),
+            prints(yearPrompt),
+            inputs("2013"),
 
+            prints(monthPrompt),
+            inputs("4"),
+
+            prints(dayPrompt),
+            inputs("20"),
             prints("The gain for stock AAPL from 2005-04-20 to 2013-04-20 was $10.89.\n"),
             prints(mainMenu),
-            inputs("EXIT")
+            inputs("0")
     ));
   }
 
@@ -244,14 +319,28 @@ public class BasicPortfolioStockControllerIntegrationTest {
             inputs("aAPl"),
 
             prints(startDatePrompt),
-            inputs("04/20/2005"),
+            prints(yearPrompt),
+            inputs("2005"),
+
+            prints(monthPrompt),
+            inputs("4"),
+
+            prints(dayPrompt),
+            inputs("20"),
 
             prints(endDatePrompt),
-            inputs("04/20/2013"),
+            prints(yearPrompt),
+            inputs("2013"),
+
+            prints(monthPrompt),
+            inputs("4"),
+
+            prints(dayPrompt),
+            inputs("20"),
 
             prints(gainMessage),
             prints(mainMenu),
-            inputs("EXIT")
+            inputs("0")
     ));
 
     assertTrue(runTest(
@@ -262,14 +351,27 @@ public class BasicPortfolioStockControllerIntegrationTest {
             inputs("aapl"),
 
             prints(startDatePrompt),
-            inputs("04/20/2005"),
+            prints(yearPrompt),
+            inputs("2005"),
+
+            prints(monthPrompt),
+            inputs("4"),
+
+            prints(dayPrompt),
+            inputs("20"),
 
             prints(endDatePrompt),
-            inputs("04/20/2013"),
+            prints(yearPrompt),
+            inputs("2013"),
 
+            prints(monthPrompt),
+            inputs("4"),
+
+            prints(dayPrompt),
+            inputs("20"),
             prints(gainMessage),
             prints(mainMenu),
-            inputs("EXIT")
+            inputs("0")
     ));
 
   }
@@ -288,50 +390,117 @@ public class BasicPortfolioStockControllerIntegrationTest {
             inputs("AAPL"),
 
             prints(startDatePrompt),
-            inputs("04/20/2024/2"),
+            prints(yearPrompt),
+            inputs("2013"),
 
-            prints(invalidDateFormat),
-            inputs("/1/04/20/2024"),
+            prints(monthPrompt),
+            inputs("a"),
 
-            prints(invalidDateFormat),
-            inputs("///4202024"),
-
-            prints(invalidDateFormat),
-            inputs("/420/2024/"),
+            prints(dayPrompt),
+            inputs("20"),
 
             prints(invalidInputInteger),
-            inputs("a/3/2024"),
+
+            prints(yearPrompt),
+            inputs("2013"),
+
+            prints(monthPrompt),
+            inputs("^&*"),
+
+            prints(dayPrompt),
+            inputs("20"),
 
             prints(invalidInputInteger),
-            inputs("^&*/1/3"),
+
+            prints(yearPrompt),
+            inputs("2024"),
+
+            prints(monthPrompt),
+            inputs("APRIL"),
+
+            prints(dayPrompt),
+            inputs("4th"),
 
             prints(invalidInputInteger),
-            inputs("APRIL 4th 2024"),
+
+            prints(yearPrompt),
+            inputs("2024"),
+
+            prints(monthPrompt),
+            inputs("20"),
+
+            prints(dayPrompt),
+            inputs("4"),
 
             prints(invalidDateFormat),
-            inputs("20/4/2024"),
+
+            prints(yearPrompt),
+            inputs("2024"),
+
+            prints(monthPrompt),
+            inputs("13"),
+
+            prints(dayPrompt),
+            inputs("4"),
 
             prints(invalidDate),
-            inputs("13/4/2024"),
+
+            prints(yearPrompt),
+            inputs("2024"),
+
+            prints(monthPrompt),
+            inputs("0"),
+
+            prints(dayPrompt),
+            inputs("4"),
 
             prints(invalidDate),
-            inputs("0/4/2024"),
+
+            prints(yearPrompt),
+            inputs("2024"),
+
+            prints(monthPrompt),
+            inputs("3"),
+
+            prints(dayPrompt),
+            inputs("32"),
 
             prints(invalidDate),
-            inputs("3/32/2024"),
+
+            prints(yearPrompt),
+            inputs("2024"),
+
+            prints(monthPrompt),
+            inputs("3"),
+
+            prints(dayPrompt),
+            inputs("0"),
 
             prints(invalidDate),
-            inputs("3/0/2024"),
 
-            prints(invalidDate),
-            inputs("1/1/2024"),
+            prints(yearPrompt),
+            inputs("2024"),
+
+            prints(monthPrompt),
+            inputs("1"),
+
+            prints(dayPrompt),
+            inputs("1"),
 
             prints(endDatePrompt),
-            inputs("1/31/2024"),
+
+            prints(yearPrompt),
+            inputs("2024"),
+
+            prints(monthPrompt),
+            inputs("1"),
+
+            prints(dayPrompt),
+            inputs("31"),
 
             prints("The gain for stock AAPL from 2024-01-01 to 2024-01-31 was $-1.24.\n"),
             prints(mainMenu),
-            inputs("EXIT")
+            inputs("0")
     ));
   }
 
@@ -340,21 +509,18 @@ public class BasicPortfolioStockControllerIntegrationTest {
     String invalidInputDateOrder = "Invalid input: The end date must be after the start date.";
     assertTrue(runTest(
             prints(mainMenu),
-            inputs("0"),
-            prints("Invalid input. Please enter a valid choice or EXIT to exit the application."),
-            prints(mainMenu),
             inputs("-1"),
-            prints("Invalid input. Please enter a valid choice or EXIT to exit the application."),
+            prints("Invalid input. Please enter a valid choice or 0 to exit the application."),
             prints(mainMenu),
             inputs("5"),
-            prints("Invalid input. Please enter a valid choice or EXIT to exit the application."),
+            prints("Invalid input. Please enter a valid choice or 0 to exit the application."),
             prints(mainMenu),
             inputs("6"),
-            prints("Invalid input. Please enter a valid choice or EXIT to exit the application."),
+            prints("Invalid input. Please enter a valid choice or 0 to exit the application."),
             prints(mainMenu),
             inputs("4"),
             prints(managePortfoliosMenu),
-            inputs("EXIT"),
+            inputs("0"),
             prints(mainMenu),
             inputs("1"),
 
@@ -362,10 +528,27 @@ public class BasicPortfolioStockControllerIntegrationTest {
             inputs("AAPL"),
 
             prints(startDatePrompt),
-            inputs("04/20/2024"),
+
+            prints(yearPrompt),
+            inputs("2024"),
+
+            prints(monthPrompt),
+            inputs("4"),
+
+            prints(dayPrompt),
+            inputs("20"),
 
             prints(endDatePrompt),
-            inputs("4/19/2024"),
+
+            prints(yearPrompt),
+            inputs("2024"),
+
+            prints(monthPrompt),
+            inputs("4"),
+
+            prints(dayPrompt),
+            inputs("19"),
+
             prints(invalidInputDateOrder),
             prints(mainMenu),
             inputs("1"),
@@ -374,10 +557,25 @@ public class BasicPortfolioStockControllerIntegrationTest {
             inputs("AAPL"),
 
             prints(startDatePrompt),
-            inputs("04/20/2024"),
+            prints(yearPrompt),
+            inputs("2024"),
+
+            prints(monthPrompt),
+            inputs("4"),
+
+            prints(dayPrompt),
+            inputs("20"),
 
             prints(endDatePrompt),
-            inputs("4/20/2024"),
+            prints(yearPrompt),
+            inputs("2024"),
+
+            prints(monthPrompt),
+            inputs("4"),
+
+            prints(dayPrompt),
+            inputs("20"),
+
             prints(invalidInputDateOrder),
             prints(mainMenu),
             inputs("1"),
@@ -386,14 +584,30 @@ public class BasicPortfolioStockControllerIntegrationTest {
             inputs("AAPL"),
 
             prints(startDatePrompt),
-            inputs("04/20/2024"),
+            prints(yearPrompt),
+            inputs("2024"),
+
+            prints(monthPrompt),
+            inputs("4"),
+
+            prints(dayPrompt),
+            inputs("20"),
 
             prints(endDatePrompt),
-            inputs("04/21/2024"),
+
+            prints(yearPrompt),
+            inputs("2024"),
+
+            prints(monthPrompt),
+            inputs("4"),
+
+            prints(dayPrompt),
+            inputs("21"),
+
             prints("The gain for stock AAPL from 2024-04-20 to 2024-04-21 was $0.00.\n"),
 
             prints(mainMenu),
-            inputs("EXIT")
+            inputs("0")
     ));
   }
 
@@ -407,7 +621,14 @@ public class BasicPortfolioStockControllerIntegrationTest {
             inputs("GOOG"),
 
             prints(datePrompt),
-            inputs("6/1/2021"),
+            prints(yearPrompt),
+            inputs("2021"),
+
+            prints(monthPrompt),
+            inputs("6"),
+
+            prints(dayPrompt),
+            inputs("1"),
 
             prints(daysPrompt),
             inputs("100"),
@@ -423,14 +644,21 @@ public class BasicPortfolioStockControllerIntegrationTest {
             inputs("AMZN"),
 
             prints(datePrompt),
-            inputs("04/21/2011"),
+            prints(yearPrompt),
+            inputs("2011"),
+
+            prints(monthPrompt),
+            inputs("4"),
+
+            prints(dayPrompt),
+            inputs("21"),
 
             prints(daysPrompt),
             inputs("10"),
 
             prints("The average for stock AMZN on 2011-04-21 for 10 days was $9.10.\n"),
             prints(mainMenu),
-            inputs("EXIT")
+            inputs("0")
     ));
   }
 
@@ -469,7 +697,14 @@ public class BasicPortfolioStockControllerIntegrationTest {
             inputs("AMZN"),
 
             prints(datePrompt),
-            inputs("06/1/2021"),
+            prints(yearPrompt),
+            inputs("2021"),
+
+            prints(monthPrompt),
+            inputs("6"),
+
+            prints(dayPrompt),
+            inputs("1"),
 
             prints(daysPrompt),
             inputs("100"),
@@ -485,14 +720,21 @@ public class BasicPortfolioStockControllerIntegrationTest {
             inputs("AAPL"),
 
             prints(datePrompt),
-            inputs("01/20/2021"),
+            prints(yearPrompt),
+            inputs("2021"),
+
+            prints(monthPrompt),
+            inputs("1"),
+
+            prints(dayPrompt),
+            inputs("20"),
 
             prints(daysPrompt),
             inputs("30"),
 
             prints(aaplCrossoversMessage),
             prints(mainMenu),
-            inputs("EXIT")
+            inputs("0")
     ));
   }
 
@@ -568,16 +810,16 @@ public class BasicPortfolioStockControllerIntegrationTest {
             prints(managePortfoliosMenu),
 
             // Exiting the application
-            inputs("EXIT"),
+            inputs("0"),
             prints(mainMenu),
-            inputs("EXIT")
+            inputs("0")
     ));
   }
 
   @Test
   public void testManagePortfoliosWithInvalidInputs() {
     String invalidInputMessage =
-            "Invalid input. Please enter a valid choice or EXIT to go back.";
+            "Invalid input. Please enter a valid choice or 0 to go back.";
     assertTrue(runTest(
             prints(mainMenu),
             inputs("4"), // Access manage portfolios
@@ -585,9 +827,6 @@ public class BasicPortfolioStockControllerIntegrationTest {
             // Test invalid inputs for manage portfolios menu
             prints(managePortfoliosMenu),
             inputs("4"), // This input is invalid based on your expected range
-            prints(invalidInputMessage),
-            prints(managePortfoliosMenu),
-            inputs("0"), // Test lower boundary invalid input
             prints(invalidInputMessage),
             prints(managePortfoliosMenu),
             inputs("-1"), // Test negative number invalid input
@@ -607,7 +846,7 @@ public class BasicPortfolioStockControllerIntegrationTest {
             // Access the newly created portfolio
             inputs("4"),
             prints("Please type the number that corresponds with the choice "
-                    + "you would like to pick, or type EXIT to return/exit"),
+                    + "you would like to pick, or type 0 to return/exit"),
             prints("1. Buy stock to portfolio\n"
                     + "2. Sell stock from portfolio\n"
                     + "3. Calculate portfolio value on specific date\n"
@@ -617,13 +856,13 @@ public class BasicPortfolioStockControllerIntegrationTest {
                     + "7. Rebalance the portfolio\n"
                     + "8. Performance chart for the portfolio\n"
                     + "9. Composition of the portfolio"),
-            inputs("EXIT"), // Exit from view/edit NASDAQ portfolio
+            inputs("0"), // Exit from view/edit NASDAQ portfolio
 
             prints(managePortfoliosMenu + "\n4. View/Edit: NASDAQ"),
-            inputs("EXIT"), // Exit from manage portfolios
+            inputs("0"), // Exit from manage portfolios
 
             prints(mainMenu),
-            inputs("EXIT") // Exit from main menu
+            inputs("0") // Exit from main menu
     ));
   }
 
@@ -653,10 +892,10 @@ public class BasicPortfolioStockControllerIntegrationTest {
             inputs("S&P50"),
             prints(portfolioDoesNotExistMessage),
             prints(managePortfoliosMenu + "\n4. View/Edit: S&P500"),
-            inputs("EXIT"),
+            inputs("0"),
 
             prints(mainMenu),
-            inputs("EXIT")
+            inputs("0")
     ));
 
   }

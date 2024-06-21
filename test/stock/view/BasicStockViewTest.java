@@ -41,7 +41,7 @@ public class BasicStockViewTest {
   public void printMainMenuWorks() {
     view.printMainMenu();
     String expectedOutput = "Please type the number that corresponds with the choice you would "
-            + "like to pick, or type EXIT to return/exit\n"
+            + "like to pick, or type 0 to return/exit\n"
             + "1. Get the gain/loss of stock over period of time\n"
             + "2. Get x-day moving average of a stock\n"
             + "3. Get x-day crossovers for a stock\n"
@@ -96,7 +96,7 @@ public class BasicStockViewTest {
     view.printViewPortfolios(portfolios);
 
     String expectedOutput = "Please type the number that corresponds "
-            + "with the choice you would like to pick, or type EXIT to return/exit\n"
+            + "with the choice you would like to pick, or type 0 to return/exit\n"
             + "1. Create new portfolio\n"
             + "2. Delete portfolio\n"
             + "3. Rename portfolio\n"
@@ -111,7 +111,7 @@ public class BasicStockViewTest {
     view.printViewPortfolios(portfolios);
 
     String expectedOutput = "Please type the number that corresponds with the choice "
-            + "you would like to pick, or type EXIT to return/exit\n"
+            + "you would like to pick, or type 0 to return/exit\n"
             + "1. Create new portfolio\n"
             + "2. Delete portfolio\n"
             + "3. Rename portfolio\n";
@@ -129,7 +129,7 @@ public class BasicStockViewTest {
             + "AMZN                           10\n"
             + "NFLX                           15\n\n"
             + "Please type the number that corresponds w"
-            + "ith the choice you would like to pick, or type EXIT to return/exit\n"
+            + "ith the choice you would like to pick, or type 0 to return/exit\n"
             + "1. Calculate portfolio value\n"
             + "2. Add stock to portfolio\n"
             + "3. Remove stock from portfolio\n";
@@ -144,7 +144,7 @@ public class BasicStockViewTest {
     String expectedOutput = "Here are all the stocks in the S&P500 portfolio:\n\n"
             + "Stock                          Shares\n\n"
             + "Please type the number that corresponds with the choice you "
-            + "would like to pick, or type EXIT to return/exit\n"
+            + "would like to pick, or type 0 to return/exit\n"
             + "1. Calculate portfolio value\n"
             + "2. Add stock to portfolio\n"
             + "3. Remove stock from portfolio\n";

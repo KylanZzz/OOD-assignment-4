@@ -180,8 +180,8 @@ public class BasicStockControllerTest {
       log.append("getPortfolioPerformance").append(name).append(startDate).append(endDate)
               .append("\n");
       return Map.of(LocalDate.of(2024, 1, 1), 10.0, LocalDate.of(2024, 1, 2),
-              15.0, LocalDate.of(2024, 1, 3), 20.0, LocalDate.of(2024, 1, 3), 15.0,
-              LocalDate.of(2024, 1, 4), 25.0, LocalDate.of(2024, 1, 5), 5.0);
+              15.0, LocalDate.of(2024, 1, 3), 20.0, LocalDate.of(2024, 1, 4), 15.0,
+              LocalDate.of(2024, 1, 5), 25.0, LocalDate.of(2024, 1, 6), 5.0);
     }
 
     // Dummy data
@@ -368,36 +368,42 @@ public class BasicStockControllerTest {
   String tickerPrompt = "printMessagePlease enter the ticker of the stock that you would like to "
           + "know about:";
   String invalidDate = "printMessageInvalid date: Please enter a valid date.";
-  String invalidDateFormat =
-          "printMessageIncorrect format: Please enter the date in the format "
-                  + "MM/DD/YYYY.";
+  String invalidDateFormat = "Invalid date: Please enter a valid date.";
   String invalidInputInteger = "printMessageInvalid input: not an integer, please try again.";
   String invalidInputDateOrder = "printMessageInvalid input: The end date must be after the "
           + "start" + " date.";
-  String startDatePrompt = "printMessagePlease enter the starting date (inclusive) in the format "
-          + "MM/DD/YYYY:";
-  String endDatePrompt = "printMessagePlease enter the ending date (inclusive) in the format "
-          + "MM/DD/YYYY:";
+  String startDatePrompt = "printMessagePlease enter the starting date (inclusive)!";
+  String endDatePrompt = "printMessagePlease enter the ending date (inclusive)!";
   String tickerIncorrect = "printMessageThat stock does not exist! Please try again.";
+  String stockNotInPortfolio = "You haven't buy any stock to this portfolio at";
+
+  String optionPrompt = "Please type the number that corresponds with the choice you would like "
+          + "to pick, or type 0 to return/exit";
+
+  String yearPrompt = "printMessagePlease input the year: ";
+  String monthPrompt = "printMessagePlease input the month: ";
+  String dayPrompt = "printMessagePlease input the day: ";
 
   @Test
   public void controllerExitsCorrectly() {
-    assertTrue(runTest(false, prints("printMainMenu"), inputs("EXIT")));
+    assertTrue(runTest(false, prints("printMainMenu"), inputs("0")));
   }
 
   @Test
   public void controllerHandlesInvalidMenuInputs() {
     String invalidInputMessage = "printMessageInvalid input. Please enter a valid choice or "
             + BasicMenuOptions.exitKeyword() + " to exit the application.";
-    assertTrue(runTest(false, prints("printMainMenu"), inputs("0"), prints(invalidInputMessage,
+    assertTrue(runTest(false, prints("printMainMenu"), inputs("10"),
+            prints(invalidInputMessage,
                     "printMainMenu"), inputs("500000"), prints(invalidInputMessage,
                     "printMainMenu"),
             inputs("a"), prints(invalidInputMessage, "printMainMenu"), inputs("-1"),
             prints(invalidInputMessage, "printMainMenu"), inputs("1+1"),
             prints(invalidInputMessage, "printMainMenu"), inputs("-10000"),
-            prints(invalidInputMessage, "printMainMenu"), inputs("a"), prints(invalidInputMessage,
+            prints(invalidInputMessage, "printMainMenu"), inputs("a"),
+            prints(invalidInputMessage,
                     "printMainMenu"), inputs("&(*&91j"), prints(invalidInputMessage,
-                    "printMainMenu"), inputs("EXIT")));
+                    "printMainMenu"), inputs("0")));
 
   }
 
@@ -415,12 +421,29 @@ public class BasicStockControllerTest {
 
             prints(tickerIncorrect), inputs("AAPL"),
 
-            prints(startDatePrompt), inputs("4/20/2005"),
+            prints(startDatePrompt),
+            prints(yearPrompt),
+            inputs("2005"),
 
-            prints(endDatePrompt), inputs("4/20/2024"),
+            prints(monthPrompt),
+            inputs("4"),
 
-            prints("printStockGainAAPL2005-04-202024-04-20100.0"), prints("printMainMenu"),
-            inputs("EXIT")));
+            prints(dayPrompt),
+            inputs("20"),
+
+            prints(endDatePrompt),
+            prints(yearPrompt),
+            inputs("2024"),
+
+            prints(monthPrompt),
+            inputs("4"),
+
+            prints(dayPrompt),
+            inputs("20"),
+
+            prints("printStockGainAAPL2005-04-202024-04-20100.0"),
+            prints("printMainMenu"),
+            inputs("0")));
 
 
   }
@@ -431,30 +454,76 @@ public class BasicStockControllerTest {
 
             prints(tickerPrompt), inputs("aapl"),
 
-            prints(startDatePrompt), inputs("4/20/2005"),
+            prints(startDatePrompt),
+            prints(yearPrompt),
+            inputs("2005"),
 
-            prints(endDatePrompt), inputs("4/20/2024"),
+            prints(monthPrompt),
+            inputs("4"),
 
-            prints("printStockGainAAPL2005-04-202024-04-20100.0"), prints("printMainMenu"),
+            prints(dayPrompt),
+            inputs("20"),
+
+            prints(endDatePrompt),
+            prints(yearPrompt),
+            inputs("2024"),
+
+            prints(monthPrompt),
+            inputs("4"),
+
+            prints(dayPrompt),
+            inputs("20"),
+            prints("printStockGainAAPL2005-04-202024-04-20100.0"),
+            prints("printMainMenu"),
             inputs("1"),
 
             prints(tickerPrompt), inputs("aAPl"),
 
-            prints(startDatePrompt), inputs("4/20/2005"),
+            prints(startDatePrompt),
+            prints(yearPrompt),
+            inputs("2005"),
 
-            prints(endDatePrompt), inputs("4/20/2024"),
+            prints(monthPrompt),
+            inputs("4"),
 
-            prints("printStockGainAAPL2005-04-202024-04-20100.0"), prints("printMainMenu"),
+            prints(dayPrompt),
+            inputs("20"),
+            prints(endDatePrompt),
+            prints(yearPrompt),
+            inputs("2024"),
+
+            prints(monthPrompt),
+            inputs("4"),
+
+            prints(dayPrompt),
+            inputs("20"),
+            prints("printStockGainAAPL2005-04-202024-04-20100.0"),
+            prints("printMainMenu"),
             inputs("1"),
 
             prints(tickerPrompt), inputs("AAPL"),
 
-            prints(startDatePrompt), inputs("4/20/2005"),
+            prints(startDatePrompt),
+            prints(yearPrompt),
+            inputs("2005"),
 
-            prints(endDatePrompt), inputs("4/20/2024"),
+            prints(monthPrompt),
+            inputs("4"),
 
-            prints("printStockGainAAPL2005-04-202024-04-20100.0"), prints("printMainMenu"),
-            inputs("EXIT")));
+            prints(dayPrompt),
+            inputs("20"),
+            prints(endDatePrompt),
+            prints(yearPrompt),
+            inputs("2024"),
+
+            prints(monthPrompt),
+            inputs("4"),
+
+            prints(dayPrompt),
+            inputs("20"),
+            prints("printStockGainAAPL2005-04-202024-04-20100.0"),
+            prints("printMainMenu"),
+            inputs("0")));
 
 
   }
@@ -466,73 +535,214 @@ public class BasicStockControllerTest {
 
             prints(tickerPrompt), inputs("AAPL"),
 
-            prints(startDatePrompt), inputs("a&(*aLm.]10-"),
+            prints(startDatePrompt),
+            prints(yearPrompt),
+            inputs("a&(*aLm.]10-"),
 
-            prints(invalidDateFormat), inputs("a/20/2024"),
+            prints(monthPrompt),
+            inputs("a"),
 
-            prints(invalidInputInteger), inputs("20/2024"),
+            prints(dayPrompt),
+            inputs("20"),
 
-            prints(invalidDateFormat), inputs("20/2024"),
+            prints(invalidInputInteger),
 
-            prints(invalidDateFormat), inputs("202024/111/"),
+            prints(yearPrompt),
+            inputs("2005"),
 
-            prints(invalidDateFormat), inputs("/11/24/2011"),
+            prints(monthPrompt),
+            inputs("a"),
 
-            prints(invalidDateFormat), inputs("-1/11/2011"),
+            prints(dayPrompt),
+            inputs("20"),
 
-            prints(invalidDate), inputs("1/32/2012"),
+            prints(invalidInputInteger),
+            prints(yearPrompt),
+            inputs("2005"),
 
-            prints(invalidDate), inputs("13/1/2011"),
+            prints(monthPrompt),
+            inputs("13"),
 
-            prints(invalidDate), inputs("4/20/2013"),
+            prints(dayPrompt),
+            inputs("20"),
 
-            prints(endDatePrompt), inputs("4/19/2013"),
+            prints(invalidDate),
+            prints(yearPrompt),
+            inputs("2005"),
+
+            prints(monthPrompt),
+            inputs("12"),
+
+            prints(dayPrompt),
+            inputs("34"),
+
+            prints(invalidDate),
+            prints(yearPrompt),
+            inputs("2012"),
+
+            prints(monthPrompt),
+            inputs("1"),
+
+            prints(dayPrompt),
+            inputs("32"),
+
+            prints(invalidDate),
+            prints(yearPrompt),
+            inputs("2011"),
+
+            prints(monthPrompt),
+            inputs("13"),
+
+            prints(dayPrompt),
+            inputs("1"),
+
+            prints(invalidDate),
+
+            prints(yearPrompt),
+            inputs("2013"),
+
+            prints(monthPrompt),
+            inputs("4"),
+
+            prints(dayPrompt),
+            inputs("20"),
+
+            prints(endDatePrompt),
+
+            prints(yearPrompt),
+            inputs("2013"),
+
+            prints(monthPrompt),
+            inputs("4"),
+
+            prints(dayPrompt),
+            inputs("19"),
 
             prints(invalidInputDateOrder), prints("printMainMenu"), inputs("1"),
 
             prints(tickerPrompt), inputs("AAPL"),
 
-            prints(startDatePrompt), inputs("4/20/2013"),
+            prints(startDatePrompt),
 
-            prints(endDatePrompt), inputs("4/20/2013"),
+            prints(yearPrompt),
+            inputs("2013"),
+
+            prints(monthPrompt),
+            inputs("4"),
+
+            prints(dayPrompt),
+            inputs("20"),
+            prints(endDatePrompt),
+
+            prints(yearPrompt),
+            inputs("2013"),
+
+            prints(monthPrompt),
+            inputs("4"),
+
+            prints(dayPrompt),
+            inputs("20"),
 
             prints(invalidInputDateOrder), prints("printMainMenu"), inputs("1"),
 
             prints(tickerPrompt), inputs("AAPL"),
 
-            prints(startDatePrompt), inputs("4/20/2013"),
+            prints(startDatePrompt),
+            prints(yearPrompt),
+            inputs("2013"),
 
-            prints(endDatePrompt), inputs("4/21/2013"),
+            prints(monthPrompt),
+            inputs("4"),
 
-            prints("printStockGainAAPL2013-04-202013-04-21100.0"), prints("printMainMenu"),
+            prints(dayPrompt),
+            inputs("20"),
+            prints(endDatePrompt),
+            prints(yearPrompt),
+            inputs("2013"),
+
+            prints(monthPrompt),
+            inputs("4"),
+
+            prints(dayPrompt),
+            inputs("21"),
+            prints("printStockGainAAPL2013-04-202013-04-21100.0"),
+            prints("printMainMenu"),
             inputs("1"),
 
             prints(tickerPrompt), inputs("AAPL"),
 
-            prints(startDatePrompt), inputs("12/30/2023"),
+            prints(startDatePrompt),
+            prints(yearPrompt),
+            inputs("2023"),
 
-            prints(endDatePrompt), inputs("12/31/2023"),
+            prints(monthPrompt),
+            inputs("12"),
 
-            prints("printStockGainAAPL2023-12-302023-12-31100.0"), prints("printMainMenu"),
+            prints(dayPrompt),
+            inputs("30"),
+            prints(endDatePrompt),
+            prints(yearPrompt),
+            inputs("2023"),
+
+            prints(monthPrompt),
+            inputs("12"),
+
+            prints(dayPrompt),
+            inputs("31"),
+
+            prints("printStockGainAAPL2023-12-302023-12-31100.0"),
+            prints("printMainMenu"),
             inputs("1"),
 
             prints(tickerPrompt), inputs("AAPL"),
 
-            prints(startDatePrompt), inputs("01/01/2023"),
+            prints(startDatePrompt),
+            prints(yearPrompt),
+            inputs("2023"),
 
-            prints(endDatePrompt), inputs("12/31/2023"),
+            prints(monthPrompt),
+            inputs("1"),
 
-            prints("printStockGainAAPL2023-01-012023-12-31100.0"), prints("printMainMenu"),
+            prints(dayPrompt),
+            inputs("1"),
+            prints(endDatePrompt),
+            prints(yearPrompt),
+            inputs("2023"),
+
+            prints(monthPrompt),
+            inputs("12"),
+
+            prints(dayPrompt),
+            inputs("31"),
+            prints("printStockGainAAPL2023-01-012023-12-31100.0"),
+            prints("printMainMenu"),
             inputs("1"),
 
             prints(tickerPrompt), inputs("AAPL"),
 
-            prints(startDatePrompt), inputs("4/20/2024"),
+            prints(startDatePrompt),
+            prints(yearPrompt),
+            inputs("2024"),
 
-            prints(endDatePrompt), inputs("6/5/2024"),
+            prints(monthPrompt),
+            inputs("4"),
 
-            prints("printStockGainAAPL2024-04-202024-06-05100.0"), prints("printMainMenu"),
-            inputs("EXIT")));
+            prints(dayPrompt),
+            inputs("20"),
+
+            prints(endDatePrompt),
+            prints(yearPrompt),
+            inputs("2024"),
+
+            prints(monthPrompt),
+            inputs("6"),
+
+            prints(dayPrompt),
+            inputs("5"),
+
+            prints("printStockGainAAPL2024-04-202024-06-05100.0"),
+            prints("printMainMenu"),
+            inputs("0")));
 
   }
 
@@ -543,13 +753,20 @@ public class BasicStockControllerTest {
 
             prints(tickerPrompt), inputs("NFLX"),
 
-            prints("printMessagePlease enter the ending date in the format MM/DD/YYYY:"), inputs(
-                    "04/20/2013"),
+            prints("printMessagePlease enter the ending date!"),
+            prints(yearPrompt),
+            inputs("2013"),
+
+            prints(monthPrompt),
+            inputs("4"),
+
+            prints(dayPrompt),
+            inputs("20"),
 
             prints("printMessagePlease enter the number of days."), inputs("100"),
 
-            prints("printStockAverageNFLX2013-04-20100200.0"), prints("printMainMenu"), inputs(
-                    "EXIT")));
+            prints("printStockAverageNFLX2013-04-20100200.0"), prints("printMainMenu"),
+            inputs("0")));
 
   }
 
@@ -559,9 +776,15 @@ public class BasicStockControllerTest {
 
             prints(tickerPrompt), inputs("AAPL"),
 
-            prints("printMessagePlease enter the ending date in the format MM/DD/YYYY:"), inputs(
-                    "04/20/2013"),
+            prints("printMessagePlease enter the ending date!"),
+            prints(yearPrompt),
+            inputs("2013"),
 
+            prints(monthPrompt),
+            inputs("4"),
+
+            prints(dayPrompt),
+            inputs("20"),
             prints("printMessagePlease enter the number of days."), inputs("13"), modelLog(
                     "getCrossover2013-04-2013AAPL"),
 
@@ -569,7 +792,7 @@ public class BasicStockControllerTest {
                     + "2013-04-2013"
                     + "0001-01-01"
                     + "0002-02-02"),
-            prints("printMainMenu"), inputs("EXIT")));
+            prints("printMainMenu"), inputs("0")));
 
 
   }
@@ -584,9 +807,9 @@ public class BasicStockControllerTest {
             inputs("ADOBE"), modelLog("createNewPortfolioADOBE"),
 
             prints("printMessageSuccessfully created portfolio ADOBE."), prints(
-                    "printViewPortfoliosS&P500NASDAQ"), inputs("EXIT"),
+                    "printViewPortfoliosS&P500NASDAQ"), inputs("0"),
 
-            prints("printMainMenu"), inputs("EXIT")));
+            prints("printMainMenu"), inputs("0")));
 
   }
 
@@ -612,9 +835,9 @@ public class BasicStockControllerTest {
             inputs("AAAAAA"), modelLog("createNewPortfolioAAAAAA"),
 
             prints("printMessageSuccessfully created portfolio AAAAAA."), prints(
-                    "printViewPortfoliosS&P500NASDAQ"), inputs("EXIT"),
+                    "printViewPortfoliosS&P500NASDAQ"), inputs("0"),
 
-            prints("printMainMenu"), inputs("EXIT")));
+            prints("printMainMenu"), inputs("0")));
 
   }
 
@@ -638,9 +861,9 @@ public class BasicStockControllerTest {
             prints("printMessageWhat portfolio would you like to delete?"), inputs("AAPL"),
 
             prints("printMessageA portfolio with that name does not exist!"), prints(
-                    "printViewPortfoliosS&P500NASDAQ"), inputs("EXIT"),
+                    "printViewPortfoliosS&P500NASDAQ"), inputs("0"),
 
-            prints("printMainMenu"), inputs("EXIT")));
+            prints("printMainMenu"), inputs("0")));
 
 
   }
@@ -651,16 +874,17 @@ public class BasicStockControllerTest {
 
             prints("printViewPortfoliosS&P500NASDAQ"), inputs("3"),
 
-            prints("printMessageWhat portfolio would you like to rename? (Please enter the name)"
+            prints("printMessageWhat portfolio would you like to rename? "
+                    + "(Please enter the name)"
                     + "."), inputs("NASDAQ"),
 
             prints("printMessageWhat would you like to rename this portfolio to?"), inputs(
                     "AAAAAA"), modelLog("renamePortfolioNASDAQAAAAAA"),
 
             prints("printMessageSuccessfully renamed portfolio NASDAQ to AAAAAA."), prints(
-                    "printViewPortfoliosS&P500NASDAQ"), inputs("EXIT"),
+                    "printViewPortfoliosS&P500NASDAQ"), inputs("0"),
 
-            prints("printMainMenu"), inputs("EXIT")));
+            prints("printMainMenu"), inputs("0")));
 
 
   }
@@ -671,12 +895,30 @@ public class BasicStockControllerTest {
 
             prints(tickerPrompt), inputs("AAPL"),
 
-            prints(startDatePrompt), inputs("01/01/2020"),
+            prints(startDatePrompt),
+            prints(yearPrompt),
+            inputs("2020"),
 
-            prints(endDatePrompt), inputs("01/01/2021"),
+            prints(monthPrompt),
+            inputs("1"),
 
-            modelLog("getGainOverTimeIOException"), prints("printMessageError while fetching "
-                    + "data: gainIOExceptionMessage"), prints("printMainMenu"), inputs("EXIT")));
+            prints(dayPrompt),
+            inputs("1"),
+
+            prints(endDatePrompt),
+            prints(yearPrompt),
+            inputs("2021"),
+
+            prints(monthPrompt),
+            inputs("1"),
+
+            prints(dayPrompt),
+            inputs("1"),
+
+            modelLog("getGainOverTimeIOException"), prints("printMessageError "
+                    + "while fetching "
+                    + "data: gainIOExceptionMessage"), prints("printMainMenu"),
+            inputs("0")));
 
   }
 
@@ -686,13 +928,22 @@ public class BasicStockControllerTest {
 
             prints(tickerPrompt), inputs("AAPL"),
 
-            prints("printMessagePlease enter the ending date in the format MM/DD/YYYY:"), inputs(
-                    "01/01/2021"),
+            prints("printMessagePlease enter the ending date!"),
+            prints(yearPrompt),
+            inputs("2021"),
+
+            prints(monthPrompt),
+            inputs("1"),
+
+            prints(dayPrompt),
+            inputs("1"),
 
             prints("printMessagePlease enter the number of days."), inputs("50"),
 
-            modelLog("getCrossoverIOException"), prints("printMessageError while fetching data: "
-                    + "crossoverIOExceptionMessage"), prints("printMainMenu"), inputs("EXIT")));
+            modelLog("getCrossoverIOException"), prints("printMessageError while "
+                    + "fetching data: "
+                    + "crossoverIOExceptionMessage"), prints("printMainMenu"),
+            inputs("0")));
 
   }
 
@@ -702,13 +953,23 @@ public class BasicStockControllerTest {
 
             prints(tickerPrompt), inputs("AAPL"),
 
-            prints("printMessagePlease enter the ending date in the format MM/DD/YYYY:"), inputs(
-                    "01/01/2021"),
+            prints("printMessagePlease enter the ending date!"),
+
+            prints(yearPrompt),
+            inputs("2021"),
+
+            prints(monthPrompt),
+            inputs("1"),
+
+            prints(dayPrompt),
+            inputs("1"),
 
             prints("printMessagePlease enter the number of days."), inputs("50"),
 
-            modelLog("getMovingDayAverageIOException"), prints("printMessageError while fetching "
-                    + "data: averageIOExceptionMessage"), prints("printMainMenu"), inputs("EXIT")));
+            modelLog("getMovingDayAverageIOException"), prints("printMessageError"
+                    + " while fetching "
+                    + "data: averageIOExceptionMessage"), prints("printMainMenu"),
+            inputs("0")));
 
   }
 
@@ -718,13 +979,14 @@ public class BasicStockControllerTest {
 
             prints("printViewPortfoliosS&P500NASDAQ"), inputs("3"),
 
-            prints("printMessageWhat portfolio would you like to rename? (Please enter the name)"
+            prints("printMessageWhat portfolio would you like to rename? "
+                    + "(Please enter the name)"
                     + "."), inputs("S&N500"),
 
             prints("printMessageA portfolio with that name does not exist!"), prints(
-                    "printViewPortfoliosS&P500NASDAQ"), inputs("EXIT"),
+                    "printViewPortfoliosS&P500NASDAQ"), inputs("0"),
 
-            prints("printMainMenu"), inputs("EXIT")));
+            prints("printMainMenu"), inputs("0")));
 
   }
 
@@ -734,16 +996,17 @@ public class BasicStockControllerTest {
 
             prints("printViewPortfoliosS&P500NASDAQ"), inputs("3"),
 
-            prints("printMessageWhat portfolio would you like to rename? (Please enter the name)"
+            prints("printMessageWhat portfolio would you like to rename? "
+                    + "(Please enter the name)"
                     + "."), inputs("S&P500"),
 
             prints("printMessageWhat would you like to rename this portfolio to?"), inputs(
                     "NASDAQ"),
 
             prints("printMessageA portfolio with that name already exists!"), prints(
-                    "printViewPortfoliosS&P500NASDAQ"), inputs("EXIT"),
+                    "printViewPortfoliosS&P500NASDAQ"), inputs("0"),
 
-            prints("printMainMenu"), inputs("EXIT")));
+            prints("printMainMenu"), inputs("0")));
 
   }
 
@@ -751,25 +1014,25 @@ public class BasicStockControllerTest {
   public void viewPortfoliosMenuHandlesInvalidInput() {
     assertTrue(runTest(false, prints("printMainMenu"), inputs("4"),
 
-            prints("printViewPortfoliosS&P500NASDAQ"), inputs("0"),
+            prints("printViewPortfoliosS&P500NASDAQ"), inputs("-1"),
 
-            prints("printMessageInvalid input. Please enter a valid choice or EXIT to go back."),
-            prints("printViewPortfoliosS&P500NASDAQ"),
+            prints("printMessageInvalid input. Please enter a valid choice or "
+                    + "0 to go back."), prints("printViewPortfoliosS&P500NASDAQ"),
             inputs("10"),
 
-            prints("printMessageInvalid input. Please enter a valid choice or EXIT to go back."),
-            prints("printViewPortfoliosS&P500NASDAQ"),
+            prints("printMessageInvalid input. Please enter a valid choice "
+                    + "or 0 to go back."), prints("printViewPortfoliosS&P500NASDAQ"),
             inputs("a"),
 
-            prints("printMessageInvalid input. Please enter a valid choice or EXIT to go back."),
-            prints("printViewPortfoliosS&P500NASDAQ"),
+            prints("printMessageInvalid input. Please enter a valid choice "
+                    + "or 0 to go back."), prints("printViewPortfoliosS&P500NASDAQ"),
             inputs("-1"),
 
-            prints("printMessageInvalid input. Please enter a valid choice or EXIT to go back."),
-            prints("printViewPortfoliosS&P500NASDAQ"),
-            inputs("EXIT"),
+            prints("printMessageInvalid input. Please enter a valid choice "
+                    + "or 0 to go back."), prints("printViewPortfoliosS&P500NASDAQ"),
+            inputs("0"),
 
-            prints("printMainMenu"), inputs("EXIT")));
+            prints("printMainMenu"), inputs("0")));
 
   }
 
@@ -780,8 +1043,8 @@ public class BasicStockControllerTest {
 
             prints("printViewPortfoliosS&P500NASDAQ"), inputs("1"),
 
-            prints("printMessageWhat is the name of the portfolio you would like to create?"),
-            inputs("ASjkdsf"),
+            prints("printMessageWhat is the name of the portfolio you would"
+                    + " like to create?"), inputs("ASjkdsf"),
             prints("printMessageSuccessfully created portfolio ASJKDSF."),
             modelLog("createNewPortfolioASJKDSF"),
             prints("printViewPortfoliosS&P500NASDAQ"),
@@ -789,25 +1052,32 @@ public class BasicStockControllerTest {
             prints("printMenu"),
             inputs("4"),
             inputs("1"),
-            prints("printMessagePlease enter the ticker of the stock that you would like to add "
-                    + "to portfolio S&P500:"),
-            inputs("AAPL"),
-            prints("printMessagePlease enter the number of shares you would like to purchase (you"
-                    + " cannot buy fractional number of stocks): "),
+            prints("printMessagePlease enter the ticker of the stock that you would "
+                    + "like to add to portfolio S&P500:"),inputs("AAPL"),
+            prints("printMessagePlease enter the number of shares you would like to "
+                    + "purchase (you cannot buy fractional number of stocks): "),
             inputs("19"),
             prints("printMessagePlease enter the date in the format MM/DD/YYYY: "),
-            inputs("12/23/2023"),
-            prints("printMessageSuccessfully purchased 19 shares of AAPL stocks at date "
-                    + "2023-12-23 in the S&P500 portfolio."),
+            prints(yearPrompt),
+            inputs("2023"),
+
+            prints(monthPrompt),
+            inputs("12"),
+
+            prints(dayPrompt),
+            inputs("23"),
+
+            prints("printMessageSuccessfully purchased 19 shares of"
+                    + " AAPL stocks at date 2023-12-23 in the S&P500 portfolio."),
             modelLog("addStockToPortfolioS&P500AAPL192023-12-23"),
             prints("printMessage"),
             prints("printOptionsPrompt"),
-            prints("printMenu"), inputs("EXIT"),
+            prints("printMenu"), inputs("0"),
 
-            prints("printViewPortfoliosS&P500NASDAQ"), inputs("EXIT"),
+            prints("printViewPortfoliosS&P500NASDAQ"), inputs("0"),
 
             prints("printMainMenu"),
-            inputs("EXIT")));
+            inputs("0")));
   }
 
   @Test
@@ -818,8 +1088,8 @@ public class BasicStockControllerTest {
             prints("printViewPortfoliosS&P500NASDAQ"), inputs("1"),
 
 
-            prints("printMessageWhat is the name of the portfolio you would like to create?"),
-            inputs("ASjkdsf"),
+            prints("printMessageWhat is the name of the portfolio you would like"
+                    + " to create?"), inputs("ASjkdsf"),
             prints("printMessageSuccessfully created portfolio ASJKDSF."),
             modelLog("createNewPortfolioASJKDSF"),
             prints("printViewPortfoliosS&P500NASDAQ"),
@@ -827,9 +1097,8 @@ public class BasicStockControllerTest {
             prints("printMenu"),
             inputs("4"),
             inputs("1"),
-            prints("printMessagePlease enter the ticker of the stock that you would like to add "
-                    + "to portfolio S&P500:"),
-            inputs("asdfs"),
+            prints("printMessagePlease enter the ticker of the stock that you would like "
+                    + "to add to portfolio S&P500:"),inputs("asdfs"),
             prints(tickerIncorrect), inputs("$%^YTG"),
 
             prints(tickerIncorrect), inputs("7654rfgy"),
@@ -841,20 +1110,27 @@ public class BasicStockControllerTest {
             prints(tickerIncorrect), inputs("WSDF"),
 
             prints(tickerIncorrect), inputs("AAPL"),
-            prints("printMessagePlease enter the number of shares you would like to purchase (you"
-                    + " cannot buy fractional number of stocks): "),
+            prints("printMessagePlease enter the number of shares you would like to "
+                    + "purchase (you cannot buy fractional number of stocks): "),
             inputs("19"),
             prints("printMessagePlease enter the date in the format MM/DD/YYYY: "),
-            inputs("12/23/2023"),
+            prints(yearPrompt),
+            inputs("2023"),
+
+            prints(monthPrompt),
+            inputs("12"),
+
+            prints(dayPrompt),
+            inputs("23"),
             prints("printMessageSuccessfully purchased 19 shares of AAPL stocks at date "
                     + "2023-12-23 in the S&P500 portfolio."),
             modelLog("addStockToPortfolioS&P500AAPL192023-12-23"),
             prints("printMessage"),
-            prints("printOptionsPrompt"), prints("printMenu"), inputs("EXIT"),
+            prints("printOptionsPrompt"), prints("printMenu"),inputs("0"),
 
-            prints("printViewPortfoliosS&P500NASDAQ"), inputs("EXIT"),
+            prints("printViewPortfoliosS&P500NASDAQ"), inputs("0"),
 
-            prints("printMainMenu"), inputs("EXIT")));
+            prints("printMainMenu"), inputs("0")));
   }
 
   @Test
@@ -864,8 +1140,8 @@ public class BasicStockControllerTest {
 
             prints("printViewPortfoliosS&P500NASDAQ"), inputs("1"),
 
-            prints("printMessageWhat is the name of the portfolio you would like to create?"),
-            inputs("ASjkdsf"),
+            prints("printMessageWhat is the name of the portfolio you would "
+                    + "like to create?"), inputs("ASjkdsf"),
             prints("printMessageSuccessfully created portfolio ASJKDSF."),
             modelLog("createNewPortfolioASJKDSF"),
             prints("printViewPortfoliosS&P500NASDAQ"),
@@ -874,27 +1150,30 @@ public class BasicStockControllerTest {
             inputs("4"),
 
             inputs("1"),
-            prints("printMessagePlease enter the ticker of the stock that you would like to add "
-                    + "to portfolio S&P500:"),
-            inputs("AAPL"),
-            prints("printMessagePlease enter the number of shares you would like to purchase "
-                    + "(you" + " cannot buy fractional number of stocks): "), inputs("$%^&"),
+            prints("printMessagePlease enter the ticker of the stock that you would like to "
+                    + "add to portfolio S&P500:"),inputs("AAPL"),
+            prints("printMessagePlease enter the number of shares you would like to " +
+                    "purchase " + "(you" + " cannot buy fractional number of stocks): "),
+            inputs("$%^&"),
             prints("printMessageInvalid input: not an integer, please try again."),
             prints("printOptionsPrompt"),
             prints("printMenu"),
             inputs("1"),
 
-            prints("printMessagePlease enter the ticker of the stock that you would like to add "
+            prints("printMessagePlease enter the ticker of the stock that you would like"
+                    + " to add "
                     + "to portfolio S&P500:"), inputs("AAPL"),
 
-            prints("printMessagePlease enter the number of shares you would like to purchase "
+            prints("printMessagePlease enter the number of shares you would like to "
+                    + "purchase "
                     + "(you" + " cannot buy fractional number of stocks): "), inputs("10.5"),
             prints("printMessageInvalid input: not an integer, please try again."),
             prints("printOptionsPrompt"),
             prints("printMenu"),
             inputs("1"),
 
-            prints("printMessagePlease enter the ticker of the stock that you would like to add "
+            prints("printMessagePlease enter the ticker of the stock that you would like "
+                    + "to add "
                     + "to portfolio S&P500:"), inputs("AAPL"),
 
             prints("printMessagePlease enter the number of shares you would like to purchase "
@@ -904,7 +1183,8 @@ public class BasicStockControllerTest {
             prints("printMenu"),
             inputs("1"),
 
-            prints("printMessagePlease enter the ticker of the stock that you would like to add "
+            prints("printMessagePlease enter the ticker of the stock that you would like "
+                    + "to add "
                     + "to portfolio S&P500:"), inputs("AAPL"),
 
             prints("printMessagePlease enter the number of shares you would like to purchase "
@@ -914,13 +1194,22 @@ public class BasicStockControllerTest {
             prints("printMenu"),
             inputs("1"),
 
-            prints("printMessagePlease enter the ticker of the stock that you would like to add "
+            prints("printMessagePlease enter the ticker of the stock that you would like "
+                    + "to add "
                     + "to portfolio S&P500:"), inputs("AAPL"),
 
             prints("printMessagePlease enter the number of shares you would like to purchase "
                     + "(you" + " cannot buy fractional number of stocks): "), inputs("50"),
             prints("printMessagePlease enter the date in the format MM/DD/YYYY: "),
-            inputs("12/23/2023"),
+
+            prints(yearPrompt),
+            inputs("2023"),
+
+            prints(monthPrompt),
+            inputs("12"),
+
+            prints(dayPrompt),
+            inputs("23"),
 
             prints("printMessageSuccessfully purchased 50 shares of AAPL stocks at date "
                     + "2023-12-23 in the S&P500 portfolio."),
@@ -929,25 +1218,30 @@ public class BasicStockControllerTest {
             prints("printOptionsPrompt"),
             prints("printMenu"), inputs("2"),
 
-            prints("printMessagePlease enter the date that you want to sell the stocks in the "
-                    + "format MM/DD/YYYY: "),
-            inputs("12/30/2023"),
-            prints("printMessagePlease enter the ticker of the stock that you would like to sell "
-                    + "from portfolio S&P500:")
+            prints("printMessagePlease enter the date that you want to sell the stocks!"),
+            prints(yearPrompt),
+            inputs("2023"),
 
-
-            , inputs("AAPL"),
-            prints("printMessagePlease enter the number of shares you would like to sell (you "
-                    + "cannot sell fractional number of stocks): "),
+            prints(monthPrompt),
             inputs("12"),
-            prints("printMessageSuccessfully sold 12 number of AAPL stocks from date 2023-12-30 "
-                    + "in the S&P500 portfolio."),
+
+            prints(dayPrompt),
+            inputs("30"),
+            prints("printMessagePlease enter the ticker of the "
+                    + "stock that you would like to sell from portfolio S&P500:")
+
+
+            ,inputs("AAPL"),
+            prints("printMessagePlease enter the number of shares you would like to sell "
+                    + "(you cannot sell fractional number of stocks): "),
+            inputs("12"), prints("printMessageSuccessfully sold 12 number of AAPL stocks "
+                    + "from date 2023-12-30 in the S&P500 portfolio."),
             modelLog("sellStockFromPortfolioS&P500AAPL122023-12-30"),
-            prints("printOptionsPrompt"), prints("printMenu"), inputs("EXIT"),
+            prints("printOptionsPrompt"), prints("printMenu"),inputs("0"),
 
-            prints("printViewPortfoliosS&P500NASDAQ"), inputs("EXIT"),
+            prints("printViewPortfoliosS&P500NASDAQ"), inputs("0"),
 
-            prints("printMainMenu"), inputs("EXIT")));
+            prints("printMainMenu"), inputs("0")));
   }
 
   @Test
@@ -968,40 +1262,52 @@ public class BasicStockControllerTest {
             inputs("4"),
 
             inputs("1"),
-            prints("printMessagePlease enter the ticker of the stock that you would like to add "
-                    + "to portfolio S&P500:"),
-            inputs("AAPL"),
-            prints("printMessagePlease enter the number of shares you would like to purchase (you"
-                    + " cannot buy fractional number of stocks): "),
+            prints("printMessagePlease enter the ticker of the stock that you would like to "
+                    + "add to portfolio S&P500:"),inputs("AAPL"),
+            prints("printMessagePlease enter the number of shares you would like to purchase "
+                    + "(you cannot buy fractional number of stocks): "),
             inputs("19"),
             prints("printMessagePlease enter the date in the format MM/DD/YYYY: "),
-            inputs("12/23/2023"),
-            prints("printMessageSuccessfully purchased 19 shares of AAPL stocks at date "
-                    + "2023-12-23 in the S&P500 portfolio."),
+
+            prints(yearPrompt),
+            inputs("2023"),
+
+            prints(monthPrompt),
+            inputs("12"),
+
+            prints(dayPrompt),
+            inputs("23"),
+            prints("printMessageSuccessfully purchased 19 shares of AAPL stocks at date 2"
+                    + "023-12-23 in the S&P500 portfolio."),
             modelLog("addStockToPortfolioS&P500AAPL192023-12-23"),
             prints("printMessage"),
             prints("printOptionsPrompt"),
             prints("printMenu"), inputs("2"),
 
-            prints("printMessagePlease enter the date that you want to sell the stocks in the "
-                    + "format MM/DD/YYYY: "),
-            inputs("12/30/2023"),
-            prints("printMessagePlease enter the ticker of the stock that you would like to sell "
-                    + "from portfolio S&P500:")
+            prints("printMessagePlease enter the date that you want to sell the stocks!"),
+            prints(yearPrompt),
+            inputs("2023"),
 
-
-            , inputs("AAPL"),
-            prints("printMessagePlease enter the number of shares you would like to sell (you "
-                    + "cannot sell fractional number of stocks): "),
+            prints(monthPrompt),
             inputs("12"),
-            prints("printMessageSuccessfully sold 12 number of AAPL stocks from date 2023-12-30 "
-                    + "in the S&P500 portfolio."),
+
+            prints(dayPrompt),
+            inputs("30"),
+            prints("printMessagePlease enter the ticker of the stock "
+                    + "that you would like to sell from portfolio S&P500:")
+
+
+            ,inputs("AAPL"),
+            prints("printMessagePlease enter the number of shares you would like to sell "
+                    + "(you cannot sell fractional number of stocks): "),
+            inputs("12"), prints("printMessageSuccessfully sold 12 number of AAPL stocks "
+                    + "from date 2023-12-30 in the S&P500 portfolio."),
             modelLog("sellStockFromPortfolioS&P500AAPL122023-12-30"),
-            prints("printOptionsPrompt"), prints("printMenu"), inputs("EXIT"),
+            prints("printOptionsPrompt"), prints("printMenu"),inputs("0"),
 
-            prints("printViewPortfoliosS&P500NASDAQ"), inputs("EXIT"),
+            prints("printViewPortfoliosS&P500NASDAQ"), inputs("0"),
 
-            prints("printMainMenu"), inputs("EXIT")));
+            prints("printMainMenu"), inputs("0")));
 
   }
 
@@ -1012,56 +1318,65 @@ public class BasicStockControllerTest {
             prints("printViewPortfoliosS&P500NASDAQ"), inputs("1"),
 
 
-            prints("printMessageWhat is the name of the portfolio you would like to create?"),
-            inputs("ASjkdsf"),
+            prints("printMessageWhat is the name of the portfolio you would like to"
+                    + " create?"), inputs("ASjkdsf"),
             prints("printMessageSuccessfully created portfolio ASJKDSF."),
             modelLog("createNewPortfolioASJKDSF"),
             prints("printViewPortfoliosS&P500NASDAQ"),
             prints("printOptionsPrompt"),
             prints("printMenu"),
             inputs("4"),
-
             inputs("1"),
-            prints("printMessagePlease enter the ticker of the stock that you would like to add "
-                    + "to portfolio S&P500:"),
-            inputs("AAPL"),
-            prints("printMessagePlease enter the number of shares you would like to purchase (you"
-                    + " cannot buy fractional number of stocks): "),
+            prints("printMessagePlease enter the ticker of the stock that you would like "
+                    + "to add to portfolio S&P500:"),inputs("AAPL"),
+            prints("printMessagePlease enter the number of shares you would like to purchase "
+                    + "(you cannot buy fractional number of stocks): "),
             inputs("19"),
             prints("printMessagePlease enter the date in the format MM/DD/YYYY: "),
-            inputs("12/23/2023"),
-            prints("printMessageSuccessfully purchased 19 shares of AAPL stocks at date "
-                    + "2023-12-23 in the S&P500 portfolio."),
+
+            prints(yearPrompt),
+            inputs("2023"),
+
+            prints(monthPrompt),
+            inputs("12"),
+
+            prints(dayPrompt),
+            inputs("23"),
+            prints("printMessageSuccessfully purchased 19 shares of AAPL stocks at "
+                    + "date 2023-12-23 in the S&P500 portfolio."),
             modelLog("addStockToPortfolioS&P500AAPL192023-12-23"),
             prints("printMessage"),
             prints("printOptionsPrompt"),
             prints("printMenu"), inputs("2"),
 
-            prints("printMessagePlease enter the date that you want to sell the stocks in the "
-                    + "format MM/DD/YYYY: "),
-            inputs("12/30/2023"),
-            prints("printMessagePlease enter the ticker of the stock that you would like to sell "
-                    + "from portfolio S&P500:"),
+            prints("printMessagePlease enter the date that you want to sell the stocks!"),
+            prints(yearPrompt),
+            inputs("2023"),
 
-
-            inputs("XYZ123"),
-            prints("printMessagePlease enter the stock that you bought before that date: "),
-            inputs("GOOGL"),
-            prints("printMessagePlease enter the stock that you bought before that date: "),
-            inputs("NFLX100"),
-            prints("printMessagePlease enter the stock that you bought before that date: "),
-            inputs("AAPL"),
-            prints("printMessagePlease enter the number of shares you would like to sell (you "
-                    + "cannot sell fractional number of stocks): "),
+            prints(monthPrompt),
             inputs("12"),
-            prints("printMessageSuccessfully sold 12 number of AAPL stocks from date 2023-12-30 "
-                    + "in the S&P500 portfolio."),
+
+            prints(dayPrompt),
+            inputs("30"),
+            prints("printMessagePlease enter the ticker of the stock "
+                    + "that you would like to sell from portfolio S&P500:"),
+
+
+            inputs("XYZ123"), prints("printMessagePlease enter the stock that you bought "
+                    + "before that date: "), inputs("GOOGL"),  prints("printMessagePlease "
+                    + "enter the stock that you bought before that date: "), inputs("NFLX100"),
+            prints("printMessagePlease enter the stock that you bought before that date: ")
+            ,inputs("AAPL"),
+            prints("printMessagePlease enter the number of shares you would like to sell "
+                    + "(you cannot sell fractional number of stocks): "),
+            inputs("12"), prints("printMessageSuccessfully sold 12 number of AAPL stocks"
+                    + " from date 2023-12-30 in the S&P500 portfolio."),
             modelLog("sellStockFromPortfolioS&P500AAPL122023-12-30"),
-            prints("printOptionsPrompt"), prints("printMenu"), inputs("EXIT"),
+            prints("printOptionsPrompt"), prints("printMenu"),inputs("0"),
 
-            prints("printViewPortfoliosS&P500NASDAQ"), inputs("EXIT"),
+            prints("printViewPortfoliosS&P500NASDAQ"), inputs("0"),
 
-            prints("printMainMenu"), inputs("EXIT")));
+            prints("printMainMenu"), inputs("0")));
 
   }
 
@@ -1070,27 +1385,30 @@ public class BasicStockControllerTest {
     assertTrue(runTest(false, prints("printMainMenu"), inputs("4"),
             prints("printViewPortfoliosS&P500NASDAQ"), inputs("invalid"),
 
-            prints("printMessageInvalid input. Please enter a valid choice or EXIT to go back."),
-            prints("printViewPortfoliosS&P500NASDAQ"), inputs("10"),
+            prints("printMessageInvalid input. Please enter a valid choice or 0 "
+                    + "to go back."), prints("printViewPortfoliosS&P500NASDAQ"), inputs("10"),
 
-            prints("printMessageInvalid input. Please enter a valid choice or EXIT to go back."),
+            prints("printMessageInvalid input. Please enter a valid choice or 0"
+                    + " to go back."), prints("printViewPortfoliosS&P500NASDAQ"), inputs("-1"),
+
+            prints("printMessageInvalid input. Please enter a valid choice or 0"
+                    + " to go back."), prints("printViewPortfoliosS&P500NASDAQ"),
+            inputs("1+1"),
+
+            prints("printMessageInvalid input. Please enter a valid choice or 0 "
+                    + "to go back."), prints("printViewPortfoliosS&P500NASDAQ"),
+            inputs("-5"),
+
+            prints("printMessageInvalid input. Please enter a valid choice or 0 "
+                    + "to go back."), prints("printViewPortfoliosS&P500NASDAQ"),
+            inputs("2.5"),
+
+            prints("printMessageInvalid input. Please enter a valid choice or 0 "
+                    + "to go back."), inputs("0"),
+
             prints("printViewPortfoliosS&P500NASDAQ"), inputs("0"),
 
-            prints("printMessageInvalid input. Please enter a valid choice or EXIT to go back."),
-            prints("printViewPortfoliosS&P500NASDAQ"), inputs("1+1"),
-
-            prints("printMessageInvalid input. Please enter a valid choice or EXIT to go back."),
-            prints("printViewPortfoliosS&P500NASDAQ"), inputs("-5"),
-
-            prints("printMessageInvalid input. Please enter a valid choice or EXIT to go back."),
-            prints("printViewPortfoliosS&P500NASDAQ"), inputs("2.5"),
-
-            prints("printMessageInvalid input. Please enter a valid choice or EXIT to go back."),
-            inputs("EXIT"),
-
-            prints("printViewPortfoliosS&P500NASDAQ"), inputs("EXIT"),
-
-            prints("printMainMenu"), inputs("EXIT")));
+            prints("printMainMenu"), inputs("0")));
 
   }
 
@@ -1107,9 +1425,9 @@ public class BasicStockControllerTest {
             prints("printMessageSuccessfully created portfolio 01/01/2021."),
 
 
-            prints("printViewPortfoliosS&P500NASDAQ"), inputs("EXIT"),
+            prints("printViewPortfoliosS&P500NASDAQ"), inputs("0"),
 
-            prints("printMainMenu"), inputs("EXIT")));
+            prints("printMainMenu"), inputs("0")));
 
   }
 
@@ -1126,9 +1444,9 @@ public class BasicStockControllerTest {
 
             prints("printMessageSuccessfully created portfolio PORTFOLIOSS&P500NASDAQ."),
 
-            prints("printViewPortfoliosS&P500NASDAQ"), inputs("EXIT"),
+            prints("printViewPortfoliosS&P500NASDAQ"), inputs("0"),
 
-            prints("printMainMenu"), inputs("EXIT")));
+            prints("printMainMenu"), inputs("0")));
 
   }
 
@@ -1138,23 +1456,178 @@ public class BasicStockControllerTest {
 
             prints(tickerPrompt), inputs("AAPL"),
 
-            prints("printMessagePlease enter the ending date in the format MM/DD/YYYY:"), inputs(
-                    "01/01/2021"),
+            prints("printMessagePlease enter the ending date!"),
+            prints(yearPrompt),
+            inputs("2021"),
+
+            prints(monthPrompt),
+            inputs("1"),
+
+            prints(dayPrompt),
+            inputs("1"),
 
             prints("printMessagePlease enter the number of days."), inputs("abcd"), prints(
-                    "printMessageInvalid input: not an integer, please try again."), inputs("$"
+                    "printMessageInvalid input: not an integer, please try again."),
+            inputs("$"
                     + "%^&"),
             prints("printMessageInvalid input: not an integer, please try again."),
             inputs("10.5"),
-            prints("printMessageInvalid input: not an integer, please try again."), inputs("-10"),
-            prints("printMessageInvalid input: not a valid number. Please enter a number from 1"
+            prints("printMessageInvalid input: not an integer, please try again."),
+            inputs("-10"),
+            prints("printMessageInvalid input: not a valid number. Please enter a "
+                    + "number from 1"
                     + " " + "to 2147483647"), inputs("100"), modelLog("getCrossover2021-01"
-                    + "-01100AAPL"), prints("printXDayCrossoversAAPL2021-01-011000001-01-010002-02"
+                    + "-01100AAPL"), prints("printXDayCrossoversAAPL2021-01-011000001-01"
+                    + "-010002-02"
                     + "-02"),
 
-            prints("printMainMenu"), inputs("EXIT")));
-
-
+            prints("printMainMenu"), inputs("0")));
   }
 
+  @Test
+  public void DisplayPortfolio() {
+    assertTrue(runTest(false, prints("printMainMenu"), inputs("4"),
+            prints("printViewPortfoliosS&P500NASDAQ"), inputs("1"),
+
+
+            prints("printMessageWhat is the name of the portfolio you would like to create?"),
+            inputs("ASjkdsf"),
+            prints("printMessageSuccessfully created portfolio ASJKDSF."),
+            modelLog("createNewPortfolioASJKDSF"),
+            prints("printViewPortfoliosS&P500NASDAQ"),
+            prints("printOptionsPrompt"),
+            prints("printMenu"),
+            inputs("4"),
+
+            inputs("9"),
+            prints("printMessageWhat date would you like to know the composition of portfolio"
+                    + " S&P500 at?"),
+            prints(yearPrompt),
+            inputs("2023"),
+
+            prints(monthPrompt),
+            inputs("12"),
+
+            prints(dayPrompt),
+            inputs("23"),
+            prints("printManagePortfolioDoubleS&P500NFLXAMZNAAPL5.515.510.5"),
+
+            prints("printOptionsPrompt"),
+            prints("printMenu"), inputs("0"),
+
+            prints("printViewPortfoliosS&P500NASDAQ"), inputs("0"),
+
+            prints("printMainMenu"), inputs("0")));
+  }
+
+  @Test
+  public void DistributionWithDate() {
+    assertTrue(runTest(false, prints("printMainMenu"), inputs("4"),
+            prints("printViewPortfoliosS&P500NASDAQ"), inputs("1"),
+
+
+            prints("printMessageWhat is the name of the portfolio you would like to create?"),
+            inputs("ASjkdsf"),
+            prints("printMessageSuccessfully created portfolio ASJKDSF."),
+            modelLog("createNewPortfolioASJKDSF"),
+            prints("printViewPortfoliosS&P500NASDAQ"),
+            prints("printOptionsPrompt"),
+            prints("printMenu"),
+            inputs("4"),
+
+            inputs("4"),
+            prints("printMessageWhat date would you like to know the value of portfolio "
+                    + "S&P500 at?"),
+            prints(yearPrompt),
+            inputs("2023"),
+
+            prints(monthPrompt),
+            inputs("12"),
+
+            prints(dayPrompt),
+            inputs("23"),            prints("printDistributionS&P500GOOGAMZNAAPL0.250.250.25"),
+            modelLog("getPortfolioDistributionS&P5002023-12-23"),
+            prints("printOptionsPrompt"),
+            prints("printMenu"), inputs("0"),
+
+            prints("printViewPortfoliosS&P500NASDAQ"), inputs("0"),
+
+            prints("printMainMenu"), inputs("0")));
+  }
+
+  @Test
+  public void LoadPortfolio() {
+    assertTrue(runTest(false, prints("printMainMenu"), inputs("4"),
+            prints("printViewPortfoliosS&P500NASDAQ"), inputs("1"),
+
+
+            prints("printMessageWhat is the name of the portfolio you would like to create?"),
+            inputs("ASjkdsf"),
+            prints("printMessageSuccessfully created portfolio ASJKDSF."),
+            modelLog("createNewPortfolioASJKDSF"),
+            prints("printViewPortfoliosS&P500NASDAQ"),
+            prints("printOptionsPrompt"),
+            prints("printMenu"),
+            inputs("4"),
+
+            inputs("5"),
+
+            prints("printMessageYou have successfully saved the portfolio!"),
+            modelLog("createNewPortfolioSaveS&P500"),
+            prints("printMessage"), prints("printOptionsPrompt"),
+            prints("printMenu"), inputs("0"),
+
+            prints("printViewPortfoliosS&P500NASDAQ"), inputs("0"),
+
+            prints("printMainMenu"), inputs("0")));
+  }
+
+  @Test
+  public void PerformanceOverTime() {
+    assertTrue(runTest(false, prints("printMainMenu"), inputs("4"),
+            prints("printViewPortfoliosS&P500NASDAQ"), inputs("1"),
+
+
+            prints("printMessageWhat is the name of the portfolio you would like to create?"),
+            inputs("ASjkdsf"),
+            prints("printMessageSuccessfully created portfolio ASJKDSF."),
+            modelLog("createNewPortfolioASJKDSF"),
+            prints("printViewPortfoliosS&P500NASDAQ"),
+            prints("printOptionsPrompt"),
+            prints("printMenu"),
+            inputs("4"),
+
+            inputs("8"),
+
+            prints("printMessagePlease enter the starting date (inclusive)!"),
+            prints(yearPrompt),
+            inputs("2023"),
+
+            prints(monthPrompt),
+            inputs("12"),
+
+            prints(dayPrompt),
+            inputs("23"),
+            prints("printMessagePlease enter the ending date (inclusive)!"),
+            prints(yearPrompt),
+            inputs("2024"),
+
+            prints(monthPrompt),
+            inputs("5"),
+
+            prints(dayPrompt),
+            inputs("12"),
+            prints("printMessagePerformance of portfolio S&P500 from 2023-12-23 to "
+                    + "2024-05-12"),
+            prints("printPortfolioPerformance2023-12-232024-05-125.025.02024-01-062024-01-"
+                    + "052024-01-042024-01-032024-01-022024-01-0120.015.015.010.0"),
+            modelLog("getPortfolioPerformanceS&P5002023-12-232024-05-12"),
+            modelLog("getPortfolioPerformanceS&P5002023-12-232024-05-12"),
+            prints("printMessage"), prints("printOptionsPrompt"),
+            prints("printMenu"), inputs("0"),
+
+            prints("printViewPortfoliosS&P500NASDAQ"), inputs("0"),
+
+            prints("printMainMenu"), inputs("0")));
+  }
 }

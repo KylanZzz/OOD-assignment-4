@@ -20,44 +20,14 @@ contents of tickerList.txt from:
 
 --Running the Program--
 
-This section contains instructions on running the Stocks Program, detailing an example of how to
-create a portfolio, add three unique stocks to it at three distinct dates, then query the value of
-the portfolio at two separate dates.
+In order to run the program in GUI mode:
 
-1. Run the program
-    $java -jar assignment-4.jar
-2. Select manage portfolios
-    $4
-3. Create the portfolio
-    $1
-    $S&P500
-4. Edit the portfolio
-    $4
-5. Add first stock
-    $1
-    $AAPL
-    $100
-    $04/20/2024
-6. Add second stock
-    $1
-    $AMZN
-    $200
-    $04/22/2024
-7. Add third stock
-    $1
-    $NFLX
-    $250
-    $04/24/2024
-8. Calculate value of portfolio at first date
-    $3
-    $04/25/2024
-9. Calculate value of portfolio at second date
-    $3
-    $04/27/2024
-10. Exit application
-    $EXIT
-    $EXIT
-    $EXIT
+        $java -jar assignment-4.jar
+
+In order to run the program in TUI mode:
+
+        $java -jar assignment-4.jar --text
+
 
 --Valid Stocks--
 The list of all stocks that this program supports is listed in 'res/stocksData/tickerList.txt'.

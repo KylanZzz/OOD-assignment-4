@@ -4,7 +4,17 @@
 Features:
 --IMPORTANT--
 All input (Ticker symbols, portfolio names, etc.) are CASE INSENSITIVE!
+A tag such as [GUI-ONLY] indicates that a section of the readme is ONLY applicable the GUI portion
+of the program, and [TUI-ONLY] indicates that it is ONLY application to the text-based interface.
 
+--TUI/GUI choice--
+In our program, it is possible to run the program either using a text-based interface (TUI) or a
+graphical user interface (GUI). The default is the GUI; in order to select the TUI, run the program
+jar file with the '--text' flag. The TUI has several more functions than the GUI (IE: Rebalancing
+portfolios, viewing the performance graph)
+
+
+[TUI-ONLY]
 --Examine Gain/Loss For a Stock--
 The application allows users to calculate the gain or loss of a stock over a specified period based
 on its closing prices. All calculations use the adjusted closing price. Users are prompted to input
@@ -17,6 +27,7 @@ Note: If neither the start date nor the end date have data, but data is availabl
 the program will return 0 because the end date is required for comparison.
 
 
+[TUI-ONLY]
 --Calculate x-Day Moving Average of a Stock--
 Users can calculate the x-day moving average of a stock, which is the average of the closing prices
 over the last x days from a specified date. The application prompts the user to enter the ticker
@@ -27,6 +38,7 @@ Note: If there are not enough data points available for the specified x days fro
 available closing prices up to the earliest available date.
 
 
+[TUI-ONLY]
 --Calculate x-Day Crossovers for a Stock--
 The application can identify days when the stock's closing price was greater than the x-day moving
 average, signaling potential buy opportunities. Users are asked to input the ticker symbol,
@@ -63,6 +75,7 @@ stock simply doesn't exist in the portfolio). After selling all shares of a stoc
 it will no longer be shown in the portfolio composition until it is bought again.
 
 
+[TUI-ONLY]
 --Rebalance--
 Users can also choose to rebalance a portfolio. This means buying shares of some stocks and selling
 shares of others so that the proportion of value of each stock matches a user-inputted proportion.
@@ -86,6 +99,7 @@ stock) at a specific date. This will IGNORE all transactions (buy, sell, rebalan
 specified date.
 
 
+[TUI-ONLY]
 --Calculate Portfolio Distribution--
 Users can calculate the value of each stock (shares * value) at a date. The value of each stock at
 any given date should be equivalent to the total value of the portfolio.
@@ -100,6 +114,7 @@ Note: If the closing price on the inputted date cannot be found, then the next e
 closing price is used instead. If no other earlier closing price can be found, then 0 is assumed.
 
 
+[TUI-ONLY]
 --Calculate Portfolio Performance--
 Users can calculate the performance of a portfolio between two dates. The performance of a portfolio
 is simply the value of the portfolio at various times. This performance is displayed on a graph
@@ -135,7 +150,8 @@ at the top, bottom, or anywhere in between). Here is how to format each transact
             IE: REBALANCE:04/21/2005,AAPL=>1.1213207210798;AMZN=>1.6835,AAPL=>0.5;AMZN=>0.5
 
 
---Loading a Portfolio--
+[TUI-ONLY]
+--Loading a Portfolio Text-based--
 After creating a save (whether through the program or manually written), users can choose to load
 a portfolio save into an existing portfolio. The contents of a save can only be loaded into a
 portfolio with the same name as the save (case insensitive). For example, if I created a save with a
@@ -144,6 +160,15 @@ in order to load the save that I created before. The reason this was implemented
 safeguard against accidental data corruption from the users side. While it may seem inconvenient at
 first, designing loading this way ensures that all saves correspond to the correct portfolio and
 no portfolio can be "crossed" with another.
+
+
+[GUI-ONLY]
+--Loading a Portfolio GUI--
+Loading contents into the GUI has been changed. Users may pick ANY file with the format following
+naming format:
+    [portfolio name]_[custom identifier (can be anything non-empty)]
+When the file is loaded, if the portfolio with that name already exists, it's data be OVERWRITTEN.
+If a portfolio with that name does NOT exist, then it will be CREATED.
 
 
 --Configuration--
@@ -161,6 +186,8 @@ and each subsequent row should contain the corresponding data values in the same
 Note: The first row must be formatted exactly as specified above, and each row must have all
 fields present with no extra or missing fields.
 
+
+[GUI-ONLY]
 --GUI--
 All the features in it have the same mechanism as the text-based one.
 

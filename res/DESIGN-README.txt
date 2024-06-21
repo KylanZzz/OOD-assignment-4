@@ -51,6 +51,18 @@ they both extend the abstract Command class.
 Several commands also act as "menus," which continue looping until a specific user input is
 detected ("0" in this case).
 
+The FeaturesStockController is a new controller that is compatible with both TUI and GUI views. It
+implements a "Features" interface (PortfolioStockFeatures) that has several functions for handling
+user input that can be passed down from the view. This is the controller that we used for linking
+our existing PortfolioStockModel with our new GUI view. Since it implements the 'Features' interface,
+it works with any view that implements a function in the view named "addFeatures" which links the
+controller with user input from the view.
+
+We decided to not use this controller with our old views because it would result in a higher coupling
+between the view and controller (Since the view has to pass the input to the controller now), thus,
+we opted for TWO separate controllers for our TUI and GUI. Also, this would require us to change our
+existing views because they would also need to implement the 'addFeatures' method.
+
 
 --View--
 The view is responsible for displaying data to the user.
@@ -63,8 +75,10 @@ To introduce new text-based features to the user, BasicPortfolioView extends Bas
 and implements the PortfolioStockView to present new information to users as BasicStockView did.
 
 With GUI, we made a new interface called FeaturesStockView, which doesn't extend to any other
-interface. SimpleFeaturesStockView implements this new interface. In this class, we made the view
-more interactive so that the user can manage it with buttons and text fields.
+interface. SimpleFeaturesStockView implements this new interface. This interface essentially changes
+the first point of contact with user input from the controller to the view. It has a new method called
+"addFeatures" which 'links' the controller with the view. In this class, we made the view more
+interactive so that the user can manage it with buttons and text fields.
 
 --Testing--
 The Model was tested using a combination of unit tests and mock data sources. We implemented a

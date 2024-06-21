@@ -30,7 +30,7 @@ import static stock.controller.Interactions.prints;
  */
 public class BasicStockControllerTest {
 
-  protected final class MockModel implements PortfolioStockModel {
+  protected static final class MockModel implements PortfolioStockModel {
     private StringBuilder log;
     private boolean throwIOException;
 

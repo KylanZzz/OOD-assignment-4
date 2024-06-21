@@ -122,11 +122,6 @@ public class FeaturesStockController implements PortfolioStockFeatures {
       return;
     }
 
-//    if (!share.isEmpty() || !ticker.isEmpty()) {
-//      view.displayErrorMessage("Ticker and share must be empty in order to get composition.");
-//      return;
-//    }
-
     view.displayComposition(model.getPortfolioContentsDecimal(portfolio, date));
   }
 
@@ -140,11 +135,6 @@ public class FeaturesStockController implements PortfolioStockFeatures {
       view.displayErrorMessage("Portfolio cannot be an empty string!");
       return;
     }
-
-//    if (!share.isEmpty() || !ticker.isEmpty()) {
-//      view.displayErrorMessage("Ticker and share must be empty in order to calculate value.");
-//      return;
-//    }
 
     try {
       view.displayValue(model.getPortfolioValue(portfolio, date));
@@ -227,7 +217,12 @@ public class FeaturesStockController implements PortfolioStockFeatures {
     }
 
     try {
-      return LocalDate.of(y, m, d);
+      LocalDate date =  LocalDate.of(y, m, d);
+      if (date.isAfter(LocalDate.now())) {
+        view.displayErrorMessage("Date must be before today!");
+        return null;
+      }
+      return date;
     } catch (DateTimeException e) {
       view.displayErrorMessage("Invalid date! Please enter a positive, valid date.");
       return null;

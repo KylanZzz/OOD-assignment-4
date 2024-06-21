@@ -30,7 +30,7 @@ final class MockPortfolioModel implements PortfolioStockModel {
   public void addStockToPortfolio(String name, String ticker, int shares, LocalDate date)
           throws IOException, IllegalArgumentException {
     if (throwIOException) {
-      log.append("addStockToPortfolioIOException\n");
+      throw new IOException("buyIOExceptionMessage");
     }
     log.append("addStockToPortfolio").append(name).append(ticker).append(shares)
             .append(date).append("\n");
@@ -42,7 +42,7 @@ final class MockPortfolioModel implements PortfolioStockModel {
   public void sellStockFromPortfolio(String name, String ticker, int shares, LocalDate date)
           throws IOException, IllegalArgumentException {
     if (throwIOException) {
-      log.append("sellStockFromPortfolioIOException\n");
+      throw new IOException("sellIOExceptionMessage");
     }
     log.append("sellStockFromPortfolio").append(name).append(ticker).append(shares)
             .append(date).append("\n");
@@ -145,18 +145,26 @@ final class MockPortfolioModel implements PortfolioStockModel {
   @Override
   public void loadPortfolioSave(String fileSaveName) throws IOException,
           IllegalArgumentException {
-
+    if (throwIOException) {
+      throw new IOException("loadPortfolioSaveIOExceptionMessage");
+    }
+    log.append("loadPortfolioSave").append(fileSaveName).append("\n");
   }
 
   @Override
   public void createNewPortfolioSave(String name) throws IOException, IllegalArgumentException {
+    if (throwIOException) {
+      throw new IOException("createNewPortfolioSaveIOExceptionMessage");
+    }
     log.append("createNewPortfolioSave").append(name).append("\n");
-
   }
 
   @Override
   public void rebalancePortfolio(String name, LocalDate date, Map<String, Double> proportions)
           throws IOException, IllegalArgumentException {
+    if (throwIOException) {
+      throw new IOException("rebalancePortfolioIOExceptionMessage");
+    }
     log.append("rebalancePortfolio").append(name).append(date).append(proportions).append("\n");
   }
 

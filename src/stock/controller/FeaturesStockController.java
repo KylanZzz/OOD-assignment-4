@@ -64,7 +64,7 @@ public class FeaturesStockController implements PortfolioStockFeatures {
 
   @Override
   public void choosePortfolio(String name) {
-    if (name != null && !name.isBlank()) {
+    if (name != null && !name.isBlank() && model.getPortfolios().contains(name)) {
       view.displayEditPortfolio(name);
     } else {
       view.displayErrorMessage("Please create a new portfolio or load one from a save first.");
@@ -100,7 +100,13 @@ public class FeaturesStockController implements PortfolioStockFeatures {
       int sh = Integer.parseInt(shares);
 
       try {
-        model.sellStockFromPortfolio(portfolio, ticker, sh, getValidDate(month, day, year));
+        var date = getValidDate(month, day, year);
+        if (model.getPortfolioContentsDecimal(portfolio, date).get(ticker) < sh) {
+          view.displayErrorMessage("Not enough shares bought to sell!");
+          return;
+        }
+
+        model.sellStockFromPortfolio(portfolio, ticker, sh, date);
         view.displaySoldStock(ticker, sh);
       } catch (Exception e) {
         view.displayErrorMessage(e.getMessage());
@@ -117,8 +123,13 @@ public class FeaturesStockController implements PortfolioStockFeatures {
     LocalDate date = getValidDate(month, day, year);
     if (date == null) return;
 
-    if (portfolio.isEmpty()) {
+    if (portfolio.isBlank()) {
       view.displayErrorMessage("Portfolio cannot be an empty string!");
+      return;
+    }
+
+    if (!model.getPortfolios().contains(portfolio)) {
+      view.displayErrorMessage("Portfolio does not exist.");
       return;
     }
 
@@ -131,8 +142,13 @@ public class FeaturesStockController implements PortfolioStockFeatures {
     LocalDate date = getValidDate(month, day, year);
     if (date == null) return;
 
-    if (portfolio.isEmpty()) {
+    if (portfolio.isBlank()) {
       view.displayErrorMessage("Portfolio cannot be an empty string!");
+      return;
+    }
+
+    if (!model.getPortfolios().contains(portfolio)) {
+      view.displayErrorMessage("Portfolio does not exist.");
       return;
     }
 
@@ -146,6 +162,11 @@ public class FeaturesStockController implements PortfolioStockFeatures {
   @Override
   public void savePortfolio(String portfolio) {
     portfolio = portfolio.toUpperCase();
+
+    if (!model.getPortfolios().contains(portfolio)) {
+      view.displayErrorMessage("Portfolio does not exist.");
+      return;
+    }
 
     try {
       model.createNewPortfolioSave(portfolio);
@@ -227,12 +248,5 @@ public class FeaturesStockController implements PortfolioStockFeatures {
       view.displayErrorMessage("Invalid date! Please enter a positive, valid date.");
       return null;
     }
-  }
-
-  public static void main(String[] args) {
-    SimpleFeaturesStockView view = new SimpleFeaturesStockView("Stock Program");
-    PortfolioStockModel model = new PortfolioStockModelImpl(new AlphaVantageDataSource(), "res"
-            + "/portfolio");
-    FeaturesStockController controller = new FeaturesStockController(view, model);
   }
 }

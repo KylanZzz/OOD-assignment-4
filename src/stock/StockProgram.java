@@ -51,7 +51,7 @@ public class StockProgram {
 
       controller.run();
     } else {
-      // TUI
+      // GUI
 
       SimpleFeaturesStockView view = new SimpleFeaturesStockView("Stock Program");
       PortfolioStockModel model = new PortfolioStockModelImpl(new AlphaVantageDataSource(), "res"

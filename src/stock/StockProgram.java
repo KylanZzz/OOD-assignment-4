@@ -3,11 +3,14 @@ package stock;
 import java.io.InputStreamReader;
 
 import stock.controller.BasicStockController;
+import stock.controller.FeaturesStockController;
 import stock.controller.StockController;
 import stock.model.AlphaVantageDataSource;
+import stock.model.PortfolioStockModel;
 import stock.model.PortfolioStockModelImpl;
 import stock.model.StockModel;
 import stock.view.BasicPortfolioStockView;
+import stock.view.SimpleFeaturesStockView;
 import stock.view.StockView;
 
 /**
@@ -32,22 +35,28 @@ public class StockProgram {
    */
   public static void main(String[] args) {
 
-    //    StockView view = new BasicPortfolioStockView(System.out) {
-    //    };
-    //    StockView view= new BasicPortfolioStockView(System.out);
-    //    StockModel model = new BasicStockModel(new AlphaVantageDataSource());
-    //    StockController controller = new BasicStockController(view, model,
-    //            new InputStreamReader(System.in));
-    //
-    //     StockModel model = new BasicStockModel(new CSVDataSource("res/CSVData"));
+    if (args.length > 1) {
+      System.err.println("Incorrect number of arguments! Only valid argument is ${--text} to show "
+              + "TUI instead of GUI.");
+      System.exit(2);
+    }
 
+    if (args.length == 1 && args[0].equals("--text")) {
+      // TUI
 
-    // To run GUI, check out FeaturesStockController.java!
-    StockView view = new BasicPortfolioStockView(System.out);
-    StockModel model = new PortfolioStockModelImpl(new AlphaVantageDataSource(), "res/portfolio");
-    StockController controller = new BasicStockController(view, model,
-            new InputStreamReader(System.in));
+      StockView view = new BasicPortfolioStockView(System.out);
+      StockModel model = new PortfolioStockModelImpl(new AlphaVantageDataSource(), "res/portfolio");
+      StockController controller = new BasicStockController(view, model,
+              new InputStreamReader(System.in));
 
-    controller.run();
+      controller.run();
+    } else {
+      // TUI
+
+      SimpleFeaturesStockView view = new SimpleFeaturesStockView("Stock Program");
+      PortfolioStockModel model = new PortfolioStockModelImpl(new AlphaVantageDataSource(), "res"
+              + "/portfolio");
+      FeaturesStockController controller = new FeaturesStockController(view, model);
+    }
   }
 }

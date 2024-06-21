@@ -160,3 +160,20 @@ The CSV files themselves should have the first row as:
 and each subsequent row should contain the corresponding data values in the same order.
 Note: The first row must be formatted exactly as specified above, and each row must have all
 fields present with no extra or missing fields.
+
+--GUI--
+All the features in it have the same mechanism as the text-based one.
+
+The GUI has its own controller called FeaturesStockController.java. This GUI will first lead the
+user to create a new portfolio or let the user upload their own txt file. The way it uploads the file
+is through user's computer.
+
+Once the user clicks in to the edit, all the features will show in the other GUI window. There are
+five text fields that allow the user to input the shares, ticker, month, day, and year respectively.
+After the information been given from the user, they can choose the button that they want
+to manipulate. They can either buy stock, sell stock, get composition, or get value of this
+portfolio. At any point of their operation, user are able to save the portfolio with the button
+that's at the bottom of the window.
+
+Note: Get composition and Get value wouldn't be affected by the shares and ticker that are currently
+in the text fields.

@@ -42,14 +42,14 @@ invokes upon receiving user input. The Command class is an abstract class that d
 method, which is implemented by various concrete command classes. Each concrete command class (e.g.,
 CalculateGain, CalculateAverage, CalculateCrossover, ViewPortfolios) handles a specific user
 request. An abstract class was used instead of an interface because there are several helper methods
- that all commands can use (mainly for parsing input) that are placed in the parent Command class.
+that all commands can use (mainly for parsing input) that are placed in the parent Command class.
 Building on the original structure we had defined, StockPortfolioCommand adds new functionalities as
- the program calls on PortfolioStockController. For all new features, they all extend
- StockPortfolioCommand. As StockPortfolioCommand plays a similar role to PortfolioCommand,
- they both extend the abstract Command class.
+the program calls on PortfolioStockController. For all new features, they all extend
+StockPortfolioCommand. As StockPortfolioCommand plays a similar role to PortfolioCommand,
+they both extend the abstract Command class.
 
 Several commands also act as "menus," which continue looping until a specific user input is
-detected ("EXIT" in this case).
+detected ("0" in this case).
 
 
 --View--
@@ -59,8 +59,12 @@ The BasicStockView implements the StockView interface and displays data by print
 the terminal. It simply receives input from the controller and then displays that information in a
 visually appealing format.
 
-To introduce new features to the user, BasicPortfolioView extends BasicStockView and implements the
- PortfolioStockView to present new information to users as BasicStockView did.
+To introduce new text-based features to the user, BasicPortfolioView extends BasicStockView
+and implements the PortfolioStockView to present new information to users as BasicStockView did.
+
+With GUI, we made a new interface called FeaturesStockView, which doesn't extend to any other
+interface. SimpleFeaturesStockView implements this new interface. In this class, we made the view
+more interactive so that the user can manage it with buttons and text fields.
 
 --Testing--
 The Model was tested using a combination of unit tests and mock data sources. We implemented a

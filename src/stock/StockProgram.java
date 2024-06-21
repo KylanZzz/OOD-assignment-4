@@ -40,6 +40,9 @@ public class StockProgram {
     //            new InputStreamReader(System.in));
     //
     //     StockModel model = new BasicStockModel(new CSVDataSource("res/CSVData"));
+
+
+    // To run GUI, check out FeaturesStockController.java!
     StockView view = new BasicPortfolioStockView(System.out);
     StockModel model = new PortfolioStockModelImpl(new AlphaVantageDataSource(), "res/portfolio");
     StockController controller = new BasicStockController(view, model,

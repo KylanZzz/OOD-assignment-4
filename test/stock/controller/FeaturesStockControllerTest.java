@@ -66,6 +66,9 @@ public class FeaturesStockControllerTest {
           case "savePortfolio":
             features.savePortfolio(param[0]);
             break;
+          default:
+            System.err.println("Incorrect input in mock view!");
+            System.exit(3);
         }
       }
     }
@@ -73,7 +76,7 @@ public class FeaturesStockControllerTest {
     @Override
     public void displayComposition(Map<String, Double> composition) {
       log.append("displayComposition");
-      for (var key: composition.keySet().stream().sorted().collect(Collectors.toList())) {
+      for (var key : composition.keySet().stream().sorted().collect(Collectors.toList())) {
         log.append(key).append(composition.get(key));
       }
       log.append(System.lineSeparator());
@@ -97,7 +100,7 @@ public class FeaturesStockControllerTest {
     @Override
     public void displayPortfolios(List<String> names) {
       log.append("displayPortfolios");
-      for (String name: names) {
+      for (String name : names) {
         log.append(name);
       }
       log.append(System.lineSeparator());
@@ -226,7 +229,8 @@ public class FeaturesStockControllerTest {
   public void loadPortfolioWorksWithIOError() {
     assertTrue(runTest(true,
             inputs("loadPortfolio:DDD"),
-            prints("displayErrorMessageError while loading save: loadPortfolioSaveIOExceptionMessage")
+            prints("displayErrorMessageError while loading save: "
+                    + "loadPortfolioSaveIOExceptionMessage")
     ));
   }
 

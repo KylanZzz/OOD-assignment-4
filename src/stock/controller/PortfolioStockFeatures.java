@@ -1,7 +1,12 @@
 package stock.controller;
 
 /**
- * An interface that helps to make a view for the stock by GUI
+ * This interface defines certain "features" of a controller that
+ * implements a Model-View-Controller (MVC) architecture for managing
+ * stock portfolios. The controller implementing this interface is connected
+ * to a graphical user interface (GUI) view which takes an instance of this
+ * interface. The view will call the "addFeatures" method to connect the action
+ * listeners to the controller.
  */
 public interface PortfolioStockFeatures {
   /**
@@ -29,49 +34,53 @@ public interface PortfolioStockFeatures {
    * To buy the stock to the portfolio with certain date.
    *
    * @param portfolio the name of the portfolio.
-   * @param ticker the ticker of the stock.
-   * @param shares the quantity of the stock.
-   * @param month the month to buy the stock.
-   * @param day the day to buy the stock.
-   * @param year the year to buy the stock.
+   * @param ticker    the ticker of the stock.
+   * @param shares    the quantity of the stock.
+   * @param month     the month to buy the stock.
+   * @param day       the day to buy the stock.
+   * @param year      the year to buy the stock.
    */
-  void buyStock(String portfolio, String ticker, String shares, String month, String day, String year);
+  void buyStock(String portfolio, String ticker, String shares, String month, String day,
+                String year);
 
   /**
    * To sell the stock from the portfolio with certain date.
    *
    * @param portfolio the name of the portfolio.
-   * @param ticker the ticker of the stock.
-   * @param shares the quantity of the stock.
-   * @param month the month to sell the stock.
-   * @param day the day to sell the stock.
-   * @param year the year to sell the stock.
+   * @param ticker    the ticker of the stock.
+   * @param shares    the quantity of the stock.
+   * @param month     the month to sell the stock.
+   * @param day       the day to sell the stock.
+   * @param year      the year to sell the stock.
    */
-  void sellStock(String portfolio, String ticker, String shares, String month, String day, String year);
+  void sellStock(String portfolio, String ticker, String shares, String month, String day,
+                 String year);
 
   /**
    * To get the composition of the portfolio.
    *
    * @param portfolio the name of the portfolio.
-   * @param month the month of the stock.
-   * @param day the day of the stock.
-   * @param year the year of the stock.
-   * @param share the quantity of the stock.
-   * @param ticker the name of the stock.
+   * @param month     the month of the stock.
+   * @param day       the day of the stock.
+   * @param year      the year of the stock.
+   * @param share     the quantity of the stock.
+   * @param ticker    the name of the stock.
    */
-  void getComposition(String portfolio, String month, String day, String year, String share, String ticker);
+  void getComposition(String portfolio, String month, String day, String year, String share,
+                      String ticker);
 
   /**
    * To get the total value of the portfolio.
    *
    * @param portfolio the name of the portfolio.
-   * @param month the month of the stock.
-   * @param day the day of the stock.
-   * @param year the year of the stock
-   * @param share the quantity of the stock.
-   * @param ticker the name of the stock.
+   * @param month     the month of the stock.
+   * @param day       the day of the stock.
+   * @param year      the year of the stock
+   * @param share     the quantity of the stock.
+   * @param ticker    the name of the stock.
    */
-  void getValue(String portfolio, String month, String day, String year, String share, String ticker);
+  void getValue(String portfolio, String month, String day, String year, String share,
+                String ticker);
 
   /**
    * To save the portfolio that created.

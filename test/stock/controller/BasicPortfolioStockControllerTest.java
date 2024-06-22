@@ -2,7 +2,6 @@ package stock.controller;
 
 import org.junit.Test;
 
-import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
 import java.time.LocalDate;
@@ -10,7 +9,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import stock.model.PortfolioStockModel;
 import stock.model.StockModel;
 import stock.view.BasicMenuOptions;
 import stock.view.PortfolioStockView;

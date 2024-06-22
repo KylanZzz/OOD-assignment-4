@@ -3,17 +3,9 @@ package stock.controller;
 import java.io.IOException;
 import java.time.DateTimeException;
 import java.time.LocalDate;
-import java.util.InputMismatchException;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ExecutionException;
 
-import stock.model.AlphaVantageDataSource;
 import stock.model.PortfolioStockModel;
-import stock.model.PortfolioStockModelImpl;
 import stock.view.FeaturesStockView;
-import stock.view.PortfolioStockView;
-import stock.view.SimpleFeaturesStockView;
 
 /**
  * A simple implementation of a features stock controller. This controller allows for
@@ -131,7 +123,9 @@ public class FeaturesStockController implements PortfolioStockFeatures {
     portfolio = portfolio.toUpperCase();
 
     LocalDate date = getValidDate(month, day, year);
-    if (date == null) return;
+    if (date == null) {
+      return;
+    }
 
     if (portfolio.isBlank()) {
       view.displayErrorMessage("Portfolio cannot be an empty string!");
@@ -150,7 +144,9 @@ public class FeaturesStockController implements PortfolioStockFeatures {
   public void getValue(String portfolio, String month, String day, String year, String share,
                        String ticker) {
     LocalDate date = getValidDate(month, day, year);
-    if (date == null) return;
+    if (date == null) {
+      return;
+    }
 
     if (portfolio.isBlank()) {
       view.displayErrorMessage("Portfolio cannot be an empty string!");
@@ -199,7 +195,8 @@ public class FeaturesStockController implements PortfolioStockFeatures {
       return false;
     }
 
-    if (portfolio.isEmpty() || ticker.isEmpty() || shares.isEmpty() || month.isEmpty() || day.isEmpty()) {
+    if (portfolio.isEmpty() || ticker.isEmpty() || shares.isEmpty() || month.isEmpty()
+            || day.isEmpty()) {
       view.displayErrorMessage("Make sure all fields are filled out!");
       return false;
     }

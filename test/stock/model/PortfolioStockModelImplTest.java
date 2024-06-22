@@ -280,8 +280,8 @@ public class PortfolioStockModelImplTest extends BasicStockModelTest {
     mockDataSource.setStockExistsAtDate(LocalDate.of(2024, 5, 7));
     double expectedValue = 10.0 * 100.0 + 20.0 * 100.0;
     assertEquals(expectedValue, portModel.getPortfolioValue("testPortfolio",
-            LocalDate.of(2024, 5
-                    , 7)), 0.01);
+            LocalDate.of(2024, 5,
+                    7)), 0.01);
   }
 
   @Test

@@ -5,6 +5,11 @@ import java.util.Map;
 
 import stock.controller.PortfolioStockFeatures;
 
+/**
+ * An interface that contains allows the view to associates with the GUI. The view is able to
+ * display the composition, display value, display bought stock, display sold stock, and other
+ * abilities towards to the portfolio itself.
+ */
 public interface FeaturesStockView {
 
   /**

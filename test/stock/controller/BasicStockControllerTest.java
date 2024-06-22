@@ -1365,8 +1365,8 @@ public class BasicStockControllerTest {
             inputs("XYZ123"), prints("printMessagePlease enter the stock that you bought "
                     + "before that date: "), inputs("GOOGL"),  prints("printMessagePlease "
                     + "enter the stock that you bought before that date: "), inputs("NFLX100"),
-            prints("printMessagePlease enter the stock that you bought before that date: ")
-            ,inputs("AAPL"),
+            prints("printMessagePlease enter the stock that you bought before that date: "),
+            inputs("AAPL"),
             prints("printMessagePlease enter the number of shares you would like to sell "
                     + "(you cannot sell fractional number of stocks): "),
             inputs("12"), prints("printMessageSuccessfully sold 12 number of AAPL stocks"

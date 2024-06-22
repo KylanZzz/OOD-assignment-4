@@ -15,10 +15,20 @@ import stock.view.FeaturesStockView;
 import stock.view.PortfolioStockView;
 import stock.view.SimpleFeaturesStockView;
 
+/**
+ * A simple implementation of a features stock controller. This controller allows for
+ * view-independent input processing that works with both text-based and graphics-based UIs.
+ */
 public class FeaturesStockController implements PortfolioStockFeatures {
   FeaturesStockView view;
   PortfolioStockModel model;
 
+  /**
+   * Constructs a features stock controller.
+   *
+   * @param view the view of the stock program.
+   * @param model the controller of the stock program.
+   */
   public FeaturesStockController(FeaturesStockView view, PortfolioStockModel model) {
     this.view = view;
     this.model = model;

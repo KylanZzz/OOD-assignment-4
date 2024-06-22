@@ -7,11 +7,24 @@ import java.util.Map;
 
 import stock.model.PortfolioStockModel;
 
+/**
+ * A class that mocks StockPortfolioModel. It has hardedcoded data such as the valid stocks it
+ * supports, the contents of getPortfolioContents, as well as the current valid portfolios, that
+ * CANNOT be updated. This allows us to most directly test the controller (by having the simplest
+ * possible model that simply logs function calls and data updates). It also has the ability to
+ * "toggle" a mode where it will throw and IO exception for any function that can throw it, in order
+ * to test how the controller handles exceptions.
+ */
 final class MockPortfolioModel implements PortfolioStockModel {
   private StringBuilder log;
   private boolean throwIOException;
   private BasicStockControllerTest.MockModel mockModelHelper;
 
+  /**
+   * Constructs a new mock model.
+   * @param log the place where the model will log it's changes and function calls.
+   * @param throwIOException determines whether the model is in "Exception throwing mode".
+   */
   public MockPortfolioModel(StringBuilder log, boolean throwIOException) {
     this.log = log;
     this.throwIOException = throwIOException;

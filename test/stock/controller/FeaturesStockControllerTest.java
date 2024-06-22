@@ -19,6 +19,11 @@ import static stock.controller.Interactions.inputs;
 import static stock.controller.Interactions.modelLog;
 import static stock.controller.Interactions.prints;
 
+/**
+ * A test for features stock controller. It tests whether information is correctly passed from
+ * view to controller to model and then back to view. It also tests whether the controller properly
+ * handles invalid inputs.
+ */
 public class FeaturesStockControllerTest {
   protected final class MockFeaturesView implements FeaturesStockView {
     private final StringBuilder log;

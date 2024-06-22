@@ -33,7 +33,8 @@ import stock.controller.PortfolioStockFeatures;
 
 
 /**
- * A simple implementation of the FeaturesStockView interface for managing and displaying stock portfolios.
+ * A simple implementation of the FeaturesStockView interface for managing and displaying stock
+ * portfolios.
  */
 public class SimpleFeaturesStockView implements FeaturesStockView {
   private JButton saveButton;
@@ -76,7 +77,7 @@ public class SimpleFeaturesStockView implements FeaturesStockView {
     mainFrame = new JFrame();
     mainFrame.setTitle(title);
     mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    mainFrame.setMinimumSize(new Dimension(400,300));
+    mainFrame.setMinimumSize(new Dimension(400, 300));
     JPanel mainPanel = new JPanel();
     mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
 
@@ -344,7 +345,7 @@ public class SimpleFeaturesStockView implements FeaturesStockView {
   @Override
   public void displayPortfolios(List<String> names) {
     portfolioDropdown.removeAllItems();
-    for (String name: names) {
+    for (String name : names) {
       portfolioDropdown.addItem(name);
     }
   }
